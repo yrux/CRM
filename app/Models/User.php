@@ -53,4 +53,7 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(RolePermission::class, Role::class,'id','role_id','role_id');
     }
+    public function brands(){
+        return $this->hasManyThrough(BrandUser::class, Brand::class,'id','user_id');
+    }
 }

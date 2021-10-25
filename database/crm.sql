@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2021 at 07:00 PM
+-- Generation Time: Oct 25, 2021 at 07:00 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -68,6 +68,7 @@ CREATE TABLE `brand_users` (
   `brand_id` int(11) NOT NULL,
   `is_owner` tinyint(4) NOT NULL DEFAULT 0,
   `user_email` varchar(255) NOT NULL,
+  `user_name` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -76,8 +77,10 @@ CREATE TABLE `brand_users` (
 -- Dumping data for table `brand_users`
 --
 
-INSERT INTO `brand_users` (`id`, `user_id`, `brand_id`, `is_owner`, `user_email`, `created_at`, `updated_at`) VALUES
-(2, 2, 4, 1, 'test@tcwdd.com', '2021-10-22 11:13:06', '2021-10-22 11:13:18');
+INSERT INTO `brand_users` (`id`, `user_id`, `brand_id`, `is_owner`, `user_email`, `user_name`, `created_at`, `updated_at`) VALUES
+(2, 2, 4, 1, 'test@tcwdd.com', 'test', '2021-10-22 11:13:06', '2021-10-25 06:51:27'),
+(4, 4, 4, 1, 'brandowner@gmail.com', 'Brand Owner', '2021-10-25 07:05:51', '2021-10-25 07:05:51'),
+(5, 5, 4, 1, 'brandsupport@gmail.com', 'Brand Owner', '2021-10-25 07:06:16', '2021-10-25 07:06:16');
 
 -- --------------------------------------------------------
 
@@ -194,6 +197,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('55262ac7ce99755fa871193e5811963ad74c7e3135a2e2fb9b889f20e445df877897a2ce8959ca13', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 11:41:31', '2021-10-12 11:41:31', '2022-04-12 16:41:30'),
 ('5c8fd358a70858ca04ba519212b2eb8af795edb64cbbe06bb4136ac635815a5c2d2d8bf98a40756c', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-22 10:00:04', '2021-10-22 10:00:04', '2022-04-22 15:00:04'),
 ('777890fee8591160c7764c9a0c4d2832eb5ba01d9cfd3e0b8a7037df713a48a1d2fdfbcc7be25d04', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-22 09:59:56', '2021-10-22 09:59:56', '2022-04-22 14:59:56'),
+('94f89e565a9161ddb6866642b1644a22f95dc2144fe42718f0ba2b1f4ae0d499d86d7a6b865f503e', 4, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-25 10:23:05', '2021-10-25 10:23:05', '2022-04-25 15:23:05'),
 ('a1965dafc527d60579be7dc09fc6b03dd3918badf28d1d4a06ee891f0913ba19a7b109c5723530af', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 11:41:08', '2021-10-12 11:41:08', '2022-04-12 16:41:03'),
 ('b12cb03f8c2a2927f4ad0ae029ef7a07a2341be9e59e4d0a7fb9cc5be8f27e3659e1b9e6670b9122', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 11:39:17', '2021-10-12 11:39:17', '2022-04-12 16:39:17'),
 ('bd5bde4934c8ec94293cff223bbff3f35f7d87b6164aee28017a7fdb01fd550a7b6d6bd640da60c8', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 11:40:00', '2021-10-12 11:40:00', '2022-04-12 16:40:00'),
@@ -201,7 +205,8 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('c59b0c278186605a13f492f22bad66f9a949b9b4baadba8a51772e011010bf737afb36c6626697dd', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 11:37:51', '2021-10-12 11:37:51', '2022-04-12 16:37:50'),
 ('c8ddb38c688c2a8b18e705e2c0b9fbdb37c8e5567e03a62e32ea18241d50c666e220c766a7b1d533', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-22 09:58:56', '2021-10-22 09:58:56', '2022-04-22 14:58:56'),
 ('e4bca24d383cdb75d0c019f52f4fba6c1ab63437d7517bd15e44562b5b38811411e00aff41e7da7f', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 09:08:18', '2021-10-12 09:08:18', '2022-04-12 14:08:18'),
-('ec5a63dad8e368cacdf8cb58aadb9d0b3a838a943733e460ad1467d72ec26ebe9c7ed3cd0675a2b7', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 09:09:43', '2021-10-12 09:09:43', '2022-04-12 14:09:43');
+('ec5a63dad8e368cacdf8cb58aadb9d0b3a838a943733e460ad1467d72ec26ebe9c7ed3cd0675a2b7', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 09:09:43', '2021-10-12 09:09:43', '2022-04-12 14:09:43'),
+('ed3409f49ec7d6b7bfc94b3e1e052e63044996be9e598c06a91d921f232c5b2cf95a0a6b6cb3bcbf', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-25 06:39:16', '2021-10-25 06:39:16', '2022-04-25 11:39:15');
 
 -- --------------------------------------------------------
 
@@ -324,7 +329,22 @@ INSERT INTO `permissions` (`id`, `name`, `title`, `updated_at`, `created_at`) VA
 (12, 'users-create', 'Users Create', '2021-10-20 15:52:17', '2021-10-20 15:52:17'),
 (13, 'users-edit', 'Users Edit', '2021-10-20 15:52:24', '2021-10-20 15:52:24'),
 (14, 'users-delete', 'Users Delete', '2021-10-20 15:53:00', '2021-10-20 15:52:29'),
-(15, 'users-view', 'Users View', '2021-10-20 15:53:07', '2021-10-20 15:52:48');
+(15, 'users-view', 'Users View', '2021-10-20 15:53:07', '2021-10-20 15:52:48'),
+(16, 'brand-users-list', 'Brand Users List', '2021-10-20 15:52:07', '2021-10-20 15:52:07'),
+(17, 'brand-users-create', 'Brand Users Create', '2021-10-20 15:52:17', '2021-10-20 15:52:17'),
+(18, 'brand-users-edit', 'Brand Users Edit', '2021-10-20 15:52:24', '2021-10-20 15:52:24'),
+(19, 'brand-users-delete', 'Brand Users Delete', '2021-10-20 15:53:00', '2021-10-20 15:52:29'),
+(20, 'brand-users-view', 'Brand Users View', '2021-10-20 15:53:07', '2021-10-20 15:52:48'),
+(21, 'project-list', 'Project List', '2021-10-20 15:52:07', '2021-10-20 15:52:07'),
+(22, 'project-create', 'Project Create', '2021-10-20 15:52:17', '2021-10-20 15:52:17'),
+(23, 'project-edit', 'Project Edit', '2021-10-20 15:52:24', '2021-10-20 15:52:24'),
+(24, 'project-delete', 'Project Delete', '2021-10-20 15:53:00', '2021-10-20 15:52:29'),
+(25, 'project-view', 'Project View', '2021-10-20 15:53:07', '2021-10-20 15:52:48'),
+(26, 'task-list', 'Task List', '2021-10-20 15:52:07', '2021-10-20 15:52:07'),
+(27, 'task-create', 'Task Create', '2021-10-20 15:52:17', '2021-10-20 15:52:17'),
+(28, 'task-edit', 'Task Edit', '2021-10-20 15:52:24', '2021-10-20 15:52:24'),
+(29, 'task-delete', 'Task Delete', '2021-10-20 15:53:00', '2021-10-20 15:52:29'),
+(30, 'task-view', 'Task View', '2021-10-20 15:53:07', '2021-10-20 15:52:48');
 
 -- --------------------------------------------------------
 
@@ -347,6 +367,68 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `projects`
+--
+
+CREATE TABLE `projects` (
+  `id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `brand_id` int(11) NOT NULL,
+  `project_id` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=pending,1=in progress,2=completed,3=refund,4=chargeback,5=live',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`id`, `company_id`, `brand_id`, `project_id`, `title`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(2, 1, 4, 'TCWB-1635175928-2', 'Test Project', '<p>test description</p>', 0, '2021-10-25 10:32:08', '2021-10-25 10:32:08'),
+(3, 1, 4, 'TCWB-1635176496-3', 'Test Project', '<p>test description</p>', 0, '2021-10-25 10:41:36', '2021-10-25 10:41:36'),
+(4, 1, 4, 'TCWB-1635176507-4', 'Test Project', '<p>test description</p>', 0, '2021-10-25 10:41:47', '2021-10-25 10:41:47'),
+(5, 1, 4, 'TCWB-1635176516-5', 'Test Project', '<p>test description</p>', 0, '2021-10-25 10:41:56', '2021-10-25 10:41:56'),
+(6, 1, 4, 'TCWB-1635176535-6', 'Test Project', '<p>test description</p>', 0, '2021-10-25 10:42:15', '2021-10-25 10:42:15'),
+(7, 1, 4, 'TCWB-1635176593-7', 'Test Project', '<p>test description</p>', 0, '2021-10-25 10:43:13', '2021-10-25 10:43:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `project_users`
+--
+
+CREATE TABLE `project_users` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `project_users`
+--
+
+INSERT INTO `project_users` (`id`, `user_id`, `role_id`, `project_id`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, 6, '2021-10-25 10:42:15', '2021-10-25 10:42:15'),
+(2, 4, 4, 6, '2021-10-25 10:42:15', '2021-10-25 10:42:15'),
+(3, 5, 5, 6, '2021-10-25 10:42:15', '2021-10-25 10:42:15'),
+(4, 4, 4, 7, '2021-10-25 10:43:13', '2021-10-25 10:43:13'),
+(5, 2, 1, 7, '2021-10-25 10:43:13', '2021-10-25 10:43:13'),
+(6, 5, 5, 7, '2021-10-25 10:43:13', '2021-10-25 10:43:13'),
+(7, 5, 5, 7, '2021-10-25 11:23:06', '2021-10-25 11:23:06'),
+(8, 5, 5, 6, '2021-10-25 11:26:27', '2021-10-25 11:26:27'),
+(9, 5, 5, 6, '2021-10-25 11:26:29', '2021-10-25 11:26:29'),
+(10, 5, 5, 6, '2021-10-25 11:27:59', '2021-10-25 11:27:59'),
+(11, 5, 5, 6, '2021-10-25 11:28:06', '2021-10-25 11:28:06');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `roles`
 --
 
@@ -364,7 +446,13 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id`, `name`, `title`, `created_at`, `updated_at`) VALUES
 (1, 'superadmin', 'Super Admin', '2021-10-12 12:35:14', '2021-10-12 12:35:14'),
-(2, 'company', 'Company', '2021-10-12 12:35:14', '2021-10-12 12:35:14');
+(2, 'company', 'Company', '2021-10-12 12:35:14', '2021-10-12 12:35:14'),
+(3, 'brand', 'Brand', '2021-10-25 11:30:33', '2021-10-25 13:17:32'),
+(4, 'sales', 'Sales', '2021-10-25 11:31:22', '2021-10-25 11:31:22'),
+(5, 'support', 'Support', '2021-10-25 11:31:22', '2021-10-25 11:31:22'),
+(6, 'customer', 'Customer', '2021-10-25 13:17:42', '2021-10-25 13:17:42'),
+(7, 'productionmanager', 'Production Manager', '2021-10-25 13:18:12', '2021-10-25 13:18:12'),
+(8, 'developer', 'Developer', '2021-10-25 13:18:22', '2021-10-25 13:18:22');
 
 -- --------------------------------------------------------
 
@@ -404,7 +492,22 @@ INSERT INTO `roles_permissions` (`id`, `role_id`, `permission_id`, `created_at`,
 (17, 1, 12, '2021-10-20 16:01:32', '2021-10-20 16:01:32'),
 (18, 1, 13, '2021-10-20 16:01:35', '2021-10-20 16:01:35'),
 (19, 1, 14, '2021-10-20 16:01:37', '2021-10-20 16:01:37'),
-(20, 1, 15, '2021-10-20 16:01:40', '2021-10-20 16:01:40');
+(20, 1, 15, '2021-10-20 16:01:40', '2021-10-20 16:01:40'),
+(21, 3, 17, '2021-10-25 13:22:29', '2021-10-25 13:22:29'),
+(22, 3, 19, '2021-10-25 13:22:29', '2021-10-25 13:22:29'),
+(23, 3, 18, '2021-10-25 13:22:29', '2021-10-25 13:22:29'),
+(24, 3, 16, '2021-10-25 13:22:29', '2021-10-25 13:22:29'),
+(25, 3, 20, '2021-10-25 13:22:29', '2021-10-25 13:22:29'),
+(26, 3, 22, '2021-10-25 13:42:13', '2021-10-25 13:42:13'),
+(27, 3, 24, '2021-10-25 13:42:13', '2021-10-25 13:42:13'),
+(28, 3, 23, '2021-10-25 13:42:13', '2021-10-25 13:42:13'),
+(29, 3, 21, '2021-10-25 13:42:13', '2021-10-25 13:42:13'),
+(30, 3, 25, '2021-10-25 13:42:13', '2021-10-25 13:42:13'),
+(31, 4, 22, '2021-10-25 13:42:13', '2021-10-25 13:42:13'),
+(32, 4, 24, '2021-10-25 13:42:13', '2021-10-25 13:42:13'),
+(33, 4, 23, '2021-10-25 13:42:13', '2021-10-25 13:42:13'),
+(34, 4, 21, '2021-10-25 13:42:13', '2021-10-25 13:42:13'),
+(35, 4, 25, '2021-10-25 13:42:13', '2021-10-25 13:42:13');
 
 -- --------------------------------------------------------
 
@@ -421,6 +524,10 @@ CREATE TABLE `users` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `company_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL DEFAULT 0,
+  `country` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `phone` varchar(100) DEFAULT NULL,
   `remember_token` varchar(255) DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -429,9 +536,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`, `company_id`, `role_id`, `remember_token`, `email_verified_at`) VALUES
-(2, 'Super Admin', 'admin@crm.com', '$2y$10$fJwkT72wGNXCIBSqq.5JveP/rSFoSRfrSvotM2BJYPO6xgJFgSWVm', '2021-10-12 13:07:37', '2021-10-20 13:08:30', 1, 1, NULL, NULL),
-(3, 'Soft Cube', 'company@softcube.com', '$2y$10$41qAKuxphEMLOLYRWp8WEOwMB3x9y69qPJf6qBu9uw8PRPv0Z9PRG', '2021-10-22 09:49:58', '2021-10-22 09:49:58', 1, 2, NULL, NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`, `company_id`, `role_id`, `country`, `city`, `state`, `phone`, `remember_token`, `email_verified_at`) VALUES
+(2, 'Super Admin', 'admin@crm.com', '$2y$10$fJwkT72wGNXCIBSqq.5JveP/rSFoSRfrSvotM2BJYPO6xgJFgSWVm', '2021-10-12 13:07:37', '2021-10-20 13:08:30', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'Soft Cube', 'company@softcube.com', '$2y$10$41qAKuxphEMLOLYRWp8WEOwMB3x9y69qPJf6qBu9uw8PRPv0Z9PRG', '2021-10-22 09:49:58', '2021-10-22 09:49:58', 1, 2, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'Brand Owner', 'brandowner@gmail.com', '$2y$10$zeSbB.N9ZeD/X8JxZAfjWe5MEka826SlwCbg4B4lnpE2gtKDe9Rcm', '2021-10-25 07:05:51', '2021-10-25 07:05:51', 1, 4, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'Brand Owner', 'brandsupport@gmail.com', '$2y$10$3JZCgeni1webVQ0SJgpJlu5wOb.KVeMwR9pIMw2rHx3Y4j8RArUmG', '2021-10-25 07:06:16', '2021-10-25 07:06:16', 1, 5, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -534,6 +643,22 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indexes for table `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `project_customer` (`company_id`),
+  ADD KEY `project_brand` (`brand_id`);
+
+--
+-- Indexes for table `project_users`
+--
+ALTER TABLE `project_users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `project_users` (`user_id`,`role_id`),
+  ADD KEY `project_project_id` (`project_id`);
+
+--
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
@@ -569,7 +694,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `brand_users`
 --
 ALTER TABLE `brand_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -605,7 +730,7 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -614,22 +739,34 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `projects`
+--
+ALTER TABLE `projects`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `project_users`
+--
+ALTER TABLE `project_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `roles_permissions`
 --
 ALTER TABLE `roles_permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

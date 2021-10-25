@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\BrandUser;
 use App\Models\Brand;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\BrandUserResource;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\BrandUserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class BrandUserController extends Controller
 {
@@ -17,7 +20,7 @@ class BrandUserController extends Controller
      */
     public function index(Brand $brand)
     {
-        //Gate::authorize('viewAny',[BrandUser::class,$brand]);
+        Gate::authorize('viewAny',[BrandUser::class,$brand]);
         return BrandUserResource::collection($brand->users()->paginate(25));
     }
 
@@ -27,12 +30,21 @@ class BrandUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Brand $brand)
+    public function store(BrandUserRequest $request, Brand $brand)
     {
+        Gate::authorize('create',[BrandUser::class,$brand]);
+        $user = User::create([
+            'name'=>$request->user_name,
+            'email'=>$request->user_email,
+            'password'=>Hash::make(config('app.defaultpw')),
+            'company_id'=>$request->user()->company_id,
+            'role_id'=>$request->role,
+        ]);
         $brand_user = $brand->users()->create([
-            'user_id'=>$request->user_id,
+            'user_id'=>$user->id,
             'is_owner'=>$request->is_owner,
             'user_email'=>$request->user_email,
+            'user_name'=>$request->user_name,
         ]);
         return new BrandUserResource($brand_user);
     }
@@ -55,9 +67,9 @@ class BrandUserController extends Controller
      * @param  \App\Models\BrandUser  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Brand $brand, BrandUser $user)
+    public function update(BrandUserRequest $request,Brand $brand, BrandUser $user)
     {
-        $user->update($request->only(['user_id','is_owner','user_email']));
+        $user->update($request->only(['user_id','is_owner','user_email','user_name']));
         return new BrandUserResource($user);
     }
 
