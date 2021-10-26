@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
-
+var path = require('path');
+// require('laravel-mix-alias');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,7 +12,14 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+mix.js('resources/js/app.js', 'public/js').vue()
+.sass('resources/sass/app.scss', 'public/css')
+
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'resources/js'),
+            '@services': path.resolve(__dirname, 'resources/js/services'),
+        }
+    }
+});

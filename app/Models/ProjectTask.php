@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectTask extends Model
 {
     use HasFactory;
+    protected $with = ['files'];
     protected $fillable = [
         'project_id','task_description','due_date','status','assiged_on','assigned_by','project_tag',
     ];
@@ -22,5 +23,8 @@ class ProjectTask extends Model
     }
     public function comments(){
         return $this->hasMany(TaskComment::class,'task_id');
+    }
+    public function files(){
+        return $this->morphMany(File::class,'fileable');
     }
 }

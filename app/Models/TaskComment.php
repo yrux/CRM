@@ -17,4 +17,7 @@ class TaskComment extends Model
     public function task(){
         return $this->belongsTo(ProjectTask::class,'task_id');
     }
+    public function files(){
+        return $this->morphMany(File::class,'fileable');
+    }
 }

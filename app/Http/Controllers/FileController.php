@@ -4,61 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use Illuminate\Http\Request;
-
+use App\Repositories\FileRepository;
 class FileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    protected $file;
+    public function __construct(FileRepository $file)
     {
-        //
+        $this->file = $file;
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $result = $this->file->create($request->attachements, $request->table_name, $request->ref_id, $request->type);
+        return $result;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function show(File $file)
-    {
-        //
+    public function destroy(File $file){
+        $this->file->delete($file);
+        return response()->json(null, 204);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, File $file)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(File $file)
-    {
-        //
+    public function findByTable($table, $id, $type){
+        return $this->file->findByTable($table,$id,$type);
     }
 }

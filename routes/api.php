@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\{BrandController, BrandUserController};
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController, TaskCommentController};
@@ -36,6 +37,10 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::post('/project/{project}/{task}/status/{status}', [ProjectTaskController::class,'updateStatus']);
     Route::apiResource('task/{task}/comment', TaskCommentController::class);
     //task end
+    Route::apiResource('file', FileController::class)->only([
+        'store', 'destroy'
+    ]);
+    Route::post('/file/{table}/{id}/{type}', [FileController::class,'findByTable']);
     Route::apiResource('user', UserController::class);
 });
 Route::middleware('auth:api')->get('/me', function (Request $request) {
