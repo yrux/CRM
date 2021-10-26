@@ -3,9 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\{BrandController, BrandUserController, BrandCustomerController};
+use App\Http\Controllers\{BrandController, BrandUserController};
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController};
+use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController, TaskCommentController};
 use App\Http\Controllers\Auth\ApiAuthController;
 /*
 |--------------------------------------------------------------------------
@@ -28,10 +28,14 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::apiResource('company', CompanyController::class);
     Route::apiResource('brand', BrandController::class);
     Route::apiResource('brand/{brand}/user', BrandUserController::class);
-    Route::apiResource('brand/{brand}/customer', BrandCustomerController::class);
+    // Route::apiResource('brand/{brand}/customer', BrandCustomerController::class);
     Route::apiResource('project', ProjectController::class);
     Route::apiResource('project/{project}/u', ProjectUserController::class);
-    Route::apiResource('project/{project}/t', ProjectTaskController::class);
+    //task
+    Route::apiResource('project/{project}/task', ProjectTaskController::class);
+    Route::post('/project/{project}/{task}/status/{status}', [ProjectTaskController::class,'updateStatus']);
+    Route::apiResource('task/{task}/comment', TaskCommentController::class);
+    //task end
     Route::apiResource('user', UserController::class);
 });
 Route::middleware('auth:api')->get('/me', function (Request $request) {

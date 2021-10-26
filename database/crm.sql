@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2021 at 07:00 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.11
+-- Generation Time: Oct 26, 2021 at 02:18 AM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -204,6 +204,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('c38745ff67b73da8a432836b8e8d89b8f8a7086186c91e6c12d790dfd456b5b2e71691820888351f', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 11:38:10', '2021-10-12 11:38:10', '2022-04-12 16:38:10'),
 ('c59b0c278186605a13f492f22bad66f9a949b9b4baadba8a51772e011010bf737afb36c6626697dd', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 11:37:51', '2021-10-12 11:37:51', '2022-04-12 16:37:50'),
 ('c8ddb38c688c2a8b18e705e2c0b9fbdb37c8e5567e03a62e32ea18241d50c666e220c766a7b1d533', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-22 09:58:56', '2021-10-22 09:58:56', '2022-04-22 14:58:56'),
+('d4601b8317f1b5a1959022d8b9da977e3c86d1e62b622c59ad85ad5ead1a47d2db8e5d067bda4989', 4, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-25 17:47:29', '2021-10-25 17:47:29', '2022-04-25 22:47:29'),
 ('e4bca24d383cdb75d0c019f52f4fba6c1ab63437d7517bd15e44562b5b38811411e00aff41e7da7f', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 09:08:18', '2021-10-12 09:08:18', '2022-04-12 14:08:18'),
 ('ec5a63dad8e368cacdf8cb58aadb9d0b3a838a943733e460ad1467d72ec26ebe9c7ed3cd0675a2b7', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-12 09:09:43', '2021-10-12 09:09:43', '2022-04-12 14:09:43'),
 ('ed3409f49ec7d6b7bfc94b3e1e052e63044996be9e598c06a91d921f232c5b2cf95a0a6b6cb3bcbf', 2, '949d9205-b060-4a02-b12c-d7b0c317359e', 'Laravel Password Grant Client', '[]', 0, '2021-10-25 06:39:16', '2021-10-25 06:39:16', '2022-04-25 11:39:15');
@@ -397,6 +398,32 @@ INSERT INTO `projects` (`id`, `company_id`, `brand_id`, `project_id`, `title`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `project_tasks`
+--
+
+CREATE TABLE `project_tasks` (
+  `id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `task_description` text DEFAULT NULL,
+  `due_date` date NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=opened,1=inprogress,2=closed/completed,3=onhold',
+  `assiged_on` int(11) NOT NULL,
+  `assigned_by` int(11) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `project_tag` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `project_tasks`
+--
+
+INSERT INTO `project_tasks` (`id`, `project_id`, `task_description`, `due_date`, `status`, `assiged_on`, `assigned_by`, `updated_at`, `created_at`, `project_tag`) VALUES
+(1, 6, '<p>test</p>', '2021-04-19', 1, 6, 4, '2021-10-25 18:39:15', '2021-10-25 18:18:15', 'test');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `project_users`
 --
 
@@ -512,6 +539,29 @@ INSERT INTO `roles_permissions` (`id`, `role_id`, `permission_id`, `created_at`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `task_comments`
+--
+
+CREATE TABLE `task_comments` (
+  `id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `task_comments`
+--
+
+INSERT INTO `task_comments` (`id`, `task_id`, `comment`, `user_id`, `updated_at`, `created_at`) VALUES
+(1, 1, '<p>test</p>', 4, '2021-10-25 18:57:16', '2021-10-25 18:57:16'),
+(2, 1, '<p>test</p>', 4, '2021-10-25 18:57:30', '2021-10-25 18:57:30');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -540,7 +590,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_a
 (2, 'Super Admin', 'admin@crm.com', '$2y$10$fJwkT72wGNXCIBSqq.5JveP/rSFoSRfrSvotM2BJYPO6xgJFgSWVm', '2021-10-12 13:07:37', '2021-10-20 13:08:30', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL),
 (3, 'Soft Cube', 'company@softcube.com', '$2y$10$41qAKuxphEMLOLYRWp8WEOwMB3x9y69qPJf6qBu9uw8PRPv0Z9PRG', '2021-10-22 09:49:58', '2021-10-22 09:49:58', 1, 2, NULL, NULL, NULL, NULL, NULL, NULL),
 (4, 'Brand Owner', 'brandowner@gmail.com', '$2y$10$zeSbB.N9ZeD/X8JxZAfjWe5MEka826SlwCbg4B4lnpE2gtKDe9Rcm', '2021-10-25 07:05:51', '2021-10-25 07:05:51', 1, 4, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, 'Brand Owner', 'brandsupport@gmail.com', '$2y$10$3JZCgeni1webVQ0SJgpJlu5wOb.KVeMwR9pIMw2rHx3Y4j8RArUmG', '2021-10-25 07:06:16', '2021-10-25 07:06:16', 1, 5, NULL, NULL, NULL, NULL, NULL, NULL);
+(5, 'Brand Owner', 'brandsupport@gmail.com', '$2y$10$3JZCgeni1webVQ0SJgpJlu5wOb.KVeMwR9pIMw2rHx3Y4j8RArUmG', '2021-10-25 07:06:16', '2021-10-25 07:06:16', 1, 5, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'Production', 'production@gmail.com', '$2y$10$3JZCgeni1webVQ0SJgpJlu5wOb.KVeMwR9pIMw2rHx3Y4j8RArUmG', '2021-10-25 07:06:16', '2021-10-25 07:06:16', 1, 7, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -651,6 +702,12 @@ ALTER TABLE `projects`
   ADD KEY `project_brand` (`brand_id`);
 
 --
+-- Indexes for table `project_tasks`
+--
+ALTER TABLE `project_tasks`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `project_users`
 --
 ALTER TABLE `project_users`
@@ -671,6 +728,12 @@ ALTER TABLE `roles_permissions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `rp_permission_id` (`permission_id`),
   ADD KEY `rp_role_id` (`role_id`) USING BTREE;
+
+--
+-- Indexes for table `task_comments`
+--
+ALTER TABLE `task_comments`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -745,6 +808,12 @@ ALTER TABLE `projects`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `project_tasks`
+--
+ALTER TABLE `project_tasks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `project_users`
 --
 ALTER TABLE `project_users`
@@ -763,10 +832,16 @@ ALTER TABLE `roles_permissions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
+-- AUTO_INCREMENT for table `task_comments`
+--
+ALTER TABLE `task_comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

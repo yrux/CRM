@@ -20,4 +20,7 @@ class Project extends Model
     public function users(){
         return $this->hasMany(ProjectUser::class,'project_id','id');
     }
+    public function tasks(){
+        return $this->hasMany(ProjectTask::class,'project_id','id');
+    }
 }

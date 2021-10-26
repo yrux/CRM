@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Policies\{CompanyPolicy, BrandPolicy, BrandUserPolicy, UserPolicy};
-use App\Models\{Company, Brand, BrandUser, User};
+use App\Policies\{CompanyPolicy, BrandPolicy, BrandUserPolicy, UserPolicy, TaskCommentPolicy};
+use App\Models\{Company, Brand, BrandUser, User, TaskComment};
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -21,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
         Brand::class => BrandPolicy::class,
         User::class => UserPolicy::class,
         BrandUser::class => BrandUserPolicy::class,
+        TaskComment::class => TaskCommentPolicy::class,
     ];
 
     /**
