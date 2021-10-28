@@ -15,6 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'defaultpw'=>'12345678',
+    'noimage'=>env('NO_IMAGE','https://dummyimage.com/50x50/d1d1d1/000000&text=No+Image'),
 
     /*
     |--------------------------------------------------------------------------

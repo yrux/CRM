@@ -24,9 +24,12 @@ class FileRepository implements BaseRepository {
     public function create($files, $table_name, $ref_id, $type=2) : Array {
         $iteration = 0;
         $result = [];
+        $plural_table = Str::studly(Str::singular($table_name));
+        if($type==1){
+            File::where('fileable_id', $ref_id)->where('table_name',$table_name)->where('fileable_type','App\Models\\'.$plural_table)->delete();
+        }
         foreach($files as $file){
             $path = $file->store($table_name);
-            $plural_table = Str::studly(Str::singular($table_name));
             $result[] = File::create([
                 'url'=>$path,
                 'fileable_id'=>$ref_id,

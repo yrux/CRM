@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\BrandResource;
 use App\Models\Brand;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\BrandRequest;
 
 class BrandController extends Controller
 {
@@ -14,10 +15,18 @@ class BrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('viewAny',Brand::class);
-        return BrandResource::collection(Brand::paginate(25));
+        if($request->user()->role_id==1){
+            $brand = Brand::orderBy('id','desc');
+        }else{
+            $brand = Brand::where('company_id',$request->user()->id)->orderBy('id','desc');
+        }
+        $brand = $brand->paginate(10);
+        $brand->load('users');
+        $brand->load('users.user');
+        return BrandResource::collection($brand);
     }
 
     /**
@@ -26,7 +35,7 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
         Gate::authorize('create',Brand::class);
         $brand = Brand::create($request->only(['brand_name','brand_code','company_id']));
@@ -52,7 +61,7 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
+    public function update(BrandRequest $request, Brand $brand)
     {
         Gate::authorize('update',$brand);
         $brand->update($request->only('brand_name','brand_code','company_id'));

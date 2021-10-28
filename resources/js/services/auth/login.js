@@ -25,6 +25,15 @@ class loginservice{
 			return response.data;
 		})
 	}
+	async updateProfile(formData){
+		formData.append('_method','put')
+		var res = await  axios.post('/api/updateprofile',formData).then(function(e){
+            return {status: 1, data: e.data.data}
+        }).catch(function(e){
+            return {status: 0, data: e.response.data.errors};
+        });
+        return res;
+	}
 }
 
 export default new loginservice();

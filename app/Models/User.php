@@ -15,6 +15,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $with = ['permissions'];
+    protected $appends = ['image_url'];
 
     /**
      * The attributes that are mass assignable.
@@ -55,5 +56,15 @@ class User extends Authenticatable
     }
     public function brands(){
         return $this->hasManyThrough(BrandUser::class, Brand::class,'id','user_id');
+    }
+    public function image(){
+        return $this->morphOne(File::class,'fileable');
+    }
+    public function getImageUrlAttribute(){
+        if($this->image){
+            return asset($this->image->url);
+        }else{
+            return 'https://randomuser.me/api/portraits/men/85.jpg';
+        }
     }
 }

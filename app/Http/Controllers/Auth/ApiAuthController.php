@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Http\Resources\UserResource;
+use App\Http\Requests\ProfileRequest;
 
 class ApiAuthController extends Controller
 {
@@ -40,5 +42,18 @@ class ApiAuthController extends Controller
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);
+    }
+    public function updateprofile(ProfileRequest $request){
+        $arr = [
+            'name'=>$request->name,
+            'email'=>$request->email,
+        ];
+        if(isset($request->password)){
+            if(strlen($request->password)<60){
+                $arr['password'] = Hash::make($request->password);
+            }
+        }
+        $data = User::where('id',$request->user()->id)->update($arr);
+        return new UserResource(User::find($request->user()->id));
     }
 }

@@ -2302,8 +2302,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'sidebar',
+  name: "sidebar",
   components: {},
   props: {},
   data: function data() {
@@ -2311,22 +2319,22 @@ __webpack_require__.r(__webpack_exports__);
       drawer: false,
       mini: true,
       adminrolemenu: [{
-        name: 'Company',
-        route: 'auth.company'
+        name: "Company",
+        route: "auth.company"
       }],
       companyrolemenu: [{
-        name: 'Brand',
-        route: 'auth.brand'
+        name: "Brand",
+        route: "auth.brand"
       }]
     };
   },
   methods: {
     logoutauthparent: function logoutauthparent() {
-      this.$store.commit('setLoginStatus', false);
-      this.$store.commit('setAuthToken', '');
-      this.$store.commit('setloggedInUser', {});
+      this.$store.commit("setLoginStatus", false);
+      this.$store.commit("setAuthToken", "");
+      this.$store.commit("setloggedInUser", {});
       this.$router.push({
-        name: 'auth.login'
+        name: "auth.login"
       });
     }
   },
@@ -2386,23 +2394,57 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 
 vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]);
 
+_routes__WEBPACK_IMPORTED_MODULE_3__["default"].beforeEach( /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(to, from, next) {
+    var isAuthenticated;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            // console.log(store.getters.loggedIn)
+            // if(to.meta.middleware){
+            //     return to.meta.middleware({
+            //         next: next,
+            //         store: store,
+            //     })
+            // }
+            isAuthenticated = localStorage.getItem('auth_token') ? true : false;
+            if (to.name !== 'auth.login' && !isAuthenticated) next({
+              name: 'auth.login'
+            });
+            if (to.name === 'auth.login' && isAuthenticated) next({
+              name: 'auth.dashboard'
+            });else next();
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function (_x, _x2, _x3) {
+    return _ref.apply(this, arguments);
+  };
+}());
 new vue__WEBPACK_IMPORTED_MODULE_5__["default"]({
   router: _routes__WEBPACK_IMPORTED_MODULE_3__["default"],
   vuetify: _plugins_vuetify_js__WEBPACK_IMPORTED_MODULE_1__["default"],
   store: _store__WEBPACK_IMPORTED_MODULE_2__.store,
-  mounted: function mounted() {
+  created: function created() {
     var _this = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var token, user;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
               token = localStorage.getItem('auth_token') ? localStorage.getItem('auth_token') : '';
 
               if (!token) {
-                _context.next = 8;
+                _context2.next = 8;
                 break;
               }
 
@@ -2410,21 +2452,21 @@ new vue__WEBPACK_IMPORTED_MODULE_5__["default"]({
 
               _this.$store.commit('setLoginStatus', true);
 
-              _context.next = 6;
+              _context2.next = 6;
               return _services_auth_login__WEBPACK_IMPORTED_MODULE_4__["default"].me();
 
             case 6:
-              user = _context.sent;
+              user = _context2.sent;
 
               _this.$store.commit('setloggedInUser', user); //redirecting to user dashboard
 
 
             case 8:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee);
+      }, _callee2);
     }))();
   },
   components: {
@@ -2462,6 +2504,56 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/middleware/admin.js":
+/*!******************************************!*\
+  !*** ./resources/js/middleware/admin.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ admin)
+/* harmony export */ });
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.js");
+
+function admin(to, from, next) {
+  if (_store__WEBPACK_IMPORTED_MODULE_0__.store.getters.loggedInUser.role_id != 1) {
+    return next({
+      name: 'auth.dashboard'
+    });
+  }
+
+  return next();
+}
+
+/***/ }),
+
+/***/ "./resources/js/middleware/company.js":
+/*!********************************************!*\
+  !*** ./resources/js/middleware/company.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ company)
+/* harmony export */ });
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.js");
+
+function company(to, from, next) {
+  if (_store__WEBPACK_IMPORTED_MODULE_0__.store.getters.loggedInUser.role_id != 2 && _store__WEBPACK_IMPORTED_MODULE_0__.store.getters.loggedInUser.role_id != 1) {
+    return next({
+      name: 'auth.dashboard'
+    });
+  }
+
+  return next();
+}
 
 /***/ }),
 
@@ -2539,6 +2631,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _middleware_admin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/middleware/admin */ "./resources/js/middleware/admin.js");
+/* harmony import */ var _middleware_company__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/middleware/company */ "./resources/js/middleware/company.js");
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
   path: '/dashboard',
   name: 'auth.dashboard',
@@ -2551,6 +2647,62 @@ __webpack_require__.r(__webpack_exports__);
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_Profile_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Profile.vue */ "./resources/js/views/Profile.vue"));
   }
+}, {
+  path: '/company/add',
+  name: 'auth.company.add',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Company_Add_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Company/Add.vue */ "./resources/js/views/Company/Add.vue"));
+  },
+  beforeEnter: _middleware_admin__WEBPACK_IMPORTED_MODULE_0__["default"] // meta: {
+  //     middleware: admin
+  // }
+
+}, {
+  path: '/company/edit/:id',
+  name: 'auth.company.edit',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Company_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Company/Edit.vue */ "./resources/js/views/Company/Edit.vue"));
+  },
+  beforeEnter: _middleware_admin__WEBPACK_IMPORTED_MODULE_0__["default"] // meta: {
+  //     middleware: admin
+  // }
+
+}, {
+  path: '/company/list',
+  name: 'auth.company.listing',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Company_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Company/List.vue */ "./resources/js/views/Company/List.vue"));
+  },
+  beforeEnter: _middleware_admin__WEBPACK_IMPORTED_MODULE_0__["default"] // meta: {
+  //     middleware: admin
+  // }
+
+}, {
+  path: '/brand/',
+  name: 'auth.brands',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Brand_Main_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Brand/Main.vue */ "./resources/js/views/Brand/Main.vue"));
+  },
+  children: [{
+    path: '',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Brand_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Brand/List.vue */ "./resources/js/views/Brand/List.vue"));
+    },
+    name: 'auth.brands.listing'
+  }, {
+    path: 'add',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Brand_Add_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Brand/Add.vue */ "./resources/js/views/Brand/Add.vue"));
+    },
+    name: 'auth.brands.add'
+  }, {
+    path: 'edit/:id',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Brand_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Brand/Edit.vue */ "./resources/js/views/Brand/Edit.vue"));
+    },
+    name: 'auth.brands.edit'
+  }],
+  beforeEnter: _middleware_company__WEBPACK_IMPORTED_MODULE_1__["default"]
 }]);
 
 /***/ }),
@@ -2566,10 +2718,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _routes_baseroutes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/routes/baseroutes.js */ "./resources/js/routes/baseroutes.js");
 /* harmony import */ var _routes_dashboard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/routes/dashboard.js */ "./resources/js/routes/dashboard.js");
+/* harmony import */ var _services_auth_login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @services/auth/login */ "./resources/js/services/auth/login.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2586,21 +2739,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]);
+
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]);
 var routes = [].concat(_toConsumableArray(_routes_baseroutes_js__WEBPACK_IMPORTED_MODULE_0__["default"]), _toConsumableArray(_routes_dashboard_js__WEBPACK_IMPORTED_MODULE_1__["default"]));
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
   mode: 'history',
   // base: process.env.BASE_URL,
   routes: routes
-});
-router.beforeEach(function (to, from, next, store) {
-  var isAuthenticated = localStorage.getItem('auth_token') ? true : false;
-  if (to.name !== 'auth.login' && !isAuthenticated) next({
-    name: 'auth.login'
-  });
-  if (to.name === 'auth.login' && isAuthenticated) next({
-    name: 'auth.dashboard'
-  });else next();
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
@@ -2617,6 +2762,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2666,6 +2819,47 @@ var loginservice = /*#__PURE__*/function () {
         return response.data;
       });
     }
+  }, {
+    key: "updateProfile",
+    value: function () {
+      var _updateProfile = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(formData) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData.append('_method', 'put');
+                _context.next = 3;
+                return axios.post('/api/updateprofile', formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 3:
+                res = _context.sent;
+                return _context.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function updateProfile(_x) {
+        return _updateProfile.apply(this, arguments);
+      }
+
+      return updateProfile;
+    }()
   }]);
 
   return loginservice;
@@ -21419,7 +21613,7 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "v-btn",
-                { attrs: { to: { name: "auth.admin.users.main" }, text: "" } },
+                { attrs: { to: { name: "auth.dashboard" }, text: "" } },
                 [
                   _c("span", { staticClass: "mr-2" }, [_vm._v("Dashboard")]),
                   _vm._v(" "),
@@ -21486,7 +21680,50 @@ var render = function () {
                     132804281
                   ),
                 },
-                [_vm._v(" "), _c("v-list")],
+                [
+                  _vm._v(" "),
+                  _c(
+                    "v-list",
+                    [
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: { link: "", to: { name: "auth.company.add" } },
+                        },
+                        [
+                          _c(
+                            "v-list-item-title",
+                            [
+                              _c("v-icon", [_vm._v("mdi-plus")]),
+                              _vm._v("Company"),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: { link: "", to: { name: "auth.brands.add" } },
+                        },
+                        [
+                          _c(
+                            "v-list-item-title",
+                            [
+                              _c("v-icon", [_vm._v("mdi-plus")]),
+                              _vm._v("Brand"),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
                 1
               ),
             ],
@@ -21521,13 +21758,7 @@ var render = function () {
                 [
                   _c(
                     "v-list-item-avatar",
-                    [
-                      _c("v-img", {
-                        attrs: {
-                          src: "https://randomuser.me/api/portraits/men/85.jpg",
-                        },
-                      }),
-                    ],
+                    [_c("v-img", { attrs: { src: _vm.user.image_url } })],
                     1
                   ),
                   _vm._v(" "),
@@ -21561,7 +21792,7 @@ var render = function () {
                     "v-list-item",
                     {
                       staticClass: "pa-0",
-                      attrs: { link: "", to: { name: "auth.leads.listing" } },
+                      attrs: { link: "", to: { name: "auth.company.listing" } },
                     },
                     [
                       _c(
@@ -21618,7 +21849,7 @@ var render = function () {
                                       "v-list-item-content",
                                       [
                                         _c("v-list-item-title", [
-                                          _vm._v("Leads"),
+                                          _vm._v("Company"),
                                         ]),
                                       ],
                                       1
@@ -21629,7 +21860,7 @@ var render = function () {
                             ],
                             null,
                             false,
-                            591940017
+                            1635089257
                           ),
                         },
                         [
@@ -21643,10 +21874,119 @@ var render = function () {
                                   attrs: {
                                     exact: "",
                                     link: "",
-                                    to: { name: "auth.leads.add" },
+                                    to: { name: "auth.company.add" },
                                   },
                                 },
-                                [_c("v-list-item-title", [_vm._v("Add Lead")])],
+                                [
+                                  _c("v-list-item-title", [
+                                    _vm._v("Add Company"),
+                                  ]),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item",
+                    {
+                      staticClass: "pa-0",
+                      attrs: { link: "", to: { name: "auth.brands.listing" } },
+                    },
+                    [
+                      _c(
+                        "v-menu",
+                        {
+                          staticStyle: { "max-width": "600px" },
+                          attrs: {
+                            "open-on-hover": "",
+                            "offset-x": "",
+                            "close-on-content-click": false,
+                          },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "activator",
+                                fn: function (ref) {
+                                  var on = ref.on
+                                  var attrs = ref.attrs
+                                  return [
+                                    _c(
+                                      "v-list-item-icon",
+                                      _vm._g(
+                                        _vm._b(
+                                          {
+                                            staticClass: "d-block",
+                                            staticStyle: {
+                                              width: "100%",
+                                              "text-align": "center",
+                                            },
+                                            attrs: {
+                                              color: "primary",
+                                              dark: "",
+                                            },
+                                          },
+                                          "v-list-item-icon",
+                                          attrs,
+                                          false
+                                        ),
+                                        on
+                                      ),
+                                      [
+                                        _c("v-icon", {
+                                          domProps: {
+                                            textContent:
+                                              _vm._s("mdi-watermark"),
+                                          },
+                                        }),
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-list-item-content",
+                                      [
+                                        _c("v-list-item-title", [
+                                          _vm._v("Brands"),
+                                        ]),
+                                      ],
+                                      1
+                                    ),
+                                  ]
+                                },
+                              },
+                            ],
+                            null,
+                            false,
+                            4241269793
+                          ),
+                        },
+                        [
+                          _vm._v(" "),
+                          _c(
+                            "v-list",
+                            [
+                              _c(
+                                "v-list-item",
+                                {
+                                  attrs: {
+                                    exact: "",
+                                    link: "",
+                                    to: { name: "auth.brands.add" },
+                                  },
+                                },
+                                [
+                                  _c("v-list-item-title", [
+                                    _vm._v("Add Brand"),
+                                  ]),
+                                ],
                                 1
                               ),
                             ],
@@ -83915,7 +84255,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

@@ -24,6 +24,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 });
 Route::group(['middleware' => ['cors', 'json.response','auth:api']], function () {
     Route::post('/logout', [ApiAuthController::class,'logout'])->name('logout.api');
+    Route::put('/updateprofile', [ApiAuthController::class,'updateprofile']);
 
     /*Company resource*/
     Route::apiResource('company', CompanyController::class);

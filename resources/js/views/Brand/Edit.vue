@@ -1,5 +1,11 @@
 <template>
   <div>
+    <v-breadcrumbs :items="bread">
+      <template v-slot:divider>
+        <v-icon>mdi-forward</v-icon>
+      </template></v-breadcrumbs
+    >
+</v-breadcrumbs>
 <v-row no-gutters  class="grey lighten-5 pa-10 rounded elevation-10">
 <v-col
 cols="12"
@@ -18,10 +24,10 @@ lazy-validation
   class="pb-0"
 >
   <v-text-field
-    v-model="name"
+    v-model="brand_name"
     :rules="[rules.required]"
-    :error-messages="errors.name"
-    label="Company Name"
+    :error-messages="errors.brand_name"
+    label="Brand Name"
     outlined
   ></v-text-field>
 </v-col>
@@ -32,25 +38,10 @@ lazy-validation
   class="pb-0"
 >
   <v-text-field
-    v-model="email"
+    v-model="brand_code"
     :rules="[rules.required]"
-    :error-messages="errors.email"
-    label="Email"
-    outlined
-  ></v-text-field>
-</v-col>
-
-<v-col
-  cols="12"
-  sm="12"
-  class="pb-0"
->
-  <v-text-field
-    v-model="password"
-    :error-messages="errors.password"
-    label="password"
-    type="password"
-    autocomplete="new-password"
+    :error-messages="errors.brand_code"
+    label="Brand Code"
     outlined
   ></v-text-field>
 </v-col>
@@ -102,27 +93,22 @@ lazy-validation
 </template>
 
 <script>
-import loginservice from "@services/auth/login";
+import brandservice from "@services/auth/brand";
 import fileservice from "@services/auth/file";
 export default {
   name: "auth.company.edit",
-  mounted(){
-      this.startProfile()
+  async mounted(){
+      this.id = this.$route.params.id
+      var res = await brandservice.get(this.id)
+      this.brand_name = res.brand_name
+      this.brand_code = res.brand_code
+      this.imageurl = res.image_url
   },
   methods: {
-    async startProfile(){
-      this.id = this.$route.params.id
-      var res = await loginservice.me()
-      this.name = res.name
-      this.email = res.email
-      this.password = ''
-      this.imageurl = res.image_url
-    },
     resetError(){
         this.errors = {
-          name:[],
-          password: [],
-          email: [],
+          brand_name:[],
+          brand_code: [],
           file: [],
       }
     },
@@ -131,25 +117,20 @@ export default {
       if (this.$refs.form.validate()) {
         this.btnloading = true;
         var formdata = new FormData();
-        formdata.append("name", this.name);
-        formdata.append("email", this.email);
-        if(this.password){
-            formdata.append("password", this.password);
-        }
+        formdata.append("brand_name", this.brand_name);
+        formdata.append("company_id", this.user.company_id);
+        formdata.append("brand_code", this.brand_code);
         if(this.image.size){
             formdata.append("file", this.image);
         }
         this.btnloading = false;
-        var res = await loginservice.updateProfile(formdata, this.id)
+        var res = await brandservice.update(formdata, this.id)
         if(!res.status){
-            if(res.data.name){
-                this.errors.name = res.data.name
+            if(res.data.brand_name){
+                this.errors.brand_name = res.data.brand_name
             }
-            if(res.data.email){
-                this.errors.email = res.data.email
-            }
-            if(res.data.password){
-                this.errors.password = res.data.password
+            if(res.data.brand_code){
+                this.errors.brand_code = res.data.brand_code
             }
             if(res.data.file){
                 this.errors.file = res.data.file
@@ -160,30 +141,53 @@ export default {
             if(this.image.size){
                 var fileData = new FormData();
                 fileData.append("ref_id", res.data.id);
-                fileData.append("table_name", 'users');
+                fileData.append("table_name", 'brands');
                 fileData.append("type", '1');
                 fileData.append("attachements[0]", this.image);
                 await fileservice.create(fileData)
             }
-            this.startProfile()
+            this.$router.push({ name: "auth.brands.listing" });
         }
       }
     },
   },
+  computed: {
+    user() {
+        return this.$store.getters.loggedInUser;
+    },
+  },
   data() {
     return {
-      name: "",
       id: 0,
-      email:'',
-      password: '',
+      brand_name:'',
+      brand_code: '',
       imageurl: '',
       errors: {
-          name:[],
-          email: [],
-          password: [],
+          brand_name:[],
+          brand_code: [],
           file: [],
       },
       image: {},
+      bread: [
+        {
+          text: "Dashboard",
+          to: { name: "auth.dashboard" },
+          disabled: false,
+          exact: true,
+        },
+        {
+          text: "Brand",
+          to: { name: "auth.brands.listing" },
+          disabled: false,
+          exact: true,
+        },
+        {
+          text: "Edit",
+          to: { name: "auth.brands.edit", params: {id: this.$route.params.id} },
+          disabled: false,
+          exact: true,
+        },
+      ],
       loading: false,
       btnloading: false,
       rules: {
