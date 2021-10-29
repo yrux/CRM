@@ -1,6 +1,6 @@
 /*
-SQLyog Community v13.1.6 (64 bit)
-MySQL - 10.4.19-MariaDB : Database - crm
+SQLyog Community v13.1.7 (64 bit)
+MySQL - 10.4.21-MariaDB : Database - crm
 *********************************************************************
 */
 
@@ -12,6 +12,10 @@ MySQL - 10.4.19-MariaDB : Database - crm
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`crm` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+
+USE `crm`;
+
 /*Table structure for table `brand_users` */
 
 DROP TABLE IF EXISTS `brand_users`;
@@ -85,15 +89,13 @@ CREATE TABLE `chat_heads` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chat_heads` */
 
 insert  into `chat_heads`(`id`,`user_id`,`sender_id`,`updated_at`,`created_at`) values 
-(1,24,25,'2021-10-29 00:28:25','2021-10-29 00:28:25'),
-(2,24,24,'2021-10-29 00:28:34','2021-10-29 00:28:34'),
-(3,24,25,'2021-10-29 00:28:41','2021-10-29 00:28:41'),
-(4,24,24,'2021-10-29 00:28:51','2021-10-29 00:28:51');
+(25,2,3,'2021-10-29 14:31:01','2021-10-29 14:31:01'),
+(26,3,4,'2021-10-29 14:31:18','2021-10-29 14:31:18');
 
 /*Table structure for table `chats` */
 
@@ -107,16 +109,12 @@ CREATE TABLE `chats` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chats` */
 
 insert  into `chats`(`id`,`chat_head_id`,`message`,`user_id`,`updated_at`,`created_at`) values 
-(1,1,'test',NULL,'2021-10-29 05:44:32','2021-10-29 05:44:32'),
-(2,1,'test',NULL,'2021-10-29 05:44:34','2021-10-29 05:44:34'),
-(3,1,'test',NULL,'2021-10-29 05:44:35','2021-10-29 05:44:35'),
-(4,1,'test',NULL,'2021-10-29 05:44:37','2021-10-29 05:44:37'),
-(5,1,'test',NULL,'2021-10-29 05:44:38','2021-10-29 05:44:38');
+(22,25,'eteasdasdasd',NULL,'2021-10-29 19:40:44','2021-10-29 19:40:44');
 
 /*Table structure for table `company` */
 
@@ -292,12 +290,14 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('5c8fd358a70858ca04ba519212b2eb8af795edb64cbbe06bb4136ac635815a5c2d2d8bf98a40756c',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-22 15:00:04','2021-10-22 15:00:04','2022-04-22 15:00:04'),
 ('5fb0b489a636f94d889e05658ed8969c20b2169dd21306105d34fba8b78b7808c4a8d4a52560f34d',17,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 20:33:18','2021-10-28 20:33:18','2022-04-28 20:33:17'),
 ('6376a763b8dc25b48a9b927b2ce0465c71a6c01c17ef73fbf81684292850f1c6b3bc541ffb02e121',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 18:50:34','2021-10-28 18:50:34','2022-04-28 18:50:34'),
+('6764bbb5e4a864ad4f19e81a0a4b1c21e89406939cfe97d8f1dea3a5737cbdaedb675facdf3ee321',17,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-29 14:08:08','2021-10-29 14:08:08','2022-04-29 14:08:07'),
 ('6a8e4b9a65f96bcd5230fec543e0e77585bbc7b77ff3436067bc055f1653db36f8fe22734895bc78',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:27:15','2021-10-26 09:27:15','2022-04-26 09:27:15'),
 ('71a47291531d4f9b279780724521e67a45311cccd2117c39049b4d5742ed9bdeb5e097ef0fbab190',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:42:21','2021-10-26 13:42:21','2022-04-26 13:42:20'),
 ('7301ec5dd0c604c68977f009ef4f5bafdd33df1673983e5f794dd8ca9159755139d86b5025fe8748',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:44:55','2021-10-26 13:44:55','2022-04-26 13:44:55'),
 ('737043d6887153febecbb326dc53b38f13476ef8ede7e23a238d24d8d624bda9acc80c97ade95ef8',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 14:43:01','2021-10-28 14:43:01','2022-04-28 14:43:01'),
 ('777890fee8591160c7764c9a0c4d2832eb5ba01d9cfd3e0b8a7037df713a48a1d2fdfbcc7be25d04',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-22 14:59:56','2021-10-22 14:59:56','2022-04-22 14:59:56'),
 ('7be9038d5c01d33e85cbf1afd999f12734898f3382a721cc5107827dab0c989e736b57719545aa26',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:51:19','2021-10-26 09:51:19','2022-04-26 09:51:19'),
+('8227a1d5b6ec4aaa5c69e6df6c2bdd58fdc2fe95736ff48e5af118097a22fb18332fa698bed18ce5',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-29 14:10:00','2021-10-29 14:10:00','2022-04-29 14:10:00'),
 ('869ae8747bee378b5db22a30d7160b21d82f7e4a54b75ec393e679ef22cc9a4edb540f255c993157',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 15:09:28','2021-10-28 15:09:28','2022-04-28 15:09:28'),
 ('8be153733650bc19c1a18d118d6142c8b51e351f3126db1542321c080342e853e8f3b1320eb2931e',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 11:37:51','2021-10-28 11:37:51','2022-04-28 11:37:51'),
 ('94f89e565a9161ddb6866642b1644a22f95dc2144fe42718f0ba2b1f4ae0d499d86d7a6b865f503e',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-25 15:23:05','2021-10-25 15:23:05','2022-04-25 15:23:05'),
