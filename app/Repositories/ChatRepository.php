@@ -18,9 +18,9 @@ class ChatRepository implements BaseRepository {
         $this->model->delete($id);
     }
     public function findBySenders($sender, $receiver){
-        return $this->model->whereOr(function($query) use ($sender, $receiver){
+        return $this->model->where(function($query) use ($sender, $receiver){
             $query->where('user_id',$sender)->where('sender_id',$receiver);
-        })->whereOr(function($query) use ($sender, $receiver){
+        })->orWhere(function($query) use ($sender, $receiver){
             $query->where('sender_id',$sender)->where('user_id',$receiver);
         })->first();
     }

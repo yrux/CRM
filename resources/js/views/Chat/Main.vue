@@ -1,10 +1,10 @@
 <template>
-    <v-row no-gutters>
+    <v-row class="chat_page" no-gutters>
         <v-col sm="2">
             <chats v-on:search-users="setSearch" :users="users"></chats>
         </v-col>
         <v-col sm="10">
-            <rightwidget v-if="curuser>0" :curuser="curuser" />
+            <rightwidget :user="user" v-if="curuser>0" :curuser="curuser" />
         </v-col>
     </v-row>
 </template>
@@ -50,6 +50,11 @@ export default {
                 this.curuser = this.$route.params.id
             }
         }
-    }
+    },
+    computed: {
+        user() {
+            return this.$store.getters.loggedInUser;
+        },
+    },
 }
 </script>

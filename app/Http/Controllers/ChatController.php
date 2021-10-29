@@ -20,7 +20,12 @@ class ChatController extends Controller
         return $data;
     }
     public function chatHistory(ChatHead $ChatHead){
-        $res = $ChatHead->messages()->orderBy('id','desc')->cursorPaginate(2);
+        $res = $ChatHead->messages()->orderBy('id','desc');
+        if(!empty($_GET['search'])){
+            $q = $_GET['search'];
+            $res = $res->where('message','like','%'.$q.'%');
+        }
+        $res = $res->cursorPaginate(10);
         $data = array_reverse($res->items());
         return [
             'result'=>$data,
