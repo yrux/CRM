@@ -33,5 +33,24 @@ class brandservice{
         });
         return res;
 	}
+	async createUser(formData, brandid){
+		var res = await  axios.post('/api/brand/'+brandid+'/user',formData).then(function(e){
+            return {status: 1, data: e.data.data}
+        }).catch(function(e){
+            return {status: 0, data: e.response.data.errors};
+        });
+        return res;
+	}
+	async getAllCompanyUsers(){
+		return axios.get('/api/company/user/getallusers').then(e=>e.data)
+	}
+	async assignUser(formData, brandid){
+		var res = await  axios.post('/api/brand/'+brandid+'/assign-user',formData).then(function(e){
+            return {status: 1, data: e.data.data}
+        }).catch(function(e){
+            return {status: 0, data: e.response.data.errors};
+        });
+        return res;
+	}
 }
 export default new brandservice();

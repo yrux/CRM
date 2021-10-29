@@ -5,6 +5,7 @@ export const store = new Vuex.Store({
     state: {
         authtoken: '',
         loggedIn: false,
+        sideBarStatus: false,
         loggedInUser: {},
     },
     mutations: {
@@ -17,7 +18,11 @@ export const store = new Vuex.Store({
             state.loggedIn = loggedIn
         },
         setloggedInUser(state, loggedInUser){
+            localStorage.setItem('logged_in_role_id',loggedInUser.role_id);
             state.loggedInUser = loggedInUser
+        },
+        setSideBarStatus(status, sideBarStatus){
+            status.sideBarStatus = sideBarStatus
         }
     },
     getters: {
@@ -29,6 +34,9 @@ export const store = new Vuex.Store({
         },
         loggedInUser(state){
             return state.loggedInUser
+        },
+        sideBarStatus(state){
+            return state.sideBarStatus
         }
     }
 })

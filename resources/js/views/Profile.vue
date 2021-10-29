@@ -22,7 +22,6 @@ lazy-validation
     :rules="[rules.required]"
     :error-messages="errors.name"
     label="Company Name"
-    outlined
   ></v-text-field>
 </v-col>
 
@@ -36,7 +35,6 @@ lazy-validation
     :rules="[rules.required]"
     :error-messages="errors.email"
     label="Email"
-    outlined
   ></v-text-field>
 </v-col>
 
@@ -51,7 +49,6 @@ lazy-validation
     label="password"
     type="password"
     autocomplete="new-password"
-    outlined
   ></v-text-field>
 </v-col>
 

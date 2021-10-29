@@ -106,8 +106,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -406,6 +404,112 @@ var brandservice = /*#__PURE__*/function () {
 
       return update;
     }()
+  }, {
+    key: "createUser",
+    value: function () {
+      var _createUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(formData, brandid) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios.post('/api/brand/' + brandid + '/user', formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 2:
+                res = _context4.sent;
+                return _context4.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function createUser(_x5, _x6) {
+        return _createUser.apply(this, arguments);
+      }
+
+      return createUser;
+    }()
+  }, {
+    key: "getAllCompanyUsers",
+    value: function () {
+      var _getAllCompanyUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                return _context5.abrupt("return", axios.get('/api/company/user/getallusers').then(function (e) {
+                  return e.data;
+                }));
+
+              case 1:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function getAllCompanyUsers() {
+        return _getAllCompanyUsers.apply(this, arguments);
+      }
+
+      return getAllCompanyUsers;
+    }()
+  }, {
+    key: "assignUser",
+    value: function () {
+      var _assignUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6(formData, brandid) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return axios.post('/api/brand/' + brandid + '/assign-user', formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 2:
+                res = _context6.sent;
+                return _context6.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      function assignUser(_x7, _x8) {
+        return _assignUser.apply(this, arguments);
+      }
+
+      return assignUser;
+    }()
   }]);
 
   return brandservice;
@@ -635,7 +739,6 @@ var render = function () {
                               rules: [_vm.rules.required],
                               "error-messages": _vm.errors.brand_name,
                               label: "Brand Name",
-                              outlined: "",
                             },
                             model: {
                               value: _vm.brand_name,
@@ -661,7 +764,6 @@ var render = function () {
                               rules: [_vm.rules.required],
                               "error-messages": _vm.errors.brand_code,
                               label: "Brand Code",
-                              outlined: "",
                             },
                             model: {
                               value: _vm.brand_code,

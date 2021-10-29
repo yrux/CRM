@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\{BrandController, BrandUserController};
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\{UserController, ChatController};
 use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController, TaskCommentController};
 use App\Http\Controllers\Auth\ApiAuthController;
 /*
@@ -28,8 +28,11 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
 
     /*Company resource*/
     Route::apiResource('company', CompanyController::class);
+    Route::get('/company/user/getallusers', [CompanyController::class,'getallusers']);
     Route::apiResource('brand', BrandController::class);
     Route::apiResource('brand/{brand}/user', BrandUserController::class);
+    Route::post('brand/{brand}/assign-user', [BrandUserController::class,'assignUser']);
+
     // Route::apiResource('brand/{brand}/customer', BrandCustomerController::class);
     Route::apiResource('project', ProjectController::class);
     Route::apiResource('project/{project}/u', ProjectUserController::class);
@@ -43,6 +46,8 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     ]);
     Route::post('/file/{table}/{id}/{type}', [FileController::class,'findByTable']);
     Route::apiResource('user', UserController::class);
+    Route::post('/chat', [ChatController::class,'index']);
+    Route::get('/chat-history/{ChatHead}', [ChatController::class,'chatHistory']);
 });
 Route::middleware('auth:api')->get('/me', function (Request $request) {
     return $request->user();

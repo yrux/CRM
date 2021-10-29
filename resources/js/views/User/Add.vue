@@ -24,10 +24,10 @@ lazy-validation
   class="pb-0"
 >
   <v-text-field
-    v-model="brandname"
+    v-model="name"
     :rules="[rules.required]"
-    :error-messages="errors.company_name"
-    label="Company Name"
+    :error-messages="errors.name"
+    label="Name"
   ></v-text-field>
 </v-col>
 
@@ -49,30 +49,30 @@ lazy-validation
   sm="12"
   class="pb-0"
 >
-  <v-text-field
-    v-model="password"
-    :rules="[rules.required]"
-    :error-messages="errors.password"
-    label="password"
-    type="password"
-  ></v-text-field>
+<v-select
+    :items="[{id: 4, value: 'Sale'},{id: 5, value: 'Support'},{id: 6, value: 'Customer'},{id:7, value: 'Production Manager'},{id:8, value: 'Developer'}]"
+    item-text="value"
+    item-value="id"
+    label="Role*"
+    required
+    v-model="role_id"
+    :error-messages="errors.role_id"
+></v-select>
 </v-col>
-
 <v-col
   cols="12"
   sm="12"
   class="pb-0"
 >
-  <v-file-input
-    show-size
-    v-model="image"
-    :error-messages="errors.file"
-    accept="image/png, image/jpeg, image/bmp"
-    label="Title Image"
+  <v-text-field
+    v-model="password"
     :rules="[rules.required]"
-    truncate-length="15"
-  ></v-file-input>
+    :error-messages="errors.password"
+    label="Password"
+    type="password"
+  ></v-text-field>
 </v-col>
+
  <v-col
   cols="12"
   sm="12"
@@ -98,17 +98,16 @@ lazy-validation
 </template>
 
 <script>
-import companyservice from "@services/auth/company";
-import fileservice from "@services/auth/file";
+import userervice from "@services/auth/user";
 export default {
-  name: "auth.company.add",
+  name: "auth.users.add",
   methods: {
     resetError(){
         this.errors = {
-          company_name:[],
-          password: [],
+          name:[],
           email: [],
-          file: [],
+          password: [],
+          role_id: [],
       }
     },
     addbrand: async function () {
@@ -116,15 +115,16 @@ export default {
       if (this.$refs.form.validate()) {
         this.btnloading = true;
         var formdata = new FormData();
-        formdata.append("company_name", this.brandname);
+        formdata.append("name", this.name);
         formdata.append("email", this.email);
         formdata.append("password", this.password);
-        formdata.append("file", this.image);
+        formdata.append("role_id", this.role_id);
+        formdata.append("company_id", this.user.company_id);
         this.btnloading = false;
-        var res = await companyservice.create(formdata)
+        var res = await userervice.create(formdata)
         if(!res.status){
-            if(res.data.company_name){
-                this.errors.company_name = res.data.company_name
+            if(res.data.name){
+                this.errors.name = res.data.name
             }
             if(res.data.email){
                 this.errors.email = res.data.email
@@ -132,35 +132,34 @@ export default {
             if(res.data.password){
                 this.errors.password = res.data.password
             }
-            if(res.data.file){
-                this.errors.file = res.data.file
+            if(res.data.role_id){
+                this.errors.role_id = res.data.role_id
             }
             //errors here
         }else{
             //suuccess here
-            var fileData = new FormData();
-            fileData.append("ref_id", res.data.id);
-            fileData.append("table_name", 'company');
-            fileData.append("type", '1');
-            fileData.append("attachements[0]", this.image);
-            await fileservice.create(fileData)
-            this.$router.push({ name: "auth.company.listing" });
+            this.$router.push({ name: "auth.users.listing" });
         }
       }
     },
   },
+  computed: {
+    user() {
+        return this.$store.getters.loggedInUser;
+    },
+  },
   data() {
     return {
-      brandname: "",
-      email:'',
+      name: '',
+      email: '',
       password: '',
+      role_id: '',
       errors: {
-          company_name:[],
-          password: [],
+          name:[],
           email: [],
-          file: [],
+          password: [],
+          role_id: [],
       },
-      image: {},
       bread: [
         {
           text: "Dashboard",
@@ -169,14 +168,14 @@ export default {
           exact: true,
         },
         {
-          text: "Company",
-          to: { name: "auth.company.listing" },
+          text: "User",
+          to: { name: "auth.users.listing" },
           disabled: false,
           exact: true,
         },
         {
           text: "Add",
-          to: { name: "auth.company.add" },
+          to: { name: "auth.users.add" },
           disabled: false,
           exact: true,
         },

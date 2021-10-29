@@ -11,9 +11,9 @@
 <body class="">
   <div id="app">
     <v-app>
-      <adminbar></adminbar>
+      <adminbar :showsidebar="sideBarStatus"></adminbar>
       <v-main>
-        <v-container class="mt-5">
+        <v-container :fluid="sideBarStatus" class="mt-5">
           <router-view />
         </v-container>
       </v-main>

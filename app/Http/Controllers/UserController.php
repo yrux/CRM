@@ -7,7 +7,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-
+use App\Http\Requests\UserRequest;
 class UserController extends Controller
 {
     /**
@@ -15,10 +15,34 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('viewAny',User::class);
-        return UserResource::collection(User::paginate(25));
+        $user = User::leftJoin('roles','users.role_id','=','roles.id');
+        if(isset($_GET['sortCol'])){
+            $user = $user->orderBy($_GET['sortCol'],($_GET['sortByDesc']==1?'desc':'asc'));
+        }else{
+            $user = $user->orderBy('users.id','desc');
+        }
+        if(!empty($_GET['search'])){
+            $user = $user->orWhere(
+                function($query) {
+                $q = $_GET['search'];
+                $query->orWhere('users.name', 'like', '%'.$q.'%')->orWhere('users.email', 'like', '%'.$q.'%')
+                ->orWhere('roles.title', 'like', '%'.$q.'%')->orWhere('roles.name', 'like', '%'.$q.'%');
+            });
+        }
+        $user=$user->select('users.id','users.email','users.name','roles.title as role_name');
+        if($request->user()->role_id==2){
+            $user=$user->where('company_id',$request->user()->company_id);
+        }
+        $user=$user->where('users.id','<>',$request->user()->id);
+        if(intval($_GET['perpage'])>0){
+            $user=$user->paginate($_GET['perpage']);
+        }else{
+            $user=$user->get();
+        }
+        return UserResource::collection($user);
     }
 
     /**
@@ -27,9 +51,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        Gate::authorize('create',Company::class);
+        Gate::authorize('create',User::class);
         $user = User::create($request->only('name','email','role_id','password','company_id'));
         $user->password = Hash::make($user->password);
         $user->save();
@@ -55,11 +79,11 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
         Gate::authorize('update',$user);
         $user->update($request->only('name','email','role_id','company_id'));
-        if($user->password!=$request->password){
+        if($request->password!=''){
             $user->password = Hash::make($request->password);
             $user->save();
         }

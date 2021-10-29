@@ -21,7 +21,7 @@ class BrandController extends Controller
         if($request->user()->role_id==1){
             $brand = Brand::orderBy('id','desc');
         }else{
-            $brand = Brand::where('company_id',$request->user()->id)->orderBy('id','desc');
+            $brand = Brand::where('company_id',$request->user()->company_id)->orderBy('id','desc');
         }
         $brand = $brand->paginate(10);
         $brand->load('users');

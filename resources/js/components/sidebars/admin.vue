@@ -31,14 +31,19 @@
         </template>
 
         <v-list>
-          <v-list-item link :to="{ name: 'auth.company.add' }">
+          <v-list-item v-if="user.role_id==1" link :to="{ name: 'auth.company.add' }">
             <v-list-item-title
               ><v-icon>mdi-plus</v-icon>Company</v-list-item-title
             >
           </v-list-item>
-          <v-list-item link :to="{ name: 'auth.brands.add' }">
+          <v-list-item v-if="user.role_id==1||user.role_id==2" link :to="{ name: 'auth.brands.add' }">
             <v-list-item-title
               ><v-icon>mdi-plus</v-icon>Brand</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item v-if="user.role_id==1||user.role_id==2" link :to="{ name: 'auth.users.add' }">
+            <v-list-item-title
+              ><v-icon>mdi-plus</v-icon>User</v-list-item-title
             >
           </v-list-item>
           <!-- <v-list-item link :to="{ name: 'auth.quote.add' }">
@@ -60,6 +65,7 @@
       absolute
       mini-variant
       class=""
+      v-if="!showsidebar"
     >
       <v-system-bar></v-system-bar>
       <v-system-bar></v-system-bar>
@@ -77,7 +83,7 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list dense>
-        <v-list-item class="pa-0" link :to="{ name: 'auth.company.listing' }">
+        <v-list-item v-if="user.role_id==1" class="pa-0" link :to="{ name: 'auth.company.listing' }">
           <v-menu
             open-on-hover
             offset-x
@@ -107,7 +113,7 @@
             </v-list>
           </v-menu>
         </v-list-item>
-        <v-list-item class="pa-0" link :to="{ name: 'auth.brands.listing' }">
+        <v-list-item  v-if="user.role_id==1||user.role_id==2" class="pa-0" link :to="{ name: 'auth.brands.listing' }">
           <v-menu
             open-on-hover
             offset-x
@@ -137,8 +143,7 @@
             </v-list>
           </v-menu>
         </v-list-item>
-        <!--
-        <v-list-item class="pa-0" link :to="{ name: 'auth.quote.listing' }">
+        <v-list-item  v-if="user.role_id==1||user.role_id==2" class="pa-0" link :to="{ name: 'auth.users.listing' }">
           <v-menu
             open-on-hover
             offset-x
@@ -154,25 +159,46 @@
                 v-bind="attrs"
                 v-on="on"
               >
-                <v-icon v-text="'mdi-format-quote-close-outline'"></v-icon>
+                <v-icon v-text="'mdi-account-multiple-plus-outline'"></v-icon>
               </v-list-item-icon>
 
               <v-list-item-content>
-                <v-list-item-title>Quote</v-list-item-title>
+                <v-list-item-title>Users</v-list-item-title>
               </v-list-item-content>
             </template>
             <v-list>
-              <v-list-item
-                exact
-                link
-                :to="{ name: 'auth.quote.add', params: { id: 0 } }"
-              >
-                <v-list-item-title>Add Quote</v-list-item-title>
+              <v-list-item exact link :to="{ name: 'auth.users.add' }">
+                <v-list-item-title>Add User</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
         </v-list-item>
+        <v-list-item class="pa-0" link :to="{ name: 'auth.chat' }">
+          <v-menu
+            open-on-hover
+            offset-x
+            style="max-width: 600px"
+            :close-on-content-click="false"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-icon
+                color="primary"
+                dark
+                class="d-block"
+                style="width: 100%; text-align: center"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon v-text="'mdi-message-bulleted'"></v-icon>
+              </v-list-item-icon>
 
+              <v-list-item-content>
+                <v-list-item-title>Chat</v-list-item-title>
+              </v-list-item-content>
+            </template>
+          </v-menu>
+        </v-list-item>
+        <!--
         <v-list-item class="pa-0" link :to="{ name: 'auth.admin.users.main' }">
           <v-menu
             open-on-hover
@@ -236,7 +262,7 @@
 export default {
   name: "sidebar",
   components: {},
-  props: {},
+  props: ['showsidebar'],
   data: () => ({
     drawer: false,
     mini: true,

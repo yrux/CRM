@@ -40,5 +40,24 @@ new Vue({
   },
   components: {
     adminbar
+  },
+  data(){
+    return {
+
+    }
+  },
+  computed:{
+    sideBarStatus() {
+      return this.$store.getters.sideBarStatus;
+    },
+  },
+  watch:{
+    $route(){
+      if(this.$route.meta.showsidebar){
+        this.$store.commit('setSideBarStatus',true);
+      }else{
+        this.$store.commit('setSideBarStatus',false);
+      }
+    }
   }
 }).$mount('#app')

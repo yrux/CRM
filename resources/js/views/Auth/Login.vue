@@ -16,7 +16,6 @@
             :rules="[rules.required, rules.email]"
             label="Email"
             clearable
-            outlined
           ></v-text-field>
           <v-text-field
             :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -29,7 +28,6 @@
             class="input-group--focused"
             @click:append="show3 = !show3"
             clearable
-            outlined
           ></v-text-field>
           <v-btn
             elevation="1"

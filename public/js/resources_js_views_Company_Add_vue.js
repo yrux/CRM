@@ -120,9 +120,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -651,8 +648,7 @@ var render = function () {
                             attrs: {
                               rules: [_vm.rules.required],
                               "error-messages": _vm.errors.company_name,
-                              label: "Brand Name",
-                              outlined: "",
+                              label: "Company Name",
                             },
                             model: {
                               value: _vm.brandname,
@@ -678,7 +674,6 @@ var render = function () {
                               rules: [_vm.rules.required],
                               "error-messages": _vm.errors.email,
                               label: "Email",
-                              outlined: "",
                             },
                             model: {
                               value: _vm.email,
@@ -705,7 +700,6 @@ var render = function () {
                               "error-messages": _vm.errors.password,
                               label: "password",
                               type: "password",
-                              outlined: "",
                             },
                             model: {
                               value: _vm.password,

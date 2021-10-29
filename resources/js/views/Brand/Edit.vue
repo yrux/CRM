@@ -28,7 +28,6 @@ lazy-validation
     :rules="[rules.required]"
     :error-messages="errors.brand_name"
     label="Brand Name"
-    outlined
   ></v-text-field>
 </v-col>
 
@@ -42,7 +41,6 @@ lazy-validation
     :rules="[rules.required]"
     :error-messages="errors.brand_code"
     label="Brand Code"
-    outlined
   ></v-text-field>
 </v-col>
 

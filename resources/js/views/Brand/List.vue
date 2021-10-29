@@ -24,17 +24,36 @@
   :src="item.image_url"
   contain
 ></v-img>
-<v-card-title>{{item.brand_name}}</v-card-title>
+<v-card-title>
+  {{item.brand_name}}
+<v-btn
+color="info"
+fab
+x-small
+dark
+:to="{ name:'auth.brands.edit' ,params:{id:item.id}}"
+>
+<v-icon>mdi-pencil-plus</v-icon>
+</v-btn>
+<v-btn
+color="error"
+fab
+x-small
+dark
+@click="deletebrand(item.id)"
+>
+<v-icon>mdi-delete-outline</v-icon>
+</v-btn>
+</v-card-title>
 <v-card-text>
   <v-chip-group
-    v-model="selection"
-    active-class="deep-purple accent-4 white--text"
     column
   >
     <v-chip
       pill
       v-for="user in item.users"
       :key="user.id"
+      small
     >
       <v-avatar left>
         <v-img :src="user.user.image_url"></v-img>
@@ -45,82 +64,52 @@
       pill
       color="indigo"
       text-color="white"
+      small
       @click="addUser(item)"
     >
     <v-avatar left>
         <v-icon>mdi-plus</v-icon>
       </v-avatar>
-      Add User
+      Create User
+    </v-chip>
+    <v-chip
+      pill
+      color="warning"
+      text-color="white"
+      small
+      @click="assignUser(item)"
+    >
+    <v-avatar left>
+        <v-icon>mdi-account-check</v-icon>
+      </v-avatar>
+      Assign User
     </v-chip>
   </v-chip-group>
 </v-card-text>
 </v-card>
   </v-col>
 </v-row>
-<v-simple-table>
-    <template v-slot:default>
-      <thead>
-        <tr>
-        <th class="text-left">
-            #
-          </th>
-          <th class="text-left">
-            Name
-          </th>
-          <th class="text-left">
-            Code
-          </th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="item in desserts"
-          :key="item.id"
-          class="text-left"
-        >
-          <td>
-            <v-img
-            :lazy-src="item.image_url"
-            max-height="50"
-            max-width="50"
-            :src="item.image_url"
-            contain
-            ></v-img>
-          </td>
-          <td>{{ item.brand_code }}</td>
-          <td>{{ item.brand_name }}</td>
-          <td>
-                <v-btn
-                color="info"
-                fab
-                x-small
-                dark
-                :to="{ name:'auth.brands.edit' ,params:{id:item.id}}"
-                >
-                <v-icon>mdi-pencil-plus</v-icon>
-                </v-btn>
-                <v-btn
-                color="error"
-                fab
-                x-small
-                dark
-                @click="deletebrand(item.id)"
-                >
-                <v-icon>mdi-delete-outline</v-icon>
-                </v-btn>
-          </td>
-        </tr>
-      </tbody>
-    </template>
-  </v-simple-table>
+<userAdd :user="user" :item="selected" :dialog="userDialog" v-on:close-useraddmodal="userDialog=false;getDataFromApi()"></userAdd>
+<userAssign :user="user" :item="selected" :dialogassign="assignDialog" v-on:close-assigndmodal="assignDialog=false;getDataFromApi()"></userAssign>
   </div>
 </template>
 <script>
 import Swal from "sweetalert2";
 import brandservice from "@services/auth/brand";
+import userAdd from "@/views/Brand/User/Add.vue";
+import userAssign from "@/views/Brand/User/Assign.vue";
+// import userAdd from "@/components/sidebars/admin.vue";
 export default {
   name: "auth.brands.listing",
+  computed: {
+    user() {
+        return this.$store.getters.loggedInUser;
+    },
+  },
+  components:{
+    userAssign,
+    userAdd,
+  },
   data() {
     return {
       bread: [
@@ -138,6 +127,9 @@ export default {
         },
       ],
       desserts: [],
+      userDialog: false,
+      assignDialog: false,
+      selected: {},
     };
   },
   watch: {
@@ -159,7 +151,14 @@ export default {
   },
   methods: {
     addUser(item){
-      console.log(item)
+      this.userDialog = true
+      this.assignDialog = false
+      this.selected = item
+    },
+    assignUser(item){
+      this.userDialog = false
+      this.assignDialog = true
+      this.selected = item
     },
     deletebrand: async function (id) {
       const isConfirmed = await Swal.fire({

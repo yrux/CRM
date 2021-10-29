@@ -78,8 +78,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Login",
@@ -306,7 +304,6 @@ var render = function () {
                             rules: [_vm.rules.required, _vm.rules.email],
                             label: "Email",
                             clearable: "",
-                            outlined: "",
                           },
                           model: {
                             value: _vm.loggedinemail,
@@ -329,7 +326,6 @@ var render = function () {
                             label: "Password",
                             value: "",
                             clearable: "",
-                            outlined: "",
                           },
                           on: {
                             "click:append": function ($event) {

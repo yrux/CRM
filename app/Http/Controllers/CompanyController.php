@@ -94,4 +94,7 @@ class CompanyController extends Controller
         $company->delete();
         return response()->json(null, 204);
     }
+    public function getallusers(Request $request){
+        return User::where('company_id',$request->user()->company_id)->whereIn('role_id',[4,5])->orderBy('id','desc')->select('id','email','name')->get();
+    }
 }

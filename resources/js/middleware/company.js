@@ -1,6 +1,6 @@
-import { store } from '@/store'
 export default function company(to, from, next) {
-    if (store.getters.loggedInUser.role_id!=2&&store.getters.loggedInUser.role_id!=1) 
+    var roleId = localStorage.getItem('logged_in_role_id')?parseInt(localStorage.getItem('logged_in_role_id')):0;
+    if (roleId!=2&&roleId!=1) 
     {
         return next({
             name: 'auth.dashboard'

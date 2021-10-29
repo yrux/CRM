@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class BrandUserRequest extends FormRequest
+class BrandUserAssignRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +27,7 @@ class BrandUserRequest extends FormRequest
         return [
             'user_email'=>'required|max:255|unique:App\Models\User,email|unique:App\Models\BrandUser,user_email'.($id>0?(','.$id):''),
             'user_name'=>'required|max:255',
-            'role'=>['sometimes','required','integer',Rule::in(['5', '4','6'])],
+            'user_id'=>'required',
         ];
     }
 }

@@ -2310,10 +2310,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "sidebar",
   components: {},
-  props: {},
+  props: ['showsidebar'],
   data: function data() {
     return {
       drawer: false,
@@ -2471,6 +2497,23 @@ new vue__WEBPACK_IMPORTED_MODULE_5__["default"]({
   },
   components: {
     adminbar: _components_sidebars_admin_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+  },
+  data: function data() {
+    return {};
+  },
+  computed: {
+    sideBarStatus: function sideBarStatus() {
+      return this.$store.getters.sideBarStatus;
+    }
+  },
+  watch: {
+    $route: function $route() {
+      if (this.$route.meta.showsidebar) {
+        this.$store.commit('setSideBarStatus', true);
+      } else {
+        this.$store.commit('setSideBarStatus', false);
+      }
+    }
   }
 }).$mount('#app');
 
@@ -2518,10 +2561,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ admin)
 /* harmony export */ });
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.js");
-
 function admin(to, from, next) {
-  if (_store__WEBPACK_IMPORTED_MODULE_0__.store.getters.loggedInUser.role_id != 1) {
+  var roleId = localStorage.getItem('logged_in_role_id') ? parseInt(localStorage.getItem('logged_in_role_id')) : 0;
+
+  if (roleId != 1) {
     return next({
       name: 'auth.dashboard'
     });
@@ -2543,10 +2586,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ company)
 /* harmony export */ });
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.js");
-
 function company(to, from, next) {
-  if (_store__WEBPACK_IMPORTED_MODULE_0__.store.getters.loggedInUser.role_id != 2 && _store__WEBPACK_IMPORTED_MODULE_0__.store.getters.loggedInUser.role_id != 1) {
+  var roleId = localStorage.getItem('logged_in_role_id') ? parseInt(localStorage.getItem('logged_in_role_id')) : 0;
+
+  if (roleId != 2 && roleId != 1) {
     return next({
       name: 'auth.dashboard'
     });
@@ -2616,6 +2659,40 @@ __webpack_require__.r(__webpack_exports__);
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_Auth_Login_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Auth/Login.vue */ "./resources/js/views/Auth/Login.vue"));
   }
+}]);
+
+/***/ }),
+
+/***/ "./resources/js/routes/chat.js":
+/*!*************************************!*\
+  !*** ./resources/js/routes/chat.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
+  path: '/chat/',
+  name: 'auth.chat',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Chat_Main_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Chat/Main.vue */ "./resources/js/views/Chat/Main.vue"));
+  },
+  meta: {
+    showsidebar: true
+  },
+  children: [{
+    path: ':id',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Chat_Main_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Chat/Main.vue */ "./resources/js/views/Chat/Main.vue"));
+    },
+    name: 'auth.chat.single',
+    meta: {
+      showsidebar: true
+    }
+  }]
 }]);
 
 /***/ }),
@@ -2703,6 +2780,32 @@ __webpack_require__.r(__webpack_exports__);
     name: 'auth.brands.edit'
   }],
   beforeEnter: _middleware_company__WEBPACK_IMPORTED_MODULE_1__["default"]
+}, {
+  path: '/users/',
+  name: 'auth.users',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_User_Main_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/User/Main.vue */ "./resources/js/views/User/Main.vue"));
+  },
+  children: [{
+    path: '',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_User_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/User/List.vue */ "./resources/js/views/User/List.vue"));
+    },
+    name: 'auth.users.listing'
+  }, {
+    path: 'add',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_User_Add_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/User/Add.vue */ "./resources/js/views/User/Add.vue"));
+    },
+    name: 'auth.users.add'
+  }, {
+    path: 'edit/:id',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_User_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/User/Edit.vue */ "./resources/js/views/User/Edit.vue"));
+    },
+    name: 'auth.users.edit'
+  }],
+  beforeEnter: _middleware_company__WEBPACK_IMPORTED_MODULE_1__["default"]
 }]);
 
 /***/ }),
@@ -2722,7 +2825,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _routes_baseroutes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/routes/baseroutes.js */ "./resources/js/routes/baseroutes.js");
 /* harmony import */ var _routes_dashboard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/routes/dashboard.js */ "./resources/js/routes/dashboard.js");
-/* harmony import */ var _services_auth_login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @services/auth/login */ "./resources/js/services/auth/login.js");
+/* harmony import */ var _routes_chat_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/routes/chat.js */ "./resources/js/routes/chat.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2741,7 +2844,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]);
-var routes = [].concat(_toConsumableArray(_routes_baseroutes_js__WEBPACK_IMPORTED_MODULE_0__["default"]), _toConsumableArray(_routes_dashboard_js__WEBPACK_IMPORTED_MODULE_1__["default"]));
+var routes = [].concat(_toConsumableArray(_routes_baseroutes_js__WEBPACK_IMPORTED_MODULE_0__["default"]), _toConsumableArray(_routes_dashboard_js__WEBPACK_IMPORTED_MODULE_1__["default"]), _toConsumableArray(_routes_chat_js__WEBPACK_IMPORTED_MODULE_2__["default"]));
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
   mode: 'history',
   // base: process.env.BASE_URL,
@@ -2889,6 +2992,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     authtoken: '',
     loggedIn: false,
+    sideBarStatus: false,
     loggedInUser: {}
   },
   mutations: {
@@ -2901,7 +3005,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.loggedIn = loggedIn;
     },
     setloggedInUser: function setloggedInUser(state, loggedInUser) {
+      localStorage.setItem('logged_in_role_id', loggedInUser.role_id);
       state.loggedInUser = loggedInUser;
+    },
+    setSideBarStatus: function setSideBarStatus(status, sideBarStatus) {
+      status.sideBarStatus = sideBarStatus;
     }
   },
   getters: {
@@ -2913,6 +3021,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     loggedInUser: function loggedInUser(state) {
       return state.loggedInUser;
+    },
+    sideBarStatus: function sideBarStatus(state) {
+      return state.sideBarStatus;
     }
   }
 });
@@ -21685,41 +21796,74 @@ var render = function () {
                   _c(
                     "v-list",
                     [
-                      _c(
-                        "v-list-item",
-                        {
-                          attrs: { link: "", to: { name: "auth.company.add" } },
-                        },
-                        [
-                          _c(
-                            "v-list-item-title",
+                      _vm.user.role_id == 1
+                        ? _c(
+                            "v-list-item",
+                            {
+                              attrs: {
+                                link: "",
+                                to: { name: "auth.company.add" },
+                              },
+                            },
                             [
-                              _c("v-icon", [_vm._v("mdi-plus")]),
-                              _vm._v("Company"),
+                              _c(
+                                "v-list-item-title",
+                                [
+                                  _c("v-icon", [_vm._v("mdi-plus")]),
+                                  _vm._v("Company"),
+                                ],
+                                1
+                              ),
                             ],
                             1
-                          ),
-                        ],
-                        1
-                      ),
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
-                      _c(
-                        "v-list-item",
-                        {
-                          attrs: { link: "", to: { name: "auth.brands.add" } },
-                        },
-                        [
-                          _c(
-                            "v-list-item-title",
+                      _vm.user.role_id == 1 || _vm.user.role_id == 2
+                        ? _c(
+                            "v-list-item",
+                            {
+                              attrs: {
+                                link: "",
+                                to: { name: "auth.brands.add" },
+                              },
+                            },
                             [
-                              _c("v-icon", [_vm._v("mdi-plus")]),
-                              _vm._v("Brand"),
+                              _c(
+                                "v-list-item-title",
+                                [
+                                  _c("v-icon", [_vm._v("mdi-plus")]),
+                                  _vm._v("Brand"),
+                                ],
+                                1
+                              ),
                             ],
                             1
-                          ),
-                        ],
-                        1
-                      ),
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.user.role_id == 1 || _vm.user.role_id == 2
+                        ? _c(
+                            "v-list-item",
+                            {
+                              attrs: {
+                                link: "",
+                                to: { name: "auth.users.add" },
+                              },
+                            },
+                            [
+                              _c(
+                                "v-list-item-title",
+                                [
+                                  _c("v-icon", [_vm._v("mdi-plus")]),
+                                  _vm._v("User"),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
                     ],
                     1
                   ),
@@ -21730,268 +21874,470 @@ var render = function () {
             1
           ),
           _vm._v(" "),
-          _c(
-            "v-navigation-drawer",
-            {
-              attrs: { permanent: "", absolute: "", "mini-variant": "" },
-              model: {
-                value: _vm.drawer,
-                callback: function ($$v) {
-                  _vm.drawer = $$v
-                },
-                expression: "drawer",
-              },
-            },
-            [
-              _c("v-system-bar"),
-              _vm._v(" "),
-              _c("v-system-bar"),
-              _vm._v(" "),
-              _c("v-system-bar"),
-              _vm._v(" "),
-              _c(
-                "v-list-item",
+          !_vm.showsidebar
+            ? _c(
+                "v-navigation-drawer",
                 {
-                  staticClass: "px-2",
-                  attrs: { link: "", to: { name: "auth.profile" } },
+                  attrs: { permanent: "", absolute: "", "mini-variant": "" },
+                  model: {
+                    value: _vm.drawer,
+                    callback: function ($$v) {
+                      _vm.drawer = $$v
+                    },
+                    expression: "drawer",
+                  },
                 },
                 [
-                  _c(
-                    "v-list-item-avatar",
-                    [_c("v-img", { attrs: { src: _vm.user.image_url } })],
-                    1
-                  ),
+                  _c("v-system-bar"),
                   _vm._v(" "),
-                  _c("v-list-item-title", [_vm._v(_vm._s(_vm.user.name))]),
+                  _c("v-system-bar"),
                   _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { icon: "" },
-                      on: {
-                        click: function ($event) {
-                          $event.stopPropagation()
-                          _vm.mini = !_vm.mini
-                        },
-                      },
-                    },
-                    [_c("v-icon", [_vm._v("mdi-chevron-left")])],
-                    1
-                  ),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-list",
-                { attrs: { dense: "" } },
-                [
+                  _c("v-system-bar"),
+                  _vm._v(" "),
                   _c(
                     "v-list-item",
                     {
-                      staticClass: "pa-0",
-                      attrs: { link: "", to: { name: "auth.company.listing" } },
+                      staticClass: "px-2",
+                      attrs: { link: "", to: { name: "auth.profile" } },
                     },
                     [
                       _c(
-                        "v-menu",
+                        "v-list-item-avatar",
+                        [_c("v-img", { attrs: { src: _vm.user.image_url } })],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-list-item-title", [_vm._v(_vm._s(_vm.user.name))]),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
                         {
-                          staticStyle: { "max-width": "600px" },
-                          attrs: {
-                            "open-on-hover": "",
-                            "offset-x": "",
-                            "close-on-content-click": false,
+                          attrs: { icon: "" },
+                          on: {
+                            click: function ($event) {
+                              $event.stopPropagation()
+                              _vm.mini = !_vm.mini
+                            },
                           },
-                          scopedSlots: _vm._u(
+                        },
+                        [_c("v-icon", [_vm._v("mdi-chevron-left")])],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-divider"),
+                  _vm._v(" "),
+                  _c(
+                    "v-list",
+                    { attrs: { dense: "" } },
+                    [
+                      _vm.user.role_id == 1
+                        ? _c(
+                            "v-list-item",
+                            {
+                              staticClass: "pa-0",
+                              attrs: {
+                                link: "",
+                                to: { name: "auth.company.listing" },
+                              },
+                            },
                             [
-                              {
-                                key: "activator",
-                                fn: function (ref) {
-                                  var on = ref.on
-                                  var attrs = ref.attrs
-                                  return [
-                                    _c(
-                                      "v-list-item-icon",
-                                      _vm._g(
-                                        _vm._b(
-                                          {
-                                            staticClass: "d-block",
-                                            staticStyle: {
-                                              width: "100%",
-                                              "text-align": "center",
-                                            },
-                                            attrs: {
-                                              color: "primary",
-                                              dark: "",
-                                            },
-                                          },
-                                          "v-list-item-icon",
-                                          attrs,
-                                          false
-                                        ),
-                                        on
-                                      ),
-                                      [
-                                        _c("v-icon", {
-                                          domProps: {
-                                            textContent: _vm._s(
-                                              "mdi-shape-circle-plus"
+                              _c(
+                                "v-menu",
+                                {
+                                  staticStyle: { "max-width": "600px" },
+                                  attrs: {
+                                    "open-on-hover": "",
+                                    "offset-x": "",
+                                    "close-on-content-click": false,
+                                  },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function (ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "v-list-item-icon",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "d-block",
+                                                    staticStyle: {
+                                                      width: "100%",
+                                                      "text-align": "center",
+                                                    },
+                                                    attrs: {
+                                                      color: "primary",
+                                                      dark: "",
+                                                    },
+                                                  },
+                                                  "v-list-item-icon",
+                                                  attrs,
+                                                  false
+                                                ),
+                                                on
+                                              ),
+                                              [
+                                                _c("v-icon", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      "mdi-shape-circle-plus"
+                                                    ),
+                                                  },
+                                                }),
+                                              ],
+                                              1
                                             ),
-                                          },
-                                        }),
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-list-item-content",
-                                      [
-                                        _c("v-list-item-title", [
-                                          _vm._v("Company"),
-                                        ]),
-                                      ],
-                                      1
-                                    ),
-                                  ]
-                                },
-                              },
-                            ],
-                            null,
-                            false,
-                            1635089257
-                          ),
-                        },
-                        [
-                          _vm._v(" "),
-                          _c(
-                            "v-list",
-                            [
-                              _c(
-                                "v-list-item",
-                                {
-                                  attrs: {
-                                    exact: "",
-                                    link: "",
-                                    to: { name: "auth.company.add" },
-                                  },
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-item-content",
+                                              [
+                                                _c("v-list-item-title", [
+                                                  _vm._v("Company"),
+                                                ]),
+                                              ],
+                                              1
+                                            ),
+                                          ]
+                                        },
+                                      },
+                                    ],
+                                    null,
+                                    false,
+                                    1635089257
+                                  ),
                                 },
                                 [
-                                  _c("v-list-item-title", [
-                                    _vm._v("Add Company"),
-                                  ]),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item",
-                    {
-                      staticClass: "pa-0",
-                      attrs: { link: "", to: { name: "auth.brands.listing" } },
-                    },
-                    [
-                      _c(
-                        "v-menu",
-                        {
-                          staticStyle: { "max-width": "600px" },
-                          attrs: {
-                            "open-on-hover": "",
-                            "offset-x": "",
-                            "close-on-content-click": false,
-                          },
-                          scopedSlots: _vm._u(
-                            [
-                              {
-                                key: "activator",
-                                fn: function (ref) {
-                                  var on = ref.on
-                                  var attrs = ref.attrs
-                                  return [
-                                    _c(
-                                      "v-list-item-icon",
-                                      _vm._g(
-                                        _vm._b(
-                                          {
-                                            staticClass: "d-block",
-                                            staticStyle: {
-                                              width: "100%",
-                                              "text-align": "center",
-                                            },
-                                            attrs: {
-                                              color: "primary",
-                                              dark: "",
-                                            },
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list",
+                                    [
+                                      _c(
+                                        "v-list-item",
+                                        {
+                                          attrs: {
+                                            exact: "",
+                                            link: "",
+                                            to: { name: "auth.company.add" },
                                           },
-                                          "v-list-item-icon",
-                                          attrs,
-                                          false
-                                        ),
-                                        on
+                                        },
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v("Add Company"),
+                                          ]),
+                                        ],
+                                        1
                                       ),
-                                      [
-                                        _c("v-icon", {
-                                          domProps: {
-                                            textContent:
-                                              _vm._s("mdi-watermark"),
-                                          },
-                                        }),
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-list-item-content",
-                                      [
-                                        _c("v-list-item-title", [
-                                          _vm._v("Brands"),
-                                        ]),
-                                      ],
-                                      1
-                                    ),
-                                  ]
-                                },
-                              },
-                            ],
-                            null,
-                            false,
-                            4241269793
-                          ),
-                        },
-                        [
-                          _vm._v(" "),
-                          _c(
-                            "v-list",
-                            [
-                              _c(
-                                "v-list-item",
-                                {
-                                  attrs: {
-                                    exact: "",
-                                    link: "",
-                                    to: { name: "auth.brands.add" },
-                                  },
-                                },
-                                [
-                                  _c("v-list-item-title", [
-                                    _vm._v("Add Brand"),
-                                  ]),
+                                    ],
+                                    1
+                                  ),
                                 ],
                                 1
                               ),
                             ],
                             1
-                          ),
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.user.role_id == 1 || _vm.user.role_id == 2
+                        ? _c(
+                            "v-list-item",
+                            {
+                              staticClass: "pa-0",
+                              attrs: {
+                                link: "",
+                                to: { name: "auth.brands.listing" },
+                              },
+                            },
+                            [
+                              _c(
+                                "v-menu",
+                                {
+                                  staticStyle: { "max-width": "600px" },
+                                  attrs: {
+                                    "open-on-hover": "",
+                                    "offset-x": "",
+                                    "close-on-content-click": false,
+                                  },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function (ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "v-list-item-icon",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "d-block",
+                                                    staticStyle: {
+                                                      width: "100%",
+                                                      "text-align": "center",
+                                                    },
+                                                    attrs: {
+                                                      color: "primary",
+                                                      dark: "",
+                                                    },
+                                                  },
+                                                  "v-list-item-icon",
+                                                  attrs,
+                                                  false
+                                                ),
+                                                on
+                                              ),
+                                              [
+                                                _c("v-icon", {
+                                                  domProps: {
+                                                    textContent:
+                                                      _vm._s("mdi-watermark"),
+                                                  },
+                                                }),
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-item-content",
+                                              [
+                                                _c("v-list-item-title", [
+                                                  _vm._v("Brands"),
+                                                ]),
+                                              ],
+                                              1
+                                            ),
+                                          ]
+                                        },
+                                      },
+                                    ],
+                                    null,
+                                    false,
+                                    4241269793
+                                  ),
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list",
+                                    [
+                                      _c(
+                                        "v-list-item",
+                                        {
+                                          attrs: {
+                                            exact: "",
+                                            link: "",
+                                            to: { name: "auth.brands.add" },
+                                          },
+                                        },
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v("Add Brand"),
+                                          ]),
+                                        ],
+                                        1
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.user.role_id == 1 || _vm.user.role_id == 2
+                        ? _c(
+                            "v-list-item",
+                            {
+                              staticClass: "pa-0",
+                              attrs: {
+                                link: "",
+                                to: { name: "auth.users.listing" },
+                              },
+                            },
+                            [
+                              _c(
+                                "v-menu",
+                                {
+                                  staticStyle: { "max-width": "600px" },
+                                  attrs: {
+                                    "open-on-hover": "",
+                                    "offset-x": "",
+                                    "close-on-content-click": false,
+                                  },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function (ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "v-list-item-icon",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "d-block",
+                                                    staticStyle: {
+                                                      width: "100%",
+                                                      "text-align": "center",
+                                                    },
+                                                    attrs: {
+                                                      color: "primary",
+                                                      dark: "",
+                                                    },
+                                                  },
+                                                  "v-list-item-icon",
+                                                  attrs,
+                                                  false
+                                                ),
+                                                on
+                                              ),
+                                              [
+                                                _c("v-icon", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      "mdi-account-multiple-plus-outline"
+                                                    ),
+                                                  },
+                                                }),
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-item-content",
+                                              [
+                                                _c("v-list-item-title", [
+                                                  _vm._v("Users"),
+                                                ]),
+                                              ],
+                                              1
+                                            ),
+                                          ]
+                                        },
+                                      },
+                                    ],
+                                    null,
+                                    false,
+                                    3636303469
+                                  ),
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list",
+                                    [
+                                      _c(
+                                        "v-list-item",
+                                        {
+                                          attrs: {
+                                            exact: "",
+                                            link: "",
+                                            to: { name: "auth.users.add" },
+                                          },
+                                        },
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v("Add User"),
+                                          ]),
+                                        ],
+                                        1
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          staticClass: "pa-0",
+                          attrs: { link: "", to: { name: "auth.chat" } },
+                        },
+                        [
+                          _c("v-menu", {
+                            staticStyle: { "max-width": "600px" },
+                            attrs: {
+                              "open-on-hover": "",
+                              "offset-x": "",
+                              "close-on-content-click": false,
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "activator",
+                                  fn: function (ref) {
+                                    var on = ref.on
+                                    var attrs = ref.attrs
+                                    return [
+                                      _c(
+                                        "v-list-item-icon",
+                                        _vm._g(
+                                          _vm._b(
+                                            {
+                                              staticClass: "d-block",
+                                              staticStyle: {
+                                                width: "100%",
+                                                "text-align": "center",
+                                              },
+                                              attrs: {
+                                                color: "primary",
+                                                dark: "",
+                                              },
+                                            },
+                                            "v-list-item-icon",
+                                            attrs,
+                                            false
+                                          ),
+                                          on
+                                        ),
+                                        [
+                                          _c("v-icon", {
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                "mdi-message-bulleted"
+                                              ),
+                                            },
+                                          }),
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v("Chat"),
+                                          ]),
+                                        ],
+                                        1
+                                      ),
+                                    ]
+                                  },
+                                },
+                              ],
+                              null,
+                              false,
+                              1140589590
+                            ),
+                          }),
                         ],
                         1
                       ),
@@ -22000,10 +22346,8 @@ var render = function () {
                   ),
                 ],
                 1
-              ),
-            ],
-            1
-          ),
+              )
+            : _vm._e(),
         ],
         1
       )
@@ -84144,7 +84488,7 @@ var index = {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"axios@^0.21","name":"axios","escapedName":"axios","rawSpec":"^0.21","saveSpec":null,"fetchSpec":"^0.21"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_shasum":"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575","_spec":"axios@^0.21","_where":"C:\\\\Users\\\\Yaseen\\\\Desktop\\\\projects\\\\CRM","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundleDependencies":false,"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"deprecated":false,"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
+module.exports = JSON.parse('{"_args":[["axios@0.21.4","C:\\\\Users\\\\m.yaseen\\\\Desktop\\\\projects\\\\CRM"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"C:\\\\Users\\\\m.yaseen\\\\Desktop\\\\projects\\\\CRM","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
 
 /***/ })
 
@@ -84255,7 +84599,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Chat_Main_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

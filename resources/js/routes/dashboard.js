@@ -61,4 +61,27 @@ export default [
         ],
         beforeEnter: company,
     },
+    {
+        path: '/users/',
+        name: 'auth.users',
+        component: ()=> import('@/views/User/Main.vue'),
+        children: [
+            {
+                path: '',
+                component: ()=> import('@/views/User/List.vue'),
+                name: 'auth.users.listing'
+            },
+            {
+                path: 'add',
+                component: ()=> import('@/views/User/Add.vue'),
+                name: 'auth.users.add'
+            },
+            {
+                path: 'edit/:id',
+                component: ()=> import('@/views/User/Edit.vue'),
+                name: 'auth.users.edit'
+            }
+        ],
+        beforeEnter: company,
+    },
 ];

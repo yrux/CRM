@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\BrandUserResource;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\BrandUserRequest;
+use App\Http\Requests\{BrandUserRequest, BrandUserAssignRequest};
 use Illuminate\Support\Facades\Hash;
 
 class BrandUserController extends Controller
@@ -83,5 +83,14 @@ class BrandUserController extends Controller
     {
         $user->delete();
         return response()->json(null, 204);
+    }
+    public function assignUser(BrandUserAssignRequest $request, Brand $brand){
+        $brand_user = $brand->users()->create([
+            'user_id'=>$request->user_id,
+            'is_owner'=>$request->is_owner,
+            'user_email'=>$request->user_email,
+            'user_name'=>$request->user_name,
+        ]);
+        return new BrandUserResource($brand_user);
     }
 }

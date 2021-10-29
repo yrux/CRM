@@ -67,4 +67,10 @@ class User extends Authenticatable
             return 'https://randomuser.me/api/portraits/men/85.jpg';
         }
     }
+    public function role(){
+        return $this->hasOne(Role::class,'id','role_id');
+    }
+    // public function getRoleNameAttribute(){
+    //     return $this->role->title;
+    // }
 }
