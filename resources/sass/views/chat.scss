@@ -9,6 +9,14 @@
             display: block;
             text-align: right;
         }
+        .chat_attachements{
+            background: transparent;
+            display: block;
+            width: 100%;
+            span{
+                float: right;
+            }
+        }
     }
     .message-get{
         div{
@@ -18,6 +26,14 @@
         span{
             font-size: 12px;
             display: block;
+        }
+        .chat_attachements{
+            background: transparent;
+            display: block;
+            width: 100%;
+            span{
+                float: left;
+            }
         }
     }
     .chat_row{

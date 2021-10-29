@@ -27,6 +27,7 @@ io.on("connection", function (socket) {
             message: arg[1],
             updated_at: date.toJSON(),
             user_id: arg[3],
+            files: (arg[4]?arg[4]:[])
         }
         io.emit("channel_" + arg[0], obj);
     });

@@ -49,4 +49,9 @@ class FileRepository implements BaseRepository {
     public function deleteByType($table_name,$ref_id){
         $this->model->where('table_name',$table_name)->where('ref_id',$ref_id)->delete();
     }
+    public function updateRefById($id, $ref_id){
+        $model = $this->model->find($id);
+        $model->fileable_id = $ref_id;
+        $model->save();
+    }
 }

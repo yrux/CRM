@@ -9,6 +9,7 @@ class Chat extends Model
 {
     use HasFactory;
     protected $appends = ['created_at_formatted'];
+    protected $with = ['files'];
     protected $fillable = [
         'chat_head_id','message','user_id'
     ];
@@ -17,5 +18,8 @@ class Chat extends Model
     }
     public function getCreatedAtFormattedAttribute(){
         return date('Y-m-d h:i a',strtotime($this->created_at));
+    }
+    public function files(){
+        return $this->morphMany(File::class,'fileable');
     }
 }

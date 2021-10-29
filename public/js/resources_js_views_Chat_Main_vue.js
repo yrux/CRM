@@ -306,6 +306,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_auth_chat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @services/auth/chat */ "./resources/js/services/auth/chat.js");
+/* harmony import */ var _services_auth_file__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @services/auth/file */ "./resources/js/services/auth/file.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -356,6 +357,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 var _require = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/cjs/index.js"),
@@ -492,9 +515,20 @@ var socket = io('http://localhost:9000');
       if (this.head_id > 0) {
         if (e.keyCode == 13 && e.shiftKey == true) {//let it line break
         } else if (e.keyCode == 13) {
-          if (document.getElementsByClassName('message_area_editor')[0].innerText) {
-            socket.emit('channel', [this.head_id, document.getElementsByClassName('message_area_editor')[0].innerHTML, this.curuser.id, this.user.id]);
-            document.getElementsByClassName('message_area_editor')[0].innerHTML = '';
+          if (this.allowMessages) {
+            if (document.getElementsByClassName('message_area_editor')[0].innerText) {
+              var formData = new FormData();
+              formData.append("message", document.getElementsByClassName('message_area_editor')[0].innerHTML);
+
+              for (var i = 0; i < this.currentfiles.length; i++) {
+                formData.append("attachements[" + i + "]", this.currentfiles[i].id);
+              }
+
+              _services_auth_chat__WEBPACK_IMPORTED_MODULE_1__["default"].saveMsg(this.head_id, formData);
+              socket.emit('channel', [this.head_id, document.getElementsByClassName('message_area_editor')[0].innerHTML, this.curuser.id, this.user.id, this.currentfiles]);
+              this.currentfiles = [];
+              document.getElementsByClassName('message_area_editor')[0].innerHTML = '';
+            }
           }
 
           e.preventDefault();
@@ -502,16 +536,116 @@ var socket = io('http://localhost:9000');
         }
       }
     },
-    pasteInMessage: function pasteInMessage(e) {// console.log(e)
+    disableDrop: function disableDrop(e) {
+      e.preventDefault();
+      return false;
     },
-    bindSocketEv: function bindSocketEv() {
+    pasteInMessage: function pasteInMessage(e) {
       var _this4 = this;
 
-      socket.on('channel_' + this.head_id, function (arg) {
-        _this4.messages.push(arg);
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var files, i, file, formData, res, _data;
 
-        _this4.scrolltobtm();
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _this4.allowMessages = false;
+                files = e.clipboardData.files;
+
+                if (!(files.length > 0)) {
+                  _context4.next = 19;
+                  break;
+                }
+
+                i = 0;
+
+              case 4:
+                if (!(file = files[i])) {
+                  _context4.next = 19;
+                  break;
+                }
+
+                _context4.next = 7;
+                return _this4.readFile(file);
+
+              case 7:
+                formData = new FormData();
+                formData.append("ref_id", 0);
+                formData.append("table_name", 'chat');
+                formData.append("type", '2');
+                formData.append("attachements[0]", file);
+                _context4.next = 14;
+                return _services_auth_file__WEBPACK_IMPORTED_MODULE_2__["default"].create(formData);
+
+              case 14:
+                res = _context4.sent;
+
+                if (res.status) {
+                  _this4.currentfiles.push(res.data[0]);
+                }
+
+              case 16:
+                i++;
+                _context4.next = 4;
+                break;
+
+              case 19:
+                _data = e.clipboardData.getData("text/plain");
+
+                if (_data) {
+                  document.execCommand('insertHTML', true, _data);
+                }
+
+                _this4.allowMessages = true;
+                e.preventDefault();
+                return _context4.abrupt("return", false);
+
+              case 24:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    readFile: function readFile(file) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                return _context5.abrupt("return", new Promise(function (resolve, reject) {
+                  var fr = new FileReader();
+
+                  fr.onload = function () {
+                    resolve(fr);
+                  }; //fr.onerror = reject;
+
+
+                  //fr.onerror = reject;
+                  fr.readAsText(file);
+                }));
+
+              case 1:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    bindSocketEv: function bindSocketEv() {
+      var _this5 = this;
+
+      socket.on('channel_' + this.head_id, function (arg) {
+        _this5.messages.push(arg);
+
+        _this5.scrolltobtm();
       });
+    },
+    openFile: function openFile(url) {
+      window.open(url, '_blank').focus();
     }
   },
   data: function data() {
@@ -521,7 +655,9 @@ var socket = io('http://localhost:9000');
       head_id: 0,
       lastlen: 0,
       message_search: '',
-      typingSearch: undefined
+      typingSearch: undefined,
+      currentfiles: [],
+      allowMessages: true
     };
   }
 });
@@ -714,12 +850,98 @@ var chatservice = /*#__PURE__*/function () {
     value: function checkIfNextAvail() {
       return this.next_url == '' ? false : true;
     }
+  }, {
+    key: "saveMsg",
+    value: function saveMsg(head_id, formData) {
+      axios.post('/api/chat-send/' + head_id, formData);
+    }
   }]);
 
   return chatservice;
 }();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new chatservice());
+
+/***/ }),
+
+/***/ "./resources/js/services/auth/file.js":
+/*!********************************************!*\
+  !*** ./resources/js/services/auth/file.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var fileservice = /*#__PURE__*/function () {
+  function fileservice() {
+    _classCallCheck(this, fileservice);
+  }
+
+  _createClass(fileservice, [{
+    key: "create",
+    value: function () {
+      var _create = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(formData) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.post('/api/file', formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 2:
+                res = _context.sent;
+                return _context.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function create(_x) {
+        return _create.apply(this, arguments);
+      }
+
+      return create;
+    }()
+  }]);
+
+  return fileservice;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new fileservice());
 
 /***/ }),
 
@@ -4348,6 +4570,48 @@ var render = function () {
                     domProps: { innerHTML: _vm._s(item.message) },
                   }),
                   _vm._v(" "),
+                  item.files.length > 0
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "chat_attachements mt-2",
+                          class:
+                            item.user_id == _vm.user.id
+                              ? "float-right"
+                              : "float-left",
+                        },
+                        _vm._l(item.files, function (currentfile, index) {
+                          return _c(
+                            "v-chip",
+                            {
+                              key: currentfile.id,
+                              attrs: {
+                                color: "green d-inline-block",
+                                outlined: "",
+                              },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.openFile(currentfile.full_url)
+                                },
+                              },
+                            },
+                            [
+                              _vm._v(
+                                "\n            " +
+                                  _vm._s(
+                                    currentfile.url.split("/")[
+                                      currentfile.url.split("/").length - 1
+                                    ]
+                                  ) +
+                                  "\n            "
+                              ),
+                            ]
+                          )
+                        }),
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c(
                     "span",
                     {
@@ -4366,13 +4630,48 @@ var render = function () {
           )
         : _vm._e(),
       _vm._v(" "),
-      _c("v-row", { attrs: { "no-gutters": "" } }, [
-        _c("div", {
-          staticClass: "message_area_editor mt-7 pa-1",
-          attrs: { contentEditable: "true" },
-          on: { paste: _vm.pasteInMessage, keydown: _vm.typingMessage },
-        }),
-      ]),
+      _c(
+        "v-row",
+        { attrs: { "no-gutters": "" } },
+        [
+          _vm._l(_vm.currentfiles, function (currentfile, index) {
+            return _c(
+              "v-chip",
+              {
+                key: currentfile.id,
+                attrs: { close: "", color: "green", outlined: "" },
+                on: {
+                  "click:close": function ($event) {
+                    return _vm.currentfiles.splice(index, 1)
+                  },
+                },
+              },
+              [
+                _vm._v(
+                  "\n    " +
+                    _vm._s(
+                      currentfile.url.split("/")[
+                        currentfile.url.split("/").length - 1
+                      ]
+                    ) +
+                    "\n    "
+                ),
+              ]
+            )
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "message_area_editor mt-7 pa-1",
+            attrs: { contentEditable: "true" },
+            on: {
+              drop: _vm.disableDrop,
+              paste: _vm.pasteInMessage,
+              keydown: _vm.typingMessage,
+            },
+          }),
+        ],
+        2
+      ),
     ],
     2
   )

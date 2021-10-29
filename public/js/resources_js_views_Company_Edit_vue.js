@@ -524,7 +524,7 @@ var fileservice = /*#__PURE__*/function () {
                 return axios.post('/api/file', formData).then(function (e) {
                   return {
                     status: 1,
-                    data: e.data.data
+                    data: e.data
                   };
                 })["catch"](function (e) {
                   return {

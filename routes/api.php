@@ -48,6 +48,7 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::apiResource('user', UserController::class);
     Route::post('/chat', [ChatController::class,'index']);
     Route::get('/chat-history/{ChatHead}', [ChatController::class,'chatHistory']);
+    Route::post('/chat-send/{ChatHead}', [ChatController::class,'chatSend']);
 });
 Route::middleware('auth:api')->get('/me', function (Request $request) {
     return $request->user();

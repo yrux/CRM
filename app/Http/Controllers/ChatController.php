@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ChatHead;
+use App\Models\{ChatHead, Chat, File};
 use Illuminate\Http\Request;
-use App\Repositories\ChatRepository;
+use App\Repositories\{ChatRepository, FileRepository};
 class ChatController extends Controller
 {
     protected $chat;
-    public function __construct(ChatRepository $chat)
+    protected $file;
+    public function __construct(ChatRepository $chat, FileRepository $file)
     {
         $this->chat = $chat;
+        $this->file = $file;
     }
     public function index(Request $request){
         $data=$this->chat->findBySenders($request->user()->id, $request->user_id);
@@ -31,5 +33,16 @@ class ChatController extends Controller
             'result'=>$data,
             'next_page_url'=>$res->nextPageUrl(),
         ];
+    }
+    public function chatSend(Request $request, ChatHead $ChatHead){
+        $chat_id = $ChatHead->messages()->create([
+            'message'=>$request->message,
+            'user_id'=>$request->user()->id,
+        ]);
+        if($request->attachements){
+            foreach($request->attachements as $attachement){
+                $this->file->updateRefById($attachement, $chat_id->id);
+            }
+        }
     }
 }

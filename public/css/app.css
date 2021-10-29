@@ -11,6 +11,14 @@
   display: block;
   text-align: right;
 }
+.chat_page .message-sent .chat_attachements {
+  background: transparent;
+  display: block;
+  width: 100%;
+}
+.chat_page .message-sent .chat_attachements span {
+  float: right;
+}
 .chat_page .message-get div {
   background: #00800033;
   color: black;
@@ -18,6 +26,14 @@
 .chat_page .message-get span {
   font-size: 12px;
   display: block;
+}
+.chat_page .message-get .chat_attachements {
+  background: transparent;
+  display: block;
+  width: 100%;
+}
+.chat_page .message-get .chat_attachements span {
+  float: left;
 }
 .chat_page .chat_row {
   max-height: 650px;

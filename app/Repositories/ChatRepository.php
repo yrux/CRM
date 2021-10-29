@@ -4,7 +4,7 @@ namespace App\Repositories;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Models\ChatHead;
+use App\Models\{ChatHead, Chat};
 class ChatRepository implements BaseRepository {
     protected $model;
     public function __construct(ChatHead $model)

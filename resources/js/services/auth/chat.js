@@ -31,5 +31,8 @@ class chatservice{
 	checkIfNextAvail(){
 		return (this.next_url==''?false:true);
 	}
+	saveMsg(head_id, formData){
+		axios.post('/api/chat-send/'+head_id,formData);
+	}
 }
 export default new chatservice();
