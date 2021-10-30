@@ -3,11 +3,13 @@ require('./bootstrap');
 import Vue from 'vue'
 import vuetify from './plugins/vuetify.js' // path to vuetify export
 import VueRouter from 'vue-router';
+import CKEditor from '@ckeditor/ckeditor5-vue2';
 import { store } from './store'
 import router from './routes'
 window.Vue = require('vue').default;
 import loginservice from "@services/auth/login";
 Vue.use(VueRouter);
+Vue.use(CKEditor);
 import adminbar from "@/components/sidebars/admin.vue";
 
 router.beforeEach(async (to, from, next) => {

@@ -46,6 +46,11 @@
               ><v-icon>mdi-plus</v-icon>User</v-list-item-title
             >
           </v-list-item>
+          <v-list-item v-if="user.role_id==4||user.role_id==5" link :to="{ name: 'auth.task.open' }">
+            <v-list-item-title
+              ><v-icon>mdi-plus</v-icon>Task</v-list-item-title
+            >
+          </v-list-item>
           <!-- <v-list-item link :to="{ name: 'auth.quote.add' }">
             <v-list-item-title
               ><v-icon>mdi-plus</v-icon>Quote</v-list-item-title

@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        Gate::authorize('viewAny',User::class);
+        // Gate::authorize('viewAny',User::class);
         $user = User::leftJoin('roles','users.role_id','=','roles.id');
         if(isset($_GET['sortCol'])){
             $user = $user->orderBy($_GET['sortCol'],($_GET['sortByDesc']==1?'desc':'asc'));
@@ -25,7 +25,7 @@ class UserController extends Controller
             $user = $user->orderBy('users.id','desc');
         }
         if(!empty($_GET['search'])){
-            $user = $user->orWhere(
+            $user = $user->Where(
                 function($query) {
                 $q = $_GET['search'];
                 $query->orWhere('users.name', 'like', '%'.$q.'%')->orWhere('users.email', 'like', '%'.$q.'%')
@@ -33,7 +33,7 @@ class UserController extends Controller
             });
         }
         $user=$user->select('users.id','users.email','users.name','roles.title as role_name');
-        if($request->user()->role_id==2){
+        if($request->user()->role_id!=1){
             $user=$user->where('company_id',$request->user()->company_id);
         }
         $user=$user->where('users.id','<>',$request->user()->id);

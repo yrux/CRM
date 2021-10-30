@@ -9,6 +9,7 @@ class Project extends Model
 {
     use HasFactory;
     protected $with = ['files'];
+    protected $appends = ['created_at_formatted'];
     protected $fillable = [
         'company_id','brand_id','project_id','title','description','status',
     ];
@@ -26,5 +27,8 @@ class Project extends Model
     }
     public function files(){
         return $this->morphMany(File::class,'fileable');
+    }
+    public function getCreatedAtFormattedAttribute(){
+        return date('Y-m-d h:i a',strtotime($this->created_at));
     }
 }

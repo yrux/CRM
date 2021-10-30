@@ -16,14 +16,41 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         Gate::authorize('viewAny',Project::class);
-        $data = Project::where('company_id',$request->user()->company_id);
+        $data = Project::where('projects.company_id',$request->user()->company_id);
+        if(isset($_GET['sortCol'])){
+            $data = $data->orderBy($_GET['sortCol'],($_GET['sortByDesc']==1?'desc':'asc'));
+        }else{
+            $data = $data->orderBy('projects.id','desc');
+        }
+        if(!empty($_GET['search'])){
+            $data = $data->Where(
+                function($query) {
+                $q = $_GET['search'];
+                $query->orWhere('projects.title', 'like', '%'.$q.'%')->orWhere('customers.name', 'like', '%'.$q.'%')
+                ->orWhere('customers.email', 'like', '%'.$q.'%')
+                ->orWhere('projects.project_id', 'like', '%'.$q.'%');
+            });
+        }
+        //getting customer names
+        $data = $data->leftJoin('project_users',function($join){
+            $join->on('projects.id','=','project_users.project_id')->where('project_users.role_id',6);
+        });
+        $data = $data->leftJoin('users as customers',function($join){
+            $join->on('project_users.user_id','=','customers.id')->where('customers.role_id',6);
+        });
+        $data = $data->select('customers.name as customer_name','customers.email as customer_email','projects.title','projects.project_id','projects.created_at');
         if($request->user()->role_id==3){
             //$data = $data->where('brand_id',);
         }
         if($request->user()->role_id==4){
             //$data = $data->where('brand_id',);
         }
-        return ProjectResource::collection($data->paginate(25));
+        if(intval($_GET['perpage'])>0){
+            $data=$data->paginate($_GET['perpage']);
+        }else{
+            $data=$data->get();
+        }
+        return ProjectResource::collection($data);
     }
 
     /**
