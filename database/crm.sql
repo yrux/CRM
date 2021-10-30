@@ -657,7 +657,6 @@ CREATE TABLE `projects` (
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=pending,1=in progress,2=completed,3=refund,4=chargeback,5=live',
-  `user_id` int(11) DEFAULT 0 COMMENT 'customer ids',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
@@ -667,13 +666,13 @@ CREATE TABLE `projects` (
 
 /*Data for the table `projects` */
 
-insert  into `projects`(`id`,`company_id`,`brand_id`,`project_id`,`title`,`description`,`status`,`user_id`,`created_at`,`updated_at`) values 
-(2,18,4,'TCWB-1635175928-2','Test Project','<p>test description</p>',0,0,'2021-10-25 15:32:08','2021-10-30 02:38:43'),
-(3,18,4,'TCWB-1635176496-3','Test Project','<p>test description</p>',0,0,'2021-10-25 15:41:36','2021-10-30 02:38:43'),
-(4,18,4,'TCWB-1635176507-4','Test Project','<p>test description</p>',0,0,'2021-10-25 15:41:47','2021-10-30 02:38:44'),
-(5,18,4,'TCWB-1635176516-5','Test Project','<p>test description</p>',0,0,'2021-10-25 15:41:56','2021-10-30 02:38:44'),
-(6,18,4,'TCWB-1635176535-6','Test Project','<p>test description</p>',0,0,'2021-10-25 15:42:15','2021-10-30 02:38:44'),
-(7,18,4,'TCWB-1635176593-7','Test Project','<p>test description</p>',0,0,'2021-10-25 15:43:13','2021-10-30 02:38:45');
+insert  into `projects`(`id`,`company_id`,`brand_id`,`project_id`,`title`,`description`,`status`,`created_at`,`updated_at`) values 
+(2,18,4,'TCWB-1635175928-2','Test Project','<p>test description</p>',0,'2021-10-25 15:32:08','2021-10-30 02:38:43'),
+(3,18,4,'TCWB-1635176496-3','Test Project','<p>test description</p>',0,'2021-10-25 15:41:36','2021-10-30 02:38:43'),
+(4,18,4,'TCWB-1635176507-4','Test Project','<p>test description</p>',0,'2021-10-25 15:41:47','2021-10-30 02:38:44'),
+(5,18,4,'TCWB-1635176516-5','Test Project','<p>test description</p>',0,'2021-10-25 15:41:56','2021-10-30 02:38:44'),
+(6,18,4,'TCWB-1635176535-6','Test Project','<p>test description</p>',0,'2021-10-25 15:42:15','2021-10-30 02:38:44'),
+(7,18,4,'TCWB-1635176593-7','Test Project','<p>test description</p>',0,'2021-10-25 15:43:13','2021-10-30 02:38:45');
 
 /*Table structure for table `roles` */
 
