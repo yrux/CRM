@@ -1,5 +1,5 @@
 <template>
-    <h1>test</h1>
+    <h1>Dashboard (Under Development)</h1>
 </template>
 <script>
 import adminbar from "@/components/sidebars/admin.vue";

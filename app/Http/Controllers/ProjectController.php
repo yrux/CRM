@@ -38,12 +38,19 @@ class ProjectController extends Controller
         $data = $data->leftJoin('users as customers',function($join){
             $join->on('project_users.user_id','=','customers.id')->where('customers.role_id',6);
         });
-        $data = $data->select('customers.name as customer_name','customers.email as customer_email','projects.title','projects.project_id','projects.created_at');
+        $data = $data->select('customers.name as customer_name','customers.email as customer_email','projects.title','projects.project_id','projects.created_at','projects.id as project_id_int');
         if($request->user()->role_id==3){
+            $data = $data->leftJoin('users as salesupport',function($join){
+                $join->on('project_users.user_id','=','salesupport.id')->where('customers.role_id',3);
+            });
+            $data = $data->where('salesupport.id',$request->user()->id);
             //$data = $data->where('brand_id',);
         }
         if($request->user()->role_id==4){
-            //$data = $data->where('brand_id',);
+            $data = $data->leftJoin('users as salesupport',function($join){
+                $join->on('project_users.user_id','=','salesupport.id')->where('customers.role_id',4);
+            });
+            $data = $data->where('salesupport.id',$request->user()->id);
         }
         if(intval($_GET['perpage'])>0){
             $data=$data->paginate($_GET['perpage']);

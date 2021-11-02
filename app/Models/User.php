@@ -57,6 +57,12 @@ class User extends Authenticatable
     public function brands(){
         return $this->hasManyThrough(BrandUser::class, Brand::class,'id','user_id');
     }
+    public function brandsAssigned(){
+        return $this->hasMany(BrandUser::class);
+    }
+    public function projects(){
+        return $this->hasMany(ProjectUser::class);
+    }
     public function image(){
         return $this->morphOne(File::class,'fileable');
     }

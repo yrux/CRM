@@ -52,5 +52,13 @@ class brandservice{
         });
         return res;
 	}
+	async myBrands(){
+		var res = await axios.get('/api/brands/me').then(function(e){
+            return e.data;
+        }).catch(function(e){
+            return {status: 0, data: e.response.data.errors};
+        });
+        return res;
+	}
 }
 export default new brandservice();

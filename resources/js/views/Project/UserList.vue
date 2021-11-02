@@ -1,34 +1,27 @@
 <template>
-    <v-data-table
-      :headers="headers"
-      :items="items"
-      :options.sync="options"
-      :server-items-length="totalRecords"
-      :loading="loading"
-      class="elevation-1"
-      show-select
-      v-model="selectedProject"
-      :single-select="true"
-      item-key="project_id"
-    >
-      <template v-slot:top>
-        <v-text-field
-          v-model="search"
-          label="Search"
-          class="mx-4"
-        ></v-text-field>
-      </template>
-      <template v-slot:item.email="{ item }">
-        {{item.name}} | {{item.email}}
-      </template>
-    </v-data-table>
+  <v-data-table
+    :headers="headers"
+    :items="items"
+    :options.sync="options"
+    :server-items-length="totalRecords"
+    :loading="loading"
+    class="elevation-1"
+    show-select
+    v-model="selectedUser"
+    :single-select="true"
+    item-key="id"
+  >
+    <template v-slot:top>
+      <v-text-field v-model="search" label="Search" class="mx-4"></v-text-field>
+    </template>
+  </v-data-table>
 </template>
 <script>
-import projectservice from "@services/auth/project";
+import userservice from "@services/auth/user";
 export default {
   data() {
     return {
-      selectedProject: [],
+      selectedUser: [],
       search: "",
       items: [],
       loading: true,
@@ -36,28 +29,16 @@ export default {
       options: {},
       headers: [
         {
-          text: "Title",
+          text: "Name",
           align: "start",
           sortable: true,
-          value: "title",
+          value: "name",
         },
         {
-          text: "Project ID",
+          text: "Email",
           align: "start",
           sortable: true,
-          value: "project_id",
-        },
-        {
-          text: "Customer",
-          align: "start",
-          sortable: true,
-          value: "customer_email",
-        },
-        {
-          text: "Created@",
-          align: "start",
-          sortable: false,
-          value: "created_at_formatted",
+          value: "email",
         },
       ],
     };
@@ -75,12 +56,6 @@ export default {
       },
       deep: true,
     },
-    search() {
-      this.getDataFromApi();
-    },
-    selectedProject(){
-      this.$emit('selected-project', (this.selectedProject.length>0?this.selectedProject[0]:{}))
-    }
   },
   mounted() {
     this.getDataFromApi();
@@ -113,8 +88,23 @@ export default {
       if (this.search != "") {
         query += "&search=" + this.search;
       }
-      return projectservice.getlist(query);
+      query += "&role_id=7";
+      return userservice.getlist(query);
     },
+  },
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+    search() {
+      this.getDataFromApi();
+    },
+    selectedUser(){
+      this.$emit('selected-user', (this.selectedUser.length>0?this.selectedUser[0]:{}))
+    }
   },
 };
 </script>

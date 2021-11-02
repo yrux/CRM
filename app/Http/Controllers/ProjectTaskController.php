@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\{ProjectTask, Project};
 use Illuminate\Http\Request;
 use App\Http\Resources\ProjectTaskResource;
+use App\Http\Requests\ProjectTaskRequest;
 class ProjectTaskController extends Controller
 {
     /**
@@ -12,9 +13,15 @@ class ProjectTaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Project $project)
+    public function index(Request $request, Project $project)
     {
-        return ProjectTaskResource::collection($project->tasks()->orderBy('id','asc')->paginate(25));
+        $tasks = $project->tasks();
+        $user = $request->user();
+        if($user->role_id==4||$user->role_id==5){
+            $tasks = $tasks->where('assigned_by',$request->user()->id);
+        }
+        $tasks = $tasks->orderBy('id','asc')->paginate(25);
+        return ProjectTaskResource::collection($tasks);
     }
 
     /**
@@ -72,5 +79,8 @@ class ProjectTaskController extends Controller
         $task->status = $status;
         $task->save();
         return response()->json(null, 200);
+    }
+    public function validateTask(ProjectTaskRequest $request){
+        return response()->json(null,200);
     }
 }

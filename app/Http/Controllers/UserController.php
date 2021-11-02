@@ -32,6 +32,9 @@ class UserController extends Controller
                 ->orWhere('roles.title', 'like', '%'.$q.'%')->orWhere('roles.name', 'like', '%'.$q.'%');
             });
         }
+        if(!empty($_GET['role_id'])){
+            $user = $user->where('role_id',$_GET['role_id']);
+        }
         $user=$user->select('users.id','users.email','users.name','roles.title as role_name');
         if($request->user()->role_id!=1){
             $user=$user->where('company_id',$request->user()->company_id);

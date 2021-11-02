@@ -31,6 +31,7 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::get('/company/user/getallusers', [CompanyController::class,'getallusers']);
     Route::apiResource('brand', BrandController::class);
     Route::apiResource('brand/{brand}/user', BrandUserController::class);
+    Route::get('/brands/me', [BrandUserController::class,'myBrands']);
     Route::post('brand/{brand}/assign-user', [BrandUserController::class,'assignUser']);
 
     // Route::apiResource('brand/{brand}/customer', BrandCustomerController::class);
@@ -38,6 +39,7 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::apiResource('project/{project}/u', ProjectUserController::class);
     //task
     Route::apiResource('project/{project}/task', ProjectTaskController::class);
+    Route::post('/task-validate', [ProjectTaskController::class,'validateTask']);
     Route::post('/project/{project}/{task}/status/{status}', [ProjectTaskController::class,'updateStatus']);
     Route::apiResource('task/{task}/comment', TaskCommentController::class);
     //task end

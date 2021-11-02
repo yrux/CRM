@@ -1,4 +1,12 @@
 <template>
+  <div>
+    <v-row no-gutters>
+      <v-breadcrumbs :items="bread">
+        <template v-slot:divider>
+          <v-icon>mdi-forward</v-icon>
+        </template>
+      </v-breadcrumbs>
+    </v-row>
     <v-data-table
       :headers="headers"
       :items="items"
@@ -6,10 +14,10 @@
       :server-items-length="totalRecords"
       :loading="loading"
       class="elevation-1"
-      show-select
-      v-model="selectedProject"
-      :single-select="true"
       item-key="project_id"
+			show-expand
+			:expanded.sync="expanded"
+			:single-expand="true"
     >
       <template v-slot:top>
         <v-text-field
@@ -19,15 +27,58 @@
         ></v-text-field>
       </template>
       <template v-slot:item.email="{ item }">
-        {{item.name}} | {{item.email}}
+        {{ item.name }} | {{ item.email }}
       </template>
+			<template v-slot:item.actions="{ item }">
+				<v-tooltip top>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn
+							color="info"
+							fab
+							x-small
+							dark
+							:to="{ name: 'auth.task.open', query: { project: item.project_id_int } }"
+							v-bind="attrs"
+          		v-on="on"
+						>
+							<v-icon>mdi-file-tree</v-icon>
+						</v-btn>
+					</template>
+					<span>Create/Assign Task</span>
+				</v-tooltip>
+      </template>
+			<template v-slot:expanded-item="{ headers, item }">
+				<td :colspan="headers.length">
+					<task-timeline :projectid="item.project_id_int" />
+				</td>
+			</template>
     </v-data-table>
+  </div>
 </template>
 <script>
 import projectservice from "@services/auth/project";
+import taskTimeline from "@/views/Project/taskTimeline.vue";
 export default {
+	components: {
+    'task-timeline': taskTimeline,
+  },
   data() {
     return {
+			expanded: [],
+			bread: [
+        {
+          text: "Dashboard",
+          to: { name: "auth.dashboard" },
+          disabled: false,
+          exact: true,
+        },
+        {
+          text: "Project",
+          to: { name: "auth.projects.listing" },
+          disabled: false,
+          exact: true,
+        },
+      ],
       selectedProject: [],
       search: "",
       items: [],
@@ -59,6 +110,7 @@ export default {
           sortable: false,
           value: "created_at_formatted",
         },
+        { text: "Actions", value: "actions", sortable: false },
       ],
     };
   },
@@ -78,9 +130,12 @@ export default {
     search() {
       this.getDataFromApi();
     },
-    selectedProject(){
-      this.$emit('selected-project', (this.selectedProject.length>0?this.selectedProject[0]:{}))
-    }
+		expanded(){
+			if(this.expanded.length>0){
+				//getting timeline
+				// this.expanded[0].project_id_int
+			}
+		}
   },
   mounted() {
     this.getDataFromApi();

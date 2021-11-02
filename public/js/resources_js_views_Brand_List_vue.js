@@ -880,6 +880,43 @@ var brandservice = /*#__PURE__*/function () {
 
       return assignUser;
     }()
+  }, {
+    key: "myBrands",
+    value: function () {
+      var _myBrands = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.next = 2;
+                return axios.get('/api/brands/me').then(function (e) {
+                  return e.data;
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 2:
+                res = _context7.sent;
+                return _context7.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }));
+
+      function myBrands() {
+        return _myBrands.apply(this, arguments);
+      }
+
+      return myBrands;
+    }()
   }]);
 
   return brandservice;
