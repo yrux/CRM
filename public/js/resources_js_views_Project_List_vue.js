@@ -496,6 +496,25 @@ var taskservice = /*#__PURE__*/function () {
         return error;
       });
     }
+  }, {
+    key: "tasks",
+    value: function tasks(query) {
+      return axios.get('/api/tasks' + query).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "update",
+    value: function update(project_id, id, formData) {
+      formData.append('_method', 'put');
+      return axios.post("/api/project/".concat(project_id, "/task/").concat(id), formData).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
   }]);
 
   return taskservice;

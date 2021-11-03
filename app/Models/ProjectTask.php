@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectTask extends Model
 {
     use HasFactory;
-    protected $appends = ['due_type'];
+    protected $appends = ['due_type','created_at_formatted'];
     protected $with = ['files'];
     protected $fillable = [
-        'project_id','task_description','due_date','status','assiged_on','assigned_by','project_tag','title'
+        'project_id','task_description','due_date','status','assigned_on','assigned_by','project_tag','title'
     ];
     public function assigned_on_user(){
-        return $this->belongsTo(User::class,'assiged_on','id');
+        return $this->belongsTo(User::class,'assigned_on','id');
     }
     public function assigned_by_user(){
         return $this->belongsTo(User::class,'assigned_by','id');
@@ -41,5 +41,8 @@ class ProjectTask extends Model
             return 'Upcomming';
         }
         return 'N/A';
+    }
+    public function getCreatedAtFormattedAttribute(){
+        return date('Y-m-d h:i a',strtotime($this->created_at));
     }
 }

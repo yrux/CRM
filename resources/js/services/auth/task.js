@@ -9,5 +9,20 @@ class taskservice{
 			return error;
 		});
 	}
+	tasks(query){
+		return axios.get('/api/tasks'+query).then(function(response){
+			return response.data
+		}).catch(function(error){
+			return error
+		})
+	}
+	update(project_id, id, formData){
+		formData.append('_method','put')
+		return axios.post(`/api/project/${project_id}/task/${id}`, formData).then(function(response){
+			return response.data
+		}).catch(function(error){
+			return error
+		})
+	}
 }
 export default new taskservice();

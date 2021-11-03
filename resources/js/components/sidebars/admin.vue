@@ -253,7 +253,7 @@
           v-if="user.role_id == 4 || user.role_id == 5"
           class="pa-0"
           link
-          :to="{ name: 'auth.tasks.today' }"
+          :to="{ name: 'auth.tasks.type', params:{type: 'today'} }"
         >
           <v-tooltip right>
             <template v-slot:activator="{ on, attrs }">
@@ -261,7 +261,7 @@
                 color="primary"
                 dark
                 class="d-block"
-                style="width: 100%; text-align: center"
+                style="width: 100%;"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -275,7 +275,7 @@
           v-if="user.role_id == 4 || user.role_id == 5"
           class="pa-0"
           link
-          :to="{ name: 'auth.tasks.overdue' }"
+          :to="{ name: 'auth.tasks.type', params:{type: 'overdue'} }"
         >
           <v-tooltip right>
             <template v-slot:activator="{ on, attrs }">
@@ -283,7 +283,7 @@
                 color="primary"
                 dark
                 class="d-block"
-                style="width: 100%; text-align: center"
+                style="width: 100%;"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -297,7 +297,7 @@
           v-if="user.role_id == 4 || user.role_id == 5"
           class="pa-0"
           link
-          :to="{ name: 'auth.tasks.upcomming' }"
+          :to="{ name: 'auth.tasks.type', params:{type: 'upcomming'} }"
         >
           <v-tooltip right>
             <template v-slot:activator="{ on, attrs }">
@@ -305,7 +305,7 @@
                 color="primary"
                 dark
                 class="d-block"
-                style="width: 100%; text-align: center"
+                style="width: 100%;"
                 v-bind="attrs"
                 v-on="on"
               >

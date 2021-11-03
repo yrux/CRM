@@ -25,25 +25,13 @@ export default [
         component: ()=> import('@/views/Project/OpenTask.vue'),
     },
     {
-        path: '/task/',
-        name: 'auth.tasks',
-        component: ()=> import('@/views/Task/Main.vue'),
-        children: [
-            {
-                path: 'overdue',
-                component: ()=> import('@/views/Task/List.vue'),
-                name: 'auth.tasks.overdue'
-            },
-            {
-                path: 'today',
-                component: ()=> import('@/views/Task/List.vue'),
-                name: 'auth.tasks.today'
-            },
-            {
-                path: 'upcomming',
-                component: ()=> import('@/views/Task/List.vue'),
-                name: 'auth.tasks.upcomming'
-            }
-        ],
+        path: '/task/:type',
+        name: 'auth.tasks.type',
+        component: ()=> import('@/views/Task/List.vue'),
+    },
+    {
+        path: '/task/summary/:project',
+        name: 'auth.task.summary',
+        component: ()=> import('@/views/Task/Summary.vue'),
     }
 ];

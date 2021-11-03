@@ -13,6 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_auth_task__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @services/auth/task */ "./resources/js/services/auth/task.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -22,27 +23,241 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      search: "",
+      taskType: "",
+      tasks: [],
+      loading: true,
+      totalRecords: 0,
+      options: {},
+      perpage: 10,
+      headers: [{
+        text: "#",
+        align: "start",
+        sortable: true,
+        value: "id"
+      }, {
+        text: "Title",
+        align: "start",
+        sortable: true,
+        value: "task_title"
+      }, {
+        text: "Project ID",
+        align: "start",
+        sortable: true,
+        value: "project_id"
+      }, {
+        text: "Assigned On",
+        align: "start",
+        sortable: true,
+        value: "created_at_formatted"
+      }, {
+        text: "Assigned To",
+        align: "start",
+        sortable: true,
+        value: "assigned_user_name"
+      }, {
+        text: "Due",
+        align: "start",
+        sortable: false,
+        value: "due_date"
+      }, {
+        text: "Actions",
+        value: "actions",
+        sortable: false
+      }]
+    };
   },
-  methods: {},
+  methods: {
+    getTasks: function getTasks() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var q, page, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.loading = true;
+                q = "";
+
+                if (_this.taskType != "all") {
+                  q += "?type=" + _this.taskType;
+                }
+
+                page = _this.options.page;
+                q += (q == "" ? "?" : "&") + "page=" + page;
+
+                if (_this.options.sortBy.length > 0) {
+                  q += "&sortCol=" + _this.options.sortBy[0];
+                }
+
+                if (_this.options.sortDesc.length > 0) {
+                  //if 1 then by desc else asc
+                  q += "&sortByDesc=" + (_this.options.sortDesc[0] == true ? 1 : 0);
+                }
+
+                q += "&perpage=" + _this.options.itemsPerPage;
+
+                if (_this.search != "") {
+                  q += "&search=" + _this.search;
+                }
+
+                _context.next = 11;
+                return _services_auth_task__WEBPACK_IMPORTED_MODULE_1__["default"].tasks(q);
+
+              case 11:
+                res = _context.sent;
+                _this.totalRecords = res.total;
+                _this.tasks = res.data;
+                _this.loading = false;
+
+              case 15:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  },
   mounted: function mounted() {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+    var _this2 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
+              _this2.taskType = _this2.$route.params.type;
+
+            case 1:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee);
+      }, _callee2);
     }))();
   },
-  watch: {},
+  watch: {
+    $route: function $route() {
+      this.taskType = this.$route.params.type;
+    },
+    taskType: function taskType() {
+      this.getTasks();
+    },
+    perpage: function perpage() {
+      this.getTasks();
+    },
+    options: {
+      handler: function handler() {
+        this.getTasks();
+      },
+      deep: true
+    },
+    search: function search() {
+      this.getTasks();
+    }
+  },
   computed: {}
 });
+
+/***/ }),
+
+/***/ "./resources/js/services/auth/task.js":
+/*!********************************************!*\
+  !*** ./resources/js/services/auth/task.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var taskservice = /*#__PURE__*/function () {
+  function taskservice() {
+    _classCallCheck(this, taskservice);
+  }
+
+  _createClass(taskservice, [{
+    key: "summary",
+    value: function summary(project_id) {
+      return axios.get("/api/project/".concat(project_id, "/task")).then(function (response) {
+        return response.data.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "tasks",
+    value: function tasks(query) {
+      return axios.get('/api/tasks' + query).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "update",
+    value: function update(project_id, id, formData) {
+      formData.append('_method', 'put');
+      return axios.post("/api/project/".concat(project_id, "/task/").concat(id), formData).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }]);
+
+  return taskservice;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new taskservice());
 
 /***/ }),
 
@@ -130,7 +345,99 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("v-data-table", {
+    staticClass: "elevation-1",
+    attrs: {
+      headers: _vm.headers,
+      items: _vm.tasks,
+      options: _vm.options,
+      "server-items-length": _vm.totalRecords,
+      loading: _vm.loading,
+      "item-key": "id",
+    },
+    on: {
+      "update:options": function ($event) {
+        _vm.options = $event
+      },
+    },
+    scopedSlots: _vm._u([
+      {
+        key: "top",
+        fn: function () {
+          return [
+            _c("v-text-field", {
+              staticClass: "mx-4",
+              attrs: { label: "Search" },
+              model: {
+                value: _vm.search,
+                callback: function ($$v) {
+                  _vm.search = $$v
+                },
+                expression: "search",
+              },
+            }),
+          ]
+        },
+        proxy: true,
+      },
+      {
+        key: "item.actions",
+        fn: function (ref) {
+          var item = ref.item
+          return [
+            _c(
+              "v-tooltip",
+              {
+                attrs: { top: "" },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "activator",
+                      fn: function (ref) {
+                        var on = ref.on
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._g(
+                              _vm._b(
+                                {
+                                  attrs: {
+                                    color: "info",
+                                    fab: "",
+                                    "x-small": "",
+                                    dark: "",
+                                    to: {
+                                      name: "auth.task.summary",
+                                      params: { project: item.project_id_root },
+                                      query: { task: item.id },
+                                    },
+                                  },
+                                },
+                                "v-btn",
+                                attrs,
+                                false
+                              ),
+                              on
+                            ),
+                            [_c("v-icon", [_vm._v("mdi-file-tree")])],
+                            1
+                          ),
+                        ]
+                      },
+                    },
+                  ],
+                  null,
+                  true
+                ),
+              },
+              [_vm._v(" "), _c("span", [_vm._v("Task Detail")])]
+            ),
+          ]
+        },
+      },
+    ]),
+  })
 }
 var staticRenderFns = []
 render._withStripped = true

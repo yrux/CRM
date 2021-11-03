@@ -3082,30 +3082,17 @@ __webpack_require__.r(__webpack_exports__);
     return __webpack_require__.e(/*! import() */ "resources_js_views_Project_OpenTask_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Project/OpenTask.vue */ "./resources/js/views/Project/OpenTask.vue"));
   }
 }, {
-  path: '/task/',
-  name: 'auth.tasks',
+  path: '/task/:type',
+  name: 'auth.tasks.type',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ "resources_js_views_Task_Main_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Task/Main.vue */ "./resources/js/views/Task/Main.vue"));
-  },
-  children: [{
-    path: 'overdue',
-    component: function component() {
-      return __webpack_require__.e(/*! import() */ "resources_js_views_Task_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Task/List.vue */ "./resources/js/views/Task/List.vue"));
-    },
-    name: 'auth.tasks.overdue'
-  }, {
-    path: 'today',
-    component: function component() {
-      return __webpack_require__.e(/*! import() */ "resources_js_views_Task_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Task/List.vue */ "./resources/js/views/Task/List.vue"));
-    },
-    name: 'auth.tasks.today'
-  }, {
-    path: 'upcomming',
-    component: function component() {
-      return __webpack_require__.e(/*! import() */ "resources_js_views_Task_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Task/List.vue */ "./resources/js/views/Task/List.vue"));
-    },
-    name: 'auth.tasks.upcomming'
-  }]
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Task_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Task/List.vue */ "./resources/js/views/Task/List.vue"));
+  }
+}, {
+  path: '/task/summary/:project',
+  name: 'auth.task.summary',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Task_Summary_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Task/Summary.vue */ "./resources/js/views/Task/Summary.vue"));
+  }
 }]);
 
 /***/ }),
@@ -22685,7 +22672,10 @@ var render = function () {
                               staticClass: "pa-0",
                               attrs: {
                                 link: "",
-                                to: { name: "auth.tasks.today" },
+                                to: {
+                                  name: "auth.tasks.type",
+                                  params: { type: "today" },
+                                },
                               },
                             },
                             [
@@ -22709,7 +22699,6 @@ var render = function () {
                                                     staticClass: "d-block",
                                                     staticStyle: {
                                                       width: "100%",
-                                                      "text-align": "center",
                                                     },
                                                     attrs: {
                                                       color: "primary",
@@ -22740,7 +22729,7 @@ var render = function () {
                                     ],
                                     null,
                                     false,
-                                    2691724165
+                                    2372972325
                                   ),
                                 },
                                 [_vm._v(" "), _c("span", [_vm._v("Today")])]
@@ -22757,7 +22746,10 @@ var render = function () {
                               staticClass: "pa-0",
                               attrs: {
                                 link: "",
-                                to: { name: "auth.tasks.overdue" },
+                                to: {
+                                  name: "auth.tasks.type",
+                                  params: { type: "overdue" },
+                                },
                               },
                             },
                             [
@@ -22781,7 +22773,6 @@ var render = function () {
                                                     staticClass: "d-block",
                                                     staticStyle: {
                                                       width: "100%",
-                                                      "text-align": "center",
                                                     },
                                                     attrs: {
                                                       color: "primary",
@@ -22812,7 +22803,7 @@ var render = function () {
                                     ],
                                     null,
                                     false,
-                                    267073164
+                                    3560503020
                                   ),
                                 },
                                 [_vm._v(" "), _c("span", [_vm._v("Overdue")])]
@@ -22829,7 +22820,10 @@ var render = function () {
                               staticClass: "pa-0",
                               attrs: {
                                 link: "",
-                                to: { name: "auth.tasks.upcomming" },
+                                to: {
+                                  name: "auth.tasks.type",
+                                  params: { type: "upcomming" },
+                                },
                               },
                             },
                             [
@@ -22853,7 +22847,6 @@ var render = function () {
                                                     staticClass: "d-block",
                                                     staticStyle: {
                                                       width: "100%",
-                                                      "text-align": "center",
                                                     },
                                                     attrs: {
                                                       color: "primary",
@@ -22883,7 +22876,7 @@ var render = function () {
                                     ],
                                     null,
                                     false,
-                                    374370591
+                                    1185658431
                                   ),
                                 },
                                 [_vm._v(" "), _c("span", [_vm._v("Upcomming")])]
@@ -85227,7 +85220,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Chat_Main_vue":1,"resources_js_views_Project_Main_vue":1,"resources_js_views_Project_List_vue":1,"resources_js_views_Project_Add_vue":1,"resources_js_views_Project_OpenTask_vue":1,"resources_js_views_Task_Main_vue":1,"resources_js_views_Task_List_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Chat_Main_vue":1,"resources_js_views_Project_Main_vue":1,"resources_js_views_Project_List_vue":1,"resources_js_views_Project_Add_vue":1,"resources_js_views_Project_OpenTask_vue":1,"resources_js_views_Task_List_vue":1,"resources_js_views_Task_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

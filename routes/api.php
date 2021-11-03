@@ -40,6 +40,7 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     //task
     Route::apiResource('project/{project}/task', ProjectTaskController::class);
     Route::post('/task-validate', [ProjectTaskController::class,'validateTask']);
+    Route::get('/tasks', [ProjectTaskController::class,'allTasks']);
     Route::post('/project/{project}/{task}/status/{status}', [ProjectTaskController::class,'updateStatus']);
     Route::apiResource('task/{task}/comment', TaskCommentController::class);
     //task end

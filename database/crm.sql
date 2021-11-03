@@ -604,7 +604,7 @@ CREATE TABLE `project_tasks` (
   `task_description` text DEFAULT NULL,
   `due_date` date NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=opened,1=inprogress,2=closed/completed,3=onhold',
-  `assiged_on` int(11) NOT NULL,
+  `assigned_on` int(11) NOT NULL,
   `assigned_by` int(11) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -614,13 +614,13 @@ CREATE TABLE `project_tasks` (
 
 /*Data for the table `project_tasks` */
 
-insert  into `project_tasks`(`id`,`project_id`,`title`,`task_description`,`due_date`,`status`,`assiged_on`,`assigned_by`,`updated_at`,`created_at`,`project_tag`) values 
+insert  into `project_tasks`(`id`,`project_id`,`title`,`task_description`,`due_date`,`status`,`assigned_on`,`assigned_by`,`updated_at`,`created_at`,`project_tag`) values 
 (1,6,NULL,'<p>test</p>','2021-04-19',1,6,4,'2021-10-25 23:39:15','2021-10-25 23:18:15','test'),
 (2,7,'123123','<p>123123123</p>','2021-11-02',0,6,25,'2021-11-02 01:14:58','2021-11-02 01:14:58',NULL),
-(3,7,'123123123','<p>123123123123123</p>','2021-11-02',0,6,25,'2021-11-02 01:17:39','2021-11-02 01:17:39',NULL),
-(4,7,'1231231','<p>23123123</p>','2021-11-02',0,6,25,'2021-11-02 01:17:57','2021-11-02 01:17:57',NULL),
-(5,7,'123123123','<p>123123123</p>','2021-11-01',0,6,25,'2021-11-02 05:50:06','2021-11-02 01:19:36',NULL),
-(6,7,'23123123','<p>1231231</p>','2021-11-03',0,6,25,'2021-11-02 05:11:51','2021-11-02 01:20:07',NULL);
+(3,7,'123123123','<p>123123123123123</p>','2021-12-31',0,6,25,'2021-11-03 05:50:14','2021-11-02 01:17:39',NULL),
+(4,7,'1231231','<p>23123123</p>','2021-11-04',0,6,25,'2021-11-03 05:30:38','2021-11-02 01:17:57',NULL),
+(5,7,'123123123','<p>123123123</p>','2021-11-25',0,6,25,'2021-11-03 05:50:07','2021-11-02 01:19:36',NULL),
+(6,7,'23123123','<p>1231231</p>','2021-11-01',0,6,25,'2021-11-03 05:50:38','2021-11-02 01:20:07',NULL);
 
 /*Table structure for table `project_users` */
 
