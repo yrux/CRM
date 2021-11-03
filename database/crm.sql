@@ -88,7 +88,7 @@ CREATE TABLE `chat_heads` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chat_heads` */
 
@@ -101,7 +101,8 @@ insert  into `chat_heads`(`id`,`user_id`,`sender_id`,`updated_at`,`created_at`) 
 (30,2,20,'2021-10-30 00:46:03','2021-10-30 00:46:03'),
 (31,2,17,'2021-10-30 00:52:16','2021-10-30 00:52:16'),
 (32,2,18,'2021-10-30 00:52:56','2021-10-30 00:52:56'),
-(33,2,26,'2021-11-02 00:10:39','2021-11-02 00:10:39');
+(33,2,26,'2021-11-02 00:10:39','2021-11-02 00:10:39'),
+(34,25,26,'2021-11-03 06:30:02','2021-11-03 06:30:02');
 
 /*Table structure for table `chats` */
 
@@ -115,7 +116,7 @@ CREATE TABLE `chats` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chats` */
 
@@ -178,7 +179,9 @@ insert  into `chats`(`id`,`chat_head_id`,`message`,`user_id`,`updated_at`,`creat
 (77,27,'ok sir',25,'2021-10-30 01:25:19','2021-10-30 01:25:19'),
 (78,27,'thanks',25,'2021-10-30 01:25:20','2021-10-30 01:25:20'),
 (79,27,'no problem',24,'2021-10-30 01:25:23','2021-10-30 01:25:23'),
-(80,33,'123123',2,'2021-11-02 00:10:43','2021-11-02 00:10:43');
+(80,33,'123123',2,'2021-11-02 00:10:43','2021-11-02 00:10:43'),
+(81,27,'hello there',25,'2021-11-03 06:30:09','2021-11-03 06:30:09'),
+(82,27,'yelo bharwe',25,'2021-11-03 06:30:20','2021-11-03 06:30:20');
 
 /*Table structure for table `company` */
 
@@ -237,7 +240,7 @@ CREATE TABLE `files` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `fileable_id_type_index` (`fileable_id`,`fileable_type`,`table_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `files` */
 
@@ -314,7 +317,19 @@ insert  into `files`(`id`,`url`,`fileable_id`,`fileable_type`,`table_name`,`crea
 (116,'chat/rMUEvFhOh4cUoJstl78rqoRFoaxlh5fMcwD5jORT.docx',68,'App\\Models\\Chat','chat','2021-10-30 00:44:27','2021-10-30 00:44:28'),
 (117,'chat/nzY793OcTGTanQZEpuwFNKECMUgkrtD8HKaaET5J.docx',68,'App\\Models\\Chat','chat','2021-10-30 00:44:27','2021-10-30 00:44:28'),
 (118,'chat/Encw95yStxehBPppPcrktEb28SUPpGyvwoeE2LRv.docx',68,'App\\Models\\Chat','chat','2021-10-30 00:44:27','2021-10-30 00:44:28'),
-(119,'chat/KbbaMZe078XCKoqk864iAUNzoqhFoI8GQduQShtV.docx',74,'App\\Models\\Chat','chat','2021-10-30 01:25:04','2021-10-30 01:25:05');
+(119,'chat/KbbaMZe078XCKoqk864iAUNzoqhFoI8GQduQShtV.docx',74,'App\\Models\\Chat','chat','2021-10-30 01:25:04','2021-10-30 01:25:05'),
+(120,'projects/xfp2xyRnD32Jdc4GNl0tj5AgS1apthvtlEZ5toee.png',13,'App\\Models\\Project','projects','2021-11-03 06:28:49','2021-11-03 06:28:49'),
+(121,'projects/Gj8xCJU5BCEY15CmXiDMKAKre3PE98Ns6VXAmMaZ.png',13,'App\\Models\\Project','projects','2021-11-03 06:28:49','2021-11-03 06:28:49'),
+(122,'projects/pLkqiN242ICNS00UvLLdBJbCYhORp3cmyhYed2kk.png',13,'App\\Models\\Project','projects','2021-11-03 06:28:49','2021-11-03 06:28:49'),
+(123,'projects/KoOwu2yrpx07plF7xJWaYmZf7ttWuGzpxui2u9Ry.png',13,'App\\Models\\Project','projects','2021-11-03 06:28:49','2021-11-03 06:28:49'),
+(124,'chat/qv1KHxg6Jd6xvQKvJM0R8Uvoj93czX3AQ8XuLiw8.docx',82,'App\\Models\\Chat','chat','2021-11-03 06:30:16','2021-11-03 06:30:20'),
+(125,'chat/aiG2Af91mpnE8kn1co2vunH7z9DFUDgutFGhA16C.jpg',82,'App\\Models\\Chat','chat','2021-11-03 06:30:17','2021-11-03 06:30:20'),
+(126,'project_tasks/ehdmgCBo5hpbN3J6nzrUMLaR9RHxuAdo2K3uG12q.png',7,'App\\Models\\ProjectTask','project_tasks','2021-11-03 06:35:54','2021-11-03 06:35:54'),
+(127,'project_tasks/7cCbXnCcwwEI0C09NWuCiIUIV0PyNAM4MsvTsx2P.jpg',7,'App\\Models\\ProjectTask','project_tasks','2021-11-03 06:35:54','2021-11-03 06:35:54'),
+(128,'project_tasks/zDuA4J1QAbBAYkw1tfDGclVQT1FShdWkYcj25yWu.png',7,'App\\Models\\ProjectTask','project_tasks','2021-11-03 06:35:54','2021-11-03 06:35:54'),
+(129,'project_tasks/Li1oN21PPSfumguwi7Aeu0pXyfR7ELW3CBOFHi0S.jpg',7,'App\\Models\\ProjectTask','project_tasks','2021-11-03 06:35:54','2021-11-03 06:35:54'),
+(130,'project_tasks/LUOpXJjums1SnnNoBfUxK88X2HycQ2umR8rbTNCK.jpg',7,'App\\Models\\ProjectTask','project_tasks','2021-11-03 06:35:54','2021-11-03 06:35:54'),
+(131,'project_tasks/MTmllH9iwtKLzMz308Df7XRHqP29Dq5cHi5inLoH.png',7,'App\\Models\\ProjectTask','project_tasks','2021-11-03 06:35:54','2021-11-03 06:35:54');
 
 /*Table structure for table `migrations` */
 
@@ -610,7 +625,7 @@ CREATE TABLE `project_tasks` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `project_tag` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `project_tasks` */
 
@@ -620,7 +635,8 @@ insert  into `project_tasks`(`id`,`project_id`,`title`,`task_description`,`due_d
 (3,7,'123123123','<p>123123123123123</p>','2021-12-31',0,6,25,'2021-11-03 05:50:14','2021-11-02 01:17:39',NULL),
 (4,7,'1231231','<p>23123123</p>','2021-11-04',0,6,25,'2021-11-03 05:30:38','2021-11-02 01:17:57',NULL),
 (5,7,'123123123','<p>123123123</p>','2021-11-25',0,6,25,'2021-11-03 05:50:07','2021-11-02 01:19:36',NULL),
-(6,7,'23123123','<p>1231231</p>','2021-11-01',0,6,25,'2021-11-03 05:50:38','2021-11-02 01:20:07',NULL);
+(6,7,'23123123','<p>1231231</p>','2021-11-01',0,6,25,'2021-11-03 05:50:38','2021-11-02 01:20:07',NULL),
+(7,13,'Create Logo of webnhub','<p>Create Logo of webnhub</p><p>Create Logo of webnhub</p><p>Create Logo of webnhub</p><p>Create Logo of webnhub</p>','2021-11-17',0,6,25,'2021-11-03 06:35:54','2021-11-03 06:35:54',NULL);
 
 /*Table structure for table `project_users` */
 
@@ -636,7 +652,7 @@ CREATE TABLE `project_users` (
   PRIMARY KEY (`id`),
   KEY `project_users` (`user_id`,`role_id`),
   KEY `project_project_id` (`project_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `project_users` */
 
@@ -662,7 +678,8 @@ insert  into `project_users`(`id`,`user_id`,`role_id`,`project_id`,`created_at`,
 (19,25,5,9,'2021-11-02 04:03:19','2021-11-02 04:03:19'),
 (20,25,5,10,'2021-11-02 04:03:58','2021-11-02 04:03:58'),
 (21,25,5,11,'2021-11-02 04:04:33','2021-11-02 04:04:33'),
-(22,25,5,12,'2021-11-02 04:10:27','2021-11-02 04:10:27');
+(22,25,5,12,'2021-11-02 04:10:27','2021-11-02 04:10:27'),
+(23,25,5,13,'2021-11-03 06:28:48','2021-11-03 06:28:48');
 
 /*Table structure for table `projects` */
 
@@ -681,7 +698,7 @@ CREATE TABLE `projects` (
   PRIMARY KEY (`id`),
   KEY `project_customer` (`company_id`),
   KEY `project_brand` (`brand_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `projects` */
 
@@ -696,7 +713,8 @@ insert  into `projects`(`id`,`company_id`,`brand_id`,`project_id`,`title`,`descr
 (9,18,11,'TCB-1635807799-9','123123','<p>123123123</p>',0,'2021-11-02 04:03:19','2021-11-02 04:03:19'),
 (10,18,11,'TCB-1635807838-10','123123','<p>123123</p>',0,'2021-11-02 04:03:58','2021-11-02 04:03:58'),
 (11,18,11,'TCB-1635807873-11','123123','<p>adadasd</p>',0,'2021-11-02 04:04:33','2021-11-02 04:04:33'),
-(12,18,11,'TCB-1635808227-12','123123123','<p>123123123123</p>',0,'2021-11-02 04:10:27','2021-11-02 04:10:27');
+(12,18,11,'TCB-1635808227-12','123123123','<p>123123123123</p>',0,'2021-11-02 04:10:27','2021-11-02 04:10:27'),
+(13,18,11,'TCB-1635902928-13','WebnHub','<p>Webnhub Website,</p><p>We need to create a website which have alot of data and users</p>',0,'2021-11-03 06:28:48','2021-11-03 06:28:48');
 
 /*Table structure for table `roles` */
 

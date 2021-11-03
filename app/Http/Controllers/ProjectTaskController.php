@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\{ProjectTask, Project};
 use Illuminate\Http\Request;
 use App\Http\Resources\ProjectTaskResource;
+use App\Repositories\FileRepository;
 use App\Http\Requests\ProjectTaskRequest;
 class ProjectTaskController extends Controller
 {
+    protected $file;
+    public function __construct(FileRepository $file)
+    {
+        $this->file = $file;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,6 +41,7 @@ class ProjectTaskController extends Controller
         $arr = $request->except(['__token']);
         $arr['assigned_by'] = $request->user()->id;
         $task = $project->tasks()->create($arr);
+        $this->file->create($request->attachements, 'project_tasks', $task->id, 2);
         return new ProjectTaskResource($task);
     }
 

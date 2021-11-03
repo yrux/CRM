@@ -1,79 +1,100 @@
 <template>
   <div>
-    <v-expansion-panels
-      v-if="tasks.length > 0"
-      v-model="taskOpen"
-      multiple
-      focusable
-    >
-      <v-expansion-panel :class="'mt-4'" v-for="task in tasks" :key="task.id">
-        <v-expansion-panel-header v-ripple="{ center: true }" v-slot="{ open }">
-          <v-row no-gutters>
-            <v-col :cols="open === true ? 12 : 4" :class="'text-break'">
-              {{ task.title }}
-            </v-col>
-            <v-col cols="8" class="text--secondary">
-              <v-fade-transition leave-absolute>
-                <span v-if="open"></span>
-                <v-row v-else no-gutters style="width: 100%">
-                  <v-col cols="6">
-                    Start date:
-                    <strong>{{
-                      task.created_at_formatted || "Not set"
-                    }}</strong>
-                  </v-col>
-                  <v-col cols="6">
-                    Due date: <strong>{{ task.due_date || "Not set" }}</strong>
-                  </v-col>
-                </v-row>
-              </v-fade-transition>
-            </v-col>
-          </v-row>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <div class="mt-2 text-break" v-html="task.task_description"></div>
-          <v-divider></v-divider>
-          <v-row class="mt-3" no-gutters>
-              
-          </v-row>
-          <v-divider></v-divider>
-          <v-row class="mt-3" no-gutters>
-            <v-col cols="4" sm="4">
-              <small
-                >Start date:
-                <strong>{{
-                  task.created_at_formatted || "Not set"
-                }}</strong></small
-              >
-            </v-col>
-            <v-col cols="4" sm="4">
-              <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn @click="dialog=true;selectedTask=task;" text tile color="success"  v-bind="attrs" v-on="on">
-                    <v-icon left> mdi-update </v-icon>
-                    <small
-                      >Due date:
-                      <strong>{{ task.due_date || "Not set" }}</strong></small
+    <v-card class="mx-auto" outlined v-if="tasks.length > 0" elevation="2">
+      <v-card-title>
+        {{ project.project_id }} {{ project.title }}
+      </v-card-title>
+      <v-divider></v-divider>
+      <v-card-text>
+        <div v-html="project.description"></div>
+        <div class="mt-2">
+          <a target="_blank" v-for="project_files in project.files" :key="project_files.id" :href="project_files.full_url"> 
+          <v-chip class="ma-2" color="secondary">
+            {{project_files.url}} </v-chip></a>
+        </div>
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-text>
+        <h3>Tasks</h3>
+      </v-card-text>
+      <v-expansion-panels v-model="taskOpen" multiple focusable>
+        <v-expansion-panel :class="'mt-4'" v-for="task in tasks" :key="task.id">
+          <v-expansion-panel-header
+            v-ripple="{ center: true }"
+            v-slot="{ open }"
+          >
+            <v-row no-gutters>
+              <v-col :cols="open === true ? 12 : 4" :class="'text-break'">
+                {{ task.title }}
+              </v-col>
+              <v-col cols="8" class="text--secondary">
+                <v-fade-transition leave-absolute>
+                  <span v-if="open"></span>
+                  <v-row v-else no-gutters style="width: 100%">
+                    <v-col cols="6">
+                      Start date:
+                      <strong>{{
+                        task.created_at_formatted || "Not set"
+                      }}</strong>
+                    </v-col>
+                    <v-col cols="6">
+                      Due date:
+                      <strong>{{ task.due_date || "Not set" }}</strong>
+                    </v-col>
+                  </v-row>
+                </v-fade-transition>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <div class="mt-2 text-break" v-html="task.task_description"></div>
+            <v-divider></v-divider>
+            <v-row class="mt-3" no-gutters> Comments here </v-row>
+            <v-divider></v-divider>
+            <v-row class="mt-3" no-gutters>
+              <v-col cols="4" sm="4">
+                <small
+                  >Start date:
+                  <strong>{{
+                    task.created_at_formatted || "Not set"
+                  }}</strong></small
+                >
+              </v-col>
+              <v-col cols="4" sm="4">
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      @click="
+                        dialog = true;
+                        selectedTask = task;
+                      "
+                      text
+                      tile
+                      color="success"
+                      v-bind="attrs"
+                      v-on="on"
                     >
-                  </v-btn>
-                </template>
-                <span>Change Due Date</span>
-              </v-tooltip>
-            </v-col>
-          </v-row>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
+                      <v-icon left> mdi-update </v-icon>
+                      <small
+                        >Due date:
+                        <strong>{{ task.due_date || "Not set" }}</strong></small
+                      >
+                    </v-btn>
+                  </template>
+                  <span>Change Due Date</span>
+                </v-tooltip>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-card>
     <v-row v-else>
       <v-col cols="12" md="12" class="pa-0" v-for="qq in 10" :key="qq">
         <v-skeleton-loader type="list-item-three-line"></v-skeleton-loader>
       </v-col>
     </v-row>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="600px"
-    >
+    <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
           <span class="text-h5">Update Due Date</span>
@@ -82,25 +103,20 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-date-picker full-width v-model="selectedTask.due_date"></v-date-picker>
+                <v-date-picker
+                  full-width
+                  v-model="selectedTask.due_date"
+                ></v-date-picker>
               </v-col>
             </v-row>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
+          <v-btn color="blue darken-1" text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="updateDue(selectedTask)"
-          >
+          <v-btn color="blue darken-1" text @click="updateDue(selectedTask)">
             Save
           </v-btn>
         </v-card-actions>
@@ -114,6 +130,7 @@ import projectservice from "@services/auth/project";
 export default {
   async mounted() {
     this.project_id = this.$route.params.project;
+    this.project = await projectservice.get(this.project_id);
     await this.getTaskSummary();
     if (this.$route.query.task) {
       for (let i = 0; i < this.tasks.length; i++) {
@@ -131,7 +148,8 @@ export default {
       taskOpen: [],
       tasks: [],
       dialog: false,
-      selectedTask : {},
+      selectedTask: {},
+      project: {},
     };
   },
   methods: {
@@ -140,12 +158,12 @@ export default {
       this.tasks = res;
     },
     async updateDue(task) {
-    //   this.tasks = [];
+      //   this.tasks = [];
       var formData = new FormData();
       formData.append("due_date", task.due_date);
       taskservice.update(this.project_id, task.id, formData);
-      this.dialog = false
-    //   this.getTaskSummary();
+      this.dialog = false;
+      //   this.getTaskSummary();
     },
   },
   computed: {},

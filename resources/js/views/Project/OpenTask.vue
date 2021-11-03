@@ -161,7 +161,7 @@ export default {
       var formData = new FormData();
       formData.append('title',this.task.task_title)
       formData.append('task_description',this.task.description)
-      formData.append('assiged_on',this.task.assigned_to)
+      formData.append('assigned_on',this.task.assigned_to)
       formData.append('due_date',this.task.picker)
       formData.append('project_id',this.task.project_id)
       for(let i = 0; i < this.task.files.length; i++){

@@ -237,7 +237,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData = new FormData();
                 formData.append('title', _this2.task.task_title);
                 formData.append('task_description', _this2.task.description);
-                formData.append('assiged_on', _this2.task.assigned_to);
+                formData.append('assigned_on', _this2.task.assigned_to);
                 formData.append('due_date', _this2.task.picker);
                 formData.append('project_id', _this2.task.project_id);
 

@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 use App\Models\{BrandUser, Brand, Project, ProjectUser};
 use Illuminate\Http\Request;
 use App\Http\Resources\ProjectResource;
+use App\Repositories\FileRepository;
 use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
+    protected $file;
+    public function __construct(FileRepository $file)
+    {
+        $this->file = $file;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -91,6 +97,7 @@ class ProjectController extends Controller
                 'role_id'=>$brand_user->user->role_id
             ]);
         }
+        $this->file->create($request->attachements, 'projects', $project->id, 2);
         return new ProjectResource($project);
     }
 
