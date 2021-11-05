@@ -6,9 +6,15 @@ use App\Models\{ProjectTask, TaskComment};
 use Illuminate\Http\Request;
 use App\Http\Resources\TaskCommentResource;
 use Illuminate\Support\Facades\Gate;
+use App\Repositories\FileRepository;
 
 class TaskCommentController extends Controller
 {
+    protected $file;
+    public function __construct(FileRepository $file)
+    {
+        $this->file = $file;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +37,7 @@ class TaskCommentController extends Controller
             'user_id'=>$request->user()->id,
             'comment'=>$request->comment
         ]);
+        $this->file->create($request->attachements, 'task_comments', $comment->id, 2);
         return new TaskCommentResource($comment);
     }
     public function destroy(ProjectTask $task, TaskComment $comment)

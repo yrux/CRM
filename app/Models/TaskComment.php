@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TaskComment extends Model
 {
     use HasFactory;
+    protected $appends = ['created_at_formatted'];
+    protected $with = ['user','files'];
     protected $fillable = [
         'task_id','comment','user_id',
     ];
@@ -19,5 +21,8 @@ class TaskComment extends Model
     }
     public function files(){
         return $this->morphMany(File::class,'fileable');
+    }
+    public function getCreatedAtFormattedAttribute(){
+        return date('Y-m-d h:i a',strtotime($this->created_at));
     }
 }

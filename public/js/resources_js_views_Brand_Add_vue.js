@@ -14,7 +14,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_auth_brand__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @services/auth/brand */ "./resources/js/services/auth/brand.js");
-/* harmony import */ var _services_auth_file__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @services/auth/file */ "./resources/js/services/auth/file.js");
+/* harmony import */ var _services_auth_company__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @services/auth/company */ "./resources/js/services/auth/company.js");
+/* harmony import */ var _services_auth_file__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @services/auth/file */ "./resources/js/services/auth/file.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -106,6 +107,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -115,7 +135,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.errors = {
         brand_code: [],
         brand_name: [],
-        file: []
+        file: [],
+        company_id: []
       };
     },
     addbrand: function () {
@@ -136,7 +157,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formdata = new FormData();
                 formdata.append("brand_name", this.brand_name);
                 formdata.append("brand_code", this.brand_code);
-                formdata.append("company_id", this.user.company_id);
+                formdata.append("company_id", this.company_id);
                 formdata.append("file", this.image);
                 this.btnloading = false;
                 _context.next = 11;
@@ -174,7 +195,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 fileData.append("type", '1');
                 fileData.append("attachements[0]", this.image);
                 _context.next = 25;
-                return _services_auth_file__WEBPACK_IMPORTED_MODULE_2__["default"].create(fileData);
+                return _services_auth_file__WEBPACK_IMPORTED_MODULE_3__["default"].create(fileData);
 
               case 25:
                 this.$router.push({
@@ -201,16 +222,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.$store.getters.loggedInUser;
     }
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!(_this.user.role_id == 1)) {
+                _context2.next = 6;
+                break;
+              }
+
+              _context2.next = 3;
+              return _services_auth_company__WEBPACK_IMPORTED_MODULE_2__["default"].getlist('').then(function (e) {
+                return e.data;
+              });
+
+            case 3:
+              _this.companies = _context2.sent;
+              _context2.next = 7;
+              break;
+
+            case 6:
+              _this.company_id = _this.user.company_id;
+
+            case 7:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
   data: function data() {
     return {
       brand_name: "",
       brand_code: '',
+      company_id: 0,
       errors: {
         brand_name: [],
         brand_code: [],
-        file: []
+        file: [],
+        company_id: []
       },
       image: {},
+      companies: [],
       bread: [{
         text: "Dashboard",
         to: {
@@ -556,6 +614,173 @@ var brandservice = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/services/auth/company.js":
+/*!***********************************************!*\
+  !*** ./resources/js/services/auth/company.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var companyservice = /*#__PURE__*/function () {
+  function companyservice() {
+    _classCallCheck(this, companyservice);
+  }
+
+  _createClass(companyservice, [{
+    key: "getlist",
+    value: function getlist(params) {
+      return axios.get("/api/company".concat(params)).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "delete",
+    value: function _delete(_ref) {
+      var query = _ref.query,
+          id = _ref.id;
+      return axios["delete"]("/api/company/".concat(id));
+    }
+  }, {
+    key: "create",
+    value: function () {
+      var _create = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(formData) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.post('/api/company', formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 2:
+                res = _context.sent;
+                return _context.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function create(_x) {
+        return _create.apply(this, arguments);
+      }
+
+      return create;
+    }()
+  }, {
+    key: "get",
+    value: function () {
+      var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(id) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get("/api/company/".concat(id));
+
+              case 2:
+                res = _context2.sent;
+                return _context2.abrupt("return", res.data.data);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function get(_x2) {
+        return _get.apply(this, arguments);
+      }
+
+      return get;
+    }()
+  }, {
+    key: "update",
+    value: function () {
+      var _update = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(formData, id) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                formData.append('_method', 'put');
+                _context3.next = 3;
+                return axios.post('/api/company/' + id, formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 3:
+                res = _context3.sent;
+                return _context3.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function update(_x3, _x4) {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }()
+  }]);
+
+  return companyservice;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new companyservice());
+
+/***/ }),
+
 /***/ "./resources/js/services/auth/file.js":
 /*!********************************************!*\
   !*** ./resources/js/services/auth/file.js ***!
@@ -841,6 +1066,36 @@ var render = function () {
                         ],
                         1
                       ),
+                      _vm._v(" "),
+                      _vm.user.role_id == 1
+                        ? _c(
+                            "v-col",
+                            {
+                              staticClass: "pb-0",
+                              attrs: { cols: "12", sm: "12" },
+                            },
+                            [
+                              _c("v-select", {
+                                attrs: {
+                                  items: _vm.companies,
+                                  "item-text": "company_name",
+                                  "item-value": "id",
+                                  label: "Company*",
+                                  required: "",
+                                  "error-messages": _vm.errors.company_id,
+                                },
+                                model: {
+                                  value: _vm.company_id,
+                                  callback: function ($$v) {
+                                    _vm.company_id = $$v
+                                  },
+                                  expression: "company_id",
+                                },
+                              }),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "v-col",

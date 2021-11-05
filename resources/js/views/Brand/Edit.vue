@@ -66,6 +66,24 @@ lazy-validation
     :src="imageurl"
     ></v-img>
 </v-col>
+
+<v-col
+  cols="12"
+  sm="12"
+  class="pb-0"
+  v-if="user.role_id==1"
+>
+<v-select
+    :items="companies"
+    item-text="company_name"
+    item-value="id"
+    label="Company*"
+    required
+    v-model="company_id"
+    :error-messages="errors.company_id"
+></v-select>
+</v-col>
+
  <v-col
   cols="12"
   sm="12"
@@ -92,6 +110,7 @@ lazy-validation
 
 <script>
 import brandservice from "@services/auth/brand";
+import companyservice from "@services/auth/company";
 import fileservice from "@services/auth/file";
 export default {
   name: "auth.company.edit",
@@ -100,7 +119,13 @@ export default {
       var res = await brandservice.get(this.id)
       this.brand_name = res.brand_name
       this.brand_code = res.brand_code
+      this.company_id = res.company_id
       this.imageurl = res.image_url
+      if(this.user.role_id==1){
+        this.companies = await companyservice.getlist('').then(e=>e.data);
+      }else{
+        // this.company_id = this.user.company_id
+      }
   },
   methods: {
     resetError(){
@@ -108,6 +133,7 @@ export default {
           brand_name:[],
           brand_code: [],
           file: [],
+          company_id: [],
       }
     },
     addbrand: async function () {
@@ -116,7 +142,7 @@ export default {
         this.btnloading = true;
         var formdata = new FormData();
         formdata.append("brand_name", this.brand_name);
-        formdata.append("company_id", this.user.company_id);
+        formdata.append("company_id", this.company_id);
         formdata.append("brand_code", this.brand_code);
         if(this.image.size){
             formdata.append("file", this.image);
@@ -164,7 +190,10 @@ export default {
           brand_name:[],
           brand_code: [],
           file: [],
+          company_id: [],
       },
+      companies: [],
+      company_id: 0,
       image: {},
       bread: [
         {

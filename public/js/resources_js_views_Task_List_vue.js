@@ -252,6 +252,24 @@ var taskservice = /*#__PURE__*/function () {
         return error;
       });
     }
+  }, {
+    key: "comment",
+    value: function comment(task_id, formData) {
+      return axios.post("/api/task/".concat(task_id, "/comment"), formData).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "updateStatus",
+    value: function updateStatus(project_id, task_id, status) {
+      return axios.post("/api/project/".concat(project_id, "/").concat(task_id, "/status/").concat(status)).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
   }]);
 
   return taskservice;

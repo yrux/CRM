@@ -8,9 +8,16 @@
       <v-card-text>
         <div v-html="project.description"></div>
         <div class="mt-2">
-          <a target="_blank" v-for="project_files in project.files" :key="project_files.id" :href="project_files.full_url"> 
-          <v-chip class="ma-2" color="secondary">
-            {{project_files.url}} </v-chip></a>
+          <a
+            target="_blank"
+            v-for="project_files in project.files"
+            :key="project_files.id"
+            :href="project_files.full_url"
+          >
+            <v-chip class="ma-2" color="secondary">
+              {{ project_files.url }}
+            </v-chip></a
+          >
         </div>
       </v-card-text>
       <v-divider></v-divider>
@@ -18,13 +25,22 @@
         <h3>Tasks</h3>
       </v-card-text>
       <v-expansion-panels v-model="taskOpen" multiple focusable>
-        <v-expansion-panel :class="'mt-4'" v-for="task in tasks" :key="task.id">
+        <v-expansion-panel
+          :class="'mt-4'"
+          v-for="(task, taskk) in tasks"
+          :key="task.id"
+        >
           <v-expansion-panel-header
             v-ripple="{ center: true }"
             v-slot="{ open }"
+            :class="task.class"
           >
             <v-row no-gutters>
               <v-col :cols="open === true ? 12 : 4" :class="'text-break'">
+                <v-chip class="ma-2" color="pink" label text-color="white">
+                  <v-icon left> mdi-label </v-icon>
+                  #{{ task.id }}
+                </v-chip>
                 {{ task.title }}
               </v-col>
               <v-col cols="8" class="text--secondary">
@@ -48,8 +64,36 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <div class="mt-2 text-break" v-html="task.task_description"></div>
+            <div class="mt-2">
+              <a
+                target="_blank"
+                v-for="task_files in task.files"
+                :key="task_files.id"
+                :href="task_files.full_url"
+              >
+                <v-chip class="ma-2" color="secondary">
+                  {{ task_files.url }}
+                </v-chip></a
+              >
+            </div>
             <v-divider></v-divider>
-            <v-row class="mt-3" no-gutters> Comments here </v-row>
+            <v-row class="mt-3 mb-2" no-gutters>
+              <h3>Comments</h3>
+              <v-col cols="12" md="12">
+                <v-row v-if="task.comments.length > 0">
+                  <comment-task
+                    v-for="comment in task.comments"
+                    :key="comment.id"
+                    :comment="comment"
+                  />
+                </v-row>
+              </v-col>
+              <post-task-comment
+                v-if="task.status != 2"
+                v-on:comment-task="refreshTasks()"
+                :task_id="task.id"
+              />
+            </v-row>
             <v-divider></v-divider>
             <v-row class="mt-3" no-gutters>
               <v-col cols="4" sm="4">
@@ -83,6 +127,42 @@
                   </template>
                   <span>Change Due Date</span>
                 </v-tooltip>
+              </v-col>
+              <v-col cols="4" sm="4">
+                <v-btn-toggle rounded>
+                  <v-tooltip bottom v-if="task.status!=2">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn @click="taskStatusUpdate(task.id, 2)" fab small v-bind="attrs" v-on="on">
+                        <v-icon>mdi-close</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Close Task</span>
+                  </v-tooltip>
+                  <v-tooltip bottom v-else>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn @click="taskStatusUpdate(task.id, 0)" fab small v-bind="attrs" v-on="on">
+                        <v-icon>mdi-check</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Re-Open Task</span>
+                  </v-tooltip>
+                  <v-tooltip bottom v-if="task.status!=2">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn fab small v-bind="attrs" v-on="on">
+                        <v-icon>mdi-account-convert</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Change Assignment</span>
+                  </v-tooltip>
+                  <v-tooltip bottom v-if="task.status!=2">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn @click="taskStatusUpdate(task.id, 3)" fab small v-bind="attrs" v-on="on">
+                        <v-icon>mdi-car-brake-hold</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Put on Hold</span>
+                  </v-tooltip>
+                </v-btn-toggle>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
@@ -127,8 +207,12 @@
 <script>
 import taskservice from "@services/auth/task";
 import projectservice from "@services/auth/project";
+import CommentTask from "./CommentTask.vue";
+import PostTaskComment from "./PostTaskComment.vue";
 export default {
   async mounted() {
+    this.$root.snackbar = true
+    this.$root.notificationText = 'Notification here'
     this.project_id = this.$route.params.project;
     this.project = await projectservice.get(this.project_id);
     await this.getTaskSummary();
@@ -153,9 +237,29 @@ export default {
     };
   },
   methods: {
+    async taskStatusUpdate(task_id, status){
+      await taskservice.updateStatus(this.project_id, task_id, status)
+      this.$store.commit('setNotification','Status Updated');
+      this.refreshTasks()
+    },
+    refreshTasks() {
+      this.getTaskSummary();
+    },
     async getTaskSummary() {
       var res = await taskservice.summary(this.project_id);
       this.tasks = res;
+      for(let q = 0; q < this.tasks.length; q++){
+        this.tasks[q].class = '';
+        if(this.tasks[q].status==3){
+          this.tasks[q].class = 'orange lighten-4'
+        }
+        if(this.tasks[q].status==2){
+          this.tasks[q].class = 'green lighten-4'
+        }
+        if(this.tasks[q].status==1){
+          this.tasks[q].class = 'blue lighten-4'
+        }
+      }
     },
     async updateDue(task) {
       //   this.tasks = [];
@@ -168,5 +272,6 @@ export default {
   },
   computed: {},
   watch: {},
+  components: { CommentTask, PostTaskComment },
 };
 </script>

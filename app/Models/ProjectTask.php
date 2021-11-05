@@ -9,7 +9,7 @@ class ProjectTask extends Model
 {
     use HasFactory;
     protected $appends = ['due_type','created_at_formatted'];
-    protected $with = ['files'];
+    protected $with = ['files','comments'];
     protected $fillable = [
         'project_id','task_description','due_date','status','assigned_on','assigned_by','project_tag','title'
     ];

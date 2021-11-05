@@ -7,6 +7,8 @@ export const store = new Vuex.Store({
         loggedIn: false,
         sideBarStatus: false,
         loggedInUser: {},
+        notificationStatus: false,
+        notificationText: '',
     },
     mutations: {
         setAuthToken(state, authtoken) {
@@ -23,6 +25,13 @@ export const store = new Vuex.Store({
         },
         setSideBarStatus(status, sideBarStatus){
             status.sideBarStatus = sideBarStatus
+        },
+        setNotification(state, text){
+            state.notificationText = text
+            state.notificationStatus = true
+            setTimeout(()=>{
+                state.notificationStatus = false
+            },1000)
         }
     },
     getters: {
@@ -37,6 +46,12 @@ export const store = new Vuex.Store({
         },
         sideBarStatus(state){
             return state.sideBarStatus
+        },
+        notificationStatus(state){
+            return state.notificationStatus
+        },
+        notificationText(state){
+            return state.notificationText
         }
     }
 })

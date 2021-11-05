@@ -19,6 +19,7 @@
         </v-container>
       </v-main>
     </v-app>
+    <notifications :notificaitontext="notificaitontext" :notificaitonstatus="notificaitonstatus" />
   </div>
   <script src="/js/app.js"></script>
 </body>

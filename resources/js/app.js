@@ -8,9 +8,12 @@ import { store } from './store'
 import router from './routes'
 window.Vue = require('vue').default;
 import loginservice from "@services/auth/login";
+
 Vue.use(VueRouter);
 Vue.use(CKEditor);
+
 import adminbar from "@/components/sidebars/admin.vue";
+import notifications from "@/components/sidebars/notifications.vue";
 
 router.beforeEach(async (to, from, next) => {
   // console.log(store.getters.loggedIn)
@@ -41,16 +44,22 @@ new Vue({
     }
   },
   components: {
-    adminbar
+    adminbar,
+    notifications
   },
   data(){
     return {
-
     }
   },
   computed:{
     sideBarStatus() {
       return this.$store.getters.sideBarStatus;
+    },
+    notificaitontext() {
+      return this.$store.getters.notificationText;
+    },
+    notificaitonstatus() {
+      return this.$store.getters.notificationStatus;
     },
   },
   watch:{

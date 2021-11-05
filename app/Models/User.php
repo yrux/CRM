@@ -57,6 +57,9 @@ class User extends Authenticatable
     public function brands(){
         return $this->hasManyThrough(BrandUser::class, Brand::class,'id','user_id');
     }
+    public function companybrands(){
+        return $this->hasMany(Brand::class,'company_id','company_id');
+    }
     public function brandsAssigned(){
         return $this->hasMany(BrandUser::class);
     }
