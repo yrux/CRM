@@ -3110,18 +3110,6 @@ __webpack_require__.r(__webpack_exports__);
       return __webpack_require__.e(/*! import() */ "resources_js_views_Lead_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Lead/List.vue */ "./resources/js/views/Lead/List.vue"));
     },
     name: 'auth.leads.listing'
-  }, {
-    path: 'add',
-    component: function component() {
-      return __webpack_require__.e(/*! import() */ "resources_js_views_Lead_Add_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Lead/Add.vue */ "./resources/js/views/Lead/Add.vue"));
-    },
-    name: 'auth.leads.add'
-  }, {
-    path: 'edit/:id',
-    component: function component() {
-      return __webpack_require__.e(/*! import() */ "resources_js_views_Lead_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Lead/Edit.vue */ "./resources/js/views/Lead/Edit.vue"));
-    },
-    name: 'auth.leads.edit'
   }],
   beforeEnter: _middleware_company__WEBPACK_IMPORTED_MODULE_1__["default"]
 }]);
@@ -85650,7 +85638,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Lead_Main_vue":1,"resources_js_views_Lead_List_vue":1,"resources_js_views_Lead_Add_vue":1,"resources_js_views_Lead_Edit_vue":1,"resources_js_views_Chat_Main_vue":1,"resources_js_views_Project_Main_vue":1,"resources_js_views_Project_List_vue":1,"resources_js_views_Project_Add_vue":1,"resources_js_views_Project_OpenTask_vue":1,"resources_js_views_Task_List_vue":1,"resources_js_views_Task_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Lead_Main_vue":1,"resources_js_views_Lead_List_vue":1,"resources_js_views_Chat_Main_vue":1,"resources_js_views_Project_Main_vue":1,"resources_js_views_Project_List_vue":1,"resources_js_views_Project_Add_vue":1,"resources_js_views_Project_OpenTask_vue":1,"resources_js_views_Task_List_vue":1,"resources_js_views_Task_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

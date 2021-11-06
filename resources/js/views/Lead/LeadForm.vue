@@ -15,28 +15,39 @@
         >
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn dark text @click="updateLead"> {{ form.id > 0 ? "Update Lead" : "Save Lead" }} </v-btn>
+          <v-btn dark text @click="updateLead">
+            {{ form.id > 0 ? "Update Lead" : "Save Lead" }}
+          </v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <v-card-text>
         <v-container>
           <v-row>
             <v-col cols="4">
-              <v-text-field label="Email*" v-model="form.email" required></v-text-field>
+              <v-text-field
+                label="Email*"
+                v-model="form.email"
+                required
+              ></v-text-field>
             </v-col>
             <v-col cols="4">
-              <v-text-field label="Full Name*" v-model="form.full_name" required></v-text-field>
+              <v-text-field
+                label="Full Name*"
+                v-model="form.full_name"
+                required
+              ></v-text-field>
             </v-col>
             <v-col cols="4">
-              <v-text-field label="Phone" v-model="form.phone" ></v-text-field>
+              <v-text-field label="Phone" v-model="form.phone"></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-text-field label="Message" v-model="form.message" ></v-text-field>
+              <v-text-field
+                label="Message"
+                v-model="form.message"
+              ></v-text-field>
             </v-col>
-            <v-col
-                cols="6"
-            >
-            <v-select
+            <v-col cols="6">
+              <v-select
                 required
                 :items="brands"
                 item-text="brand_name"
@@ -46,13 +57,25 @@
                 :hint="`${form.brand.brand_name}, ${form.brand.brand_code}`"
                 persistent-hint
                 return-object
-            ></v-select>
+              ></v-select>
             </v-col>
             <v-col v-if="form.id > 0" cols="12">
-                <h4>Custom Fields</h4>
+              <h4>Custom Fields</h4>
             </v-col>
             <v-col :key="cfk" v-for="(cf, cfk) in form.custom_fields" cols="4">
               <v-text-field readonly :label="cfk" :value="cf"></v-text-field>
+            </v-col>
+            <v-col v-if="form.id > 0" cols="12">
+              {{ lead.lead_status == 3 }}
+              <v-divider
+                v-if="form.id > 0 && lead.lead_status == 3"
+              ></v-divider>
+            </v-col>
+            <v-col v-if="form.id > 0 && lead.lead_status == 3" cols="12">
+              <v-btn color="blue-grey" class="ma-2 white--text">
+                <v-icon left dark> mdi-currency-usd </v-icon>
+                Generate Payment Link
+              </v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -82,21 +105,21 @@ export default {
       this.dialog = false;
       this.$emit("close-leaddialog");
     },
-    async updateLead(){
-        var formData = new FormData()
-        formData.append('full_name',this.form.full_name)
-        formData.append('phone',this.form.phone)
-        formData.append('email',this.form.email)
-        formData.append('message',this.form.message)
-        formData.append('brand_id',this.form.brand.id)
-        if(this.form.id>0){
-            await leadservice.update(formData, this.form.id)
-            this.$store.commit("setNotification", "Lead Updated");
-        }else{
-            await leadservice.create(formData)
-            this.$store.commit("setNotification", "Lead Created");
-        }
-        this.$emit("refresh-leads");
+    async updateLead() {
+      var formData = new FormData();
+      formData.append("full_name", this.form.full_name);
+      formData.append("phone", this.form.phone);
+      formData.append("email", this.form.email);
+      formData.append("message", this.form.message);
+      formData.append("brand_id", this.form.brand.id);
+      if (this.form.id > 0) {
+        await leadservice.update(formData, this.form.id);
+        this.$store.commit("setNotification", "Lead Updated");
+      } else {
+        await leadservice.create(formData);
+        this.$store.commit("setNotification", "Lead Created");
+      }
+      this.$emit("refresh-leads");
     },
   },
   computed: {},

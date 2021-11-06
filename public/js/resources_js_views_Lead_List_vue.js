@@ -82,6 +82,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -113,11 +136,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 formData = new FormData();
-                formData.append('full_name', _this.form.full_name);
-                formData.append('phone', _this.form.phone);
-                formData.append('email', _this.form.email);
-                formData.append('message', _this.form.message);
-                formData.append('brand_id', _this.form.brand.id);
+                formData.append("full_name", _this.form.full_name);
+                formData.append("phone", _this.form.phone);
+                formData.append("email", _this.form.email);
+                formData.append("message", _this.form.message);
+                formData.append("brand_id", _this.form.brand.id);
 
                 if (!(_this.form.id > 0)) {
                   _context.next = 12;
@@ -1054,11 +1077,11 @@ var render = function () {
                     },
                     [
                       _vm._v(
-                        " " +
+                        "\n          " +
                           _vm._s(
                             _vm.form.id > 0 ? "Update Lead" : "Save Lead"
                           ) +
-                          " "
+                          "\n        "
                       ),
                     ]
                   ),
@@ -1198,6 +1221,52 @@ var render = function () {
                           1
                         )
                       }),
+                      _vm._v(" "),
+                      _vm.form.id > 0
+                        ? _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _vm._v(
+                                "\n            " +
+                                  _vm._s(_vm.lead.lead_status == 3) +
+                                  "\n            "
+                              ),
+                              _vm.form.id > 0 && _vm.lead.lead_status == 3
+                                ? _c("v-divider")
+                                : _vm._e(),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.id > 0 && _vm.lead.lead_status == 3
+                        ? _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "ma-2 white--text",
+                                  attrs: { color: "blue-grey" },
+                                },
+                                [
+                                  _c(
+                                    "v-icon",
+                                    { attrs: { left: "", dark: "" } },
+                                    [_vm._v(" mdi-currency-usd ")]
+                                  ),
+                                  _vm._v(
+                                    "\n              Generate Payment Link\n            "
+                                  ),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
                     ],
                     2
                   ),

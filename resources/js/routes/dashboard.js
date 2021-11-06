@@ -93,16 +93,6 @@ export default [
                 path: '',
                 component: ()=> import('@/views/Lead/List.vue'),
                 name: 'auth.leads.listing'
-            },
-            {
-                path: 'add',
-                component: ()=> import('@/views/Lead/Add.vue'),
-                name: 'auth.leads.add'
-            },
-            {
-                path: 'edit/:id',
-                component: ()=> import('@/views/Lead/Edit.vue'),
-                name: 'auth.leads.edit'
             }
         ],
         beforeEnter: company,
