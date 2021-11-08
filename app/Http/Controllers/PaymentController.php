@@ -91,7 +91,7 @@ class PaymentController extends Controller
                 ]
             );
             // return $session;
-            return $intent->client_secret;
+            return $intent->client_secret; 
         } else {
             abort(404);
         }
