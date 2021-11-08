@@ -19,6 +19,7 @@ mix.webpackConfig({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'resources/js'),
+            '@components': path.resolve(__dirname, 'resources/js/components'),
             '@services': path.resolve(__dirname, 'resources/js/services'),
         }
     }

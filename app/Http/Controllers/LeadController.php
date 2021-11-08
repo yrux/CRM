@@ -35,7 +35,10 @@ class LeadController extends Controller
             $leads = $leads->Where(
                 function($query) {
                 $q = $_GET['search'];
-                $query->orWhere('leads.full_name', 'like', '%'.$q.'%')->orWhere('leads.email', 'like', '%'.$q.'%')
+                $query->orWhere('leads.first_name', 'like', '%'.$q.'%')
+                ->orWhere('leads.last_name', 'like', '%'.$q.'%')
+                ->orWhere('leads.company', 'like', '%'.$q.'%')
+                ->orWhere('leads.email', 'like', '%'.$q.'%')
                 ->orWhere('leads.phone', 'like', '%'.$q.'%')
                 ->orWhere('leads.message', 'like', '%'.$q.'%');
             });
@@ -81,7 +84,7 @@ class LeadController extends Controller
      */
     public function store(LeadRequest $request)
     {
-        $lead = Lead::create($request->only('brand_id','full_name','email','phone','message','custom_fields'));
+        $lead = Lead::create($request->only('brand_id','first_name','last_name','company','email','phone','message','custom_fields'));
         return new LeadResource($lead);
     }
 
@@ -105,7 +108,7 @@ class LeadController extends Controller
      */
     public function update(LeadRequest $request, Lead $lead)
     {
-        $lead->update($request->only(['brand_id','full_name','email','phone','message','custom_fields']));
+        $lead->update($request->only(['brand_id','first_name','last_name','company','email','phone','message','custom_fields']));
         return new LeadResource($lead);
     }
 

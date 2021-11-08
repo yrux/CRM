@@ -32,8 +32,22 @@
             </v-col>
             <v-col cols="4">
               <v-text-field
-                label="Full Name*"
-                v-model="form.full_name"
+                label="First Name*"
+                v-model="form.first_name"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4">
+              <v-text-field
+                label="Last Name*"
+                v-model="form.last_name"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4">
+              <v-text-field
+                label="Company"
+                v-model="form.company"
                 required
               ></v-text-field>
             </v-col>
@@ -72,7 +86,8 @@
               ></v-divider>
             </v-col>
             <v-col v-if="form.id > 0 && lead.lead_status == 3" cols="12">
-              <v-btn color="blue-grey" class="ma-2 white--text">
+              <v-btn link
+            :to="{ name: 'auth.payment.create', params:{id: form.id} }" color="blue-grey" class="ma-2 white--text">
                 <v-icon left dark> mdi-currency-usd </v-icon>
                 Generate Payment Link
               </v-btn>
@@ -91,7 +106,9 @@ export default {
       dialog: false,
       form: {
         id: 0,
-        full_name: "",
+        first_name: "",
+        last_name: "",
+        company: "",
         phone: "",
         email: "",
         message: "",
@@ -107,7 +124,9 @@ export default {
     },
     async updateLead() {
       var formData = new FormData();
-      formData.append("full_name", this.form.full_name);
+      formData.append("first_name", this.form.first_name);
+      formData.append("last_name", this.form.last_name);
+      formData.append("company", this.form.company);
       formData.append("phone", this.form.phone);
       formData.append("email", this.form.email);
       formData.append("message", this.form.message);
@@ -131,7 +150,9 @@ export default {
     lead() {
       if (this.lead.id) {
         this.form.id = this.lead.id;
-        this.form.full_name = this.lead.full_name;
+        this.form.first_name = this.lead.first_name;
+        this.form.last_name = this.lead.last_name;
+        this.form.company = this.lead.company;
         this.form.phone = this.lead.phone;
         this.form.email = this.lead.email;
         this.form.message = this.lead.message;
@@ -140,7 +161,9 @@ export default {
       } else {
         this.form = {
           id: 0,
-          full_name: "",
+          first_name: "",
+          last_name: "",
+          company: "",
           phone: "",
           email: "",
           message: "",

@@ -93,7 +93,12 @@ export default [
                 path: '',
                 component: ()=> import('@/views/Lead/List.vue'),
                 name: 'auth.leads.listing'
-            }
+            },
+            {
+                path: ':id/payments',
+                component: ()=> import('@/views/Lead/Payments/Create.vue'),
+                name: 'auth.payment.create'
+            },
         ],
         beforeEnter: company,
     },

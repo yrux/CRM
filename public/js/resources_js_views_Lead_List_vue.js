@@ -105,6 +105,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -112,7 +127,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       dialog: false,
       form: {
         id: 0,
-        full_name: "",
+        first_name: "",
+        last_name: "",
+        company: "",
         phone: "",
         email: "",
         message: "",
@@ -136,37 +153,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 formData = new FormData();
-                formData.append("full_name", _this.form.full_name);
+                formData.append("first_name", _this.form.first_name);
+                formData.append("last_name", _this.form.last_name);
+                formData.append("company", _this.form.company);
                 formData.append("phone", _this.form.phone);
                 formData.append("email", _this.form.email);
                 formData.append("message", _this.form.message);
                 formData.append("brand_id", _this.form.brand.id);
 
                 if (!(_this.form.id > 0)) {
-                  _context.next = 12;
+                  _context.next = 14;
                   break;
                 }
 
-                _context.next = 9;
+                _context.next = 11;
                 return _services_auth_lead__WEBPACK_IMPORTED_MODULE_1__["default"].update(formData, _this.form.id);
 
-              case 9:
+              case 11:
                 _this.$store.commit("setNotification", "Lead Updated");
 
-                _context.next = 15;
+                _context.next = 17;
                 break;
 
-              case 12:
-                _context.next = 14;
+              case 14:
+                _context.next = 16;
                 return _services_auth_lead__WEBPACK_IMPORTED_MODULE_1__["default"].create(formData);
 
-              case 14:
+              case 16:
                 _this.$store.commit("setNotification", "Lead Created");
 
-              case 15:
+              case 17:
                 _this.$emit("refresh-leads");
 
-              case 16:
+              case 18:
               case "end":
                 return _context.stop();
             }
@@ -184,7 +203,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     lead: function lead() {
       if (this.lead.id) {
         this.form.id = this.lead.id;
-        this.form.full_name = this.lead.full_name;
+        this.form.first_name = this.lead.first_name;
+        this.form.last_name = this.lead.last_name;
+        this.form.company = this.lead.company;
         this.form.phone = this.lead.phone;
         this.form.email = this.lead.email;
         this.form.message = this.lead.message;
@@ -193,7 +214,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else {
         this.form = {
           id: 0,
-          full_name: "",
+          first_name: "",
+          last_name: "",
+          company: "",
           phone: "",
           email: "",
           message: "",
@@ -490,8 +513,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         key: "id",
         value: "ID/Date"
       }, {
-        key: "full_name",
-        value: "Full Name"
+        key: "first_name",
+        value: "First Name"
+      }, {
+        key: "last_name",
+        value: "Last Name"
+      }, {
+        key: "company",
+        value: "Company"
       }, {
         key: "email",
         value: "Email"
@@ -1124,13 +1153,49 @@ var render = function () {
                         { attrs: { cols: "4" } },
                         [
                           _c("v-text-field", {
-                            attrs: { label: "Full Name*", required: "" },
+                            attrs: { label: "First Name*", required: "" },
                             model: {
-                              value: _vm.form.full_name,
+                              value: _vm.form.first_name,
                               callback: function ($$v) {
-                                _vm.$set(_vm.form, "full_name", $$v)
+                                _vm.$set(_vm.form, "first_name", $$v)
                               },
-                              expression: "form.full_name",
+                              expression: "form.first_name",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "4" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: { label: "Last Name*", required: "" },
+                            model: {
+                              value: _vm.form.last_name,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "last_name", $$v)
+                              },
+                              expression: "form.last_name",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "4" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: { label: "Company", required: "" },
+                            model: {
+                              value: _vm.form.company,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "company", $$v)
+                              },
+                              expression: "form.company",
                             },
                           }),
                         ],
@@ -1249,7 +1314,14 @@ var render = function () {
                                 "v-btn",
                                 {
                                   staticClass: "ma-2 white--text",
-                                  attrs: { color: "blue-grey" },
+                                  attrs: {
+                                    link: "",
+                                    to: {
+                                      name: "auth.payment.create",
+                                      params: { id: _vm.form.id },
+                                    },
+                                    color: "blue-grey",
+                                  },
                                 },
                                 [
                                   _c(
@@ -1476,7 +1548,11 @@ var render = function () {
                               ),
                               _vm._v(" "),
                               _c("v-list-item-subtitle", {
-                                domProps: { innerHTML: _vm._s(item.full_name) },
+                                domProps: {
+                                  innerHTML: _vm._s(
+                                    item.first_name + " " + item.last_name
+                                  ),
+                                },
                               }),
                             ],
                             1
@@ -1620,7 +1696,11 @@ var render = function () {
                               ),
                               _vm._v(" "),
                               _c("v-list-item-subtitle", {
-                                domProps: { innerHTML: _vm._s(item.full_name) },
+                                domProps: {
+                                  innerHTML: _vm._s(
+                                    item.first_name + " " + item.last_name
+                                  ),
+                                },
                               }),
                             ],
                             1
@@ -1764,7 +1844,11 @@ var render = function () {
                               ),
                               _vm._v(" "),
                               _c("v-list-item-subtitle", {
-                                domProps: { innerHTML: _vm._s(item.full_name) },
+                                domProps: {
+                                  innerHTML: _vm._s(
+                                    item.first_name + " " + item.last_name
+                                  ),
+                                },
                               }),
                             ],
                             1
@@ -1970,7 +2054,11 @@ var render = function () {
                               ),
                               _vm._v(" "),
                               _c("v-list-item-subtitle", {
-                                domProps: { innerHTML: _vm._s(item.full_name) },
+                                domProps: {
+                                  innerHTML: _vm._s(
+                                    item.first_name + " " + item.last_name
+                                  ),
+                                },
                               }),
                             ],
                             1

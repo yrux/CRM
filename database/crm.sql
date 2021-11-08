@@ -351,7 +351,9 @@ DROP TABLE IF EXISTS `leads`;
 CREATE TABLE `leads` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `brand_id` int(11) NOT NULL,
-  `full_name` varchar(255) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `company` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `message` text DEFAULT NULL,
@@ -360,34 +362,35 @@ CREATE TABLE `leads` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `leads` */
 
-insert  into `leads`(`id`,`brand_id`,`full_name`,`email`,`phone`,`message`,`lead_status`,`custom_fields`,`updated_at`,`created_at`) values 
-(1,6,'12345678','company1@gmail.com','test','test',3,'','2021-11-05 05:40:36','2021-11-05 02:08:27'),
-(2,6,'12345678','company1@gmail.com','test','test',3,'','2021-11-05 05:40:35','2021-11-05 02:11:29'),
-(3,6,'12345678','company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:34','2021-11-05 02:26:52'),
-(4,6,'12345678','company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:34','2021-11-05 02:34:13'),
-(5,6,'12345678','company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:33','2021-11-05 02:36:17'),
-(6,6,'12345678','company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:33','2021-11-05 02:40:03'),
-(7,6,'12345678','company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:32','2021-11-05 03:21:02'),
-(8,6,'12345678','company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:31','2021-11-05 03:22:09'),
-(9,6,'12345678','company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:30','2021-11-05 03:22:41'),
-(10,6,'12345678','company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:06','2021-11-05 03:23:01'),
-(11,6,'12345678','company1@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:54','2021-11-05 03:23:01'),
-(12,6,'12345678','company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:39:57','2021-11-05 03:23:01'),
-(13,6,'12345678','company1@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:48','2021-11-05 03:22:09'),
-(14,6,'12345678','company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:17','2021-11-05 03:23:01'),
-(15,6,'12345678','company2@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:50','2021-11-05 03:23:01'),
-(16,6,'12345678','lead2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:38:23','2021-11-05 03:23:01'),
-(17,6,'12345678','company2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:47:49','2021-11-05 03:23:01'),
-(18,6,'12345678','company2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:08','2021-11-05 03:23:01'),
-(19,6,'12345678','company2@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:14','2021-11-05 03:23:01'),
-(20,6,'12345678','company2@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:54','2021-11-05 03:23:01'),
-(21,6,'12345678','company2@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:11','2021-11-05 03:23:01'),
-(22,6,'12345678','company2@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:18','2021-11-05 03:23:01'),
-(23,4,'12313','lead4@gmail.com','123123','123123',3,NULL,'2021-11-05 05:38:20','2021-11-05 05:37:40');
+insert  into `leads`(`id`,`brand_id`,`first_name`,`last_name`,`company`,`email`,`phone`,`message`,`lead_status`,`custom_fields`,`updated_at`,`created_at`) values 
+(1,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'','2021-11-05 05:40:36','2021-11-05 02:08:27'),
+(2,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'','2021-11-05 05:40:35','2021-11-05 02:11:29'),
+(3,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:34','2021-11-05 02:26:52'),
+(4,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:34','2021-11-05 02:34:13'),
+(5,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:33','2021-11-05 02:36:17'),
+(6,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:33','2021-11-05 02:40:03'),
+(7,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:32','2021-11-05 03:21:02'),
+(8,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:31','2021-11-05 03:22:09'),
+(9,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:30','2021-11-05 03:22:41'),
+(10,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:06','2021-11-05 03:23:01'),
+(11,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:54','2021-11-05 03:23:01'),
+(12,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:39:57','2021-11-05 03:23:01'),
+(13,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:48','2021-11-05 03:22:09'),
+(14,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:17','2021-11-05 03:23:01'),
+(15,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:50','2021-11-05 03:23:01'),
+(16,6,'12345678',NULL,NULL,'lead2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:38:23','2021-11-05 03:23:01'),
+(17,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:47:49','2021-11-05 03:23:01'),
+(18,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:08','2021-11-05 03:23:01'),
+(19,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:14','2021-11-05 03:23:01'),
+(20,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:54','2021-11-05 03:23:01'),
+(21,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:11','2021-11-05 03:23:01'),
+(22,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:18','2021-11-05 03:23:01'),
+(23,4,'12313',NULL,NULL,'lead4@gmail.com','123123','123123',3,NULL,'2021-11-05 05:38:20','2021-11-05 05:37:40'),
+(24,4,'junaid','yrux',NULL,'jesper@gmail.com','123123','123123',3,NULL,'2021-11-08 15:03:02','2021-11-08 15:02:51');
 
 /*Table structure for table `migrations` */
 
@@ -600,6 +603,27 @@ CREATE TABLE `password_resets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `password_resets` */
+
+/*Table structure for table `payments` */
+
+DROP TABLE IF EXISTS `payments`;
+
+CREATE TABLE `payments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lead_id` int(11) DEFAULT NULL,
+  `amount` float DEFAULT NULL,
+  `status` tinyint(4) DEFAULT 0 COMMENT '0=pending,1=paid,2=failed',
+  `merchant` enum('stripe','paypal','authorize.net','other') DEFAULT 'stripe',
+  `description` varchar(555) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `payments` */
+
+insert  into `payments`(`id`,`lead_id`,`amount`,`status`,`merchant`,`description`,`updated_at`,`created_at`) values 
+(2,21,50,0,'stripe','test','2021-11-08 14:08:59','2021-11-08 14:08:59');
 
 /*Table structure for table `permissions` */
 

@@ -50,7 +50,7 @@
                   {{ item.email }}
                 </v-list-item-title>
                 <v-list-item-subtitle
-                  v-html="item.full_name"
+                  v-html="item.first_name+' '+item.last_name"
                 ></v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
@@ -85,7 +85,7 @@
                   {{ item.email }}
                 </v-list-item-title>
                 <v-list-item-subtitle
-                  v-html="item.full_name"
+                  v-html="item.first_name+' '+item.last_name"
                 ></v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
@@ -120,7 +120,7 @@
                   {{ item.email }}
                 </v-list-item-title>
                 <v-list-item-subtitle
-                  v-html="item.full_name"
+                  v-html="item.first_name+' '+item.last_name"
                 ></v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
@@ -168,7 +168,7 @@
                   {{ item.email }}
                 </v-list-item-title>
                 <v-list-item-subtitle
-                  v-html="item.full_name"
+                  v-html="item.first_name+' '+item.last_name"
                 ></v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
@@ -253,7 +253,9 @@ export default {
       sortBy: "id",
       keys: [
         { key: "id", value: "ID/Date" },
-        { key: "full_name", value: "Full Name" },
+        { key: "first_name", value: "First Name" },
+        { key: "last_name", value: "Last Name" },
+        { key: "company", value: "Company" },
         { key: "email", value: "Email" },
         { key: "phone", value: "Phone" },
       ],

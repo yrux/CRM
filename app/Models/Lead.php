@@ -12,7 +12,7 @@ class Lead extends Model
     protected $with = ['brand'];
     protected $lead_status_arr = [0=>'pending',1=>'success',2=>'junk',3=>'followup'];
     protected $fillable = [
-        'brand_id','full_name','email','phone','message','lead_status','custom_fields',
+        'brand_id','first_name','last_name','email','phone','message','lead_status','custom_fields','company',
     ];
     public function getCreatedAtFormattedAttribute(){
         return date('Y-m-d h:i a',strtotime($this->created_at));
@@ -22,6 +22,9 @@ class Lead extends Model
     }
     public function brand(){
         return $this->belongsTo(Brand::class);
+    }
+    public function payments(){
+        return $this->hasMany(Payment::class);
     }
     public function getLeadStatusTextAttribute(){
         return isset($this->lead_status_arr[$this->lead_status])?$this->lead_status_arr[$this->lead_status]:'';
