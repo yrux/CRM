@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Payment, Lead};
+use App\Models\{Payment, Lead, User};
 use Illuminate\Http\Request;
 use App\Http\Requests\PaymentRequest;
 use App\Http\Resources\PaymentResource;
@@ -74,26 +74,120 @@ class PaymentController extends Controller
     public function checkEmail(Payment $payment, Request $request)
     {
         if ($payment->lead->email == $request->email) {
-            $stripe = new \Stripe\StripeClient('sk_test_51HHKcsBBUuNvbZcl3bor8UnKLbi1lMkrueQzDjl9XrokeF2xalCKrFeIaBoYCnabAzMn8Bk2WHqqTYSjjZSNJuOn00CGS4ewcz');
-            \Stripe\Stripe::setApiKey('sk_test_51HHKcsBBUuNvbZcl3bor8UnKLbi1lMkrueQzDjl9XrokeF2xalCKrFeIaBoYCnabAzMn8Bk2WHqqTYSjjZSNJuOn00CGS4ewcz');
-            $stripeCustomerCheck = \collect($stripe->customers->all(['limit' => 1, 'email' => $payment->lead->email])->data)->where('email', $payment->lead->email)->first();
-            if (!$stripeCustomerCheck) {
-                $stripeCustomerCheck = $stripe->customers->create([
-                    'description' => $payment->lead->first_name . ' ' . $payment->lead->last_name,
-                    'email' => $payment->lead->email,
-                    // 'payment_method' => 'card',
-                ]);
+            if ($payment->merchant == 'stripe') {
+                $stripe_keys = $payment->lead->brand->company->merchants()->where('merchant_type', 'stripe')->first();
+                $stripe = new \Stripe\StripeClient($stripe_keys->merchant_details->sk);
+                \Stripe\Stripe::setApiKey($stripe_keys->merchant_details->sk);
+                $stripeCustomerCheck = \collect($stripe->customers->all(['limit' => 1, 'email' => $payment->lead->email])->data)->where('email', $payment->lead->email)->first();
+                if (!$stripeCustomerCheck) {
+                    $stripeCustomerCheck = $stripe->customers->create([
+                        'description' => $payment->lead->first_name . ' ' . $payment->lead->last_name,
+                        'email' => $payment->lead->email,
+                        // 'payment_method' => 'card',
+                    ]);
+                }
+                $intent = $stripe->setupIntents->create(
+                    [
+                        'customer' => $stripeCustomerCheck->id,
+                        'payment_method_types' => ['card'],
+                    ]
+                );
+                // return $session;
+                return [
+                    'client_secret' => $intent->client_secret,
+                    'stripe_pk' => $stripe_keys->merchant_details->pk,
+                    'type' => $payment->merchant,
+                    'success_url' => route('payment.link.success', [$payment])
+                    //'stripe_sk' => $stripe_keys->merchant_details->sk
+                ];
             }
-            $intent = $stripe->setupIntents->create(
-                [
-                    'customer' => $stripeCustomerCheck->id,
-                    'payment_method_types' => ['bancontact', 'card', 'ideal'],
-                ]
-            );
-            // return $session;
-            return $intent->client_secret; 
         } else {
             abort(404);
         }
+    }
+    public function stripeSuccess(Payment $payment, Request $request)
+    {
+        if ($payment->status != 1) {
+            $stripe_keys = $payment->lead->brand->company->merchants()->where('merchant_type', 'stripe')->first();
+            $stripe = new \Stripe\StripeClient($stripe_keys->merchant_details->sk);
+            \Stripe\Stripe::setApiKey($stripe_keys->merchant_details->sk);
+            $res = $stripe->setupIntents->retrieve(
+                $_GET['setup_intent'],
+                []
+            );
+            switch ($res->status) {
+                case 'succeeded':
+                    $payment_methods = $stripe->paymentMethods->all(
+                        ['customer' => $res->customer, 'type' => 'card']
+                    );
+                    $original_amount = ($payment->amount);
+                    $amount_first = round(($original_amount - 3), 0);
+                    // 2nd transaction
+                    $rand = round(floatVal('1.' . rand(10, 90)), 0);
+                    // $rand = $rand;
+                    // 3rd transaction
+                    $rand2 = round(($original_amount - ($amount_first + $rand)), 0);
+                    // dd($amount_first, $rand, $rand2);
+                    try {
+                        $payment_1 = \Stripe\PaymentIntent::create([
+                            'amount' => ($original_amount*100),//($amount_first * 100),
+                            'currency' => 'usd',
+                            'customer' => $res->customer,
+                            'payment_method' => $payment_methods->data[0]->id,
+                            'off_session' => true,
+                            'confirm' => true,
+                        ]);
+                    } catch (\Stripe\Exception\CardException $e) {
+                        // Error code will be authentication_required if authentication is needed
+                        echo 'Error code is:' . $e->getError()->code;
+                        $payment_intent_id = $e->getError()->payment_intent->id;
+                        $payment_intent = \Stripe\PaymentIntent::retrieve($payment_intent_id);
+                    }
+
+                    try {
+                        $payment_2 = \Stripe\PaymentIntent::create([
+                            'amount' => ($rand * 100),
+                            'currency' => 'usd',
+                            'customer' => $res->customer,
+                            'payment_method' => $payment_methods->data[0]->id,
+                            'off_session' => true,
+                            'confirm' => true,
+                        ]);
+                    } catch (\Stripe\Exception\CardException $e) {
+                        // Error code will be authentication_required if authentication is needed
+                        echo 'Error code is:' . $e->getError()->code;
+                        $payment_intent_id = $e->getError()->payment_intent->id;
+                        $payment_intent = \Stripe\PaymentIntent::retrieve($payment_intent_id);
+                    }
+                    try {
+                        $payment_3 = \Stripe\PaymentIntent::create([
+                            'amount' => ($rand2 * 100),
+                            'currency' => 'usd',
+                            'customer' => $res->customer,
+                            'payment_method' => $payment_methods->data[0]->id,
+                            'off_session' => true,
+                            'confirm' => true,
+                        ]);
+                    } catch (\Stripe\Exception\CardException $e) {
+                        // Error code will be authentication_required if authentication is needed
+                        echo 'Error code is:' . $e->getError()->code;
+                        $payment_intent_id = $e->getError()->payment_intent->id;
+                        $payment_intent = \Stripe\PaymentIntent::retrieve($payment_intent_id);
+                    }
+                    //$payment_methods->data[0]->id
+                    $payment->status = 1;
+                    $payment->save();
+                    break;
+                case 'processing':
+                    $payment->status = 2;
+                    $payment->save();
+                    break;
+                case 'requires_payment_method':
+                    $payment->status = 2;
+                    $payment->save();
+                    break;
+            }
+        }
+        return view('welcome');
     }
 }

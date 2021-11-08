@@ -59,10 +59,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+ // let stripe = Stripe(`YOUR_STRIPE_PUBLISHABLE_KEY`),
+// elements = stripe.elements(),
+// card = undefined;
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      stripe: {
+        stripe: undefined,
+        elements: undefined,
+        card: undefined
+      },
       payment_id: "",
       email: "",
       brand: {},
@@ -96,46 +115,113 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }))();
   },
   methods: {
-    verifyEmail: function verifyEmail() {
+    handleStripePayment: function handleStripePayment(e) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var formData, res;
+        var _yield$_this2$stripe$, error, messageContainer;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.emailError = [];
-                _this2.loading = true;
-                formData = new FormData();
-                formData.append("email", _this2.email);
-                _context2.next = 6;
-                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_1__["default"].checkEmail(_this2.payment_id, formData);
+                e.preventDefault();
+                _context2.next = 3;
+                return _this2.stripe.stripe.confirmSetup({
+                  elements: _this2.stripe.elements,
+                  confirmParams: {
+                    return_url: _this2.payment.success_url
+                  }
+                });
 
-              case 6:
-                res = _context2.sent;
-                //company2@gmail.com
-                _this2.loading = false;
+              case 3:
+                _yield$_this2$stripe$ = _context2.sent;
+                error = _yield$_this2$stripe$.error;
 
-                if (res.status) {
-                  //means success
-                  _this2.emailVerified = true;
-                  _this2.payment = res.data;
-                } else {
-                  //means failed
-                  _this2.email = "";
-
-                  _this2.$store.commit("setNotification", "Invalid Email");
-
-                  _this2.emailError = ["Invalid Email"];
+                if (error) {
+                  messageContainer = document.querySelector('#error-message');
+                  messageContainer.textContent = error.message;
+                } else {// Your customer will be redirected to your `return_url`. For some payment
+                  // methods like iDEAL, your customer will be redirected to an intermediate
+                  // site first to authorize the payment, then redirected to the `return_url`.
                 }
 
-              case 9:
+              case 6:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
+      }))();
+    },
+    verifyEmail: function verifyEmail() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var formData, res, options;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this3.emailError = [];
+                _this3.loading = true;
+                formData = new FormData();
+                formData.append("email", _this3.email);
+                _context3.next = 6;
+                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_1__["default"].checkEmail(_this3.payment_id, formData);
+
+              case 6:
+                res = _context3.sent;
+                //company2@gmail.com
+                _this3.loading = false;
+
+                if (!res.status) {
+                  _context3.next = 16;
+                  break;
+                }
+
+                //means success
+                _this3.emailVerified = true;
+                _context3.next = 12;
+                return _this3.$nextTick();
+
+              case 12:
+                _this3.payment = res.data;
+
+                if (_this3.payment.type == "stripe") {
+                  _this3.stripe.stripe = Stripe(_this3.payment.stripe_pk);
+                  options = {
+                    clientSecret: _this3.payment.client_secret,
+                    // Fully customizable with appearance API.
+                    appearance: {
+                      /*...*/
+                    }
+                  };
+                  _this3.stripe.elements = _this3.stripe.stripe.elements(options); // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 2
+                  // this.stripe.card = this.stripe.stripe.elements(options);
+
+                  _this3.stripe.card = _this3.stripe.elements.create("payment");
+
+                  _this3.stripe.card.mount(_this3.$refs.stripecard);
+                }
+
+                _context3.next = 19;
+                break;
+
+              case 16:
+                //means failed
+                _this3.email = "";
+
+                _this3.$store.commit("setNotification", "Invalid Email");
+
+                _this3.emailError = ["Invalid Email"];
+
+              case 19:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }
@@ -542,7 +628,45 @@ var render = function () {
             ],
             1
           )
-        : _c("v-row", [_c("h2", [_vm._v("Step 2")])]),
+        : _c(
+            "v-row",
+            [
+              _c("h2", [_vm._v("Step 2")]),
+              _vm._v(" "),
+              _c("v-col", { attrs: { cols: "12" } }, [
+                _c(
+                  "form",
+                  {
+                    attrs: { id: "payment-form" },
+                    on: { submit: _vm.handleStripePayment },
+                  },
+                  [
+                    _c("div", {
+                      ref: "stripecard",
+                      attrs: { id: "payment-element" },
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: {
+                          type: "submit",
+                          color: "green",
+                          "text-color": "white",
+                          id: "submit",
+                        },
+                      },
+                      [_vm._v("Submit")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { attrs: { id: "error-message" } }),
+                  ],
+                  1
+                ),
+              ]),
+            ],
+            1
+          ),
     ],
     1
   )

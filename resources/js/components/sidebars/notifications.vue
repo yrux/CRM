@@ -32,7 +32,7 @@ export default {
             this.snackbar = true
             setTimeout(()=>{
                 this.snackbar = false
-            },1000)
+            },2000)
         },
         notificaitontext(){
             // this.snackbar = true

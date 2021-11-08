@@ -13,4 +13,10 @@ export default [
         component: () => import('@/views/Guest/Payment.vue'),
         meta: { guest: true, showsidebar: true },
     },
+    {
+        path: '/payment/:id/stripe-success',
+        name: 'guest.payment.success',
+        component: () => import('@/views/Guest/PaymentStripeSuccess.vue'),
+        meta: { guest: true },
+    },
 ];

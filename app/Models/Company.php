@@ -16,6 +16,9 @@ class Company extends Model
     public function brands(){
         return $this->hasMany(Brand::class);
     }
+    public function merchants(){
+        return $this->hasMany(Merchant::class);
+    }
     public function getCompanyEmailAttribute(){
         return isset($this->user)?$this->user->email:'N/A';
     }

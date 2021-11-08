@@ -34,14 +34,33 @@
     </v-row>
     <v-row v-else>
       <h2>Step 2</h2>
+      <v-col cols="12">
+        <form v-on:submit="handleStripePayment" id="payment-form">
+          <div  ref="stripecard" id="payment-element">
+            <!-- Elements will create form elements here -->
+          </div>
+          <v-btn type="submit" color="green" text-color="white" id="submit">Submit</v-btn>
+          <div id="error-message">
+            <!-- Display error message to your customers here -->
+          </div>
+        </form>
+      </v-col>
     </v-row>
   </div>
 </template>
 <script>
 import paymentservice from "@services/auth/payment";
+// let stripe = Stripe(`YOUR_STRIPE_PUBLISHABLE_KEY`),
+// elements = stripe.elements(),
+// card = undefined;
 export default {
   data() {
     return {
+      stripe: {
+        stripe: undefined,
+        elements: undefined,
+        card: undefined,
+      },
       payment_id: "",
       email: "",
       brand: {},
@@ -56,6 +75,23 @@ export default {
     this.brand = await paymentservice.getBrand(this.payment_id);
   },
   methods: {
+    async handleStripePayment(e){
+      e.preventDefault();
+      const {error} = await this.stripe.stripe.confirmSetup({
+        elements: this.stripe.elements,
+        confirmParams: {
+          return_url: this.payment.success_url,
+        }
+      });
+      if (error) {
+        const messageContainer = document.querySelector('#error-message');
+        messageContainer.textContent = error.message;
+      } else {
+        // Your customer will be redirected to your `return_url`. For some payment
+        // methods like iDEAL, your customer will be redirected to an intermediate
+        // site first to authorize the payment, then redirected to the `return_url`.
+      }
+    },
     async verifyEmail() {
       this.emailError = [];
       this.loading = true;
@@ -66,7 +102,24 @@ export default {
       if (res.status) {
         //means success
         this.emailVerified = true;
+        await this.$nextTick();
         this.payment = res.data;
+        if (this.payment.type == "stripe") {
+          this.stripe.stripe = Stripe(this.payment.stripe_pk);
+          const options = {
+            clientSecret: this.payment.client_secret,
+            // Fully customizable with appearance API.
+            appearance: {
+              /*...*/
+            },
+          };
+          this.stripe.elements = this.stripe.stripe.elements(options);
+
+          // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 2
+          // this.stripe.card = this.stripe.stripe.elements(options);
+          this.stripe.card = this.stripe.elements.create("payment");
+          this.stripe.card.mount(this.$refs.stripecard);
+        }
       } else {
         //means failed
         this.email = "";
