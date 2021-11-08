@@ -11,5 +11,6 @@ export default [
         path: '/payment/:id',
         name: 'guest.payment',
         component: () => import('@/views/Guest/Payment.vue'),
+        meta: { guest: true, showsidebar: true },
     },
 ];

@@ -17,7 +17,7 @@ class PaymentController extends Controller
      */
     public function index(Lead $lead, Request $request)
     {
-        return PaymentResource::collection($lead->payments()->orderBy('id','desc')->get());
+        return PaymentResource::collection($lead->payments()->orderBy('id', 'desc')->get());
     }
 
     /**
@@ -28,7 +28,7 @@ class PaymentController extends Controller
      */
     public function store(Lead $lead, PaymentRequest $request)
     {
-        $payment = $lead->payments()->create($request->only('amount','description','status','merchant'));
+        $payment = $lead->payments()->create($request->only('amount', 'description', 'status', 'merchant'));
         return new PaymentResource($payment);
     }
 
@@ -52,7 +52,7 @@ class PaymentController extends Controller
      */
     public function update(Lead $lead, Payment $payment, PaymentRequest $request)
     {
-        $payment->update($request->only('amount','description','status','merchant'));
+        $payment->update($request->only('amount', 'description', 'status', 'merchant'));
         return new PaymentResource($payment);
     }
 
@@ -66,5 +66,34 @@ class PaymentController extends Controller
     {
         $payment->delete();
         return response()->json(null, 204);
+    }
+    public function getBrand(Payment $payment)
+    {
+        return $payment->lead->brand->only('brand_name', 'brand_code', 'image_url');
+    }
+    public function checkEmail(Payment $payment, Request $request)
+    {
+        if ($payment->lead->email == $request->email) {
+            $stripe = new \Stripe\StripeClient('sk_test_51HHKcsBBUuNvbZcl3bor8UnKLbi1lMkrueQzDjl9XrokeF2xalCKrFeIaBoYCnabAzMn8Bk2WHqqTYSjjZSNJuOn00CGS4ewcz');
+            \Stripe\Stripe::setApiKey('sk_test_51HHKcsBBUuNvbZcl3bor8UnKLbi1lMkrueQzDjl9XrokeF2xalCKrFeIaBoYCnabAzMn8Bk2WHqqTYSjjZSNJuOn00CGS4ewcz');
+            $stripeCustomerCheck = \collect($stripe->customers->all(['limit' => 1, 'email' => $payment->lead->email])->data)->where('email', $payment->lead->email)->first();
+            if (!$stripeCustomerCheck) {
+                $stripeCustomerCheck = $stripe->customers->create([
+                    'description' => $payment->lead->first_name . ' ' . $payment->lead->last_name,
+                    'email' => $payment->lead->email,
+                    // 'payment_method' => 'card',
+                ]);
+            }
+            $intent = $stripe->setupIntents->create(
+                [
+                    'customer' => $stripeCustomerCheck->id,
+                    'payment_method_types' => ['bancontact', 'card', 'ideal'],
+                ]
+            );
+            // return $session;
+            return $intent->client_secret;
+        } else {
+            abort(404);
+        }
     }
 }

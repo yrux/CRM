@@ -23,10 +23,16 @@ router.beforeEach(async (to, from, next) => {
   //         store: store,
   //     })
   // }
-  var isAuthenticated = localStorage.getItem('auth_token')?true:false;
-  if (to.name !== 'auth.login' && !isAuthenticated) next({ name: 'auth.login' })
-  if (to.name === 'auth.login' && isAuthenticated) next({ name: 'auth.dashboard' })
-  else next()
+  if(to.meta.guest){
+    //for guests and payments
+    next()
+  }
+  else{
+    var isAuthenticated = localStorage.getItem('auth_token')?true:false;
+    if (to.name !== 'auth.login' && !isAuthenticated) next({ name: 'auth.login' })
+    if (to.name === 'auth.login' && isAuthenticated) next({ name: 'auth.dashboard' })
+    else next()
+  }
 })
 
 new Vue({

@@ -22,7 +22,13 @@ use App\Http\Controllers\Auth\ApiAuthController;
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/login', [ApiAuthController::class,'login'])->name('login.api');
+
+    //guest apis
+    Route::post('payments/{payment}', [PaymentController::class,'checkEmail']);
+    Route::post('payments-getbrand/{payment}', [PaymentController::class,'getBrand']);
 });
+
+
 Route::group(['middleware' => ['cors', 'json.response','auth:api']], function () {
     Route::post('/logout', [ApiAuthController::class,'logout'])->name('logout.api');
     Route::put('/updateprofile', [ApiAuthController::class,'updateprofile']);

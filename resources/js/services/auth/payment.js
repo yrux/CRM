@@ -34,5 +34,13 @@ class paymentservice{
         });
         return res;
 	}
+	async checkEmail(id, formData){
+		var res = await axios.post('/api/payments/'+id,formData).then(e=>({status:1, data: e.data})).catch(e=>({status:0, data: e.response.message}))
+		return res;
+	}
+	async getBrand(id){
+		var res = await axios.post('/api/payments-getbrand/'+id).then(e=>e.data)
+		return res
+	}
 }
 export default new paymentservice();

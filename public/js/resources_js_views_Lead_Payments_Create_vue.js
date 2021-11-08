@@ -731,6 +731,78 @@ var paymentservice = /*#__PURE__*/function () {
 
       return update;
     }()
+  }, {
+    key: "checkEmail",
+    value: function () {
+      var _checkEmail = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(id, formData) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios.post('/api/payments/' + id, formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.message
+                  };
+                });
+
+              case 2:
+                res = _context4.sent;
+                return _context4.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function checkEmail(_x8, _x9) {
+        return _checkEmail.apply(this, arguments);
+      }
+
+      return checkEmail;
+    }()
+  }, {
+    key: "getBrand",
+    value: function () {
+      var _getBrand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(id) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios.post('/api/payments-getbrand/' + id).then(function (e) {
+                  return e.data;
+                });
+
+              case 2:
+                res = _context5.sent;
+                return _context5.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function getBrand(_x10) {
+        return _getBrand.apply(this, arguments);
+      }
+
+      return getBrand;
+    }()
   }]);
 
   return paymentservice;

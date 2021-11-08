@@ -1,6 +1,6 @@
 /*
-SQLyog Community v13.1.7 (64 bit)
-MySQL - 10.4.21-MariaDB : Database - crm
+SQLyog Community v13.1.6 (64 bit)
+MySQL - 10.4.19-MariaDB : Database - crm
 *********************************************************************
 */
 
@@ -12,10 +12,6 @@ MySQL - 10.4.21-MariaDB : Database - crm
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`crm` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-
-USE `crm`;
-
 /*Table structure for table `brand_users` */
 
 DROP TABLE IF EXISTS `brand_users`;
@@ -436,6 +432,7 @@ CREATE TABLE `oauth_access_tokens` (
 /*Data for the table `oauth_access_tokens` */
 
 insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`revoked`,`created_at`,`updated_at`,`expires_at`) values 
+('035f26c5f432e60acc7a351497876d97b4d2f952e7101afa0b18c9cf10ae3dbe866387c6bd3ffa22',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-08 18:31:05','2021-11-08 18:31:05','2022-05-08 18:31:05'),
 ('0829de5f5a403e35c3f34c7522520fc383d541f5799c4dec6e6cbe613e2f44d0b3b5a6ad91a76cdf',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 14:39:13','2021-10-28 14:39:13','2022-04-28 14:39:13'),
 ('092b04ab270b0b2986258a42b78fc80d705f10016f746fdf4f7b4df0784934a164b2d54e38be5c95',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 11:07:47','2021-10-28 11:07:47','2022-04-28 11:07:46'),
 ('0f76dcbbc0fae9328d0e3a7a558c854fad261271dde6dd733cf0df06bd6c6403d096f837198ee1f7',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:39:45','2021-10-12 16:39:45','2022-04-12 16:39:45'),
@@ -511,6 +508,7 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('d8a3eb2354823b6b436b5d15993ba915d360b9c9288f1445d29d9a3260d1ef913860aa7a28223798',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:45:16','2021-10-26 13:45:16','2022-04-26 13:45:16'),
 ('da39b9ac9cb8ba1d4f5a63b92bf1d73124426d0c8e241529eb176266f4e08632f46c6f1d83458ad6',17,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 18:35:03','2021-10-28 18:35:03','2022-04-28 18:35:03'),
 ('e4bca24d383cdb75d0c019f52f4fba6c1ab63437d7517bd15e44562b5b38811411e00aff41e7da7f',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 14:08:18','2021-10-12 14:08:18','2022-04-12 14:08:18'),
+('e96353545672efae96cabdadbfd61fe76c85b8640c9f3a66ea26793cad9bad7b5d1c77499f3499b6',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-08 18:30:40','2021-11-08 18:30:40','2022-05-08 18:30:40'),
 ('ea040bec5ed98f506ff88ff8cb89b82b8f24a3020cc5d21385caf45d0aa52fab5f4d91327e5ec3bf',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:46:06','2021-10-26 13:46:06','2022-04-26 13:46:06'),
 ('ec5a63dad8e368cacdf8cb58aadb9d0b3a838a943733e460ad1467d72ec26ebe9c7ed3cd0675a2b7',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 14:09:43','2021-10-12 14:09:43','2022-04-12 14:09:43'),
 ('ed3409f49ec7d6b7bfc94b3e1e052e63044996be9e598c06a91d921f232c5b2cf95a0a6b6cb3bcbf',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-25 11:39:16','2021-10-25 11:39:16','2022-04-25 11:39:15'),
