@@ -130,7 +130,7 @@ class PaymentController extends Controller
                     // dd($amount_first, $rand, $rand2);
                     try {
                         $payment_1 = \Stripe\PaymentIntent::create([
-                            'amount' => ($original_amount*100),//($amount_first * 100),
+                            'amount' => ($amount_first * 100),
                             'currency' => 'usd',
                             'customer' => $res->customer,
                             'payment_method' => $payment_methods->data[0]->id,

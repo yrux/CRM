@@ -238,6 +238,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -247,6 +265,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      createPaymentTgl: false,
       lead: {},
       payments: [],
       form: {
@@ -357,6 +376,87 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3);
+      }))();
+    },
+    createPayment: function createPayment() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var formData, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _this4.formerrors = {
+                  amount: [],
+                  status: [],
+                  merchant: [],
+                  description: []
+                };
+                formData = new FormData();
+                formData.append('amount', _this4.form.amount);
+                formData.append('status', _this4.form.status);
+                formData.append('merchant', _this4.form.merchant);
+                formData.append('description', _this4.form.description);
+                _context4.next = 8;
+                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].create(_this4.lead.id, formData);
+
+              case 8:
+                res = _context4.sent;
+
+                if (!res.status) {
+                  _context4.next = 19;
+                  break;
+                }
+
+                _this4.$store.commit("setNotification", "Payment Created");
+
+                _this4.form = {
+                  amount: 0,
+                  status: 0,
+                  merchant: "stripe",
+                  description: ""
+                };
+                _this4.createPaymentTgl = false;
+
+                if (!_this4.lead) {
+                  _context4.next = 17;
+                  break;
+                }
+
+                _context4.next = 16;
+                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].get(_this4.lead.id, "");
+
+              case 16:
+                _this4.payments = _context4.sent;
+
+              case 17:
+                _context4.next = 23;
+                break;
+
+              case 19:
+                if (res.data.amount) {
+                  _this4.formerrors.amount = res.data.amount;
+                }
+
+                if (res.data.status) {
+                  _this4.formerrors.status = res.data.status;
+                }
+
+                if (res.data.merchant) {
+                  _this4.formerrors.merchant = res.data.merchant;
+                }
+
+                if (res.data.description) {
+                  _this4.formerrors.description = res.data.description;
+                }
+
+              case 23:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     }
   },
@@ -1090,7 +1190,13 @@ var render = function () {
                             "text-color": "white",
                           },
                         },
-                        [_vm._v("\n          Tags\n        ")]
+                        [
+                          _vm._v(
+                            "\n          " +
+                              _vm._s(_vm.lead.totalPaid) +
+                              "\n        "
+                          ),
+                        ]
                       ),
                     ],
                     1
@@ -1253,94 +1359,6 @@ var render = function () {
                   _c(
                     "v-row",
                     [
-                      _c("v-col", { attrs: { cols: "12", md: "12" } }, [
-                        _c("h2", [_vm._v("Generate Payment Link")]),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        { attrs: { cols: "12", md: "6" } },
-                        [
-                          _c("v-text-field", {
-                            attrs: { label: "Amount$", required: "" },
-                            model: {
-                              value: _vm.form.amount,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.form, "amount", $$v)
-                              },
-                              expression: "form.amount",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        { attrs: { cols: "12", md: "6" } },
-                        [
-                          _c("v-select", {
-                            attrs: {
-                              items: _vm.merchants,
-                              label: "Merchant",
-                              "item-text": "value",
-                              "item-value": "key",
-                              required: "",
-                            },
-                            model: {
-                              value: _vm.form.merchant,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.form, "merchant", $$v)
-                              },
-                              expression: "form.merchant",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        { attrs: { cols: "12", md: "6" } },
-                        [
-                          _c("v-text-field", {
-                            attrs: { label: "Description" },
-                            model: {
-                              value: _vm.form.description,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.form, "description", $$v)
-                              },
-                              expression: "form.description",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        { attrs: { cols: "12", md: "6" } },
-                        [
-                          _c("v-select", {
-                            attrs: {
-                              items: _vm.statuses,
-                              label: "Payment Status",
-                              "item-text": "value",
-                              "item-value": "key",
-                              required: "",
-                            },
-                            model: {
-                              value: _vm.form.status,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.form, "status", $$v)
-                              },
-                              expression: "form.status",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
                       _c(
                         "v-col",
                         { attrs: { cols: "12", md: "12" } },
@@ -1348,20 +1366,183 @@ var render = function () {
                           _c(
                             "v-btn",
                             {
-                              staticClass: "white--text",
-                              attrs: { color: "blue-grey float-right" },
+                              on: {
+                                click: function ($event) {
+                                  _vm.createPaymentTgl = !_vm.createPaymentTgl
+                                },
+                              },
                             },
                             [
-                              _c("v-icon", { attrs: { left: "", dark: "" } }, [
-                                _vm._v(" mdi-currency-usd "),
+                              _vm._v(
+                                "\n              Generate Payment Link\n              "
+                              ),
+                              _c("v-icon", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.createPaymentTgl
+                                      ? "mdi-chevron-up"
+                                      : "mdi-chevron-down"
+                                  )
+                                ),
                               ]),
-                              _vm._v("\n              Generate\n            "),
                             ],
                             1
                           ),
                         ],
                         1
                       ),
+                      _vm._v(" "),
+                      _c("v-expand-transition", [
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.createPaymentTgl,
+                                expression: "createPaymentTgl",
+                              },
+                            ],
+                            staticClass: "col-md-12",
+                          },
+                          [
+                            _c("v-divider"),
+                            _vm._v(" "),
+                            _c(
+                              "v-row",
+                              { staticClass: "pa-4" },
+                              [
+                                _c(
+                                  "v-col",
+                                  { attrs: { cols: "6", md: "6" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "Amount$",
+                                        required: "",
+                                        "error-messages": _vm.formerrors.amount,
+                                      },
+                                      model: {
+                                        value: _vm.form.amount,
+                                        callback: function ($$v) {
+                                          _vm.$set(_vm.form, "amount", $$v)
+                                        },
+                                        expression: "form.amount",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-col",
+                                  { attrs: { cols: "6", md: "6" } },
+                                  [
+                                    _c("v-select", {
+                                      attrs: {
+                                        items: _vm.merchants,
+                                        label: "Merchant",
+                                        "item-text": "value",
+                                        "item-value": "key",
+                                        required: "",
+                                        "error-messages":
+                                          _vm.formerrors.merchant,
+                                      },
+                                      model: {
+                                        value: _vm.form.merchant,
+                                        callback: function ($$v) {
+                                          _vm.$set(_vm.form, "merchant", $$v)
+                                        },
+                                        expression: "form.merchant",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-col",
+                                  { attrs: { cols: "6", md: "6" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "Description",
+                                        "error-messages":
+                                          _vm.formerrors.description,
+                                      },
+                                      model: {
+                                        value: _vm.form.description,
+                                        callback: function ($$v) {
+                                          _vm.$set(_vm.form, "description", $$v)
+                                        },
+                                        expression: "form.description",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-col",
+                                  { attrs: { cols: "6", md: "6" } },
+                                  [
+                                    _c("v-select", {
+                                      attrs: {
+                                        items: _vm.statuses,
+                                        label: "Payment Status",
+                                        "item-text": "value",
+                                        "item-value": "key",
+                                        required: "",
+                                        "error-messages": _vm.formerrors.status,
+                                      },
+                                      model: {
+                                        value: _vm.form.status,
+                                        callback: function ($$v) {
+                                          _vm.$set(_vm.form, "status", $$v)
+                                        },
+                                        expression: "form.status",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-col",
+                                  { attrs: { cols: "6", md: "12" } },
+                                  [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        staticClass: "white--text",
+                                        attrs: {
+                                          color: "blue-grey float-right",
+                                        },
+                                        on: { click: _vm.createPayment },
+                                      },
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          { attrs: { left: "", dark: "" } },
+                                          [_vm._v(" mdi-currency-usd ")]
+                                        ),
+                                        _vm._v(
+                                          "\n              Generate\n            "
+                                        ),
+                                      ],
+                                      1
+                                    ),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                          ],
+                          1
+                        ),
+                      ]),
                     ],
                     1
                   ),

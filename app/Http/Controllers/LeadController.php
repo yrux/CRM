@@ -96,6 +96,7 @@ class LeadController extends Controller
      */
     public function show(Lead $lead)
     {
+        $lead->totalPaid = $lead->payments()->where('status',1)->sum('amount');
         return new LeadResource($lead);
     }
 

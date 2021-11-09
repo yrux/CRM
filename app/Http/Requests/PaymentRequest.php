@@ -24,7 +24,7 @@ class PaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount'=>'required',
+            'amount'=>'required|gt:0',
             'merchant'=>'required',
             'description'=>'max:555',
         ];
