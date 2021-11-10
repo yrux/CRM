@@ -79,6 +79,13 @@
           >
             <v-list-item-title><v-icon>mdi-plus</v-icon>Lead</v-list-item-title>
           </v-list-item>
+          <v-list-item
+            v-if="user.role_id == 2"
+            link
+            :to="{ name: 'auth.brief.add', query:{openAdd: 'true'} }"
+          >
+            <v-list-item-title><v-icon>mdi-plus</v-icon>Brief Form</v-list-item-title>
+          </v-list-item>
           <!-- <v-list-item link :to="{ name: 'auth.quote.add' }">
             <v-list-item-title
               ><v-icon>mdi-plus</v-icon>Quote</v-list-item-title
@@ -147,6 +154,41 @@
             <v-list>
               <v-list-item exact link :to="{ name: 'auth.company.add' }">
                 <v-list-item-title>Add Company</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-list-item>
+        <v-list-item
+          v-if="user.role_id == 2"
+          class="pa-0"
+          link
+          :to="{ name: 'auth.brief.listing' }"
+        >
+          <v-menu
+            open-on-hover
+            offset-x
+            style="max-width: 600px"
+            :close-on-content-click="false"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-icon
+                color="primary"
+                dark
+                class="d-block"
+                style="width: 100%; text-align: center"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon v-text="'mdi-form-select'"></v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Brief Form</v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list>
+              <v-list-item exact link :to="{ name: 'auth.brief.add' }">
+                <v-list-item-title>Add Brief Form</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>

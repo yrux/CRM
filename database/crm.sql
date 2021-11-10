@@ -78,6 +78,29 @@ insert  into `brands`(`id`,`brand_name`,`brand_code`,`created_at`,`updated_at`,`
 (11,'Test Company Brand','TCB','2021-10-28 23:33:40','2021-10-28 23:35:18',18),
 (13,'Jesper Brand','JS-B','2021-11-05 01:43:08','2021-11-05 01:43:08',1);
 
+/*Table structure for table `brief_forms` */
+
+DROP TABLE IF EXISTS `brief_forms`;
+
+CREATE TABLE `brief_forms` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `form_name` varchar(100) DEFAULT NULL,
+  `form_description` text DEFAULT NULL,
+  `form_fields` text DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `brief_forms` */
+
+insert  into `brief_forms`(`id`,`company_id`,`user_id`,`form_name`,`form_description`,`form_fields`,`updated_at`,`created_at`) values 
+(4,1,3,'test','<p>test</p>','\'test\'','2021-11-10 21:57:20','2021-11-10 21:56:02'),
+(5,1,3,'test','<p>123123</p>','[{\"type\":\"heading\",\"label\":\"NAme\"},{\"type\":\"breaker\"},{\"type\":\"textbox\",\"label\":\"123123\",\"grid\":6,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Test Area\",\"grid\":6,\"model\":\"\"},{\"type\":\"checkbox\",\"label\":\"What is your payment option?\",\"checkboxes\":[{\"label\":\"A\"},{\"label\":\"B\"},{\"label\":\"C\"},{\"label\":\"D\"}],\"model\":\"\"},{\"type\":\"description\",\"label\":\"Text Area for use\",\"grid\":12,\"model\":\"\"}]','2021-11-10 21:56:17','2021-11-10 21:56:17'),
+(6,1,3,'test','<p>123123</p>','[{\"type\":\"heading\",\"label\":\"NAme\"},{\"type\":\"breaker\"},{\"type\":\"textbox\",\"label\":\"123123\",\"grid\":6,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Test Area\",\"grid\":6,\"model\":\"\"},{\"type\":\"checkbox\",\"label\":\"What is your payment option?\",\"checkboxes\":[{\"label\":\"A\"},{\"label\":\"B\"},{\"label\":\"C\"},{\"label\":\"D\"}],\"model\":\"\"},{\"type\":\"description\",\"label\":\"Text Area for use\",\"grid\":12,\"model\":\"\"},{\"type\":\"textbox\",\"label\":\"tt\",\"grid\":6,\"model\":\"\"},{\"type\":\"breaker\"},{\"type\":\"description\",\"label\":\"ff\",\"grid\":6,\"model\":\"\"}]','2021-11-10 21:57:57','2021-11-10 21:57:39');
+
 /*Table structure for table `chat_heads` */
 
 DROP TABLE IF EXISTS `chat_heads`;
@@ -537,6 +560,7 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('ea040bec5ed98f506ff88ff8cb89b82b8f24a3020cc5d21385caf45d0aa52fab5f4d91327e5ec3bf',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:46:06','2021-10-26 13:46:06','2022-04-26 13:46:06'),
 ('ec5a63dad8e368cacdf8cb58aadb9d0b3a838a943733e460ad1467d72ec26ebe9c7ed3cd0675a2b7',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 14:09:43','2021-10-12 14:09:43','2022-04-12 14:09:43'),
 ('ed3409f49ec7d6b7bfc94b3e1e052e63044996be9e598c06a91d921f232c5b2cf95a0a6b6cb3bcbf',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-25 11:39:16','2021-10-25 11:39:16','2022-04-25 11:39:15'),
+('fb9c6ea8cdd5fc6bb0fdcc67f6da33baf44cce9a81c72ae55c3ba167f3f8440bfe0f7c81c2e24ab5',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-10 18:10:41','2021-11-10 18:10:41','2022-05-10 18:10:40'),
 ('fe4bde475f338caee5ee00a02ca99adaa289989e0ce26f78c6ffa4a805be9ba0024c936818185fc4',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 14:11:13','2021-10-26 14:11:13','2022-04-26 14:11:12');
 
 /*Table structure for table `oauth_auth_codes` */
@@ -667,7 +691,7 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `permissions` */
 
@@ -701,7 +725,12 @@ insert  into `permissions`(`id`,`name`,`title`,`updated_at`,`created_at`) values
 (27,'task-create','Task Create','2021-10-20 20:52:17','2021-10-20 20:52:17'),
 (28,'task-edit','Task Edit','2021-10-20 20:52:24','2021-10-20 20:52:24'),
 (29,'task-delete','Task Delete','2021-10-20 20:53:00','2021-10-20 20:52:29'),
-(30,'task-view','Task View','2021-10-20 20:53:07','2021-10-20 20:52:48');
+(30,'task-view','Task View','2021-10-20 20:53:07','2021-10-20 20:52:48'),
+(31,'brief-list','Brief List','2021-11-10 17:55:40','2021-11-10 17:55:40'),
+(32,'brief-create','Brief Create','2021-11-10 17:55:54','2021-11-10 17:55:44'),
+(33,'brief-edit','Brief Edit','2021-11-10 17:56:06','2021-11-10 17:56:06'),
+(34,'brief-view','Brief View','2021-11-10 17:56:13','2021-11-10 17:56:13'),
+(35,'brief-delete','Brief Delete','2021-11-10 17:56:21','2021-11-10 17:56:21');
 
 /*Table structure for table `personal_access_tokens` */
 
@@ -872,7 +901,7 @@ CREATE TABLE `roles_permissions` (
   KEY `rp_role_id` (`role_id`) USING BTREE,
   CONSTRAINT `roles_permissions_ibfk_1` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`),
   CONSTRAINT `roles_permissions_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `roles_permissions` */
 
@@ -931,7 +960,12 @@ insert  into `roles_permissions`(`id`,`role_id`,`permission_id`,`created_at`,`up
 (52,4,22,'2021-10-30 02:38:13','2021-10-30 02:38:13'),
 (53,4,23,'2021-10-30 02:38:15','2021-10-30 02:38:15'),
 (54,4,24,'2021-10-30 02:38:16','2021-10-30 02:38:16'),
-(55,4,25,'2021-10-30 02:38:18','2021-10-30 02:38:18');
+(55,4,25,'2021-10-30 02:38:18','2021-10-30 02:38:18'),
+(56,2,31,'2021-11-10 17:56:45','2021-11-10 17:56:45'),
+(57,2,32,'2021-11-10 17:56:48','2021-11-10 17:56:48'),
+(58,2,33,'2021-11-10 17:56:50','2021-11-10 17:56:50'),
+(59,2,34,'2021-11-10 17:56:53','2021-11-10 17:56:53'),
+(60,2,35,'2021-11-10 17:56:56','2021-11-10 17:56:56');
 
 /*Table structure for table `task_comments` */
 

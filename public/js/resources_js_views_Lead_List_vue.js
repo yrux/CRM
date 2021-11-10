@@ -119,7 +119,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -1292,11 +1291,6 @@ var render = function () {
                             "v-col",
                             { attrs: { cols: "12" } },
                             [
-                              _vm._v(
-                                "\n            " +
-                                  _vm._s(_vm.lead.lead_status == 3) +
-                                  "\n            "
-                              ),
                               _vm.form.id > 0 && _vm.lead.lead_status == 3
                                 ? _c("v-divider")
                                 : _vm._e(),
@@ -1305,7 +1299,9 @@ var render = function () {
                           )
                         : _vm._e(),
                       _vm._v(" "),
-                      _vm.form.id > 0 && _vm.lead.lead_status == 3
+                      _vm.form.id > 0 &&
+                      _vm.lead.lead_status != 0 &&
+                      _vm.lead.lead_status != 2
                         ? _c(
                             "v-col",
                             { attrs: { cols: "12" } },

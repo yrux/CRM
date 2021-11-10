@@ -2535,6 +2535,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "sidebar",
   components: {},
@@ -3070,6 +3112,32 @@ __webpack_require__.r(__webpack_exports__);
   //     middleware: admin
   // }
 
+}, {
+  path: '/brief/',
+  name: 'auth.brief',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Brief_Main_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Brief/Main.vue */ "./resources/js/views/Brief/Main.vue"));
+  },
+  children: [{
+    path: '',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Brief_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Brief/List.vue */ "./resources/js/views/Brief/List.vue"));
+    },
+    name: 'auth.brief.listing'
+  }, {
+    path: 'add',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Brief_Add_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Brief/Add.vue */ "./resources/js/views/Brief/Add.vue"));
+    },
+    name: 'auth.brief.add'
+  }, {
+    path: 'edit/:id',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Brief_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Brief/Edit.vue */ "./resources/js/views/Brief/Edit.vue"));
+    },
+    name: 'auth.brief.edit'
+  }],
+  beforeEnter: _middleware_company__WEBPACK_IMPORTED_MODULE_1__["default"]
 }, {
   path: '/brand/',
   name: 'auth.brands',
@@ -22420,6 +22488,32 @@ var render = function () {
                             1
                           )
                         : _vm._e(),
+                      _vm._v(" "),
+                      _vm.user.role_id == 2
+                        ? _c(
+                            "v-list-item",
+                            {
+                              attrs: {
+                                link: "",
+                                to: {
+                                  name: "auth.brief.add",
+                                  query: { openAdd: "true" },
+                                },
+                              },
+                            },
+                            [
+                              _c(
+                                "v-list-item-title",
+                                [
+                                  _c("v-icon", [_vm._v("mdi-plus")]),
+                                  _vm._v("Brief Form"),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
                     ],
                     1
                   ),
@@ -22585,6 +22679,116 @@ var render = function () {
                                         [
                                           _c("v-list-item-title", [
                                             _vm._v("Add Company"),
+                                          ]),
+                                        ],
+                                        1
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.user.role_id == 2
+                        ? _c(
+                            "v-list-item",
+                            {
+                              staticClass: "pa-0",
+                              attrs: {
+                                link: "",
+                                to: { name: "auth.brief.listing" },
+                              },
+                            },
+                            [
+                              _c(
+                                "v-menu",
+                                {
+                                  staticStyle: { "max-width": "600px" },
+                                  attrs: {
+                                    "open-on-hover": "",
+                                    "offset-x": "",
+                                    "close-on-content-click": false,
+                                  },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function (ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "v-list-item-icon",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "d-block",
+                                                    staticStyle: {
+                                                      width: "100%",
+                                                      "text-align": "center",
+                                                    },
+                                                    attrs: {
+                                                      color: "primary",
+                                                      dark: "",
+                                                    },
+                                                  },
+                                                  "v-list-item-icon",
+                                                  attrs,
+                                                  false
+                                                ),
+                                                on
+                                              ),
+                                              [
+                                                _c("v-icon", {
+                                                  domProps: {
+                                                    textContent:
+                                                      _vm._s("mdi-form-select"),
+                                                  },
+                                                }),
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-item-content",
+                                              [
+                                                _c("v-list-item-title", [
+                                                  _vm._v("Brief Form"),
+                                                ]),
+                                              ],
+                                              1
+                                            ),
+                                          ]
+                                        },
+                                      },
+                                    ],
+                                    null,
+                                    false,
+                                    3407107670
+                                  ),
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list",
+                                    [
+                                      _c(
+                                        "v-list-item",
+                                        {
+                                          attrs: {
+                                            exact: "",
+                                            link: "",
+                                            to: { name: "auth.brief.add" },
+                                          },
+                                        },
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v("Add Brief Form"),
                                           ]),
                                         ],
                                         1
@@ -85668,7 +85872,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Guest_Payment_vue":1,"resources_js_views_Guest_PaymentStripeSuccess_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Lead_Main_vue":1,"resources_js_views_Lead_List_vue":1,"resources_js_views_Lead_Payments_Create_vue":1,"resources_js_views_Chat_Main_vue":1,"resources_js_views_Project_Main_vue":1,"resources_js_views_Project_List_vue":1,"resources_js_views_Project_Add_vue":1,"resources_js_views_Project_OpenTask_vue":1,"resources_js_views_Task_List_vue":1,"resources_js_views_Task_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Guest_Payment_vue":1,"resources_js_views_Guest_PaymentStripeSuccess_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brief_Main_vue":1,"resources_js_views_Brief_List_vue":1,"resources_js_views_Brief_Add_vue":1,"resources_js_views_Brief_Edit_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Lead_Main_vue":1,"resources_js_views_Lead_List_vue":1,"resources_js_views_Lead_Payments_Create_vue":1,"resources_js_views_Chat_Main_vue":1,"resources_js_views_Project_Main_vue":1,"resources_js_views_Project_List_vue":1,"resources_js_views_Project_Add_vue":1,"resources_js_views_Project_OpenTask_vue":1,"resources_js_views_Task_List_vue":1,"resources_js_views_Task_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

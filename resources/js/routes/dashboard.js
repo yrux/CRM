@@ -39,6 +39,29 @@ export default [
         // }
     },
     {
+        path: '/brief/',
+        name: 'auth.brief',
+        component: ()=> import('@/views/Brief/Main.vue'),
+        children: [
+            {
+                path: '',
+                component: ()=> import('@/views/Brief/List.vue'),
+                name: 'auth.brief.listing'
+            },
+            {
+                path: 'add',
+                component: ()=> import('@/views/Brief/Add.vue'),
+                name: 'auth.brief.add'
+            },
+            {
+                path: 'edit/:id',
+                component: ()=> import('@/views/Brief/Edit.vue'),
+                name: 'auth.brief.edit'
+            }
+        ],
+        beforeEnter: company,
+    },
+    {
         path: '/brand/',
         name: 'auth.brands',
         component: ()=> import('@/views/Brand/Main.vue'),

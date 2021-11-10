@@ -80,12 +80,11 @@
               <v-text-field readonly :label="cfk" :value="cf"></v-text-field>
             </v-col>
             <v-col v-if="form.id > 0" cols="12">
-              {{ lead.lead_status == 3 }}
               <v-divider
                 v-if="form.id > 0 && lead.lead_status == 3"
               ></v-divider>
             </v-col>
-            <v-col v-if="form.id > 0 && lead.lead_status == 3" cols="12">
+            <v-col v-if="form.id > 0 && lead.lead_status != 0&& lead.lead_status != 2" cols="12">
               <v-btn link
             :to="{ name: 'auth.payment.create', params:{id: form.id} }" color="blue-grey" class="ma-2 white--text">
                 <v-icon left dark> mdi-currency-usd </v-icon>
