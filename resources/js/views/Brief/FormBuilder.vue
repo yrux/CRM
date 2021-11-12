@@ -22,18 +22,58 @@
         v-if="type.type == 'textbox'"
         v-model="type.model"
         :label="type.label"
-        :disabled="mode"
-      ></v-text-field>
+      >
+      <template v-slot:prepend>
+        <v-tooltip
+          bottom
+        >
+          <template v-slot:activator="{ on }">
+            <v-icon @click="openExplanation(typek)" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          Detail
+        </v-tooltip>
+      </template>
+      </v-text-field>
       <v-textarea
         v-if="type.type == 'description'"
         v-model="type.model"
         :label="type.label"
-        :disabled="mode"
-      ></v-textarea>
-      <p v-show="type.type == 'checkbox' || type.type == 'radio'">
+      >
+      <template v-slot:prepend>
+        <v-tooltip
+          bottom
+        >
+          <template v-slot:activator="{ on }">
+            <v-icon @click="openExplanation(typek)" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          Detail
+        </v-tooltip>
+      </template>
+      </v-textarea>
+      <p v-show="type.type == 'checkbox'">
         {{ type.label }}
       </p>
-      <v-radio-group :disabled="mode" v-if="type.type == 'radio'" v-model="type.model">
+      <v-radio-group
+        v-if="type.type == 'radio'"
+        :label="type.label"
+        v-model="type.model"
+      >
+      <template v-slot:prepend>
+        <v-tooltip
+          bottom
+        >
+          <template v-slot:activator="{ on }">
+            <v-icon @click="openExplanation(typek)" v-on="on">
+              mdi-help-circle-outline
+            </v-icon>
+          </template>
+          Detail
+        </v-tooltip>
+      </template>
         <v-radio
           v-for="(radio, radiok) in type.radios"
           :key="radiok"
@@ -42,7 +82,6 @@
         ></v-radio>
       </v-radio-group>
       <v-checkbox
-        :disabled="mode"
         class="ma-0"
         v-show="type.type == 'checkbox'"
         v-for="(checkbox, index) in type.checkboxes"
@@ -53,15 +92,71 @@
         :label="checkbox.label"
       />
     </v-col>
+
+    <v-dialog
+      v-model="explanationDialoge"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Add Explanation</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col
+                cols="12"
+                sm="12"
+                md="12"
+                v-if="selectedType>=0"
+                v-html="form[selectedType].explanation"
+              >
+              </v-col>
+              <v-col
+                cols="12"
+                sm="12"
+                md="12"
+              >
+                <ckeditor
+                    :editor="editor"
+                    v-model="form_explanation"
+                    :config="editorConfig"
+                ></ckeditor>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="removeSelectedExplanation"
+          >
+            No Explanation
+          </v-btn>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="saveSelectedExplanation"
+          >
+            Save Explanation
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-row>
 </template>
 <script>
 import Swal from "sweetalert2";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default {
-props: {
+  props: {
     mode: Boolean,
     formfields: Array,
-},
+  },
   methods: {
     async addHeading() {
       var label = await this.askQuestion("Provide Heading Text");
@@ -87,6 +182,7 @@ props: {
             label: label,
             grid: parseInt(gridSize),
             model: "",
+            explanation: '',
           });
         }
       }
@@ -101,6 +197,7 @@ props: {
             label: label,
             grid: parseInt(gridSize),
             model: "",
+            explanation: '',
           });
         }
       }
@@ -123,8 +220,9 @@ props: {
           this.form.push({
             type: "radio",
             label: label,
-            radios:radios,
+            radios: radios,
             model: "",
+            explanation: '',
           });
         }
       }
@@ -147,8 +245,9 @@ props: {
           this.form.push({
             type: "checkbox",
             label: label,
-            checkboxes:radios,
+            checkboxes: radios,
             model: "",
+            explanation: '',
           });
         }
       }
@@ -170,9 +269,30 @@ props: {
         return questionvalue;
       }
     },
+    openExplanation(typek){
+      this.selectedType = typek;
+      this.explanationDialoge = true
+    },
+    removeSelectedExplanation(){
+      this.form[this.selectedType].explanation = ''
+      this.explanationDialoge = false
+      this.selectedType = undefined
+      this.form_explanation = '';
+    },
+    saveSelectedExplanation(){
+      this.form[this.selectedType].explanation = this.form_explanation
+      this.explanationDialoge = false
+      this.selectedType = undefined
+      this.form_explanation = '';
+    },
   },
   data() {
     return {
+      selectedType: undefined,
+      explanationDialoge: false,
+      editorConfig: {},
+      editor: ClassicEditor,
+      form_explanation: '',
       form: [
         // { type: "heading", label: "Brief Form" },
         // { type: "breaker" },
@@ -223,18 +343,17 @@ props: {
     };
   },
   async mounted() {
-    console.log(this.formfields)
-    if(this.formfields.length>0){
+    if (this.formfields.length > 0) {
       this.form = this.formfields;
     }
   },
   watch: {
-      form(){
-          this.$emit('event-happen',this.form)
-      },
-      formfields(){
-        this.form = this.formfields
-      }
+    form() {
+      this.$emit("event-happen", this.form);
+    },
+    formfields() {
+      this.form = this.formfields;
+    },
   },
   computed: {},
 };

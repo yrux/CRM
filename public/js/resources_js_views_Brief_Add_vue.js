@@ -274,6 +274,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
+/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_2__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -337,6 +339,101 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -420,7 +517,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       type: "textbox",
                       label: label,
                       grid: parseInt(gridSize),
-                      model: ""
+                      model: "",
+                      explanation: ''
                     });
                   }
                 }
@@ -459,7 +557,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       type: "description",
                       label: label,
                       grid: parseInt(gridSize),
-                      model: ""
+                      model: "",
+                      explanation: ''
                     });
                   }
                 }
@@ -530,7 +629,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: "radio",
                   label: label,
                   radios: radios,
-                  model: ""
+                  model: "",
+                  explanation: ''
                 });
 
               case 19:
@@ -599,7 +699,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: "checkbox",
                   label: label,
                   checkboxes: radios,
-                  model: ""
+                  model: "",
+                  explanation: ''
                 });
 
               case 19:
@@ -652,10 +753,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee7);
       }))();
+    },
+    openExplanation: function openExplanation(typek) {
+      this.selectedType = typek;
+      this.explanationDialoge = true;
+    },
+    removeSelectedExplanation: function removeSelectedExplanation() {
+      this.form[this.selectedType].explanation = '';
+      this.explanationDialoge = false;
+      this.selectedType = undefined;
+      this.form_explanation = '';
+    },
+    saveSelectedExplanation: function saveSelectedExplanation() {
+      this.form[this.selectedType].explanation = this.form_explanation;
+      this.explanationDialoge = false;
+      this.selectedType = undefined;
+      this.form_explanation = '';
     }
   },
   data: function data() {
     return {
+      selectedType: undefined,
+      explanationDialoge: false,
+      editorConfig: {},
+      editor: (_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_2___default()),
+      form_explanation: '',
       form: [// { type: "heading", label: "Brief Form" },
         // { type: "breaker" },
         // { type: "textbox", label: "Your Name", grid: 6, model: "" },
@@ -712,13 +834,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
-              console.log(_this7.formfields);
-
               if (_this7.formfields.length > 0) {
                 _this7.form = _this7.formfields;
               }
 
-            case 2:
+            case 1:
             case "end":
               return _context8.stop();
           }
@@ -728,7 +848,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   watch: {
     form: function form() {
-      this.$emit('event-happen', this.form);
+      this.$emit("event-happen", this.form);
     },
     formfields: function formfields() {
       this.form = this.formfields;
@@ -4460,7 +4580,62 @@ var render = function () {
             _vm._v(" "),
             type.type == "textbox"
               ? _c("v-text-field", {
-                  attrs: { label: type.label, disabled: _vm.mode },
+                  attrs: { label: type.label },
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "prepend",
+                        fn: function () {
+                          return [
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { bottom: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function (ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c(
+                                            "v-icon",
+                                            _vm._g(
+                                              {
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.openExplanation(
+                                                      typek
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              on
+                                            ),
+                                            [
+                                              _vm._v(
+                                                "\n            mdi-help-circle-outline\n          "
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      },
+                                    },
+                                  ],
+                                  null,
+                                  true
+                                ),
+                              },
+                              [_vm._v("\n        Detail\n      ")]
+                            ),
+                          ]
+                        },
+                        proxy: true,
+                      },
+                    ],
+                    null,
+                    true
+                  ),
                   model: {
                     value: type.model,
                     callback: function ($$v) {
@@ -4473,7 +4648,62 @@ var render = function () {
             _vm._v(" "),
             type.type == "description"
               ? _c("v-textarea", {
-                  attrs: { label: type.label, disabled: _vm.mode },
+                  attrs: { label: type.label },
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "prepend",
+                        fn: function () {
+                          return [
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { bottom: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function (ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c(
+                                            "v-icon",
+                                            _vm._g(
+                                              {
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.openExplanation(
+                                                      typek
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              on
+                                            ),
+                                            [
+                                              _vm._v(
+                                                "\n            mdi-help-circle-outline\n          "
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      },
+                                    },
+                                  ],
+                                  null,
+                                  true
+                                ),
+                              },
+                              [_vm._v("\n        Detail\n      ")]
+                            ),
+                          ]
+                        },
+                        proxy: true,
+                      },
+                    ],
+                    null,
+                    true
+                  ),
                   model: {
                     value: type.model,
                     callback: function ($$v) {
@@ -4491,9 +4721,8 @@ var render = function () {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: type.type == "checkbox" || type.type == "radio",
-                    expression:
-                      "type.type == 'checkbox' || type.type == 'radio'",
+                    value: type.type == "checkbox",
+                    expression: "type.type == 'checkbox'",
                   },
                 ],
               },
@@ -4504,7 +4733,62 @@ var render = function () {
               ? _c(
                   "v-radio-group",
                   {
-                    attrs: { disabled: _vm.mode },
+                    attrs: { label: type.label },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "prepend",
+                          fn: function () {
+                            return [
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function (ref) {
+                                          var on = ref.on
+                                          return [
+                                            _c(
+                                              "v-icon",
+                                              _vm._g(
+                                                {
+                                                  on: {
+                                                    click: function ($event) {
+                                                      return _vm.openExplanation(
+                                                        typek
+                                                      )
+                                                    },
+                                                  },
+                                                },
+                                                on
+                                              ),
+                                              [
+                                                _vm._v(
+                                                  "\n            mdi-help-circle-outline\n          "
+                                                ),
+                                              ]
+                                            ),
+                                          ]
+                                        },
+                                      },
+                                    ],
+                                    null,
+                                    true
+                                  ),
+                                },
+                                [_vm._v("\n        Detail\n      ")]
+                              ),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                      ],
+                      null,
+                      true
+                    ),
                     model: {
                       value: type.model,
                       callback: function ($$v) {
@@ -4513,13 +4797,16 @@ var render = function () {
                       expression: "type.model",
                     },
                   },
-                  _vm._l(type.radios, function (radio, radiok) {
-                    return _c("v-radio", {
-                      key: radiok,
-                      attrs: { label: radio.label, value: radio.label },
-                    })
-                  }),
-                  1
+                  [
+                    _vm._v(" "),
+                    _vm._l(type.radios, function (radio, radiok) {
+                      return _c("v-radio", {
+                        key: radiok,
+                        attrs: { label: radio.label, value: radio.label },
+                      })
+                    }),
+                  ],
+                  2
                 )
               : _vm._e(),
             _vm._v(" "),
@@ -4536,7 +4823,6 @@ var render = function () {
                 key: index,
                 staticClass: "ma-0",
                 attrs: {
-                  disabled: _vm.mode,
                   multiple: "",
                   value: checkbox.label,
                   label: checkbox.label,
@@ -4554,6 +4840,114 @@ var render = function () {
           2
         )
       }),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: {
+            fullscreen: "",
+            "hide-overlay": "",
+            transition: "dialog-bottom-transition",
+          },
+          model: {
+            value: _vm.explanationDialoge,
+            callback: function ($$v) {
+              _vm.explanationDialoge = $$v
+            },
+            expression: "explanationDialoge",
+          },
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "text-h5" }, [
+                  _vm._v("Add Explanation"),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    [
+                      _c(
+                        "v-row",
+                        [
+                          _vm.selectedType >= 0
+                            ? _c("v-col", {
+                                attrs: { cols: "12", sm: "12", md: "12" },
+                                domProps: {
+                                  innerHTML: _vm._s(
+                                    _vm.form[_vm.selectedType].explanation
+                                  ),
+                                },
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", sm: "12", md: "12" } },
+                            [
+                              _c("ckeditor", {
+                                attrs: {
+                                  editor: _vm.editor,
+                                  config: _vm.editorConfig,
+                                },
+                                model: {
+                                  value: _vm.form_explanation,
+                                  callback: function ($$v) {
+                                    _vm.form_explanation = $$v
+                                  },
+                                  expression: "form_explanation",
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", text: "" },
+                      on: { click: _vm.removeSelectedExplanation },
+                    },
+                    [_vm._v("\n          No Explanation\n        ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", text: "" },
+                      on: { click: _vm.saveSelectedExplanation },
+                    },
+                    [_vm._v("\n          Save Explanation\n        ")]
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
     ],
     2
   )

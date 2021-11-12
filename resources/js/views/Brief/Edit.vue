@@ -160,7 +160,7 @@ export default {
           exact: true,
         },
         {
-          text: "Add",
+          text: "Update",
           to: {
             name: "auth.brief.edit",
             params: { id: this.$route.params.id },
