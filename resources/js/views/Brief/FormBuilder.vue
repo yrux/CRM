@@ -272,6 +272,7 @@ export default {
     openExplanation(typek){
       this.selectedType = typek;
       this.explanationDialoge = true
+      this.form_explanation = this.form[this.selectedType].explanation
     },
     removeSelectedExplanation(){
       this.form[this.selectedType].explanation = ''

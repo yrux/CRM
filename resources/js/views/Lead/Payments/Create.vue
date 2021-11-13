@@ -29,7 +29,7 @@
         <v-card-title>
           <v-icon color="indigo" size="55"> mdi-currency-usd </v-icon>
           Total Paid<v-chip class="ma-2" color="pink" label text-color="white">
-            {{lead.totalPaid}}
+            {{ lead.totalPaid }}
           </v-chip></v-card-title
         >
       </v-card>
@@ -78,64 +78,71 @@
         <v-container>
           <v-row>
             <v-col cols="12" md="12">
-              <v-btn
-                
-                @click="createPaymentTgl = !createPaymentTgl"
-              >
+              <v-btn @click="createPaymentTgl = !createPaymentTgl">
                 Generate Payment Link
-                <v-icon>{{ createPaymentTgl ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                <v-icon>{{
+                  createPaymentTgl ? "mdi-chevron-up" : "mdi-chevron-down"
+                }}</v-icon>
               </v-btn>
+
+              <v-btn color="success" v-if="lead.user_id > 0"
+                >User Signedup</v-btn
+              >
               <!-- <h2></h2> -->
             </v-col>
             <v-expand-transition>
-            <div class="col-md-12" v-show="createPaymentTgl">
-              <v-divider></v-divider>
-              <v-row class="pa-4">
-            <v-col cols="6" md="6">
-              <v-text-field
-                v-model="form.amount"
-                label="Amount$"
-                required
-                :error-messages="formerrors.amount"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="6" md="6">
-              <v-select
-                v-model="form.merchant"
-                :items="merchants"
-                label="Merchant"
-                item-text="value"
-                item-value="key"
-                required
-                :error-messages="formerrors.merchant"
-              ></v-select>
-            </v-col>
-            <v-col cols="6" md="6">
-              <v-text-field
-                v-model="form.description"
-                label="Description"
-                :error-messages="formerrors.description"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="6" md="6">
-              <v-select
-                v-model="form.status"
-                :items="statuses"
-                label="Payment Status"
-                item-text="value"
-                item-value="key"
-                required
-                :error-messages="formerrors.status"
-              ></v-select>
-            </v-col>
-            <v-col cols="6" md="12">
-              <v-btn @click="createPayment" color="blue-grey float-right" class="white--text">
-                <v-icon left dark> mdi-currency-usd </v-icon>
-                Generate
-              </v-btn>
-            </v-col>
-              </v-row>
-            </div>
+              <div class="col-md-12" v-show="createPaymentTgl">
+                <v-divider></v-divider>
+                <v-row class="pa-4">
+                  <v-col cols="6" md="6">
+                    <v-text-field
+                      v-model="form.amount"
+                      label="Amount$"
+                      required
+                      :error-messages="formerrors.amount"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6" md="6">
+                    <v-select
+                      v-model="form.merchant"
+                      :items="merchants"
+                      label="Merchant"
+                      item-text="value"
+                      item-value="key"
+                      required
+                      :error-messages="formerrors.merchant"
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="6" md="6">
+                    <v-text-field
+                      v-model="form.description"
+                      label="Description"
+                      :error-messages="formerrors.description"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6" md="6">
+                    <v-select
+                      v-model="form.status"
+                      :items="statuses"
+                      label="Payment Status"
+                      item-text="value"
+                      item-value="key"
+                      required
+                      :error-messages="formerrors.status"
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="6" md="12">
+                    <v-btn
+                      @click="createPayment"
+                      color="blue-grey float-right"
+                      class="white--text"
+                    >
+                      <v-icon left dark> mdi-currency-usd </v-icon>
+                      Generate
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </div>
             </v-expand-transition>
           </v-row>
         </v-container>
@@ -204,6 +211,36 @@
         </v-row></v-container
       >
     </v-col>
+    <v-col v-if="lead.user_id > 0" cols="12">
+      <v-divider></v-divider>
+    </v-col>
+    <v-col v-if="lead.user_id > 0" cols="12">
+      <v-container>
+        <v-row>
+          <v-col cols="12" md="12">
+            <h2>Briefs Sent to Client</h2>
+          </v-col>
+          <v-col cols="12">
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">Amount</th>
+                    <th class="text-left">Description</th>
+                    <th class="text-left">Merchant</th>
+                    <th class="text-left">Status</th>
+                    <th class="text-left"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </template>
+            </v-simple-table>
+          </v-col>
+        </v-row></v-container
+      >
+    </v-col>
   </v-row>
 </template>
 <script>
@@ -262,46 +299,46 @@ export default {
         "Payment Link Copied to Clip Board"
       );
     },
-    async createPayment(){
+    async createPayment() {
       this.formerrors = {
         amount: [],
         status: [],
         merchant: [],
         description: [],
-      }
-      var formData = new FormData()
-      formData.append('amount',this.form.amount)
-      formData.append('status',this.form.status)
-      formData.append('merchant',this.form.merchant)
-      formData.append('description',this.form.description)
-      var res = await paymentservice.create(this.lead.id, formData)
-      if(res.status){
+      };
+      var formData = new FormData();
+      formData.append("amount", this.form.amount);
+      formData.append("status", this.form.status);
+      formData.append("merchant", this.form.merchant);
+      formData.append("description", this.form.description);
+      var res = await paymentservice.create(this.lead.id, formData);
+      if (res.status) {
         this.$store.commit("setNotification", "Payment Created");
         this.form = {
           amount: 0,
           status: 0,
           merchant: "stripe",
           description: "",
-        }
-        this.createPaymentTgl = false
+        };
+        this.createPaymentTgl = false;
         if (this.lead) {
           this.payments = await paymentservice.get(this.lead.id, "");
         }
-      }else{
-        if(res.data.amount){
-          this.formerrors.amount = res.data.amount
+      } else {
+        if (res.data.amount) {
+          this.formerrors.amount = res.data.amount;
         }
-        if(res.data.status){
-          this.formerrors.status = res.data.status
+        if (res.data.status) {
+          this.formerrors.status = res.data.status;
         }
-        if(res.data.merchant){
-          this.formerrors.merchant = res.data.merchant
+        if (res.data.merchant) {
+          this.formerrors.merchant = res.data.merchant;
         }
-        if(res.data.description){
-          this.formerrors.description = res.data.description
+        if (res.data.description) {
+          this.formerrors.description = res.data.description;
         }
       }
-    }
+    },
   },
   watch: {},
   computed: {},

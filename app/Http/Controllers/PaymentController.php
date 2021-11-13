@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PaymentRequest;
 use App\Http\Resources\PaymentResource;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class PaymentController extends Controller
 {
@@ -177,6 +178,17 @@ class PaymentController extends Controller
                     //$payment_methods->data[0]->id
                     $payment->status = 1;
                     $payment->save();
+                    $user = User::create([
+                        'company_id'=>$payment->lead->brand->company->id,
+                        'email'=>$payment->lead->email,
+                        'name'=>$payment->lead->first_name.' '.$payment->lead->last_name,
+                        'password'=>Hash::make('12345678'),
+                        'role_id'=>6,
+                    ]);
+                    // dd($payment->lead->id, $user);
+                    $lead_update = Lead::find($payment->lead->id);
+                    $lead_update->user_id = $user->id;
+                    $lead_update->save();
                     break;
                 case 'processing':
                     $payment->status = 2;

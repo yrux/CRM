@@ -23474,82 +23474,84 @@ var render = function () {
                           )
                         : _vm._e(),
                       _vm._v(" "),
-                      _c(
-                        "v-list-item",
-                        {
-                          staticClass: "pa-0",
-                          attrs: { link: "", to: { name: "auth.chat" } },
-                        },
-                        [
-                          _c("v-menu", {
-                            staticStyle: { "max-width": "600px" },
-                            attrs: {
-                              "open-on-hover": "",
-                              "offset-x": "",
-                              "close-on-content-click": false,
+                      _vm.user.role_id != 6
+                        ? _c(
+                            "v-list-item",
+                            {
+                              staticClass: "pa-0",
+                              attrs: { link: "", to: { name: "auth.chat" } },
                             },
-                            scopedSlots: _vm._u(
-                              [
-                                {
-                                  key: "activator",
-                                  fn: function (ref) {
-                                    var on = ref.on
-                                    var attrs = ref.attrs
-                                    return [
-                                      _c(
-                                        "v-list-item-icon",
-                                        _vm._g(
-                                          _vm._b(
-                                            {
-                                              staticClass: "d-block",
-                                              staticStyle: {
-                                                width: "100%",
-                                                "text-align": "center",
-                                              },
-                                              attrs: {
-                                                color: "primary",
-                                                dark: "",
-                                              },
-                                            },
-                                            "v-list-item-icon",
-                                            attrs,
-                                            false
-                                          ),
-                                          on
-                                        ),
-                                        [
-                                          _c("v-icon", {
-                                            domProps: {
-                                              textContent: _vm._s(
-                                                "mdi-message-bulleted"
-                                              ),
-                                            },
-                                          }),
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-list-item-content",
-                                        [
-                                          _c("v-list-item-title", [
-                                            _vm._v("Chat"),
-                                          ]),
-                                        ],
-                                        1
-                                      ),
-                                    ]
-                                  },
+                            [
+                              _c("v-menu", {
+                                staticStyle: { "max-width": "600px" },
+                                attrs: {
+                                  "open-on-hover": "",
+                                  "offset-x": "",
+                                  "close-on-content-click": false,
                                 },
-                              ],
-                              null,
-                              false,
-                              1140589590
-                            ),
-                          }),
-                        ],
-                        1
-                      ),
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function (ref) {
+                                        var on = ref.on
+                                        var attrs = ref.attrs
+                                        return [
+                                          _c(
+                                            "v-list-item-icon",
+                                            _vm._g(
+                                              _vm._b(
+                                                {
+                                                  staticClass: "d-block",
+                                                  staticStyle: {
+                                                    width: "100%",
+                                                    "text-align": "center",
+                                                  },
+                                                  attrs: {
+                                                    color: "primary",
+                                                    dark: "",
+                                                  },
+                                                },
+                                                "v-list-item-icon",
+                                                attrs,
+                                                false
+                                              ),
+                                              on
+                                            ),
+                                            [
+                                              _c("v-icon", {
+                                                domProps: {
+                                                  textContent: _vm._s(
+                                                    "mdi-message-bulleted"
+                                                  ),
+                                                },
+                                              }),
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-list-item-content",
+                                            [
+                                              _c("v-list-item-title", [
+                                                _vm._v("Chat"),
+                                              ]),
+                                            ],
+                                            1
+                                          ),
+                                        ]
+                                      },
+                                    },
+                                  ],
+                                  null,
+                                  false,
+                                  1140589590
+                                ),
+                              }),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
                     ],
                     1
                   ),

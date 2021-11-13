@@ -12,7 +12,7 @@ class Lead extends Model
     protected $with = ['brand'];
     protected $lead_status_arr = [0=>'pending',1=>'success',2=>'junk',3=>'followup'];
     protected $fillable = [
-        'brand_id','first_name','last_name','email','phone','message','lead_status','custom_fields','company',
+        'brand_id','first_name','last_name','email','phone','message','lead_status','custom_fields','company','user_id',
     ];
     public function getCreatedAtFormattedAttribute(){
         return date('Y-m-d h:i a',strtotime($this->created_at));
@@ -22,6 +22,9 @@ class Lead extends Model
     }
     public function brand(){
         return $this->belongsTo(Brand::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
     }
     public function payments(){
         return $this->hasMany(Payment::class);

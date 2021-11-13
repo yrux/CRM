@@ -256,6 +256,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -394,10 +431,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   description: []
                 };
                 formData = new FormData();
-                formData.append('amount', _this4.form.amount);
-                formData.append('status', _this4.form.status);
-                formData.append('merchant', _this4.form.merchant);
-                formData.append('description', _this4.form.description);
+                formData.append("amount", _this4.form.amount);
+                formData.append("status", _this4.form.status);
+                formData.append("merchant", _this4.form.merchant);
+                formData.append("description", _this4.form.description);
                 _context4.next = 8;
                 return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].create(_this4.lead.id, formData);
 
@@ -1388,6 +1425,12 @@ var render = function () {
                             ],
                             1
                           ),
+                          _vm._v(" "),
+                          _vm.lead.user_id > 0
+                            ? _c("v-btn", { attrs: { color: "success" } }, [
+                                _vm._v("User Signedup"),
+                              ])
+                            : _vm._e(),
                         ],
                         1
                       ),
@@ -1528,7 +1571,7 @@ var render = function () {
                                           [_vm._v(" mdi-currency-usd ")]
                                         ),
                                         _vm._v(
-                                          "\n              Generate\n            "
+                                          "\n                    Generate\n                  "
                                         ),
                                       ],
                                       1
@@ -1713,6 +1756,93 @@ var render = function () {
         ],
         1
       ),
+      _vm._v(" "),
+      _vm.lead.user_id > 0
+        ? _c("v-col", { attrs: { cols: "12" } }, [_c("v-divider")], 1)
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.lead.user_id > 0
+        ? _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              _c(
+                "v-container",
+                [
+                  _c(
+                    "v-row",
+                    [
+                      _c("v-col", { attrs: { cols: "12", md: "12" } }, [
+                        _c("h2", [_vm._v("Briefs Sent to Client")]),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12" } },
+                        [
+                          _c("v-simple-table", {
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function () {
+                                    return [
+                                      _c("thead", [
+                                        _c("tr", [
+                                          _c(
+                                            "th",
+                                            { staticClass: "text-left" },
+                                            [_vm._v("Amount")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "th",
+                                            { staticClass: "text-left" },
+                                            [_vm._v("Description")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "th",
+                                            { staticClass: "text-left" },
+                                            [_vm._v("Merchant")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "th",
+                                            { staticClass: "text-left" },
+                                            [_vm._v("Status")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("th", {
+                                            staticClass: "text-left",
+                                          }),
+                                        ]),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tbody"),
+                                    ]
+                                  },
+                                  proxy: true,
+                                },
+                              ],
+                              null,
+                              false,
+                              533801069
+                            ),
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          )
+        : _vm._e(),
     ],
     2
   )

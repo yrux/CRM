@@ -399,7 +399,7 @@
             <span>Upcomming</span>
           </v-tooltip>
         </v-list-item>
-        <v-list-item class="pa-0" link :to="{ name: 'auth.chat' }">
+        <v-list-item v-if="user.role_id!=6" class="pa-0" link :to="{ name: 'auth.chat' }">
           <v-menu
             open-on-hover
             offset-x

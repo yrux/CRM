@@ -774,6 +774,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     openExplanation: function openExplanation(typek) {
       this.selectedType = typek;
       this.explanationDialoge = true;
+      this.form_explanation = this.form[this.selectedType].explanation;
     },
     removeSelectedExplanation: function removeSelectedExplanation() {
       this.form[this.selectedType].explanation = '';
