@@ -60,6 +60,9 @@ class User extends Authenticatable
     public function companybrands(){
         return $this->hasMany(Brand::class,'company_id','company_id');
     }
+    public function userbrands(){
+        return $this->hasMany(BrandUser::class);
+    }
     public function brandsAssigned(){
         return $this->hasMany(BrandUser::class);
     }

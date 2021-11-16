@@ -17,7 +17,11 @@ class BriefFormController extends Controller
     public function index(Request $request)
     {
         Gate::authorize('viewAny',BriefForm::class);
-        $forms = BriefForm::where('company_id',$request->user()->company_id)->where('user_id',$request->user()->id)->orderBy('id','desc')->paginate(20);
+        if(empty($_GET['all'])){
+            $forms = BriefForm::where('company_id',$request->user()->company_id)->where('user_id',$request->user()->id)->orderBy('id','desc')->paginate(20);
+        }else{
+            $forms = BriefForm::where('company_id',$request->user()->company_id)->orderBy('id','desc')->get();
+        }
         return BriefFormResource::collection($forms);
     }
 

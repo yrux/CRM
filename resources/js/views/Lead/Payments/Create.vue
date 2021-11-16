@@ -88,6 +88,13 @@
               <v-btn color="success" v-if="lead.user_id > 0"
                 >User Signedup</v-btn
               >
+
+              <v-btn v-if="lead.user_id > 0" @click="createBriefTgl = !createBriefTgl">
+                Send Brief Form
+                <v-icon>{{
+                  createBriefTgl ? "mdi-chevron-up" : "mdi-chevron-down"
+                }}</v-icon>
+              </v-btn>
               <!-- <h2></h2> -->
             </v-col>
             <v-expand-transition>
@@ -139,6 +146,41 @@
                     >
                       <v-icon left dark> mdi-currency-usd </v-icon>
                       Generate
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </div>
+            </v-expand-transition>
+
+            <v-expand-transition>
+              <div class="col-md-12" v-show="createBriefTgl">
+                <v-divider></v-divider>
+                <v-row class="pa-4">
+                  <v-col cols="6" md="6">
+                    <v-select
+                      v-model="briefform.form_id"
+                      :items="briefforms"
+                      label="Brief Forms"
+                      item-text="form_name"
+                      item-value="id"
+                      required
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="6" md="6">
+                    <v-text-field
+                      v-model="briefform.name"
+                      label="Name"
+                      required
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6" md="12">
+                    <v-btn
+                      @click="sendForm"
+                      color="blue-grey float-right"
+                      class="white--text"
+                    >
+                      <v-icon left dark> mdi-database-eye-outline </v-icon>
+                      Send
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -225,15 +267,33 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left">Amount</th>
-                    <th class="text-left">Description</th>
-                    <th class="text-left">Merchant</th>
+                    <th class="text-left">Form</th>
                     <th class="text-left">Status</th>
+                    <th class="text-left">Sent@</th>
+                    <th class="text-left">Filled@</th>
                     <th class="text-left"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  
+                  <tr v-for="brief in briefs" :key="brief.id">
+                    <td>{{brief.form_name}}</td>
+                    <td>{{brief.status_text}}</td>
+                    <td>{{brief.created_at_formatted}}</td>
+                    <td>{{brief.status!=0?brief.updated_at_formatted:'N/A'}}</td>
+                    <td>
+                      <v-btn
+                        link
+                        :to="{ name: 'guest.brief.detail', params:{id: brief.id} }"
+                        v-if="brief.status!=0"
+                        small
+                        color="blue float-right"
+                        class="white--text"
+                      >
+                        <v-icon left dark> mdi-database-eye-outline </v-icon>
+                        See Details
+                      </v-btn>
+                    </td>
+                  </tr>
                 </tbody>
               </template>
             </v-simple-table>
@@ -246,6 +306,8 @@
 <script>
 import leadservice from "@services/auth/lead";
 import paymentservice from "@services/auth/payment";
+import briefformservice from "@services/auth/briefform";
+import userbriefsservice from "@services/auth/userbriefs";
 import StatusChip from "@components/common/status.vue";
 export default {
   components: {
@@ -254,14 +316,21 @@ export default {
   data() {
     return {
       createPaymentTgl: false,
+      createBriefTgl: false,
       lead: {},
       payments: [],
+      briefs: [],
       form: {
         amount: 0,
         status: 0,
         merchant: "stripe",
         description: "",
       },
+      briefform: {
+        name: '',
+        form_id: 0,
+      },
+      briefforms: [],
       formerrors: {
         amount: [],
         status: [],
@@ -284,12 +353,41 @@ export default {
   },
   async mounted() {
     this.getLead(this.$route.params.id);
+    this.briefforms = await briefformservice.get('?all=true')
   },
   methods: {
+    async sendForm(){
+      if(this.briefform.form_id>0&&this.briefform.name!=''){
+        var formdata = new FormData();
+        formdata.append('form_name',this.briefform.name)
+        formdata.append('form_id',this.briefform.form_id)
+        formdata.append('user_id',this.lead.user_id)
+        formdata.append('brand_id',this.lead.brand_id)
+        var res = await userbriefsservice.create(formdata);
+        if(res.status){
+          this.$store.commit(
+            "setNotification",
+            "Brief Sent to Customer"
+          );
+          this.briefs = await userbriefsservice.get('?user_id='+this.lead.user_id)
+          this.briefform.form_id = 0
+          this.briefform.name = ''
+          this.createBriefTgl = false
+        }
+      }else{
+        this.$store.commit(
+          "setNotification",
+          "Please Select Form and Type name to sent brief to user"
+        );
+      }
+    },
     async getLead(id) {
       this.lead = await leadservice.get(id);
       if (this.lead) {
         this.payments = await paymentservice.get(this.lead.id, "");
+        if(this.lead.user_id>0){
+          this.briefs = await userbriefsservice.get('?user_id='+this.lead.user_id)
+        }
       }
     },
     async CopyLinkToClipBoard(payment_link) {

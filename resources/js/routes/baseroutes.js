@@ -19,4 +19,10 @@ export default [
         component: () => import('@/views/Guest/PaymentStripeSuccess.vue'),
         meta: { guest: true },
     },
+    {
+        path: '/brief-detail/:id',
+        name: 'guest.brief.detail',
+        component: () => import('@/views/Guest/Briefs.vue'),
+        meta: { guest: true },
+    },
 ];

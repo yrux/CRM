@@ -450,6 +450,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -865,8 +867,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }))();
   },
   watch: {
-    form: function form() {
-      this.$emit("event-happen", this.form);
+    form: {
+      handler: function handler() {
+        this.$emit("event-happen", this.form);
+      },
+      deep: true
     },
     formfields: function formfields() {
       this.form = this.formfields;
@@ -4863,8 +4868,8 @@ var render = function () {
         "v-dialog",
         {
           attrs: {
-            fullscreen: "",
-            "hide-overlay": "",
+            fullscreen: _vm.mode,
+            "hide-overlay": _vm.mode,
             transition: "dialog-bottom-transition",
           },
           model: {
@@ -4880,9 +4885,13 @@ var render = function () {
             "v-card",
             [
               _c("v-card-title", [
-                _c("span", { staticClass: "text-h5" }, [
-                  _vm._v("Add Explanation"),
-                ]),
+                _vm.mode == true
+                  ? _c("span", { staticClass: "text-h5" }, [
+                      _vm._v("Add Explanation"),
+                    ])
+                  : _c("span", { staticClass: "text-h5" }, [
+                      _vm._v("Explanation"),
+                    ]),
               ]),
               _vm._v(" "),
               _c(
@@ -4905,26 +4914,28 @@ var render = function () {
                               })
                             : _vm._e(),
                           _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", sm: "12", md: "12" } },
-                            [
-                              _c("ckeditor", {
-                                attrs: {
-                                  editor: _vm.editor,
-                                  config: _vm.editorConfig,
-                                },
-                                model: {
-                                  value: _vm.form_explanation,
-                                  callback: function ($$v) {
-                                    _vm.form_explanation = $$v
-                                  },
-                                  expression: "form_explanation",
-                                },
-                              }),
-                            ],
-                            1
-                          ),
+                          _vm.mode == true
+                            ? _c(
+                                "v-col",
+                                { attrs: { cols: "12", sm: "12", md: "12" } },
+                                [
+                                  _c("ckeditor", {
+                                    attrs: {
+                                      editor: _vm.editor,
+                                      config: _vm.editorConfig,
+                                    },
+                                    model: {
+                                      value: _vm.form_explanation,
+                                      callback: function ($$v) {
+                                        _vm.form_explanation = $$v
+                                      },
+                                      expression: "form_explanation",
+                                    },
+                                  }),
+                                ],
+                                1
+                              )
+                            : _vm._e(),
                         ],
                         1
                       ),
@@ -4935,31 +4946,33 @@ var render = function () {
                 1
               ),
               _vm._v(" "),
-              _c(
-                "v-card-actions",
-                [
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "blue darken-1", text: "" },
-                      on: { click: _vm.removeSelectedExplanation },
-                    },
-                    [_vm._v("\n          No Explanation\n        ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "blue darken-1", text: "" },
-                      on: { click: _vm.saveSelectedExplanation },
-                    },
-                    [_vm._v("\n          Save Explanation\n        ")]
-                  ),
-                ],
-                1
-              ),
+              _vm.mode == true
+                ? _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "blue darken-1", text: "" },
+                          on: { click: _vm.removeSelectedExplanation },
+                        },
+                        [_vm._v("\n          No Explanation\n        ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "blue darken-1", text: "" },
+                          on: { click: _vm.saveSelectedExplanation },
+                        },
+                        [_vm._v("\n          Save Explanation\n        ")]
+                      ),
+                    ],
+                    1
+                  )
+                : _vm._e(),
             ],
             1
           ),

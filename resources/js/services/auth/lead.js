@@ -41,5 +41,13 @@ class leadservice{
         });
         return res;
 	}
+	async assignUser(lead_id, user_id){
+		var res = await  axios.post('/api/leads/'+lead_id+'/user/'+user_id).then(function(e){
+            return {status: 1}
+        }).catch(function(e){
+            return {status: 0};
+        });
+        return res;
+	}
 }
 export default new leadservice();

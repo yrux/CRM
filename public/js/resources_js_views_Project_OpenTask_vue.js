@@ -577,6 +577,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_auth_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @services/auth/user */ "./resources/js/services/auth/user.js");
+var _data$watch$mounted$m;
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -604,7 +606,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_data$watch$mounted$m = {
   data: function data() {
     return {
       selectedUser: [],
@@ -697,11 +699,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         query += "&search=" + this.search;
       }
 
-      query += "&role_id=7";
+      query += "&role_id=" + this.role;
       return _services_auth_user__WEBPACK_IMPORTED_MODULE_1__["default"].getlist(query);
     }
   }
-}, "watch", {
+}, _defineProperty(_data$watch$mounted$m, "watch", {
   options: {
     handler: function handler() {
       this.getDataFromApi();
@@ -714,7 +716,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   selectedUser: function selectedUser() {
     this.$emit('selected-user', this.selectedUser.length > 0 ? this.selectedUser[0] : {});
   }
-}));
+}), _defineProperty(_data$watch$mounted$m, "props", {
+  role: {
+    type: Number,
+    "default": 7
+  }
+}), _data$watch$mounted$m);
 
 /***/ }),
 

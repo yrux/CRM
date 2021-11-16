@@ -41,7 +41,9 @@ class ProjectTaskController extends Controller
         $arr = $request->except(['__token']);
         $arr['assigned_by'] = $request->user()->id;
         $task = $project->tasks()->create($arr);
-        $this->file->create($request->attachements, 'project_tasks', $task->id, 2);
+        if($request->attachements){
+            $this->file->create($request->attachements, 'project_tasks', $task->id, 2);
+        }
         return new ProjectTaskResource($task);
     }
 

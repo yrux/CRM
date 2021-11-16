@@ -194,6 +194,36 @@
           </v-menu>
         </v-list-item>
         <v-list-item
+          v-if="user.role_id == 6"
+          class="pa-0"
+          link
+          :to="{ name: 'auth.customer.briefs.listing' }"
+        >
+          <v-menu
+            open-on-hover
+            offset-x
+            style="max-width: 600px"
+            :close-on-content-click="false"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-icon
+                color="primary"
+                dark
+                class="d-block"
+                style="width: 100%; text-align: center"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon v-text="'mdi-form-select'"></v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Briefs</v-list-item-title>
+              </v-list-item-content>
+            </template>
+          </v-menu>
+        </v-list-item>
+        <v-list-item
           v-if="user.role_id == 1 || user.role_id == 2"
           class="pa-0"
           link

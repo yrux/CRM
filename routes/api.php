@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{CompanyController, BriefFormController};
+use App\Http\Controllers\{CompanyController, BriefFormController, UserBriefController};
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\{LeadController, PaymentController};
 use App\Http\Controllers\{BrandController, BrandUserController};
@@ -36,9 +36,11 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     /*Company resource*/
     Route::apiResource('company', CompanyController::class);
     Route::apiResource('brief-form', BriefFormController::class);
+    Route::apiResource('user-briefs', UserBriefController::class);
     Route::apiResource('leads', LeadController::class);
     Route::apiResource('leads.payments', PaymentController::class);
     Route::post('leads/{lead}/{status}', [LeadController::class,'updateStatus']);
+    Route::post('leads/{lead}/user/{user}', [LeadController::class,'assignUser']);
     Route::get('/company/user/getallusers', [CompanyController::class,'getallusers']);
     Route::apiResource('brand', BrandController::class);
     Route::apiResource('brand/{brand}/user', BrandUserController::class);

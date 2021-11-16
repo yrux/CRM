@@ -23,6 +23,14 @@ lazy-validation
   sm="12"
   class="pb-0"
 >
+<h4>Select Customer</h4>
+  <user-list v-on:selected-user="userSelectEv" :role="6" />
+</v-col>
+<v-col
+  cols="12"
+  sm="12"
+  class="pb-0"
+>
   <v-text-field
     v-model="title"
     :rules="[rules.required]"
@@ -120,9 +128,13 @@ lazy-validation
 <script>
 import projectservice from "@services/auth/project";
 import brandervice from "@services/auth/brand";
+import UserList from "@/views/Project/UserList.vue";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default {
   name: "auth.projects.add",
+  components: {
+    'user-list': UserList,
+  },
   mounted(){
     this.myBrands()
   },
@@ -138,6 +150,9 @@ export default {
           attachements: [],
       }
     },
+    async userSelectEv(data){
+      this.customer_id = data.id
+    },
     addproject: async function () {
         this.resetError()
       if (this.$refs.form.validate()) {
@@ -145,6 +160,7 @@ export default {
         var formdata = new FormData();
         formdata.append("title", this.title);
         formdata.append("brand_id", this.brand_id);
+        formdata.append("customer_id", this.customer_id);
         formdata.append("description", this.description);
         for(let i = 0; i < this.attachements.length; i++){
           formdata.append('attachements['+i+']',this.attachements[i])
@@ -164,6 +180,10 @@ export default {
             if(res.data.attachements){
                 this.errors.attachements = res.data.attachements
             }
+            if(res.data.customer_id){
+                this.$store.commit("setNotification", "Please Select a Customer");
+                this.errors.customer_id = res.data.customer_id
+            }
             //errors here
         }else{
             //suuccess here
@@ -180,9 +200,11 @@ export default {
   data() {
     return {
       brands: [],
+      users: [],
       title: '',
       description: '',
       brand_id: '',
+      customer_id: 0,
       attachements: [],
       errors: {
           title: [],

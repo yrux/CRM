@@ -15,7 +15,7 @@
         >
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn dark text @click="updateLead">
+          <v-btn v-if="user.role_id==2" dark text @click="updateLead">
             {{ form.id > 0 ? "Update Lead" : "Save Lead" }}
           </v-btn>
         </v-toolbar-items>
@@ -91,6 +91,22 @@
                 Generate Payment Link
               </v-btn>
             </v-col>
+            <v-col v-if="form.id > 0 &&user.role_id==2" cols="6">
+              <v-select
+                required
+                :items="companyusers"
+                item-text="name"
+                item-value="id"
+                label="Company Sales/Support"
+                v-model="form.assigned_to"
+              ></v-select>
+            </v-col>
+            <v-col v-if="form.id > 0 &&user.role_id==2" cols="6">
+              <v-btn @click="assignUser" color="success" class="ma-2 white--text">
+                <v-icon left dark> mdi-account </v-icon>
+                Assign/Change User
+              </v-btn>
+            </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -99,10 +115,12 @@
 </template>
 <script>
 import leadservice from "@services/auth/lead";
+import brandservice from "@services/auth/brand";
 export default {
   data() {
     return {
       dialog: false,
+      companyusers: [],
       form: {
         id: 0,
         first_name: "",
@@ -113,10 +131,19 @@ export default {
         message: "",
         brand: {},
         custom_fields: {},
+        assigned_to: 0,
       },
     };
   },
   methods: {
+    async assignUser(){
+      if(this.form.id>0&&this.form.assigned_to>0){
+        await leadservice.assignUser(this.form.id, this.form.assigned_to)
+        this.$store.commit("setNotification", "User Assigned");
+        this.$emit("refresh-leads");
+        this.closeMe()
+      }
+    },
     closeMe() {
       this.dialog = false;
       this.$emit("close-leaddialog");
@@ -138,10 +165,19 @@ export default {
         this.$store.commit("setNotification", "Lead Created");
       }
       this.$emit("refresh-leads");
+      this.closeMe()
     },
   },
-  computed: {},
-  mounted() {},
+  computed: {
+    user() {
+        return this.$store.getters.loggedInUser;
+    },
+  },
+  mounted() {
+    brandservice.getAllCompanyUsers().then(e=>{
+      this.companyusers = e
+    })
+  },
   watch: {
     openLeadForm() {
       this.dialog = this.openLeadForm;
@@ -157,6 +193,7 @@ export default {
         this.form.message = this.lead.message;
         this.form.brand = this.lead.brand;
         this.form.custom_fields = this.lead.custom_fields;
+        this.form.assigned_to = this.lead.assigned_to;
       } else {
         this.form = {
           id: 0,
@@ -168,6 +205,7 @@ export default {
           message: "",
           brand: {},
           custom_fields: {},
+          assigned_to: 0,
         };
       }
     },

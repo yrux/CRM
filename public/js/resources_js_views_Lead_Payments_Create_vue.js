@@ -41,7 +41,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_auth_lead__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @services/auth/lead */ "./resources/js/services/auth/lead.js");
 /* harmony import */ var _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @services/auth/payment */ "./resources/js/services/auth/payment.js");
-/* harmony import */ var _components_common_status_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @components/common/status.vue */ "./resources/js/components/common/status.vue");
+/* harmony import */ var _services_auth_briefform__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @services/auth/briefform */ "./resources/js/services/auth/briefform.js");
+/* harmony import */ var _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @services/auth/userbriefs */ "./resources/js/services/auth/userbriefs.js");
+/* harmony import */ var _components_common_status_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @components/common/status.vue */ "./resources/js/components/common/status.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -293,24 +295,93 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    StatusChip: _components_common_status_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    StatusChip: _components_common_status_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
       createPaymentTgl: false,
+      createBriefTgl: false,
       lead: {},
       payments: [],
+      briefs: [],
       form: {
         amount: 0,
         status: 0,
         merchant: "stripe",
         description: ""
       },
+      briefform: {
+        name: '',
+        form_id: 0
+      },
+      briefforms: [],
       formerrors: {
         amount: [],
         status: [],
@@ -353,7 +424,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               _this.getLead(_this.$route.params.id);
 
-            case 1:
+              _context.next = 3;
+              return _services_auth_briefform__WEBPACK_IMPORTED_MODULE_3__["default"].get('?all=true');
+
+            case 3:
+              _this.briefforms = _context.sent;
+
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -362,32 +439,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }))();
   },
   methods: {
-    getLead: function getLead(id) {
+    sendForm: function sendForm() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var formdata, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return _services_auth_lead__WEBPACK_IMPORTED_MODULE_1__["default"].get(id);
-
-              case 2:
-                _this2.lead = _context2.sent;
-
-                if (!_this2.lead) {
-                  _context2.next = 7;
+                if (!(_this2.briefform.form_id > 0 && _this2.briefform.name != '')) {
+                  _context2.next = 19;
                   break;
                 }
 
-                _context2.next = 6;
-                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].get(_this2.lead.id, "");
+                formdata = new FormData();
+                formdata.append('form_name', _this2.briefform.name);
+                formdata.append('form_id', _this2.briefform.form_id);
+                formdata.append('user_id', _this2.lead.user_id);
+                formdata.append('brand_id', _this2.lead.brand_id);
+                _context2.next = 8;
+                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].create(formdata);
 
-              case 6:
-                _this2.payments = _context2.sent;
+              case 8:
+                res = _context2.sent;
 
-              case 7:
+                if (!res.status) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                _this2.$store.commit("setNotification", "Brief Sent to Customer");
+
+                _context2.next = 13;
+                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].get('?user_id=' + _this2.lead.user_id);
+
+              case 13:
+                _this2.briefs = _context2.sent;
+                _this2.briefform.form_id = 0;
+                _this2.briefform.name = '';
+                _this2.createBriefTgl = false;
+
+              case 17:
+                _context2.next = 20;
+                break;
+
+              case 19:
+                _this2.$store.commit("setNotification", "Please Select Form and Type name to sent brief to user");
+
+              case 20:
               case "end":
                 return _context2.stop();
             }
@@ -395,7 +495,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    CopyLinkToClipBoard: function CopyLinkToClipBoard(payment_link) {
+    getLead: function getLead(id) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
@@ -403,11 +503,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                navigator.clipboard.writeText(payment_link);
-
-                _this3.$store.commit("setNotification", "Payment Link Copied to Clip Board");
+                _context3.next = 2;
+                return _services_auth_lead__WEBPACK_IMPORTED_MODULE_1__["default"].get(id);
 
               case 2:
+                _this3.lead = _context3.sent;
+
+                if (!_this3.lead) {
+                  _context3.next = 11;
+                  break;
+                }
+
+                _context3.next = 6;
+                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].get(_this3.lead.id, "");
+
+              case 6:
+                _this3.payments = _context3.sent;
+
+                if (!(_this3.lead.user_id > 0)) {
+                  _context3.next = 11;
+                  break;
+                }
+
+                _context3.next = 10;
+                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].get('?user_id=' + _this3.lead.user_id);
+
+              case 10:
+                _this3.briefs = _context3.sent;
+
+              case 11:
               case "end":
                 return _context3.stop();
             }
@@ -415,91 +539,255 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
-    createPayment: function createPayment() {
+    CopyLinkToClipBoard: function CopyLinkToClipBoard(payment_link) {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var formData, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _this4.formerrors = {
-                  amount: [],
-                  status: [],
-                  merchant: [],
-                  description: []
-                };
-                formData = new FormData();
-                formData.append("amount", _this4.form.amount);
-                formData.append("status", _this4.form.status);
-                formData.append("merchant", _this4.form.merchant);
-                formData.append("description", _this4.form.description);
-                _context4.next = 8;
-                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].create(_this4.lead.id, formData);
+                navigator.clipboard.writeText(payment_link);
 
-              case 8:
-                res = _context4.sent;
+                _this4.$store.commit("setNotification", "Payment Link Copied to Clip Board");
 
-                if (!res.status) {
-                  _context4.next = 19;
-                  break;
-                }
-
-                _this4.$store.commit("setNotification", "Payment Created");
-
-                _this4.form = {
-                  amount: 0,
-                  status: 0,
-                  merchant: "stripe",
-                  description: ""
-                };
-                _this4.createPaymentTgl = false;
-
-                if (!_this4.lead) {
-                  _context4.next = 17;
-                  break;
-                }
-
-                _context4.next = 16;
-                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].get(_this4.lead.id, "");
-
-              case 16:
-                _this4.payments = _context4.sent;
-
-              case 17:
-                _context4.next = 23;
-                break;
-
-              case 19:
-                if (res.data.amount) {
-                  _this4.formerrors.amount = res.data.amount;
-                }
-
-                if (res.data.status) {
-                  _this4.formerrors.status = res.data.status;
-                }
-
-                if (res.data.merchant) {
-                  _this4.formerrors.merchant = res.data.merchant;
-                }
-
-                if (res.data.description) {
-                  _this4.formerrors.description = res.data.description;
-                }
-
-              case 23:
+              case 2:
               case "end":
                 return _context4.stop();
             }
           }
         }, _callee4);
       }))();
+    },
+    createPayment: function createPayment() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var formData, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _this5.formerrors = {
+                  amount: [],
+                  status: [],
+                  merchant: [],
+                  description: []
+                };
+                formData = new FormData();
+                formData.append("amount", _this5.form.amount);
+                formData.append("status", _this5.form.status);
+                formData.append("merchant", _this5.form.merchant);
+                formData.append("description", _this5.form.description);
+                _context5.next = 8;
+                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].create(_this5.lead.id, formData);
+
+              case 8:
+                res = _context5.sent;
+
+                if (!res.status) {
+                  _context5.next = 19;
+                  break;
+                }
+
+                _this5.$store.commit("setNotification", "Payment Created");
+
+                _this5.form = {
+                  amount: 0,
+                  status: 0,
+                  merchant: "stripe",
+                  description: ""
+                };
+                _this5.createPaymentTgl = false;
+
+                if (!_this5.lead) {
+                  _context5.next = 17;
+                  break;
+                }
+
+                _context5.next = 16;
+                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].get(_this5.lead.id, "");
+
+              case 16:
+                _this5.payments = _context5.sent;
+
+              case 17:
+                _context5.next = 23;
+                break;
+
+              case 19:
+                if (res.data.amount) {
+                  _this5.formerrors.amount = res.data.amount;
+                }
+
+                if (res.data.status) {
+                  _this5.formerrors.status = res.data.status;
+                }
+
+                if (res.data.merchant) {
+                  _this5.formerrors.merchant = res.data.merchant;
+                }
+
+                if (res.data.description) {
+                  _this5.formerrors.description = res.data.description;
+                }
+
+              case 23:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     }
   },
   watch: {},
   computed: {}
 });
+
+/***/ }),
+
+/***/ "./resources/js/services/auth/briefform.js":
+/*!*************************************************!*\
+  !*** ./resources/js/services/auth/briefform.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var briefformservice = /*#__PURE__*/function () {
+  function briefformservice() {
+    _classCallCheck(this, briefformservice);
+  }
+
+  _createClass(briefformservice, [{
+    key: "getlist",
+    value: function getlist(params) {
+      return axios.get("/api/brief-form".concat(params)).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "create",
+    value: function () {
+      var _create = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(formData) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.post('/api/brief-form', formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 2:
+                res = _context.sent;
+                return _context.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function create(_x) {
+        return _create.apply(this, arguments);
+      }
+
+      return create;
+    }()
+  }, {
+    key: "delete",
+    value: function _delete(_ref) {
+      var query = _ref.query,
+          id = _ref.id;
+      return axios["delete"]("/api/brief-form/".concat(id));
+    }
+  }, {
+    key: "get",
+    value: function get(id) {
+      return axios.get("/api/brief-form/".concat(id)).then(function (e) {
+        return e.data.data;
+      });
+    }
+  }, {
+    key: "update",
+    value: function () {
+      var _update = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(formData, id) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                formData.append('_method', 'put');
+                _context2.next = 3;
+                return axios.post('/api/brief-form/' + id, formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 3:
+                res = _context2.sent;
+                return _context2.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function update(_x2, _x3) {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }()
+  }]);
+
+  return briefformservice;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new briefformservice());
 
 /***/ }),
 
@@ -699,6 +987,44 @@ var leadservice = /*#__PURE__*/function () {
       }
 
       return updateStatus;
+    }()
+  }, {
+    key: "assignUser",
+    value: function () {
+      var _assignUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(lead_id, user_id) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios.post('/api/leads/' + lead_id + '/user/' + user_id).then(function (e) {
+                  return {
+                    status: 1
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0
+                  };
+                });
+
+              case 2:
+                res = _context5.sent;
+                return _context5.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function assignUser(_x7, _x8) {
+        return _assignUser.apply(this, arguments);
+      }
+
+      return assignUser;
     }()
   }]);
 
@@ -946,6 +1272,150 @@ var paymentservice = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new paymentservice());
+
+/***/ }),
+
+/***/ "./resources/js/services/auth/userbriefs.js":
+/*!**************************************************!*\
+  !*** ./resources/js/services/auth/userbriefs.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var userbriefsservice = /*#__PURE__*/function () {
+  function userbriefsservice() {
+    _classCallCheck(this, userbriefsservice);
+  }
+
+  _createClass(userbriefsservice, [{
+    key: "getlist",
+    value: function getlist(params) {
+      return axios.get("/api/user-briefs".concat(params)).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "create",
+    value: function () {
+      var _create = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(formData) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.post('/api/user-briefs', formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 2:
+                res = _context.sent;
+                return _context.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function create(_x) {
+        return _create.apply(this, arguments);
+      }
+
+      return create;
+    }()
+  }, {
+    key: "delete",
+    value: function _delete(_ref) {
+      var query = _ref.query,
+          id = _ref.id;
+      return axios["delete"]("/api/user-briefs/".concat(id));
+    }
+  }, {
+    key: "get",
+    value: function get(id) {
+      return axios.get("/api/user-briefs/".concat(id)).then(function (e) {
+        return e.data.data;
+      });
+    }
+  }, {
+    key: "update",
+    value: function () {
+      var _update = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(formData, id) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                formData.append('_method', 'put');
+                _context2.next = 3;
+                return axios.post('/api/user-briefs/' + id, formData).then(function (e) {
+                  return {
+                    status: 1,
+                    data: e.data.data
+                  };
+                })["catch"](function (e) {
+                  return {
+                    status: 0,
+                    data: e.response.data.errors
+                  };
+                });
+
+              case 3:
+                res = _context2.sent;
+                return _context2.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function update(_x2, _x3) {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }()
+  }]);
+
+  return userbriefsservice;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new userbriefsservice());
 
 /***/ }),
 
@@ -1431,6 +1901,34 @@ var render = function () {
                                 _vm._v("User Signedup"),
                               ])
                             : _vm._e(),
+                          _vm._v(" "),
+                          _vm.lead.user_id > 0
+                            ? _c(
+                                "v-btn",
+                                {
+                                  on: {
+                                    click: function ($event) {
+                                      _vm.createBriefTgl = !_vm.createBriefTgl
+                                    },
+                                  },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n              Send Brief Form\n              "
+                                  ),
+                                  _c("v-icon", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.createBriefTgl
+                                          ? "mdi-chevron-up"
+                                          : "mdi-chevron-down"
+                                      )
+                                    ),
+                                  ]),
+                                ],
+                                1
+                              )
+                            : _vm._e(),
                         ],
                         1
                       ),
@@ -1572,6 +2070,109 @@ var render = function () {
                                         ),
                                         _vm._v(
                                           "\n                    Generate\n                  "
+                                        ),
+                                      ],
+                                      1
+                                    ),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                          ],
+                          1
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("v-expand-transition", [
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.createBriefTgl,
+                                expression: "createBriefTgl",
+                              },
+                            ],
+                            staticClass: "col-md-12",
+                          },
+                          [
+                            _c("v-divider"),
+                            _vm._v(" "),
+                            _c(
+                              "v-row",
+                              { staticClass: "pa-4" },
+                              [
+                                _c(
+                                  "v-col",
+                                  { attrs: { cols: "6", md: "6" } },
+                                  [
+                                    _c("v-select", {
+                                      attrs: {
+                                        items: _vm.briefforms,
+                                        label: "Brief Forms",
+                                        "item-text": "form_name",
+                                        "item-value": "id",
+                                        required: "",
+                                      },
+                                      model: {
+                                        value: _vm.briefform.form_id,
+                                        callback: function ($$v) {
+                                          _vm.$set(
+                                            _vm.briefform,
+                                            "form_id",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "briefform.form_id",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-col",
+                                  { attrs: { cols: "6", md: "6" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: { label: "Name", required: "" },
+                                      model: {
+                                        value: _vm.briefform.name,
+                                        callback: function ($$v) {
+                                          _vm.$set(_vm.briefform, "name", $$v)
+                                        },
+                                        expression: "briefform.name",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-col",
+                                  { attrs: { cols: "6", md: "12" } },
+                                  [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        staticClass: "white--text",
+                                        attrs: {
+                                          color: "blue-grey float-right",
+                                        },
+                                        on: { click: _vm.sendForm },
+                                      },
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          { attrs: { left: "", dark: "" } },
+                                          [_vm._v(" mdi-database-eye-outline ")]
+                                        ),
+                                        _vm._v(
+                                          "\n                    Send\n                  "
                                         ),
                                       ],
                                       1
@@ -1792,19 +2393,7 @@ var render = function () {
                                           _c(
                                             "th",
                                             { staticClass: "text-left" },
-                                            [_vm._v("Amount")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "th",
-                                            { staticClass: "text-left" },
-                                            [_vm._v("Description")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "th",
-                                            { staticClass: "text-left" },
-                                            [_vm._v("Merchant")]
+                                            [_vm._v("Form")]
                                           ),
                                           _vm._v(" "),
                                           _c(
@@ -1813,13 +2402,105 @@ var render = function () {
                                             [_vm._v("Status")]
                                           ),
                                           _vm._v(" "),
+                                          _c(
+                                            "th",
+                                            { staticClass: "text-left" },
+                                            [_vm._v("Sent@")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "th",
+                                            { staticClass: "text-left" },
+                                            [_vm._v("Filled@")]
+                                          ),
+                                          _vm._v(" "),
                                           _c("th", {
                                             staticClass: "text-left",
                                           }),
                                         ]),
                                       ]),
                                       _vm._v(" "),
-                                      _c("tbody"),
+                                      _c(
+                                        "tbody",
+                                        _vm._l(_vm.briefs, function (brief) {
+                                          return _c("tr", { key: brief.id }, [
+                                            _c("td", [
+                                              _vm._v(_vm._s(brief.form_name)),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(_vm._s(brief.status_text)),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  brief.created_at_formatted
+                                                )
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  brief.status != 0
+                                                    ? brief.updated_at_formatted
+                                                    : "N/A"
+                                                )
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "td",
+                                              [
+                                                brief.status != 0
+                                                  ? _c(
+                                                      "v-btn",
+                                                      {
+                                                        staticClass:
+                                                          "white--text",
+                                                        attrs: {
+                                                          link: "",
+                                                          to: {
+                                                            name: "guest.brief.detail",
+                                                            params: {
+                                                              id: brief.id,
+                                                            },
+                                                          },
+                                                          small: "",
+                                                          color:
+                                                            "blue float-right",
+                                                        },
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "v-icon",
+                                                          {
+                                                            attrs: {
+                                                              left: "",
+                                                              dark: "",
+                                                            },
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              " mdi-database-eye-outline "
+                                                            ),
+                                                          ]
+                                                        ),
+                                                        _vm._v(
+                                                          "\n                      See Details\n                    "
+                                                        ),
+                                                      ],
+                                                      1
+                                                    )
+                                                  : _vm._e(),
+                                              ],
+                                              1
+                                            ),
+                                          ])
+                                        }),
+                                        0
+                                      ),
                                     ]
                                   },
                                   proxy: true,
@@ -1827,7 +2508,7 @@ var render = function () {
                               ],
                               null,
                               false,
-                              533801069
+                              1612082191
                             ),
                           }),
                         ],

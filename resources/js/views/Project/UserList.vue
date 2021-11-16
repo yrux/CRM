@@ -88,7 +88,7 @@ export default {
       if (this.search != "") {
         query += "&search=" + this.search;
       }
-      query += "&role_id=7";
+      query += "&role_id="+this.role;
       return userservice.getlist(query);
     },
   },
@@ -106,5 +106,11 @@ export default {
       this.$emit('selected-user', (this.selectedUser.length>0?this.selectedUser[0]:{}))
     }
   },
+  props:{
+    role: {
+      type: Number,
+      default: 7
+    },
+  }
 };
 </script>

@@ -1,5 +1,7 @@
 import admin from '@/middleware/admin'
 import company from '@/middleware/company'
+import customer from '@/middleware/customer'
+import companysalesupport from '@/middleware/companysalesupport'
 export default [
 	{
         path: '/dashboard',
@@ -123,6 +125,24 @@ export default [
                 name: 'auth.payment.create'
             },
         ],
-        beforeEnter: company,
+        beforeEnter: companysalesupport,
+    },
+    {
+        path: '/customer/',
+        name: 'auth.customer',
+        component: ()=> import('@/views/Customer/Main.vue'),
+        children: [
+            {
+                path: 'briefs',
+                component: ()=> import('@/views/Customer/Briefs/List.vue'),
+                name: 'auth.customer.briefs.listing'
+            },
+            {
+                path: 'briefs/:id',
+                component: ()=> import('@/views/Customer/Briefs/Edit.vue'),
+                name: 'auth.customer.briefs.edit'
+            }
+        ],
+        beforeEnter: customer,
     },
 ];

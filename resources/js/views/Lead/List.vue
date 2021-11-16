@@ -230,7 +230,7 @@
         <v-icon>mdi-chevron-right</v-icon>
       </v-btn>
     </v-row>
-    <v-btn color="pink" dark fixed bottom right fab @click="openLeadForm">
+    <v-btn v-if="user.role_id==2" color="pink" dark fixed bottom right fab @click="openLeadForm">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
     <LeadForm
@@ -340,7 +340,11 @@ export default {
       this.$store.commit("setNotification", "Lead Status Updated");
     },
   },
-  computed: {},
+  computed: {
+    user() {
+        return this.$store.getters.loggedInUser;
+    },
+  },
   watch: {
     page() {
       this.getLeads();

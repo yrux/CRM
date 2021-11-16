@@ -2577,6 +2577,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "sidebar",
   components: {},
@@ -2914,6 +2944,56 @@ function company(to, from, next) {
 
 /***/ }),
 
+/***/ "./resources/js/middleware/companysalesupport.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/middleware/companysalesupport.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ companysalesupport)
+/* harmony export */ });
+function companysalesupport(to, from, next) {
+  var roleId = localStorage.getItem('logged_in_role_id') ? parseInt(localStorage.getItem('logged_in_role_id')) : 0;
+
+  if (roleId != 4 && roleId != 5 && roleId != 2) {
+    return next({
+      name: 'auth.dashboard'
+    });
+  }
+
+  return next();
+}
+
+/***/ }),
+
+/***/ "./resources/js/middleware/customer.js":
+/*!*********************************************!*\
+  !*** ./resources/js/middleware/customer.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ customer)
+/* harmony export */ });
+function customer(to, from, next) {
+  var roleId = localStorage.getItem('logged_in_role_id') ? parseInt(localStorage.getItem('logged_in_role_id')) : 0;
+
+  if (roleId != 6) {
+    return next({
+      name: 'auth.dashboard'
+    });
+  }
+
+  return next();
+}
+
+/***/ }),
+
 /***/ "./resources/js/middleware/salesupport.js":
 /*!************************************************!*\
   !*** ./resources/js/middleware/salesupport.js ***!
@@ -3017,6 +3097,15 @@ __webpack_require__.r(__webpack_exports__);
   meta: {
     guest: true
   }
+}, {
+  path: '/brief-detail/:id',
+  name: 'guest.brief.detail',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Guest_Briefs_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Guest/Briefs.vue */ "./resources/js/views/Guest/Briefs.vue"));
+  },
+  meta: {
+    guest: true
+  }
 }]);
 
 /***/ }),
@@ -3068,6 +3157,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _middleware_admin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/middleware/admin */ "./resources/js/middleware/admin.js");
 /* harmony import */ var _middleware_company__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/middleware/company */ "./resources/js/middleware/company.js");
+/* harmony import */ var _middleware_customer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/middleware/customer */ "./resources/js/middleware/customer.js");
+/* harmony import */ var _middleware_companysalesupport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/middleware/companysalesupport */ "./resources/js/middleware/companysalesupport.js");
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
@@ -3209,7 +3302,27 @@ __webpack_require__.r(__webpack_exports__);
     },
     name: 'auth.payment.create'
   }],
-  beforeEnter: _middleware_company__WEBPACK_IMPORTED_MODULE_1__["default"]
+  beforeEnter: _middleware_companysalesupport__WEBPACK_IMPORTED_MODULE_3__["default"]
+}, {
+  path: '/customer/',
+  name: 'auth.customer',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Customer_Main_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Customer/Main.vue */ "./resources/js/views/Customer/Main.vue"));
+  },
+  children: [{
+    path: 'briefs',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Customer_Briefs_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Customer/Briefs/List.vue */ "./resources/js/views/Customer/Briefs/List.vue"));
+    },
+    name: 'auth.customer.briefs.listing'
+  }, {
+    path: 'briefs/:id',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Customer_Briefs_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Customer/Briefs/Edit.vue */ "./resources/js/views/Customer/Briefs/Edit.vue"));
+    },
+    name: 'auth.customer.briefs.edit'
+  }],
+  beforeEnter: _middleware_customer__WEBPACK_IMPORTED_MODULE_2__["default"]
 }]);
 
 /***/ }),
@@ -22799,6 +22912,87 @@ var render = function () {
                                 ],
                                 1
                               ),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.user.role_id == 6
+                        ? _c(
+                            "v-list-item",
+                            {
+                              staticClass: "pa-0",
+                              attrs: {
+                                link: "",
+                                to: { name: "auth.customer.briefs.listing" },
+                              },
+                            },
+                            [
+                              _c("v-menu", {
+                                staticStyle: { "max-width": "600px" },
+                                attrs: {
+                                  "open-on-hover": "",
+                                  "offset-x": "",
+                                  "close-on-content-click": false,
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function (ref) {
+                                        var on = ref.on
+                                        var attrs = ref.attrs
+                                        return [
+                                          _c(
+                                            "v-list-item-icon",
+                                            _vm._g(
+                                              _vm._b(
+                                                {
+                                                  staticClass: "d-block",
+                                                  staticStyle: {
+                                                    width: "100%",
+                                                    "text-align": "center",
+                                                  },
+                                                  attrs: {
+                                                    color: "primary",
+                                                    dark: "",
+                                                  },
+                                                },
+                                                "v-list-item-icon",
+                                                attrs,
+                                                false
+                                              ),
+                                              on
+                                            ),
+                                            [
+                                              _c("v-icon", {
+                                                domProps: {
+                                                  textContent:
+                                                    _vm._s("mdi-form-select"),
+                                                },
+                                              }),
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-list-item-content",
+                                            [
+                                              _c("v-list-item-title", [
+                                                _vm._v("Briefs"),
+                                              ]),
+                                            ],
+                                            1
+                                          ),
+                                        ]
+                                      },
+                                    },
+                                  ],
+                                  null,
+                                  false,
+                                  763260435
+                                ),
+                              }),
                             ],
                             1
                           )
@@ -85874,7 +86068,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Guest_Payment_vue":1,"resources_js_views_Guest_PaymentStripeSuccess_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brief_Main_vue":1,"resources_js_views_Brief_List_vue":1,"resources_js_views_Brief_Add_vue":1,"resources_js_views_Brief_Edit_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Lead_Main_vue":1,"resources_js_views_Lead_List_vue":1,"resources_js_views_Lead_Payments_Create_vue":1,"resources_js_views_Chat_Main_vue":1,"resources_js_views_Project_Main_vue":1,"resources_js_views_Project_List_vue":1,"resources_js_views_Project_Add_vue":1,"resources_js_views_Project_OpenTask_vue":1,"resources_js_views_Task_List_vue":1,"resources_js_views_Task_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Guest_Payment_vue":1,"resources_js_views_Guest_PaymentStripeSuccess_vue":1,"resources_js_views_Guest_Briefs_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brief_Main_vue":1,"resources_js_views_Brief_List_vue":1,"resources_js_views_Brief_Add_vue":1,"resources_js_views_Brief_Edit_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Lead_Main_vue":1,"resources_js_views_Lead_List_vue":1,"resources_js_views_Lead_Payments_Create_vue":1,"resources_js_views_Customer_Main_vue":1,"resources_js_views_Customer_Briefs_List_vue":1,"resources_js_views_Customer_Briefs_Edit_vue":1,"resources_js_views_Chat_Main_vue":1,"resources_js_views_Project_Main_vue":1,"resources_js_views_Project_List_vue":1,"resources_js_views_Project_Add_vue":1,"resources_js_views_Project_OpenTask_vue":1,"resources_js_views_Task_List_vue":1,"resources_js_views_Task_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

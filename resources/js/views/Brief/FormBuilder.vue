@@ -95,13 +95,14 @@
 
     <v-dialog
       v-model="explanationDialoge"
-      fullscreen
-      hide-overlay
+      :fullscreen="mode"
+      :hide-overlay="mode"
       transition="dialog-bottom-transition"
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">Add Explanation</span>
+          <span v-if="mode==true" class="text-h5">Add Explanation</span>
+          <span v-else class="text-h5">Explanation</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -118,6 +119,7 @@
                 cols="12"
                 sm="12"
                 md="12"
+                v-if="mode==true"
               >
                 <ckeditor
                     :editor="editor"
@@ -128,7 +130,7 @@
             </v-row>
           </v-container>
         </v-card-text>
-        <v-card-actions>
+        <v-card-actions v-if="mode==true">
           <v-spacer></v-spacer>
           <v-btn
             color="blue darken-1"
@@ -349,8 +351,11 @@ export default {
     }
   },
   watch: {
-    form() {
-      this.$emit("event-happen", this.form);
+    form: {
+      handler(){
+        this.$emit("event-happen", this.form);
+      },
+      deep: true,
     },
     formfields() {
       this.form = this.formfields;

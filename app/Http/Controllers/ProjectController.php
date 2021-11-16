@@ -41,22 +41,18 @@ class ProjectController extends Controller
         $data = $data->leftJoin('project_users',function($join){
             $join->on('projects.id','=','project_users.project_id')->where('project_users.role_id',6);
         });
+        /*$data = $data->leftJoin('project_users as project_sale',function($join){
+            $join->on('projects.id','=','project_sale.project_id')->where('project_sale.role_id',6);
+        });*/
         $data = $data->leftJoin('users as customers',function($join){
             $join->on('project_users.user_id','=','customers.id')->where('customers.role_id',6);
         });
         $data = $data->select('customers.name as customer_name','customers.email as customer_email','projects.title','projects.project_id','projects.created_at','projects.id as project_id_int');
-        if($request->user()->role_id==3){
-            $data = $data->leftJoin('users as salesupport',function($join){
-                $join->on('project_users.user_id','=','salesupport.id')->where('customers.role_id',3);
-            });
-            $data = $data->where('salesupport.id',$request->user()->id);
-            //$data = $data->where('brand_id',);
-        }
         if($request->user()->role_id==4){
-            $data = $data->leftJoin('users as salesupport',function($join){
-                $join->on('project_users.user_id','=','salesupport.id')->where('customers.role_id',4);
+            /*$data = $data->leftJoin('users as salesupport',function($join){
+                $join->on('project_sale.user_id','=','salesupport.id')->where('salesupport.role_id',4);
             });
-            $data = $data->where('salesupport.id',$request->user()->id);
+            $data = $data->where('salesupport.id',$request->user()->id);*/
         }
         if(intval($_GET['perpage'])>0){
             $data=$data->paginate($_GET['perpage']);
@@ -90,6 +86,11 @@ class ProjectController extends Controller
             'user_id'=>$request->user()->id,
             'role_id'=>$request->user()->role_id
         ]);
+        ProjectUser::create([
+            'project_id'=>$project->id,
+            'user_id'=>$request->customer_id,
+            'role_id'=>6
+        ]);
         foreach($brand_users as $brand_user){
             ProjectUser::create([
                 'project_id'=>$project->id,
@@ -97,7 +98,9 @@ class ProjectController extends Controller
                 'role_id'=>$brand_user->user->role_id
             ]);
         }
-        $this->file->create($request->attachements, 'projects', $project->id, 2);
+        if($request->attachements){
+            $this->file->create($request->attachements, 'projects', $project->id, 2);
+        }
         return new ProjectResource($project);
     }
 
