@@ -112,7 +112,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        Gate::authorize('update',$project);
+        Gate::authorize('view',$project);
         return new ProjectResource($project);
     }
 

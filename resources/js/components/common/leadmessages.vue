@@ -52,22 +52,17 @@
     </v-card>
 </template>
 <script>
-import chatservice from "@services/auth/chat";
+import leadmessagesservice from "@services/auth/leadmessages";
 import fileservice from "@services/auth/file";
 const { io } = require("socket.io-client");
 const socket = io(process.env.MIX_SOCKET_URL);
 export default {
-    props: ['curuser','user'],
+    props: ['leadid'],
     watch:{
-        curuser(){
-            chatservice.resetNextUrl()
-            this.lastlen = 0
-            this.loadingMessages = false
-            this.messages = []
-            this.getHead()
+        leadid(){
+            this.getChats(this.leadid)
         },
         async messages(n, o){
-            // console.log(n, o)
             await this.$nextTick()
             if(this.lastlen==0){
                 this.scrolltobtm()
@@ -80,30 +75,32 @@ export default {
                 obj.lastlen = 0
                 obj.loadingMessages = false
                 obj.messages = []
-                obj.getHead()
+                obj.getChats(obj.leadid)
             },500,this)
         }
     },
-    mounted(){
-        this.getHead()
+    async mounted(){
+        await this.getChats(this.leadid)
+        this.bindSocketEv()
+    },
+    computed:{
+        user(){
+            return this.$store.getters.loggedInUser;
+        }
     },
     methods:{
         async getChats(head_id){
-            if(this.messages.length==0){
-                this.loadingMessages = true
+            if(head_id>0){
+                if(this.messages.length==0){
+                    this.loadingMessages = true
+                }
+                var res = await leadmessagesservice.getMessages(head_id, this.message_search)
+                this.lastlen = this.messages.length
+                // this.messages.push(...res)
+                var narr = [...res,...this.messages]
+                this.messages = narr
+                this.loadingMessages = false
             }
-            var res = await chatservice.getMessages(head_id, this.message_search)
-            this.lastlen = this.messages.length
-            // this.messages.push(...res)
-            var narr = [...res,...this.messages]
-            this.messages = narr
-            this.loadingMessages = false
-        },
-        async getHead(){
-            var res = await chatservice.gethead(this.curuser)
-            this.head_id = res.id
-            this.getChats(res.id)
-            this.bindSocketEv()
         },
         scrolltobtm(){
             var objDiv = document.getElementsByClassName("chat_row")[0];
@@ -112,16 +109,16 @@ export default {
             }
         },
         onScroll (e) {
-            if(this.loadingMessages==false&&chatservice.checkIfNextAvail()==true){
+            if(this.loadingMessages==false&&leadmessagesservice.checkIfNextAvail()==true){
                 var objDiv = document.getElementsByClassName("chat_row")[0];
                 if(objDiv.scrollTop<=20){
                     this.loadingMessages=true
-                    this.getChats(this.head_id)
+                    this.getChats(this.leadid)
                 }
             }
         },
         typingMessage(e){
-            if(this.head_id>0){
+            if(this.leadid>0){
                 if(e.keyCode==13&&e.shiftKey==true){
                     //let it line break
                 }else if(e.keyCode==13){
@@ -132,8 +129,8 @@ export default {
                             for(let i = 0; i < this.currentfiles.length; i++){
                                 formData.append("attachements["+i+"]", this.currentfiles[i].id);
                             }
-                            chatservice.saveMsg(this.head_id, formData);
-                            socket.emit('channel', [this.head_id, document.getElementsByClassName('message_area_editor')[0].innerHTML,this.curuser.id,this.user.id,this.currentfiles]);
+                            leadmessagesservice.saveMsg(this.leadid, formData);
+                            socket.emit('lead', [this.leadid, document.getElementsByClassName('message_area_editor')[0].innerHTML,this.leadid,this.user.id,this.currentfiles]);
                             this.currentfiles = []
                             document.getElementsByClassName('message_area_editor')[0].innerHTML = '';
                         }
@@ -183,7 +180,7 @@ export default {
             });
         },
         bindSocketEv(){
-            socket.on('channel_'+this.head_id,(arg)=>{
+            socket.on('lead_'+this.leadid,(arg)=>{
 				this.messages.push(arg)
                 this.scrolltobtm()
 			})

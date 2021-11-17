@@ -14,7 +14,7 @@ class User extends Authenticatable
 
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $with = ['permissions'];
+    protected $with = ['permissions','lead'];
     protected $appends = ['image_url'];
 
     /**
@@ -81,6 +81,9 @@ class User extends Authenticatable
     }
     public function role(){
         return $this->hasOne(Role::class,'id','role_id');
+    }
+    public function lead(){
+        return $this->hasOne(Lead::class,'user_id','id');
     }
     // public function getRoleNameAttribute(){
     //     return $this->role->title;

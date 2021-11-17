@@ -89,12 +89,32 @@
                 >User Signedup</v-btn
               >
 
-              <v-btn v-if="lead.user_id > 0" @click="createBriefTgl = !createBriefTgl">
+              <v-btn
+                v-if="lead.user_id > 0"
+                @click="createBriefTgl = !createBriefTgl"
+              >
                 Send Brief Form
                 <v-icon>{{
                   createBriefTgl ? "mdi-chevron-up" : "mdi-chevron-down"
                 }}</v-icon>
               </v-btn>
+              <v-badge
+                bordered
+                color="info"
+                :content="
+                  lead.unseen_messages == 0 ? '0' : lead.unseen_messages
+                "
+                overlap
+                v-if="lead.user_id > 0"
+              >
+                <v-btn
+                  link
+                  :to="{ name: 'auth.leads.messages', params: { id: lead.id } }"
+                >
+                  Messages
+                  <v-icon>mdi-message-processing-outline</v-icon>
+                </v-btn>
+              </v-badge>
               <!-- <h2></h2> -->
             </v-col>
             <v-expand-transition>
@@ -276,15 +296,22 @@
                 </thead>
                 <tbody>
                   <tr v-for="brief in briefs" :key="brief.id">
-                    <td>{{brief.form_name}}</td>
-                    <td>{{brief.status_text}}</td>
-                    <td>{{brief.created_at_formatted}}</td>
-                    <td>{{brief.status!=0?brief.updated_at_formatted:'N/A'}}</td>
+                    <td>{{ brief.form_name }}</td>
+                    <td>{{ brief.status_text }}</td>
+                    <td>{{ brief.created_at_formatted }}</td>
+                    <td>
+                      {{
+                        brief.status != 0 ? brief.updated_at_formatted : "N/A"
+                      }}
+                    </td>
                     <td>
                       <v-btn
                         link
-                        :to="{ name: 'guest.brief.detail', params:{id: brief.id} }"
-                        v-if="brief.status!=0"
+                        :to="{
+                          name: 'guest.brief.detail',
+                          params: { id: brief.id },
+                        }"
+                        v-if="brief.status != 0"
                         small
                         color="blue float-right"
                         class="white--text"
@@ -327,7 +354,7 @@ export default {
         description: "",
       },
       briefform: {
-        name: '',
+        name: "",
         form_id: 0,
       },
       briefforms: [],
@@ -353,28 +380,27 @@ export default {
   },
   async mounted() {
     this.getLead(this.$route.params.id);
-    this.briefforms = await briefformservice.get('?all=true')
+    this.briefforms = await briefformservice.get("?all=true");
   },
   methods: {
-    async sendForm(){
-      if(this.briefform.form_id>0&&this.briefform.name!=''){
+    async sendForm() {
+      if (this.briefform.form_id > 0 && this.briefform.name != "") {
         var formdata = new FormData();
-        formdata.append('form_name',this.briefform.name)
-        formdata.append('form_id',this.briefform.form_id)
-        formdata.append('user_id',this.lead.user_id)
-        formdata.append('brand_id',this.lead.brand_id)
+        formdata.append("form_name", this.briefform.name);
+        formdata.append("form_id", this.briefform.form_id);
+        formdata.append("user_id", this.lead.user_id);
+        formdata.append("brand_id", this.lead.brand_id);
         var res = await userbriefsservice.create(formdata);
-        if(res.status){
-          this.$store.commit(
-            "setNotification",
-            "Brief Sent to Customer"
+        if (res.status) {
+          this.$store.commit("setNotification", "Brief Sent to Customer");
+          this.briefs = await userbriefsservice.get(
+            "?user_id=" + this.lead.user_id
           );
-          this.briefs = await userbriefsservice.get('?user_id='+this.lead.user_id)
-          this.briefform.form_id = 0
-          this.briefform.name = ''
-          this.createBriefTgl = false
+          this.briefform.form_id = 0;
+          this.briefform.name = "";
+          this.createBriefTgl = false;
         }
-      }else{
+      } else {
         this.$store.commit(
           "setNotification",
           "Please Select Form and Type name to sent brief to user"
@@ -385,8 +411,10 @@ export default {
       this.lead = await leadservice.get(id);
       if (this.lead) {
         this.payments = await paymentservice.get(this.lead.id, "");
-        if(this.lead.user_id>0){
-          this.briefs = await userbriefsservice.get('?user_id='+this.lead.user_id)
+        if (this.lead.user_id > 0) {
+          this.briefs = await userbriefsservice.get(
+            "?user_id=" + this.lead.user_id
+          );
         }
       }
     },

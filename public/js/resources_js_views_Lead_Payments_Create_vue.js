@@ -355,6 +355,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -378,7 +405,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         description: ""
       },
       briefform: {
-        name: '',
+        name: "",
         form_id: 0
       },
       briefforms: [],
@@ -425,7 +452,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _this.getLead(_this.$route.params.id);
 
               _context.next = 3;
-              return _services_auth_briefform__WEBPACK_IMPORTED_MODULE_3__["default"].get('?all=true');
+              return _services_auth_briefform__WEBPACK_IMPORTED_MODULE_3__["default"].get("?all=true");
 
             case 3:
               _this.briefforms = _context.sent;
@@ -448,16 +475,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(_this2.briefform.form_id > 0 && _this2.briefform.name != '')) {
+                if (!(_this2.briefform.form_id > 0 && _this2.briefform.name != "")) {
                   _context2.next = 19;
                   break;
                 }
 
                 formdata = new FormData();
-                formdata.append('form_name', _this2.briefform.name);
-                formdata.append('form_id', _this2.briefform.form_id);
-                formdata.append('user_id', _this2.lead.user_id);
-                formdata.append('brand_id', _this2.lead.brand_id);
+                formdata.append("form_name", _this2.briefform.name);
+                formdata.append("form_id", _this2.briefform.form_id);
+                formdata.append("user_id", _this2.lead.user_id);
+                formdata.append("brand_id", _this2.lead.brand_id);
                 _context2.next = 8;
                 return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].create(formdata);
 
@@ -472,12 +499,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.$store.commit("setNotification", "Brief Sent to Customer");
 
                 _context2.next = 13;
-                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].get('?user_id=' + _this2.lead.user_id);
+                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].get("?user_id=" + _this2.lead.user_id);
 
               case 13:
                 _this2.briefs = _context2.sent;
                 _this2.briefform.form_id = 0;
-                _this2.briefform.name = '';
+                _this2.briefform.name = "";
                 _this2.createBriefTgl = false;
 
               case 17:
@@ -526,7 +553,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context3.next = 10;
-                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].get('?user_id=' + _this3.lead.user_id);
+                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].get("?user_id=" + _this3.lead.user_id);
 
               case 10:
                 _this3.briefs = _context3.sent;
@@ -1929,6 +1956,49 @@ var render = function () {
                                 1
                               )
                             : _vm._e(),
+                          _vm._v(" "),
+                          _vm.lead.user_id > 0
+                            ? _c(
+                                "v-badge",
+                                {
+                                  attrs: {
+                                    bordered: "",
+                                    color: "info",
+                                    content:
+                                      _vm.lead.unseen_messages == 0
+                                        ? "0"
+                                        : _vm.lead.unseen_messages,
+                                    overlap: "",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        link: "",
+                                        to: {
+                                          name: "auth.leads.messages",
+                                          params: { id: _vm.lead.id },
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                Messages\n                "
+                                      ),
+                                      _c("v-icon", [
+                                        _vm._v(
+                                          "mdi-message-processing-outline"
+                                        ),
+                                      ]),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
+                              )
+                            : _vm._e(),
                         ],
                         1
                       ),
@@ -2442,11 +2512,13 @@ var render = function () {
                                             _vm._v(" "),
                                             _c("td", [
                                               _vm._v(
-                                                _vm._s(
-                                                  brief.status != 0
-                                                    ? brief.updated_at_formatted
-                                                    : "N/A"
-                                                )
+                                                "\n                    " +
+                                                  _vm._s(
+                                                    brief.status != 0
+                                                      ? brief.updated_at_formatted
+                                                      : "N/A"
+                                                  ) +
+                                                  "\n                  "
                                               ),
                                             ]),
                                             _vm._v(" "),
@@ -2508,7 +2580,7 @@ var render = function () {
                               ],
                               null,
                               false,
-                              1612082191
+                              3443444841
                             ),
                           }),
                         ],

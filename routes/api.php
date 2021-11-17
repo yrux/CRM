@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{CompanyController, BriefFormController, UserBriefController};
 use App\Http\Controllers\FileController;
-use App\Http\Controllers\{LeadController, PaymentController};
+use App\Http\Controllers\{LeadController, PaymentController, LeadMessageController};
 use App\Http\Controllers\{BrandController, BrandUserController};
 use App\Http\Controllers\{UserController, ChatController};
 use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController, TaskCommentController};
@@ -65,6 +65,10 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::post('/chat', [ChatController::class,'index']);
     Route::get('/chat-history/{ChatHead}', [ChatController::class,'chatHistory']);
     Route::post('/chat-send/{ChatHead}', [ChatController::class,'chatSend']);
+
+    //lead messages
+    Route::get('/lead-messages/{lead}', [LeadMessageController::class,'chatHistory']);
+    Route::post('/lead-message-send/{lead}', [LeadMessageController::class,'chatSend']);
 });
 Route::middleware('auth:api')->get('/me', function (Request $request) {
     return $request->user();

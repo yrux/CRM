@@ -120,6 +120,11 @@ export default [
                 name: 'auth.leads.listing'
             },
             {
+                path: ':id/messages',
+                component: ()=> import('@/views/Lead/Messages.vue'),
+                name: 'auth.leads.messages'
+            },
+            {
                 path: ':id/payments',
                 component: ()=> import('@/views/Lead/Payments/Create.vue'),
                 name: 'auth.payment.create'
@@ -132,6 +137,11 @@ export default [
         name: 'auth.customer',
         component: ()=> import('@/views/Customer/Main.vue'),
         children: [
+            {
+                path: 'chat',
+                component: ()=> import('@/views/Customer/Chat.vue'),
+                name: 'auth.customer.chat'
+            },
             {
                 path: 'briefs',
                 component: ()=> import('@/views/Customer/Briefs/List.vue'),

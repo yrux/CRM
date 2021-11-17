@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Casts\Json;
+use Auth;
 class Lead extends Model
 {
     use HasFactory;
-    protected $appends = ['created_at_formatted','lead_status_text','brand_code'];
+    protected $appends = ['created_at_formatted','lead_status_text','brand_code','unseen_messages'];
     protected $with = ['brand'];
     protected $lead_status_arr = [0=>'pending',1=>'success',2=>'junk',3=>'followup'];
     protected $fillable = [
@@ -31,6 +32,12 @@ class Lead extends Model
     }
     public function payments(){
         return $this->hasMany(Payment::class);
+    }
+    public function messages(){
+        return $this->hasMany(LeadMessage::class,'lead_id');
+    }
+    public function getUnseenMessagesAttribute(){
+        return $this->messages()->where('is_seen',0)->where('user_id','<>',Auth::user()->id)->count('id');
     }
     public function getLeadStatusTextAttribute(){
         return isset($this->lead_status_arr[$this->lead_status])?$this->lead_status_arr[$this->lead_status]:'';

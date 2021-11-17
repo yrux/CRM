@@ -26,6 +26,9 @@ class ProjectTaskController extends Controller
         if($user->role_id==4||$user->role_id==5){
             $tasks = $tasks->where('assigned_by',$request->user()->id);
         }
+        if($user->role_id==7){
+            $tasks = $tasks->where('assigned_on',$request->user()->id);
+        }
         $tasks = $tasks->orderBy('id','desc')->paginate(25);
         return ProjectTaskResource::collection($tasks);
     }
@@ -93,7 +96,11 @@ class ProjectTaskController extends Controller
         return response()->json(null,200);
     }
     public function allTasks(Request $request){
-        $query = ProjectTask::where('assigned_by',$request->user()->id);
+        if($request->user()->role_id==7){
+            $query = ProjectTask::where('assigned_on',$request->user()->id);
+        }else{
+            $query = ProjectTask::where('assigned_by',$request->user()->id);
+        }
         if(optional($request)->type!=''){
             if($request->type=='overdue'){
                 $query = $query->where('project_tasks.due_date','<',date('Y-m-d'));

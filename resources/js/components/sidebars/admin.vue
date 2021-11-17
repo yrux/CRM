@@ -73,18 +73,26 @@
             <v-list-item-title><v-icon>mdi-plus</v-icon>Task</v-list-item-title>
           </v-list-item>
           <v-list-item
-            v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 3 || user.role_id == 2 || user.role_id == 1"
+            v-if="
+              user.role_id == 4 ||
+              user.role_id == 5 ||
+              user.role_id == 3 ||
+              user.role_id == 2 ||
+              user.role_id == 1
+            "
             link
-            :to="{ name: 'auth.leads.listing', query:{openAdd: 'true'} }"
+            :to="{ name: 'auth.leads.listing', query: { openAdd: 'true' } }"
           >
             <v-list-item-title><v-icon>mdi-plus</v-icon>Lead</v-list-item-title>
           </v-list-item>
           <v-list-item
             v-if="user.role_id == 2"
             link
-            :to="{ name: 'auth.brief.add', query:{openAdd: 'true'} }"
+            :to="{ name: 'auth.brief.add', query: { openAdd: 'true' } }"
           >
-            <v-list-item-title><v-icon>mdi-plus</v-icon>Brief Form</v-list-item-title>
+            <v-list-item-title
+              ><v-icon>mdi-plus</v-icon>Brief Form</v-list-item-title
+            >
           </v-list-item>
           <!-- <v-list-item link :to="{ name: 'auth.quote.add' }">
             <v-list-item-title
@@ -224,6 +232,47 @@
           </v-menu>
         </v-list-item>
         <v-list-item
+          v-if="user.role_id == 6"
+          class="pa-0"
+          link
+          :to="{ name: 'auth.customer.chat' }"
+        >
+          <v-menu
+            open-on-hover
+            offset-x
+            style="max-width: 600px"
+            :close-on-content-click="false"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-icon
+                color="primary"
+                dark
+                class="d-block"
+                style="width: 100%; text-align: center"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-badge
+                  bordered
+                  color="info"
+                  :content="
+                    user.lead.unseen_messages == 0
+                      ? '0'
+                      : user.lead.unseen_messages
+                  "
+                  overlap
+                >
+                  <v-icon v-text="'mdi-message-bulleted'"></v-icon>
+                </v-badge>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Messages</v-list-item-title>
+              </v-list-item-content>
+            </template>
+          </v-menu>
+        </v-list-item>
+        <v-list-item
           v-if="user.role_id == 1 || user.role_id == 2"
           class="pa-0"
           link
@@ -294,7 +343,13 @@
           </v-menu>
         </v-list-item>
         <v-list-item
-          v-if="user.role_id == 1 || user.role_id == 2 || user.role_id == 3 || user.role_id == 4 || user.role_id == 5"
+          v-if="
+            user.role_id == 1 ||
+            user.role_id == 2 ||
+            user.role_id == 3 ||
+            user.role_id == 4 ||
+            user.role_id == 5
+          "
           class="pa-0"
           link
           :to="{ name: 'auth.leads.listing' }"
@@ -322,7 +377,11 @@
               </v-list-item-content>
             </template>
             <v-list>
-              <v-list-item exact link :to="{ name: 'auth.leads.listing', query:{openAdd: 'true'} }">
+              <v-list-item
+                exact
+                link
+                :to="{ name: 'auth.leads.listing', query: { openAdd: 'true' } }"
+              >
                 <v-list-item-title>Add Lead</v-list-item-title>
               </v-list-item>
             </v-list>
@@ -364,10 +423,10 @@
           </v-menu>
         </v-list-item>
         <v-list-item
-          v-if="user.role_id == 4 || user.role_id == 5"
+          v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 7"
           class="pa-0"
           link
-          :to="{ name: 'auth.tasks.type', params:{type: 'today'} }"
+          :to="{ name: 'auth.tasks.type', params: { type: 'today' } }"
         >
           <v-tooltip right>
             <template v-slot:activator="{ on, attrs }">
@@ -375,7 +434,7 @@
                 color="primary"
                 dark
                 class="d-block"
-                style="width: 100%;"
+                style="width: 100%"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -386,10 +445,10 @@
           </v-tooltip>
         </v-list-item>
         <v-list-item
-          v-if="user.role_id == 4 || user.role_id == 5"
+          v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 7"
           class="pa-0"
           link
-          :to="{ name: 'auth.tasks.type', params:{type: 'overdue'} }"
+          :to="{ name: 'auth.tasks.type', params: { type: 'overdue' } }"
         >
           <v-tooltip right>
             <template v-slot:activator="{ on, attrs }">
@@ -397,7 +456,7 @@
                 color="primary"
                 dark
                 class="d-block"
-                style="width: 100%;"
+                style="width: 100%"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -408,10 +467,10 @@
           </v-tooltip>
         </v-list-item>
         <v-list-item
-          v-if="user.role_id == 4 || user.role_id == 5"
+          v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 7"
           class="pa-0"
           link
-          :to="{ name: 'auth.tasks.type', params:{type: 'upcomming'} }"
+          :to="{ name: 'auth.tasks.type', params: { type: 'upcomming' } }"
         >
           <v-tooltip right>
             <template v-slot:activator="{ on, attrs }">
@@ -419,7 +478,7 @@
                 color="primary"
                 dark
                 class="d-block"
-                style="width: 100%;"
+                style="width: 100%"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -429,7 +488,12 @@
             <span>Upcomming</span>
           </v-tooltip>
         </v-list-item>
-        <v-list-item v-if="user.role_id!=6" class="pa-0" link :to="{ name: 'auth.chat' }">
+        <v-list-item
+          v-if="user.role_id != 6"
+          class="pa-0"
+          link
+          :to="{ name: 'auth.chat' }"
+        >
           <v-menu
             open-on-hover
             offset-x
@@ -454,62 +518,6 @@
             </template>
           </v-menu>
         </v-list-item>
-        <!--
-        <v-list-item class="pa-0" link :to="{ name: 'auth.admin.users.main' }">
-          <v-menu
-            open-on-hover
-            offset-x
-            style="max-width: 600px"
-            :close-on-content-click="false"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-list-item-icon
-                color="primary"
-                dark
-                class="d-block"
-                style="width: 100%; text-align: center"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-icon v-text="'mdi-account'"></v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <v-list-item-title>Users</v-list-item-title>
-              </v-list-item-content>
-            </template>
-            <v-list>
-              <v-list-item
-                exact
-                link
-                :to="{ name: 'auth.admin.users.list', params: { usertype: 1 } }"
-              >
-                <v-list-item-title>Admins</v-list-item-title>
-              </v-list-item>
-              <v-list-item
-                exact
-                link
-                :to="{ name: 'auth.admin.users.list', params: { usertype: 2 } }"
-              >
-                <v-list-item-title>BUH</v-list-item-title>
-              </v-list-item>
-              <v-list-item
-                exact
-                link
-                :to="{ name: 'auth.admin.users.list', params: { usertype: 3 } }"
-              >
-                <v-list-item-title>Purchasers</v-list-item-title>
-              </v-list-item>
-              <v-list-item
-                exact
-                link
-                :to="{ name: 'auth.admin.users.list', params: { usertype: 4 } }"
-              >
-                <v-list-item-title>Sales</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </v-list-item> -->
       </v-list>
     </v-navigation-drawer>
   </div>

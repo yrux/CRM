@@ -118,7 +118,7 @@ CREATE TABLE `chat_heads` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chat_heads` */
 
@@ -133,7 +133,11 @@ insert  into `chat_heads`(`id`,`user_id`,`sender_id`,`updated_at`,`created_at`) 
 (32,2,18,'2021-10-30 00:52:56','2021-10-30 00:52:56'),
 (33,2,26,'2021-11-02 00:10:39','2021-11-02 00:10:39'),
 (34,25,26,'2021-11-03 06:30:02','2021-11-03 06:30:02'),
-(35,33,36,'2021-11-16 16:06:21','2021-11-16 16:06:21');
+(35,33,36,'2021-11-16 16:06:21','2021-11-16 16:06:21'),
+(36,34,36,'2021-11-16 19:50:20','2021-11-16 19:50:20'),
+(37,34,37,'2021-11-16 19:50:22','2021-11-16 19:50:22'),
+(38,34,38,'2021-11-16 19:50:23','2021-11-16 19:50:23'),
+(39,33,38,'2021-11-17 00:24:48','2021-11-17 00:24:48');
 
 /*Table structure for table `chats` */
 
@@ -147,7 +151,7 @@ CREATE TABLE `chats` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chats` */
 
@@ -213,7 +217,8 @@ insert  into `chats`(`id`,`chat_head_id`,`message`,`user_id`,`updated_at`,`creat
 (80,33,'123123',2,'2021-11-02 00:10:43','2021-11-02 00:10:43'),
 (81,27,'hello there',25,'2021-11-03 06:30:09','2021-11-03 06:30:09'),
 (82,27,'yelo bharwe',25,'2021-11-03 06:30:20','2021-11-03 06:30:20'),
-(83,35,'12',33,'2021-11-16 16:06:23','2021-11-16 16:06:23');
+(83,35,'12',33,'2021-11-16 16:06:23','2021-11-16 16:06:23'),
+(84,39,'test',33,'2021-11-17 00:24:51','2021-11-17 00:24:51');
 
 /*Table structure for table `company` */
 
@@ -273,7 +278,7 @@ CREATE TABLE `files` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `fileable_id_type_index` (`fileable_id`,`fileable_type`,`table_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `files` */
 
@@ -376,7 +381,104 @@ insert  into `files`(`id`,`url`,`fileable_id`,`fileable_type`,`table_name`,`crea
 (142,'brands/xhDlbtNhSKGo9gpVGxjRcPaVNCXE8LixE7R7mxu5.png',12,'App\\Models\\Brand','brands','2021-11-05 01:36:00','2021-11-05 01:36:00'),
 (143,'brands/dP3HQkEhEUtdPUkTdrRwOviW5SGCFDGjFGkdOVmI.png',13,'App\\Models\\Brand','brands','2021-11-05 01:43:09','2021-11-05 01:43:09'),
 (144,'company/MHdHap52zSbCjrFzRyv8mKRHZlBGHYQZVlYdOwHh.jpg',19,'App\\Models\\Company','company','2021-11-16 15:13:42','2021-11-16 15:13:42'),
-(145,'brands/guyNquII2ifieU3yw8RUJtTpA064dOJSN2JvYzgz.jpg',14,'App\\Models\\Brand','brands','2021-11-16 15:15:50','2021-11-16 15:15:50');
+(145,'brands/guyNquII2ifieU3yw8RUJtTpA064dOJSN2JvYzgz.jpg',14,'App\\Models\\Brand','brands','2021-11-16 15:15:50','2021-11-16 15:15:50'),
+(146,'task_comments/MGpBv2WOOC5pN1IpYnJs7xMItUerTsADEdxhXfMs.png',12,'App\\Models\\TaskComment','task_comments','2021-11-16 19:37:40','2021-11-16 19:37:40'),
+(147,'task_comments/WK50X6LhpBVFe7JkJo9fnYrkweEDilTdhsNzjfhh.png',12,'App\\Models\\TaskComment','task_comments','2021-11-16 19:37:40','2021-11-16 19:37:40'),
+(148,'chat/W5fmv6WZtIyGIxFI1kLFqeWkgl3zCyLSCoptznPd.docx',0,'App\\Models\\Chat','chat','2021-11-17 00:39:16','2021-11-17 00:39:16'),
+(149,'chat/JeJ9UgcMocFP70xiytrBa775b5kmjlUbrWnNX9oF.docx',43,'App\\Models\\Chat','chat','2021-11-17 00:52:22','2021-11-17 00:52:24'),
+(150,'task_comments/nhzQxFLcTU6dDjNRFeKCk5OQL407zUwhtjozZtdg.png',14,'App\\Models\\TaskComment','task_comments','2021-11-17 05:30:48','2021-11-17 05:30:48');
+
+/*Table structure for table `lead_messages` */
+
+DROP TABLE IF EXISTS `lead_messages`;
+
+CREATE TABLE `lead_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lead_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `message` text DEFAULT NULL,
+  `is_seen` tinyint(4) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `lead_messages` */
+
+insert  into `lead_messages`(`id`,`lead_id`,`user_id`,`message`,`is_seen`,`created_at`,`updated_at`) values 
+(1,26,33,'<div>123123123123</div>',1,'2021-11-17 00:36:24','2021-11-17 02:11:47'),
+(2,26,33,'12312312313',1,'2021-11-17 00:36:59','2021-11-17 02:11:47'),
+(3,26,33,'123123',1,'2021-11-17 00:37:57','2021-11-17 02:11:47'),
+(4,26,33,'123123ads asd asd',1,'2021-11-17 00:38:14','2021-11-17 02:11:47'),
+(5,26,33,'123123',1,'2021-11-17 00:39:47','2021-11-17 02:11:47'),
+(6,26,33,'123123',1,'2021-11-17 00:40:11','2021-11-17 02:11:47'),
+(7,26,33,'asdasdasd',1,'2021-11-17 00:40:13','2021-11-17 02:11:47'),
+(8,26,33,'123123',1,'2021-11-17 00:40:28','2021-11-17 02:11:47'),
+(9,26,33,'asdasd',1,'2021-11-17 00:41:02','2021-11-17 02:11:46'),
+(10,26,33,'123123',1,'2021-11-17 00:42:27','2021-11-17 02:11:46'),
+(11,26,33,'12312',1,'2021-11-17 00:44:04','2021-11-17 02:11:46'),
+(12,26,33,'123123',1,'2021-11-17 00:44:05','2021-11-17 02:11:46'),
+(13,26,33,'123123',1,'2021-11-17 00:44:06','2021-11-17 02:11:46'),
+(14,26,33,'12312',1,'2021-11-17 00:44:07','2021-11-17 02:11:46'),
+(15,26,33,'3123',1,'2021-11-17 00:44:07','2021-11-17 02:11:46'),
+(16,26,33,'123123',1,'2021-11-17 00:44:08','2021-11-17 02:11:46'),
+(17,26,33,'123',1,'2021-11-17 00:44:08','2021-11-17 02:11:46'),
+(18,26,33,'123123',1,'2021-11-17 00:44:08','2021-11-17 02:11:46'),
+(19,26,33,'123',1,'2021-11-17 00:44:09','2021-11-17 02:11:32'),
+(20,26,33,'12312',1,'2021-11-17 00:44:09','2021-11-17 02:11:32'),
+(21,26,33,'3123',1,'2021-11-17 00:44:09','2021-11-17 02:11:32'),
+(22,26,33,'123asd',1,'2021-11-17 00:44:28','2021-11-17 02:11:32'),
+(23,26,33,'asd',1,'2021-11-17 00:44:28','2021-11-17 02:11:32'),
+(24,26,33,'as',1,'2021-11-17 00:44:28','2021-11-17 02:11:32'),
+(25,26,33,'ss',1,'2021-11-17 00:44:28','2021-11-17 02:11:32'),
+(26,26,33,'s',1,'2021-11-17 00:44:29','2021-11-17 02:11:32'),
+(27,26,33,'sss',1,'2021-11-17 00:44:29','2021-11-17 02:11:32'),
+(28,26,33,'s',1,'2021-11-17 00:44:31','2021-11-17 02:11:32'),
+(29,26,33,'s',1,'2021-11-17 00:44:31','2021-11-17 02:11:31'),
+(30,26,33,'s',1,'2021-11-17 00:44:31','2021-11-17 02:10:19'),
+(31,26,33,'s',1,'2021-11-17 00:44:31','2021-11-17 02:10:19'),
+(32,26,33,'s',1,'2021-11-17 00:44:32','2021-11-17 02:10:19'),
+(33,26,33,'s',1,'2021-11-17 00:44:32','2021-11-17 02:10:19'),
+(34,26,33,'s',1,'2021-11-17 00:44:32','2021-11-17 02:10:19'),
+(35,26,33,'s',1,'2021-11-17 00:44:32','2021-11-17 02:10:19'),
+(36,26,33,'s',1,'2021-11-17 00:44:32','2021-11-17 02:10:19'),
+(37,26,33,'s',1,'2021-11-17 00:44:33','2021-11-17 02:10:19'),
+(38,26,33,'ss',1,'2021-11-17 00:44:33','2021-11-17 02:10:19'),
+(39,26,33,'s',1,'2021-11-17 00:44:33','2021-11-17 02:10:19'),
+(40,27,33,'123',1,'2021-11-17 00:52:13','2021-11-17 01:53:09'),
+(41,27,38,'123',0,'2021-11-17 00:52:15','2021-11-17 00:52:15'),
+(42,27,33,'123123asdasd',1,'2021-11-17 00:52:17','2021-11-17 01:53:09'),
+(43,27,38,'user here',0,'2021-11-17 00:52:24','2021-11-17 00:52:24'),
+(44,27,33,'hello',1,'2021-11-17 00:52:27','2021-11-17 01:53:09'),
+(45,27,38,'123123',0,'2021-11-17 01:12:39','2021-11-17 01:12:39'),
+(46,27,38,'asdasd',0,'2021-11-17 01:12:40','2021-11-17 01:12:40'),
+(47,26,36,'123',1,'2021-11-17 02:10:22','2021-11-17 02:12:08'),
+(48,26,36,'1231',1,'2021-11-17 02:10:42','2021-11-17 02:12:08'),
+(49,26,36,'123',1,'2021-11-17 02:10:42','2021-11-17 02:12:08'),
+(50,26,36,'123',1,'2021-11-17 02:10:43','2021-11-17 02:12:08'),
+(51,26,36,'123',1,'2021-11-17 02:10:43','2021-11-17 02:12:08'),
+(52,26,36,'123',1,'2021-11-17 02:10:43','2021-11-17 02:12:08'),
+(53,26,36,'123',1,'2021-11-17 02:10:43','2021-11-17 02:12:08'),
+(54,26,36,'123123',1,'2021-11-17 02:10:44','2021-11-17 02:12:08'),
+(55,26,36,'123',1,'2021-11-17 02:10:44','2021-11-17 02:12:08'),
+(56,26,36,'123123',1,'2021-11-17 02:16:46','2021-11-17 02:16:58'),
+(57,26,36,'123',1,'2021-11-17 02:16:46','2021-11-17 02:16:59'),
+(58,26,36,'123',1,'2021-11-17 02:16:47','2021-11-17 02:16:59'),
+(59,26,36,'123',1,'2021-11-17 02:16:47','2021-11-17 02:16:59'),
+(60,26,36,'123',1,'2021-11-17 02:16:47','2021-11-17 02:16:59'),
+(61,26,36,'123',1,'2021-11-17 02:16:47','2021-11-17 02:16:59'),
+(62,26,36,'123',1,'2021-11-17 02:17:19','2021-11-17 02:17:51'),
+(63,26,36,'123',1,'2021-11-17 02:17:19','2021-11-17 02:17:51'),
+(64,26,36,'123asd',1,'2021-11-17 02:17:20','2021-11-17 02:17:51'),
+(65,26,36,'asd',1,'2021-11-17 02:17:20','2021-11-17 02:17:51'),
+(66,26,36,'asd',1,'2021-11-17 02:17:21','2021-11-17 02:17:51'),
+(67,26,36,'123',1,'2021-11-17 02:18:33','2021-11-17 05:04:03'),
+(68,26,36,'123',1,'2021-11-17 02:18:33','2021-11-17 05:04:03'),
+(69,26,36,'asd',1,'2021-11-17 02:18:33','2021-11-17 05:04:03'),
+(70,26,36,'asd',1,'2021-11-17 02:18:34','2021-11-17 05:04:03'),
+(71,26,33,'test',1,'2021-11-17 05:04:05','2021-11-17 05:05:04'),
+(72,26,33,'helllooo??',1,'2021-11-17 05:04:29','2021-11-17 05:05:04'),
+(73,26,36,'yes sir',0,'2021-11-17 05:05:07','2021-11-17 05:05:07');
 
 /*Table structure for table `leads` */
 
@@ -398,7 +500,7 @@ CREATE TABLE `leads` (
   `user_id` int(11) DEFAULT 0,
   `assigned_to` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `leads` */
 
@@ -428,7 +530,9 @@ insert  into `leads`(`id`,`brand_id`,`first_name`,`last_name`,`company`,`email`,
 (23,4,'12313',NULL,NULL,'lead4@gmail.com','123123','123123',3,NULL,'2021-11-05 05:38:20','2021-11-05 05:37:40',NULL,0),
 (24,4,'junaid','yrux',NULL,'jesper@gmail.com','123123','123123',3,NULL,'2021-11-13 03:49:55','2021-11-08 15:02:51',30,0),
 (25,9,'lead','llead','Lead Company','lead1@gmail.com','+123123123','Test',3,NULL,'2021-11-16 13:54:19','2021-11-16 13:50:19',31,0),
-(26,14,'N','C','NC','nclead@gmail.com','+12123123123','this is the lead for new brand',1,NULL,'2021-11-16 17:03:38','2021-11-16 15:33:45',36,33);
+(26,14,'N','C','NC','nclead@gmail.com','+12123123123','this is the lead for new brand',1,NULL,'2021-11-16 17:03:38','2021-11-16 15:33:45',36,33),
+(27,14,'test','test','123123','nhlead3@gmail.com','+123123123','123123',3,NULL,'2021-11-16 19:30:35','2021-11-16 19:27:34',38,34),
+(28,14,'jsn','jsnl',NULL,'jsn3@gmail.com','+123123123','123123',3,NULL,'2021-11-16 23:10:28','2021-11-16 23:09:22',0,33);
 
 /*Table structure for table `merchants` */
 
@@ -501,6 +605,7 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('0787c22a641759eb7ae98d7fe5d8763944476de4765442e937919fa3779d240d76d79c4dc47b0a78',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 16:18:24','2021-11-16 16:18:24','2022-05-16 16:18:24'),
 ('0829de5f5a403e35c3f34c7522520fc383d541f5799c4dec6e6cbe613e2f44d0b3b5a6ad91a76cdf',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 14:39:13','2021-10-28 14:39:13','2022-04-28 14:39:13'),
 ('092b04ab270b0b2986258a42b78fc80d705f10016f746fdf4f7b4df0784934a164b2d54e38be5c95',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 11:07:47','2021-10-28 11:07:47','2022-04-28 11:07:46'),
+('0a242af68fa53d75edefa7e77e97c2f969a024c1d38d50c000f54d9c257d95d384db484bec89579a',38,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 19:32:20','2021-11-16 19:32:20','2022-05-16 19:32:20'),
 ('0f76dcbbc0fae9328d0e3a7a558c854fad261271dde6dd733cf0df06bd6c6403d096f837198ee1f7',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:39:45','2021-10-12 16:39:45','2022-04-12 16:39:45'),
 ('1079fc1428b0857df0979358a6722911287b615a18d42135c01679b04b1382b65803fb2465fde52c',17,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 13:49:27','2021-11-16 13:49:27','2022-05-16 13:49:26'),
 ('11ef34312c38825bcd42a2d6daff2f47ca1e0aef028a896543c9dd3132a5bb0eb1e16797062d2b60',31,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 13:54:32','2021-11-16 13:54:32','2022-05-16 13:54:32'),
@@ -511,8 +616,10 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('1b35f13f73bbdaca6c9e0b3a43c8221289eaaf47005ea450d5d27050528b45787b93d8cdac942ea6',25,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-02 00:11:04','2021-11-02 00:11:04','2022-05-02 00:11:04'),
 ('22350313909524347974c0a1cd07c9a921d018dca6c7bca4245d0c4e3fd17ca5cc152677542f369c',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:32:26','2021-10-26 09:32:26','2022-04-26 09:32:26'),
 ('24cb3dd7486805da1d6a082d3ee2c18314b009fe9e8501ed82ea67a71444adee8b63b45daf1a577a',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:51:50','2021-10-26 09:51:50','2022-04-26 09:51:49'),
+('251f4718200f9918d2cf1e11b9ce4520079ebb7d14d1c0b822e3bd899d70b7c2b2ca7495a50b06af',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 19:24:48','2021-11-16 19:24:48','2022-05-16 19:24:47'),
 ('2ddf12bfb85cf5a3765e75e037ab7d4c59a12c32ae87638755bc54b0beca8dc9582e002083b19623',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-02 00:10:24','2021-11-02 00:10:24','2022-05-02 00:10:22'),
 ('317b3d6b65a29f87ba990e35cf514e283bced289347de7f39415691682c633337eb3e4f7408db7d0',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 18:53:35','2021-10-28 18:53:35','2022-04-28 18:53:34'),
+('333c184e33638c8338835f0d75ada1da77f93e0b35ee8bb3a763d75dd14a8818b41cbf3beeb648fd',33,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 23:10:21','2021-11-16 23:10:21','2022-05-16 23:10:21'),
 ('349d576f0b93e721c2c38ca4c89524aacf75ce667f30f5fff5d8005a8f98b0480fc81cb6905dc354',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:51:45','2021-10-26 09:51:45','2022-04-26 09:51:44'),
 ('3a5257b35b6c754e9ef3a4667783a36b0d82570718ea9b03b1092d9c62f30d04afd39659dcee9341',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:43:59','2021-10-26 13:43:59','2022-04-26 13:43:59'),
 ('3af0cc37a8b790b89478a7468200c46778209986bb26a782589352f6f97c435ca04b663158970aac',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-20 12:31:47','2021-10-20 12:31:47','2022-04-20 12:31:44'),
@@ -554,17 +661,20 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('8be153733650bc19c1a18d118d6142c8b51e351f3126db1542321c080342e853e8f3b1320eb2931e',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 11:37:51','2021-10-28 11:37:51','2022-04-28 11:37:51'),
 ('8d4da5df14c6047d24e21dc9b06a5c44ad546d8ed2fb74118b304c3f13c1be11a2a4dc4bc68150e3',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-30 00:23:00','2021-10-30 00:23:00','2022-04-30 00:23:00'),
 ('9071c70dc4488a5bf01f87576e191d381eb796d92c817474939430b9e164ad64a1e4b9b67b227e1d',33,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 15:17:19','2021-11-16 15:17:19','2022-05-16 15:17:18'),
+('9222f5b1570e525869d9da34c19ed0f30f6dafa374108db7a4b509557e7eba8d99bafe22998deadf',34,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 19:28:16','2021-11-16 19:28:16','2022-05-16 19:28:16'),
 ('94f89e565a9161ddb6866642b1644a22f95dc2144fe42718f0ba2b1f4ae0d499d86d7a6b865f503e',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-25 15:23:05','2021-10-25 15:23:05','2022-04-25 15:23:05'),
 ('9d777dde4d5156d97a18b5103ef790ddb709844f87bf93d3a43e51798cbbe4493a8e6eaf87b73a1b',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-05 02:44:46','2021-11-05 02:44:46','2022-05-05 02:44:46'),
 ('a1965dafc527d60579be7dc09fc6b03dd3918badf28d1d4a06ee891f0913ba19a7b109c5723530af',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:41:08','2021-10-12 16:41:08','2022-04-12 16:41:03'),
 ('a1d7341db926db936e61cb144b2a9063c6554dd4cd5c0dd8e83e7db53dc233e9dfb932fe81682c65',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 20:33:01','2021-10-28 20:33:01','2022-04-28 20:33:01'),
 ('a4743730a58a8196e7680088af4f33938e2c9e1a074c86997a890f9209a91546e728b7d4190299cd',30,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-13 03:50:41','2021-11-13 03:50:41','2022-05-13 03:50:40'),
 ('acedffd35f04add26b28c33fa17193e7d94f3e72085f06c24c089b0da2bf316101e87a5baddd95ff',24,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 23:33:03','2021-10-28 23:33:03','2022-04-28 23:33:03'),
+('add77761f1e8a5eb54c58c1cebbce190e4adbe262359dc2b23280789207e0bfc69cbeea312d032f2',37,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-17 05:07:50','2021-11-17 05:07:50','2022-05-17 05:07:50'),
 ('af38d85c996e3b2e68be590057a519b3f70880d445d17c2890c0f4805ea3a958252d61c099613d48',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:26:48','2021-10-26 09:26:48','2022-04-26 09:26:48'),
 ('b12cb03f8c2a2927f4ad0ae029ef7a07a2341be9e59e4d0a7fb9cc5be8f27e3659e1b9e6670b9122',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:39:17','2021-10-12 16:39:17','2022-04-12 16:39:17'),
 ('b3056cca6e9cf43a6ebb97de7295c0290942b04782d662d96788fcc9f6b9c1ca474ea5fa0b30f8a1',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-05 01:28:59','2021-11-05 01:28:59','2022-05-05 01:28:59'),
 ('b3de504777cd092a4e1db218e6b32fe985db4d33c7c1d3ef6e4bcc535c2ad711edbd9457f5322e0b',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 14:38:43','2021-10-28 14:38:43','2022-04-28 14:38:43'),
 ('b4b8cf0c57bc28072fea4471cfec44111647e58999c151c2ce71a9944cb4b51aa7c52603515a5e2a',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 11:19:51','2021-10-28 11:19:51','2022-04-28 11:19:51'),
+('b4c0cf73f8bb741e6be2309d318da250a9986d734f2f68d0376644d33c092fb57a29f176ef0de88b',36,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-17 02:10:18','2021-11-17 02:10:18','2022-05-17 02:10:17'),
 ('bd32e9a45f247fb720854c3c88510382a6500ad4d52c1337bc3ef8fe2024e6bfdb4451eafbf751d8',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 20:36:26','2021-10-28 20:36:26','2022-04-28 20:36:26'),
 ('bd5bde4934c8ec94293cff223bbff3f35f7d87b6164aee28017a7fdb01fd550a7b6d6bd640da60c8',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:40:00','2021-10-12 16:40:00','2022-04-12 16:40:00'),
 ('c38745ff67b73da8a432836b8e8d89b8f8a7086186c91e6c12d790dfd456b5b2e71691820888351f',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:38:10','2021-10-12 16:38:10','2022-04-12 16:38:10'),
@@ -589,7 +699,8 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('ec5a63dad8e368cacdf8cb58aadb9d0b3a838a943733e460ad1467d72ec26ebe9c7ed3cd0675a2b7',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 14:09:43','2021-10-12 14:09:43','2022-04-12 14:09:43'),
 ('ed3409f49ec7d6b7bfc94b3e1e052e63044996be9e598c06a91d921f232c5b2cf95a0a6b6cb3bcbf',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-25 11:39:16','2021-10-25 11:39:16','2022-04-25 11:39:15'),
 ('fb9c6ea8cdd5fc6bb0fdcc67f6da33baf44cce9a81c72ae55c3ba167f3f8440bfe0f7c81c2e24ab5',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-10 18:10:41','2021-11-10 18:10:41','2022-05-10 18:10:40'),
-('fe4bde475f338caee5ee00a02ca99adaa289989e0ce26f78c6ffa4a805be9ba0024c936818185fc4',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 14:11:13','2021-10-26 14:11:13','2022-04-26 14:11:12');
+('fe4bde475f338caee5ee00a02ca99adaa289989e0ce26f78c6ffa4a805be9ba0024c936818185fc4',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 14:11:13','2021-10-26 14:11:13','2022-04-26 14:11:12'),
+('ff5db12db4d9e7c99be5688c21275c8a16db3153019716f1dd55dac48310ad6e1b070092a398965e',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 23:08:57','2021-11-16 23:08:57','2022-05-16 23:08:57');
 
 /*Table structure for table `oauth_auth_codes` */
 
@@ -693,7 +804,7 @@ CREATE TABLE `payments` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `payments` */
 
@@ -710,7 +821,8 @@ insert  into `payments`(`id`,`lead_id`,`amount`,`status`,`merchant`,`description
 (11,24,5000,1,'stripe','test','2021-11-13 03:49:55','2021-11-13 03:40:56'),
 (12,24,500,0,'stripe',NULL,'2021-11-16 13:39:28','2021-11-16 13:39:28'),
 (13,25,500,1,'stripe','Test Description','2021-11-16 13:54:19','2021-11-16 13:50:55'),
-(14,26,200,1,'stripe','for css','2021-11-16 16:04:08','2021-11-16 16:02:48');
+(14,26,200,1,'stripe','for css','2021-11-16 16:04:08','2021-11-16 16:02:48'),
+(15,27,4500,1,'stripe','Website Design & Development Sale','2021-11-16 19:30:35','2021-11-16 19:29:54');
 
 /*Table structure for table `permissions` */
 
@@ -802,7 +914,7 @@ CREATE TABLE `project_tasks` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `project_tag` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `project_tasks` */
 
@@ -816,7 +928,8 @@ insert  into `project_tasks`(`id`,`project_id`,`title`,`task_description`,`due_d
 (7,13,'Create Logo of webnhub','<p>Create Logo of webnhub</p><p>Create Logo of webnhub</p><p>Create Logo of webnhub</p><p>Create Logo of webnhub</p>','2021-11-17',0,6,25,'2021-11-03 06:35:54','2021-11-03 06:35:54',NULL),
 (8,18,'test 3','<p>test 3</p>','2021-11-17',0,37,33,'2021-11-16 16:20:53','2021-11-16 16:20:53',NULL),
 (9,19,'123','<p>123</p>','2021-11-17',0,37,33,'2021-11-16 16:21:45','2021-11-16 16:21:45',NULL),
-(10,21,'test','<p>123</p>','2021-11-24',0,37,33,'2021-11-16 17:01:55','2021-11-16 17:01:19',NULL);
+(10,21,'test','<p>123</p>','2021-11-24',0,37,33,'2021-11-16 17:01:55','2021-11-16 17:01:19',NULL),
+(11,22,'Test Task','<p>asdasdasd</p>','2021-11-18',0,37,34,'2021-11-16 19:35:34','2021-11-16 19:35:34',NULL);
 
 /*Table structure for table `project_users` */
 
@@ -832,7 +945,7 @@ CREATE TABLE `project_users` (
   PRIMARY KEY (`id`),
   KEY `project_users` (`user_id`,`role_id`),
   KEY `project_project_id` (`project_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `project_users` */
 
@@ -868,7 +981,10 @@ insert  into `project_users`(`id`,`user_id`,`role_id`,`project_id`,`created_at`,
 (29,33,4,19,'2021-11-16 16:21:36','2021-11-16 16:21:36'),
 (30,33,4,20,'2021-11-16 16:44:23','2021-11-16 16:44:23'),
 (31,33,4,21,'2021-11-16 17:01:01','2021-11-16 17:01:01'),
-(32,36,6,21,'2021-11-16 17:01:01','2021-11-16 17:01:01');
+(32,36,6,21,'2021-11-16 17:01:01','2021-11-16 17:01:01'),
+(33,34,4,22,'2021-11-16 19:34:39','2021-11-16 19:34:39'),
+(34,38,6,22,'2021-11-16 19:34:39','2021-11-16 19:34:39'),
+(35,33,4,22,'2021-11-16 19:34:39','2021-11-16 19:34:39');
 
 /*Table structure for table `projects` */
 
@@ -887,7 +1003,7 @@ CREATE TABLE `projects` (
   PRIMARY KEY (`id`),
   KEY `project_customer` (`company_id`),
   KEY `project_brand` (`brand_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `projects` */
 
@@ -911,7 +1027,8 @@ insert  into `projects`(`id`,`company_id`,`brand_id`,`project_id`,`title`,`descr
 (18,19,14,'CBD-1637061623-18','Test 3','<p>test 3</p>',0,'2021-11-16 16:20:23','2021-11-16 16:20:23'),
 (19,19,14,'CBD-1637061696-19','test 3','<p>test</p>',0,'2021-11-16 16:21:36','2021-11-16 16:21:36'),
 (20,19,14,'CBD-1637063063-20','tes','<p>123123</p>',0,'2021-11-16 16:44:23','2021-11-16 16:44:23'),
-(21,19,14,'CBD-1637064061-21','test','<p>test</p>',0,'2021-11-16 17:01:01','2021-11-16 17:01:01');
+(21,19,14,'CBD-1637064061-21','test','<p>test</p>',0,'2021-11-16 17:01:01','2021-11-16 17:01:01'),
+(22,19,14,'CBD-1637073279-22','Test Project','<p>tresadasdasd</p>',0,'2021-11-16 19:34:39','2021-11-16 19:34:39');
 
 /*Table structure for table `roles` */
 
@@ -953,7 +1070,7 @@ CREATE TABLE `roles_permissions` (
   KEY `rp_role_id` (`role_id`) USING BTREE,
   CONSTRAINT `roles_permissions_ibfk_1` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`),
   CONSTRAINT `roles_permissions_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `roles_permissions` */
 
@@ -1019,7 +1136,8 @@ insert  into `roles_permissions`(`id`,`role_id`,`permission_id`,`created_at`,`up
 (59,2,34,'2021-11-10 17:56:53','2021-11-10 17:56:53'),
 (60,2,35,'2021-11-10 17:56:56','2021-11-10 17:56:56'),
 (61,4,31,'2021-11-16 15:53:46','2021-11-16 15:53:46'),
-(62,5,31,'2021-11-16 15:53:50','2021-11-16 15:53:50');
+(62,5,31,'2021-11-16 15:53:50','2021-11-16 15:53:50'),
+(63,7,25,'2021-11-17 05:27:50','2021-11-17 05:27:50');
 
 /*Table structure for table `task_comments` */
 
@@ -1033,7 +1151,7 @@ CREATE TABLE `task_comments` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `task_comments` */
 
@@ -1047,7 +1165,11 @@ insert  into `task_comments`(`id`,`task_id`,`comment`,`user_id`,`updated_at`,`cr
 (7,4,'<p>i need updates topday</p><ul><li>booking</li><li>panels</li><li><strong>updates</strong></li></ul>',25,'2021-11-04 22:38:42','2021-11-04 22:38:42'),
 (8,4,'<p>23123123231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123</p><p>231231232312312323123123231231232312312323123123231231232312312323123123231231232312312323123123</p>',25,'2021-11-04 22:38:59','2021-11-04 22:38:59'),
 (9,7,'<p>hello there</p>',25,'2021-11-05 00:34:12','2021-11-05 00:34:12'),
-(10,7,'<p>Hello sir, Kindly have a look on the website and let us know what to do in this.</p><ul><li><strong>Company’s</strong> Quality Assurance activities start right from the beginning of the project until the product is ready for production thus ensuring compliance with the market standards and trends.&nbsp;</li><li>A specialized team of skilled individuals from relevant departments takes part in requirements gathering phase where requirements and scope of the project has to be finalized following the design phase and development.</li><li><strong>Company</strong> places great emphasis on proper documentation to ensure customer satisfaction towards our understanding of the product and success of the project. Company works on a milestones based approach where we run multiple cycles of development and testing until the product is ready for production within the approved scope and schedule.</li><li>As a whole, we unite Frontend Testing to ensure web application meets design requirements, Cross Platform compatibility to ensure consistency across different platforms and finally, functional testing to enforce standards and to make sure end product fully meets customer requirements.</li></ul>',25,'2021-11-05 00:36:15','2021-11-05 00:36:15');
+(10,7,'<p>Hello sir, Kindly have a look on the website and let us know what to do in this.</p><ul><li><strong>Company’s</strong> Quality Assurance activities start right from the beginning of the project until the product is ready for production thus ensuring compliance with the market standards and trends.&nbsp;</li><li>A specialized team of skilled individuals from relevant departments takes part in requirements gathering phase where requirements and scope of the project has to be finalized following the design phase and development.</li><li><strong>Company</strong> places great emphasis on proper documentation to ensure customer satisfaction towards our understanding of the product and success of the project. Company works on a milestones based approach where we run multiple cycles of development and testing until the product is ready for production within the approved scope and schedule.</li><li>As a whole, we unite Frontend Testing to ensure web application meets design requirements, Cross Platform compatibility to ensure consistency across different platforms and finally, functional testing to enforce standards and to make sure end product fully meets customer requirements.</li></ul>',25,'2021-11-05 00:36:15','2021-11-05 00:36:15'),
+(11,11,'<p>123123123123123</p>',34,'2021-11-16 19:37:32','2021-11-16 19:37:32'),
+(12,11,'<p>123123</p>',34,'2021-11-16 19:37:40','2021-11-16 19:37:40'),
+(13,11,'<p>production manage here</p>',37,'2021-11-17 05:25:52','2021-11-17 05:25:52'),
+(14,11,'<p>123123</p>',37,'2021-11-17 05:30:48','2021-11-17 05:30:48');
 
 /*Table structure for table `user_briefs` */
 
@@ -1064,7 +1186,7 @@ CREATE TABLE `user_briefs` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `user_briefs` */
 
@@ -1078,7 +1200,8 @@ insert  into `user_briefs`(`id`,`form_name`,`form_fields`,`user_id`,`sender_id`,
 (8,'12','[{\"type\":\"heading\",\"label\":\"LOGO DESIGN BRIEF\"},{\"type\":\"breaker\"},{\"type\":\"textbox\",\"label\":\"Do you need a logo for your company or for your specific product or brand?\",\"grid\":12,\"model\":\"123123\"},{\"type\":\"textbox\",\"label\":\"Please write the exact name you would like to appear in your logo.\",\"grid\":12,\"model\":\"123123\"},{\"type\":\"description\",\"label\":\"Would you like to include a tagline with your logo? If so, please enter your tagline exactly as you would like it to be.\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Please describe your products / services and the industry it belongs to. (ie: Software Company, Food Manufacturing, etc.)\",\"grid\":12,\"model\":\"\"},{\"type\":\"textbox\",\"label\":\"Do you have an old logo or identity that you’ve been using? If yes, why are you making a change? Please attach your old logo.\",\"grid\":12,\"model\":\"\"},{\"type\":\"textbox\",\"label\":\"Do you have any existing Website? Please type the URL link.\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"What is the most important application of your logo? (ie: Business Cards, Promotional Products, Building signage, Truck, T-shirt, Website, etc.)\",\"grid\":12,\"model\":\"\"},{\"type\":\"textbox\",\"label\":\"Who are your target market, its geographical location and their age level?\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Would you like a symbol or a logotype? (Symbol – This is an icon or graphical representation alongside – i.e.apple. // Logotype – it’s within the name itself or sometime refer to type-face…- i.e. Nokia logo.)\",\"grid\":12,\"model\":\"\"},{\"type\":\"textbox\",\"label\":\"Please indicate the style you want for your new identity. i.e.: Corporate, Cartoony, Fun , Elegant, Classic, Bold, Serious or High Tech\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Do you have any color preference or existing corporate colors you want to follow?\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Who are your competitors and what do you think about their logos?\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Things or images that you DEFINITELY want to see in your logo? (e.g. \\\"I want to see a camera illustration in my logo\\\") I’d like to see one execution that uses a line drawing of two books lying flat on their side, one on top of the other, so that the spines form the shape of a “B.” This shape would stand for the B in my first name. See drawing below:\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Things or images that you do NOT want to see in your logo? (e.g. \\\"I do not want to see a house or any triangular shape”)\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Any more information you would like to add?\",\"grid\":12,\"model\":\"\"}]',31,17,9,1,'2021-11-16 14:35:36','2021-11-16 14:03:46'),
 (9,'Sales Form','[{\"type\":\"heading\",\"label\":\"Sales form\"},{\"type\":\"breaker\"},{\"type\":\"textbox\",\"label\":\"SEO Name\",\"grid\":6,\"model\":\"Have me Answer this?\",\"explanation\":\"<p>This is for SEO Purposes</p><ul><li>ABC</li><li>EFG</li><li>IJK</li><li>LMNO</li></ul>\"},{\"type\":\"textbox\",\"label\":\"SEO TITLE\",\"grid\":12,\"model\":\"Your answer is her\",\"explanation\":\"\"}]',31,17,9,1,'2021-11-16 14:44:38','2021-11-16 14:44:15'),
 (10,'test','[{\"type\":\"heading\",\"label\":\"LOGO DESIGN BRIEF\"},{\"type\":\"breaker\"},{\"type\":\"textbox\",\"label\":\"Do you need a logo for your company or for your specific product or brand?\",\"grid\":12,\"model\":\"\"},{\"type\":\"textbox\",\"label\":\"Please write the exact name you would like to appear in your logo.\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Would you like to include a tagline with your logo? If so, please enter your tagline exactly as you would like it to be.\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Please describe your products / services and the industry it belongs to. (ie: Software Company, Food Manufacturing, etc.)\",\"grid\":12,\"model\":\"\"},{\"type\":\"textbox\",\"label\":\"Do you have an old logo or identity that you’ve been using? If yes, why are you making a change? Please attach your old logo.\",\"grid\":12,\"model\":\"\"},{\"type\":\"textbox\",\"label\":\"Do you have any existing Website? Please type the URL link.\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"What is the most important application of your logo? (ie: Business Cards, Promotional Products, Building signage, Truck, T-shirt, Website, etc.)\",\"grid\":12,\"model\":\"\"},{\"type\":\"textbox\",\"label\":\"Who are your target market, its geographical location and their age level?\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Would you like a symbol or a logotype? (Symbol – This is an icon or graphical representation alongside – i.e.apple. // Logotype – it’s within the name itself or sometime refer to type-face…- i.e. Nokia logo.)\",\"grid\":12,\"model\":\"\"},{\"type\":\"textbox\",\"label\":\"Please indicate the style you want for your new identity. i.e.: Corporate, Cartoony, Fun , Elegant, Classic, Bold, Serious or High Tech\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Do you have any color preference or existing corporate colors you want to follow?\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Who are your competitors and what do you think about their logos?\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Things or images that you DEFINITELY want to see in your logo? (e.g. \\\"I want to see a camera illustration in my logo\\\") I’d like to see one execution that uses a line drawing of two books lying flat on their side, one on top of the other, so that the spines form the shape of a “B.” This shape would stand for the B in my first name. See drawing below:\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Things or images that you do NOT want to see in your logo? (e.g. \\\"I do not want to see a house or any triangular shape”)\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Any more information you would like to add?\",\"grid\":12,\"model\":\"\"}]',32,19,4,0,'2021-11-16 15:14:32','2021-11-16 13:25:35'),
-(11,'Questionair','[{\"type\":\"heading\",\"label\":\"CONTENT WRITING QUESTIONNAIRE\"},{\"type\":\"breaker\"},{\"type\":\"description\",\"label\":\"How many pages do we need to write? Please specify the exact name of the Pages that are needed; e.g. Home Page, About Us, Products, Services, Portfolio, Location Map, Contact, etc.\",\"grid\":12,\"model\":\"123123\"},{\"type\":\"heading\",\"label\":\"Information about Your Company\"},{\"type\":\"breaker\"},{\"type\":\"description\",\"label\":\"Briefly describe your business or organization in one or two short paragraphs. Describe the culture and personality of your business.\",\"grid\":12,\"model\":\"65465\"},{\"type\":\"description\",\"label\":\"Provide relevant Information about your organization, its history, the People, their expertise and resumes (if possible).\",\"grid\":12,\"model\":\"123123123\"},{\"type\":\"description\",\"label\":\"What is the Vision and Mission or Purpose of your business or Organization?\",\"grid\":12,\"model\":\"1231231\"},{\"type\":\"description\",\"label\":\"What makes you stand out and sets your company apart from others in your industry? Is there a unique aspect to your company that you could use as a point of differentiation? What is your unique selling point?\",\"grid\":12,\"model\":\"23123123123\"},{\"type\":\"description\",\"label\":\"Who is your competition? (Please list at least 3-5 competitors).\",\"grid\":12,\"model\":\"123123123\"},{\"type\":\"heading\",\"label\":\"Information about Your Services:\"},{\"type\":\"breaker\"},{\"type\":\"description\",\"label\":\"List down the services and products you offer\",\"grid\":12,\"model\":\"123123123\"},{\"type\":\"description\",\"label\":\"What makes your business, products and services unique? What is your competitive advantage? Why do customers choose you?\",\"grid\":12,\"model\":\"123123\"},{\"type\":\"description\",\"label\":\"How exactly your services enhance the lives, or solve the problems, of your target consumers?\",\"grid\":12,\"model\":\"123123\"},{\"type\":\"description\",\"label\":\"Please list 10 to 20 top keywords or phrases people use to search for your products or services\",\"grid\":12,\"model\":\"123123\"},{\"type\":\"description\",\"label\":\"Describe your ideal visitor; give us as much relevant information as you can about your target audience. Describe the typical consumer you are addressing and please include – where possible – details such as age, gender, income, interests, habits, lifestyle and locality\",\"grid\":12,\"model\":\"123123123\"},{\"type\":\"description\",\"label\":\"What are your customers trying to accomplish by using your products or services?\",\"grid\":12,\"model\":\"123123\\n123123\\nasdasdasd\"},{\"type\":\"description\",\"label\":\"What is your target location: International, national, regional or local?\",\"grid\":12,\"model\":\"123123asd123\\n1asdasd123123\\n123123123\"}]',36,33,14,1,'2021-11-16 16:05:06','2021-11-16 16:04:31');
+(11,'Questionair','[{\"type\":\"heading\",\"label\":\"CONTENT WRITING QUESTIONNAIRE\"},{\"type\":\"breaker\"},{\"type\":\"description\",\"label\":\"How many pages do we need to write? Please specify the exact name of the Pages that are needed; e.g. Home Page, About Us, Products, Services, Portfolio, Location Map, Contact, etc.\",\"grid\":12,\"model\":\"123123\"},{\"type\":\"heading\",\"label\":\"Information about Your Company\"},{\"type\":\"breaker\"},{\"type\":\"description\",\"label\":\"Briefly describe your business or organization in one or two short paragraphs. Describe the culture and personality of your business.\",\"grid\":12,\"model\":\"65465\"},{\"type\":\"description\",\"label\":\"Provide relevant Information about your organization, its history, the People, their expertise and resumes (if possible).\",\"grid\":12,\"model\":\"123123123\"},{\"type\":\"description\",\"label\":\"What is the Vision and Mission or Purpose of your business or Organization?\",\"grid\":12,\"model\":\"1231231\"},{\"type\":\"description\",\"label\":\"What makes you stand out and sets your company apart from others in your industry? Is there a unique aspect to your company that you could use as a point of differentiation? What is your unique selling point?\",\"grid\":12,\"model\":\"23123123123\"},{\"type\":\"description\",\"label\":\"Who is your competition? (Please list at least 3-5 competitors).\",\"grid\":12,\"model\":\"123123123\"},{\"type\":\"heading\",\"label\":\"Information about Your Services:\"},{\"type\":\"breaker\"},{\"type\":\"description\",\"label\":\"List down the services and products you offer\",\"grid\":12,\"model\":\"123123123\"},{\"type\":\"description\",\"label\":\"What makes your business, products and services unique? What is your competitive advantage? Why do customers choose you?\",\"grid\":12,\"model\":\"123123\"},{\"type\":\"description\",\"label\":\"How exactly your services enhance the lives, or solve the problems, of your target consumers?\",\"grid\":12,\"model\":\"123123\"},{\"type\":\"description\",\"label\":\"Please list 10 to 20 top keywords or phrases people use to search for your products or services\",\"grid\":12,\"model\":\"123123\"},{\"type\":\"description\",\"label\":\"Describe your ideal visitor; give us as much relevant information as you can about your target audience. Describe the typical consumer you are addressing and please include – where possible – details such as age, gender, income, interests, habits, lifestyle and locality\",\"grid\":12,\"model\":\"123123123\"},{\"type\":\"description\",\"label\":\"What are your customers trying to accomplish by using your products or services?\",\"grid\":12,\"model\":\"123123\\n123123\\nasdasdasd\"},{\"type\":\"description\",\"label\":\"What is your target location: International, national, regional or local?\",\"grid\":12,\"model\":\"123123asd123\\n1asdasd123123\\n123123123\"}]',36,33,14,1,'2021-11-16 16:05:06','2021-11-16 16:04:31'),
+(12,'Sendiong to user','[{\"type\":\"heading\",\"label\":\"CONTENT WRITING QUESTIONNAIRE\"},{\"type\":\"breaker\"},{\"type\":\"description\",\"label\":\"How many pages do we need to write? Please specify the exact name of the Pages that are needed; e.g. Home Page, About Us, Products, Services, Portfolio, Location Map, Contact, etc.\",\"grid\":12,\"model\":\"test\"},{\"type\":\"heading\",\"label\":\"Information about Your Company\"},{\"type\":\"breaker\"},{\"type\":\"description\",\"label\":\"Briefly describe your business or organization in one or two short paragraphs. Describe the culture and personality of your business.\",\"grid\":12,\"model\":\"asdasdasd\"},{\"type\":\"description\",\"label\":\"Provide relevant Information about your organization, its history, the People, their expertise and resumes (if possible).\",\"grid\":12,\"model\":\"asdasdasdasd\"},{\"type\":\"description\",\"label\":\"What is the Vision and Mission or Purpose of your business or Organization?\",\"grid\":12,\"model\":\"asdasdasd\"},{\"type\":\"description\",\"label\":\"What makes you stand out and sets your company apart from others in your industry? Is there a unique aspect to your company that you could use as a point of differentiation? What is your unique selling point?\",\"grid\":12,\"model\":\"asdasdasd\"},{\"type\":\"description\",\"label\":\"Who is your competition? (Please list at least 3-5 competitors).\",\"grid\":12,\"model\":\"asdasdasd\"},{\"type\":\"heading\",\"label\":\"Information about Your Services:\"},{\"type\":\"breaker\"},{\"type\":\"description\",\"label\":\"List down the services and products you offer\",\"grid\":12,\"model\":\"asdasdasd\"},{\"type\":\"description\",\"label\":\"What makes your business, products and services unique? What is your competitive advantage? Why do customers choose you?\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"How exactly your services enhance the lives, or solve the problems, of your target consumers?\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Please list 10 to 20 top keywords or phrases people use to search for your products or services\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"Describe your ideal visitor; give us as much relevant information as you can about your target audience. Describe the typical consumer you are addressing and please include – where possible – details such as age, gender, income, interests, habits, lifestyle and locality\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"What are your customers trying to accomplish by using your products or services?\",\"grid\":12,\"model\":\"\"},{\"type\":\"description\",\"label\":\"What is your target location: International, national, regional or local?\",\"grid\":12,\"model\":\"\"}]',38,34,14,1,'2021-11-16 19:33:09','2021-11-16 19:32:34');
 
 /*Table structure for table `users` */
 
@@ -1104,7 +1227,7 @@ CREATE TABLE `users` (
   KEY `user_role_id_index` (`role_id`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `users` */
 
@@ -1129,7 +1252,8 @@ insert  into `users`(`id`,`name`,`email`,`password`,`created_at`,`updated_at`,`c
 (34,'Brand Sales 3','brandsales3@gmail.com','$2y$10$YhNVFRozlIqHsJuSEVqUD..LZSnBeht0KLYgXt4pUlNo53eOJNwQS','2021-11-16 15:16:36','2021-11-16 15:16:36',19,4,NULL,NULL,NULL,NULL,NULL,NULL),
 (35,'Brand Support 3','brandsupport3@gmail.com','$2y$10$mHj2hkFEhMVwxhQJsfD5i.k0xN3tvt5joBrm50QEB65Q9J8bGgZfa','2021-11-16 15:16:48','2021-11-16 15:16:48',19,5,NULL,NULL,NULL,NULL,NULL,NULL),
 (36,'N C','nclead@gmail.com','$2y$10$2dP17NSNDG7wGHb2uMIBxOVMWWF5uq6xkaiJXPyWYwLEZAVGa1tOa','2021-11-16 16:04:08','2021-11-16 16:04:08',19,6,NULL,NULL,NULL,NULL,NULL,NULL),
-(37,'Design','design3@gmail.com','$2y$10$UGYhklpDerbClNzBUztE4OEGKQkyA19DCiVgFGqPdYpCnfKEdFIDq','2021-11-16 16:20:07','2021-11-16 16:20:07',19,7,NULL,NULL,NULL,NULL,NULL,NULL);
+(37,'Design','design3@gmail.com','$2y$10$UGYhklpDerbClNzBUztE4OEGKQkyA19DCiVgFGqPdYpCnfKEdFIDq','2021-11-16 16:20:07','2021-11-16 16:20:07',19,7,NULL,NULL,NULL,NULL,NULL,NULL),
+(38,'test test','nhlead3@gmail.com','$2y$10$ir2KAIdLE.HMj9zpsYseAeRk1uABQ/nDjdLHH1w4ZVFi.7LmcfJUe','2021-11-16 19:30:35','2021-11-16 19:30:35',19,6,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /* Trigger structure for table `brands` */
 
