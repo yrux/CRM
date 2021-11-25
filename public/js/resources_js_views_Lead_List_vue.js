@@ -1742,10 +1742,10 @@ var render = function () {
                                   _c(
                                     "v-icon",
                                     { attrs: { left: "", dark: "" } },
-                                    [_vm._v(" mdi-currency-usd ")]
+                                    [_vm._v(" mdi-account ")]
                                   ),
                                   _vm._v(
-                                    "\n              Generate Payment Link\n            "
+                                    "\n              Goto Client Summary\n            "
                                   ),
                                 ],
                                 1

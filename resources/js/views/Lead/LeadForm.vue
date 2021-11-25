@@ -87,8 +87,8 @@
             <v-col v-if="form.id > 0 && lead.lead_status != 0&& lead.lead_status != 2" cols="12">
               <v-btn link
             :to="{ name: 'auth.payment.create', params:{id: form.id} }" color="blue-grey" class="ma-2 white--text">
-                <v-icon left dark> mdi-currency-usd </v-icon>
-                Generate Payment Link
+                <v-icon left dark> mdi-account </v-icon>
+                Goto Client Summary
               </v-btn>
             </v-col>
             <v-col v-if="form.id > 0 &&user.role_id==2" cols="6">
