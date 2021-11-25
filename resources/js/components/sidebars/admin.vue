@@ -114,6 +114,7 @@
       mini-variant
       class=""
       v-if="!showsidebar"
+      dark
     >
       <v-system-bar></v-system-bar>
       <v-system-bar></v-system-bar>
