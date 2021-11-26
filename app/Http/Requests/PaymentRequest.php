@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PaymentRequest extends FormRequest
@@ -27,6 +27,11 @@ class PaymentRequest extends FormRequest
             'amount'=>'required|gt:0',
             'merchant'=>'required',
             'description'=>'max:555',
+            'payment_type' => [
+                'required',
+                Rule::in(['sell', 'upsell', 'bonus']),
+            ],
+            // 'project_id' => 'required_if:payment_type,upsell',
         ];
     }
 }

@@ -158,6 +158,28 @@
                       :error-messages="formerrors.status"
                     ></v-select>
                   </v-col>
+                  <v-col cols="6" md="6">
+                    <v-select
+                      v-model="form.payment_type"
+                      :items="payment_types"
+                      label="Type"
+                      item-text="value"
+                      item-value="key"
+                      required
+                      :error-messages="formerrors.status"
+                    ></v-select>
+                  </v-col>
+                  <v-col v-if="lead.user_id>0" cols="6" md="6">
+                    <v-select
+                      v-model="form.project_id"
+                      :items="lead_projects"
+                      label="Projects"
+                      item-text="project_id"
+                      item-value="project_id_int"
+                      required
+                      :error-messages="formerrors.project_id"
+                    ></v-select>
+                  </v-col>
                   <v-col cols="6" md="12">
                     <v-btn
                       @click="createPayment"
@@ -227,6 +249,8 @@
                     <th class="text-left">Amount</th>
                     <th class="text-left">Description</th>
                     <th class="text-left">Merchant</th>
+                    <th class="text-left">Type</th>
+                    <th class="text-left">Project</th>
                     <th class="text-left">Status</th>
                     <th class="text-left"></th>
                   </tr>
@@ -236,6 +260,8 @@
                     <td>{{ item.amount }}</td>
                     <td>{{ item.description }}</td>
                     <td>{{ item.merchant }}</td>
+                    <td>{{ item.payment_type_text }}</td>
+                    <td>{{ item.project_id>0?item.project.project_id:'N/A' }}</td>
                     <td>
                       <StatusChip
                         v-if="item.status == 0"
@@ -332,6 +358,7 @@
 </template>
 <script>
 import leadservice from "@services/auth/lead";
+import projectservice from "@services/auth/project";
 import paymentservice from "@services/auth/payment";
 import briefformservice from "@services/auth/briefform";
 import userbriefsservice from "@services/auth/userbriefs";
@@ -352,6 +379,8 @@ export default {
         status: 0,
         merchant: "stripe",
         description: "",
+        payment_type:'sell',
+        project_id:0
       },
       briefform: {
         name: "",
@@ -363,6 +392,8 @@ export default {
         status: [],
         merchant: [],
         description: [],
+        payment_type:[],
+        project_id: []
       },
       merchants: [
         { key: "stripe", value: "Stripe" },
@@ -375,12 +406,21 @@ export default {
         { key: 1, value: "Paid" },
         { key: 2, value: "Failed" },
       ],
+      payment_types:[
+        {key:'sell',value:'Sell'},
+        {key:'upsell',value:'UpSell'},
+        {key:'bonus',value:'Bonus'},
+      ],
+      lead_projects:[],
       valid: false,
     };
   },
   async mounted() {
     this.getLead(this.$route.params.id);
     this.briefforms = await briefformservice.get("?all=true");
+    if(parseInt(this.lead.user_id)>0){
+      this.lead_projects = await projectservice.getlist('?perpage=0&customer_id='+this.lead.user_id).then(e=>e.data);
+    }
   },
   methods: {
     async sendForm() {
@@ -431,12 +471,16 @@ export default {
         status: [],
         merchant: [],
         description: [],
+        project_id:[],
+        payment_type: []
       };
       var formData = new FormData();
       formData.append("amount", this.form.amount);
       formData.append("status", this.form.status);
       formData.append("merchant", this.form.merchant);
       formData.append("description", this.form.description);
+      formData.append("payment_type", this.form.payment_type);
+      formData.append("project_id", this.form.project_id);
       var res = await paymentservice.create(this.lead.id, formData);
       if (res.status) {
         this.$store.commit("setNotification", "Payment Created");
@@ -462,6 +506,12 @@ export default {
         }
         if (res.data.description) {
           this.formerrors.description = res.data.description;
+        }
+        if (res.data.payment_type) {
+          this.formerrors.payment_type = res.data.payment_type;
+        }
+        if (res.data.project_id) {
+          this.formerrors.project_id = res.data.project_id;
         }
       }
     },

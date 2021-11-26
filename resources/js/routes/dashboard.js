@@ -143,6 +143,16 @@ export default [
                 name: 'auth.customer.chat'
             },
             {
+                path: 'invoices',
+                component: ()=> import('@/views/Customer/Invoices.vue'),
+                name: 'auth.customer.invoices'
+            },
+            {
+                path: 'invoice/:id',
+                component: ()=> import('@/views/Customer/Invoice.vue'),
+                name: 'auth.customer.invoice'
+            },
+            {
                 path: 'briefs',
                 component: ()=> import('@/views/Customer/Briefs/List.vue'),
                 name: 'auth.customer.briefs.listing'

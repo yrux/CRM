@@ -25,6 +25,9 @@ class Project extends Model
     public function tasks(){
         return $this->hasMany(ProjectTask::class,'project_id','id');
     }
+    public function payments(){
+        return $this->hasMany(Payment::class,'project_id','id');
+    }
     public function files(){
         return $this->morphMany(File::class,'fileable');
     }

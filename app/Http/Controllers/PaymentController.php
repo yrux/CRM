@@ -18,7 +18,15 @@ class PaymentController extends Controller
      */
     public function index(Lead $lead, Request $request)
     {
-        return PaymentResource::collection($lead->payments()->orderBy('id', 'desc')->get());
+        $payments = $lead->payments()->with('project')->orderBy('id', 'desc');
+        if(!empty($request->project_id)){
+            $payments = $payments->where('project_id',$_GET['project_id']);
+        }
+        if(!empty($request->unpaid)){
+            $payments = $payments->whereIn('status',[0,2]);
+        }
+        $payments = $payments->get();
+        return PaymentResource::collection($payments);
     }
 
     /**
@@ -29,7 +37,7 @@ class PaymentController extends Controller
      */
     public function store(Lead $lead, PaymentRequest $request)
     {
-        $payment = $lead->payments()->create($request->only('amount', 'description', 'status', 'merchant'));
+        $payment = $lead->payments()->create($request->only('amount', 'description', 'status', 'merchant','payment_type','project_id'));
         return new PaymentResource($payment);
     }
 
@@ -53,7 +61,7 @@ class PaymentController extends Controller
      */
     public function update(Lead $lead, Payment $payment, PaymentRequest $request)
     {
-        $payment->update($request->only('amount', 'description', 'status', 'merchant'));
+        $payment->update($request->only('amount', 'description', 'status', 'merchant','payment_type','project_id'));
         return new PaymentResource($payment);
     }
 

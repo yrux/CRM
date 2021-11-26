@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\{BrandUser, Brand, Project, ProjectUser};
+use App\Models\{BrandUser, Brand, Project, ProjectUser, User, Payment, Lead};
 use Illuminate\Http\Request;
 use App\Http\Resources\ProjectResource;
 use App\Repositories\FileRepository;
 use Illuminate\Support\Facades\Gate;
-
+use DB;
 class ProjectController extends Controller
 {
     protected $file;
@@ -37,6 +37,12 @@ class ProjectController extends Controller
                 ->orWhere('projects.project_id', 'like', '%'.$q.'%');
             });
         }
+        if(!empty($_GET['customer_id'])){
+            $data = $data->where('customers.id',intval($_GET['customer_id']));
+        }
+        if($request->user()->role_id==6){
+            $data = $data->where('customers.id',$request->user()->id);
+        }
         //getting customer names
         $data = $data->leftJoin('project_users',function($join){
             $join->on('projects.id','=','project_users.project_id')->where('project_users.role_id',6);
@@ -47,7 +53,17 @@ class ProjectController extends Controller
         $data = $data->leftJoin('users as customers',function($join){
             $join->on('project_users.user_id','=','customers.id')->where('customers.role_id',6);
         });
-        $data = $data->select('customers.name as customer_name','customers.email as customer_email','projects.title','projects.project_id','projects.created_at','projects.id as project_id_int');
+        $data = $data->leftJoin(DB::raw('(SELECT SUM(amount) AS total_paid,project_id FROM payments WHERE payments.status=1 GROUP BY project_id) AS payment_paid'), 
+        function($join)
+        {
+           $join->on('projects.id', '=', 'payment_paid.project_id');
+        });
+        $data = $data->leftJoin(DB::raw('(SELECT IFNULL(SUM(amount),0) AS total_balance,project_id FROM payments WHERE payments.status IN(0,2) GROUP BY project_id) AS payment_balance'), 
+        function($join)
+        {
+           $join->on('projects.id', '=', 'payment_balance.project_id');
+        });
+        $data = $data->select('customers.name as customer_name','customers.email as customer_email','projects.title','projects.project_id','projects.created_at','projects.id as project_id_int',DB::raw('IFNULL(payment_paid.total_paid,0) as total_paid'),DB::raw('IFNULL(payment_balance.total_balance,0) as total_balance'));
         if($request->user()->role_id==4){
             /*$data = $data->leftJoin('users as salesupport',function($join){
                 $join->on('project_sale.user_id','=','salesupport.id')->where('salesupport.role_id',4);
@@ -91,6 +107,11 @@ class ProjectController extends Controller
             'user_id'=>$request->customer_id,
             'role_id'=>6
         ]);
+        //binding project with user //User, Payment, Lead
+        Lead::where('user_id',$request->customer_id)->first()->payments()->where('project_id',0)->update([
+            'project_id'=>$project->id
+        ]);
+        //binding end
         foreach($brand_users as $brand_user){
             ProjectUser::create([
                 'project_id'=>$project->id,

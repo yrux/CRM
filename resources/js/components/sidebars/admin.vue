@@ -107,6 +107,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
+    <v-hover v-slot="{ hover }">
     <v-navigation-drawer
       v-model="drawer"
       permanent
@@ -115,6 +116,7 @@
       class=""
       v-if="!showsidebar"
       dark
+      :color="!hover?'primary':undefined"
     >
       <v-system-bar></v-system-bar>
       <v-system-bar></v-system-bar>
@@ -228,6 +230,36 @@
 
               <v-list-item-content>
                 <v-list-item-title>Briefs</v-list-item-title>
+              </v-list-item-content>
+            </template>
+          </v-menu>
+        </v-list-item>
+        <v-list-item
+          v-if="user.role_id == 6"
+          class="pa-0"
+          link
+          :to="{ name: 'auth.customer.invoices' }"
+        >
+          <v-menu
+            open-on-hover
+            offset-x
+            style="max-width: 600px"
+            :close-on-content-click="false"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-icon
+                color="primary"
+                dark
+                class="d-block"
+                style="width: 100%; text-align: center"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon v-text="'mdi-cash-multiple'"></v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Invoices</v-list-item-title>
               </v-list-item-content>
             </template>
           </v-menu>
@@ -521,6 +553,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    </v-hover>
   </div>
 </template>
 <script>

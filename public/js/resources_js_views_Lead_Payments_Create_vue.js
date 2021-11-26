@@ -40,10 +40,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_auth_lead__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @services/auth/lead */ "./resources/js/services/auth/lead.js");
-/* harmony import */ var _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @services/auth/payment */ "./resources/js/services/auth/payment.js");
-/* harmony import */ var _services_auth_briefform__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @services/auth/briefform */ "./resources/js/services/auth/briefform.js");
-/* harmony import */ var _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @services/auth/userbriefs */ "./resources/js/services/auth/userbriefs.js");
-/* harmony import */ var _components_common_status_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @components/common/status.vue */ "./resources/js/components/common/status.vue");
+/* harmony import */ var _services_auth_project__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @services/auth/project */ "./resources/js/services/auth/project.js");
+/* harmony import */ var _services_auth_payment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @services/auth/payment */ "./resources/js/services/auth/payment.js");
+/* harmony import */ var _services_auth_briefform__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @services/auth/briefform */ "./resources/js/services/auth/briefform.js");
+/* harmony import */ var _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @services/auth/userbriefs */ "./resources/js/services/auth/userbriefs.js");
+/* harmony import */ var _components_common_status_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @components/common/status.vue */ "./resources/js/components/common/status.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -382,6 +383,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -389,7 +417,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    StatusChip: _components_common_status_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    StatusChip: _components_common_status_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   data: function data() {
     return {
@@ -402,7 +430,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         amount: 0,
         status: 0,
         merchant: "stripe",
-        description: ""
+        description: "",
+        payment_type: 'sell',
+        project_id: 0
       },
       briefform: {
         name: "",
@@ -413,7 +443,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         amount: [],
         status: [],
         merchant: [],
-        description: []
+        description: [],
+        payment_type: [],
+        project_id: []
       },
       merchants: [{
         key: "stripe",
@@ -438,6 +470,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         key: 2,
         value: "Failed"
       }],
+      payment_types: [{
+        key: 'sell',
+        value: 'Sell'
+      }, {
+        key: 'upsell',
+        value: 'UpSell'
+      }, {
+        key: 'bonus',
+        value: 'Bonus'
+      }],
+      lead_projects: [],
       valid: false
     };
   },
@@ -452,12 +495,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _this.getLead(_this.$route.params.id);
 
               _context.next = 3;
-              return _services_auth_briefform__WEBPACK_IMPORTED_MODULE_3__["default"].get("?all=true");
+              return _services_auth_briefform__WEBPACK_IMPORTED_MODULE_4__["default"].get("?all=true");
 
             case 3:
               _this.briefforms = _context.sent;
 
-            case 4:
+              if (!(parseInt(_this.lead.user_id) > 0)) {
+                _context.next = 8;
+                break;
+              }
+
+              _context.next = 7;
+              return _services_auth_project__WEBPACK_IMPORTED_MODULE_2__["default"].getlist('?perpage=0&customer_id=' + _this.lead.user_id).then(function (e) {
+                return e.data;
+              });
+
+            case 7:
+              _this.lead_projects = _context.sent;
+
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -486,7 +542,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formdata.append("user_id", _this2.lead.user_id);
                 formdata.append("brand_id", _this2.lead.brand_id);
                 _context2.next = 8;
-                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].create(formdata);
+                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_5__["default"].create(formdata);
 
               case 8:
                 res = _context2.sent;
@@ -499,7 +555,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.$store.commit("setNotification", "Brief Sent to Customer");
 
                 _context2.next = 13;
-                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].get("?user_id=" + _this2.lead.user_id);
+                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_5__["default"].get("?user_id=" + _this2.lead.user_id);
 
               case 13:
                 _this2.briefs = _context2.sent;
@@ -542,7 +598,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context3.next = 6;
-                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].get(_this3.lead.id, "");
+                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_3__["default"].get(_this3.lead.id, "");
 
               case 6:
                 _this3.payments = _context3.sent;
@@ -553,7 +609,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context3.next = 10;
-                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_4__["default"].get("?user_id=" + _this3.lead.user_id);
+                return _services_auth_userbriefs__WEBPACK_IMPORTED_MODULE_5__["default"].get("?user_id=" + _this3.lead.user_id);
 
               case 10:
                 _this3.briefs = _context3.sent;
@@ -599,21 +655,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   amount: [],
                   status: [],
                   merchant: [],
-                  description: []
+                  description: [],
+                  project_id: [],
+                  payment_type: []
                 };
                 formData = new FormData();
                 formData.append("amount", _this5.form.amount);
                 formData.append("status", _this5.form.status);
                 formData.append("merchant", _this5.form.merchant);
                 formData.append("description", _this5.form.description);
-                _context5.next = 8;
-                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].create(_this5.lead.id, formData);
+                formData.append("payment_type", _this5.form.payment_type);
+                formData.append("project_id", _this5.form.project_id);
+                _context5.next = 10;
+                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_3__["default"].create(_this5.lead.id, formData);
 
-              case 8:
+              case 10:
                 res = _context5.sent;
 
                 if (!res.status) {
-                  _context5.next = 19;
+                  _context5.next = 21;
                   break;
                 }
 
@@ -628,21 +688,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this5.createPaymentTgl = false;
 
                 if (!_this5.lead) {
-                  _context5.next = 17;
+                  _context5.next = 19;
                   break;
                 }
 
-                _context5.next = 16;
-                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_2__["default"].get(_this5.lead.id, "");
+                _context5.next = 18;
+                return _services_auth_payment__WEBPACK_IMPORTED_MODULE_3__["default"].get(_this5.lead.id, "");
 
-              case 16:
+              case 18:
                 _this5.payments = _context5.sent;
 
-              case 17:
-                _context5.next = 23;
+              case 19:
+                _context5.next = 27;
                 break;
 
-              case 19:
+              case 21:
                 if (res.data.amount) {
                   _this5.formerrors.amount = res.data.amount;
                 }
@@ -659,7 +719,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this5.formerrors.description = res.data.description;
                 }
 
-              case 23:
+                if (res.data.payment_type) {
+                  _this5.formerrors.payment_type = res.data.payment_type;
+                }
+
+                if (res.data.project_id) {
+                  _this5.formerrors.project_id = res.data.project_id;
+                }
+
+              case 27:
               case "end":
                 return _context5.stop();
             }
@@ -1299,6 +1367,101 @@ var paymentservice = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new paymentservice());
+
+/***/ }),
+
+/***/ "./resources/js/services/auth/project.js":
+/*!***********************************************!*\
+  !*** ./resources/js/services/auth/project.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var projectservice = /*#__PURE__*/function () {
+  function projectservice() {
+    _classCallCheck(this, projectservice);
+  }
+
+  _createClass(projectservice, [{
+    key: "getlist",
+    value: function getlist(params) {
+      return axios.get("/api/project".concat(params)).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "validateTask",
+    value: function validateTask(formData) {
+      return axios.post('/api/task-validate', formData).then(function (response) {
+        return {
+          status: 1,
+          data: 'validated'
+        };
+      })["catch"](function (error) {
+        return {
+          status: 0,
+          data: error.response.data.errors
+        };
+      });
+    }
+  }, {
+    key: "createTask",
+    value: function createTask(project_id_int, formData) {
+      return axios.post('/api/project/' + project_id_int + '/task', formData).then(function (response) {
+        return {
+          status: 1,
+          data: response.data
+        };
+      })["catch"](function (error) {
+        return {
+          status: 0,
+          data: error.response.data.errors
+        };
+      });
+    }
+  }, {
+    key: "create",
+    value: function create(formData) {
+      return axios.post('/api/project', formData).then(function (response) {
+        return {
+          status: 1,
+          data: response.data.data
+        };
+      })["catch"](function (error) {
+        return {
+          status: 0,
+          data: error.response.data.errors
+        };
+      });
+    }
+  }, {
+    key: "get",
+    value: function get(projectId) {
+      return axios.get("/api/project/".concat(projectId)).then(function (response) {
+        return response.data.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }]);
+
+  return projectservice;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new projectservice());
 
 /***/ }),
 
@@ -2121,6 +2284,67 @@ var render = function () {
                                 _vm._v(" "),
                                 _c(
                                   "v-col",
+                                  { attrs: { cols: "6", md: "6" } },
+                                  [
+                                    _c("v-select", {
+                                      attrs: {
+                                        items: _vm.payment_types,
+                                        label: "Type",
+                                        "item-text": "value",
+                                        "item-value": "key",
+                                        required: "",
+                                        "error-messages": _vm.formerrors.status,
+                                      },
+                                      model: {
+                                        value: _vm.form.payment_type,
+                                        callback: function ($$v) {
+                                          _vm.$set(
+                                            _vm.form,
+                                            "payment_type",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "form.payment_type",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _vm.lead.user_id > 0
+                                  ? _c(
+                                      "v-col",
+                                      { attrs: { cols: "6", md: "6" } },
+                                      [
+                                        _c("v-select", {
+                                          attrs: {
+                                            items: _vm.lead_projects,
+                                            label: "Projects",
+                                            "item-text": "project_id",
+                                            "item-value": "project_id_int",
+                                            required: "",
+                                            "error-messages":
+                                              _vm.formerrors.project_id,
+                                          },
+                                          model: {
+                                            value: _vm.form.project_id,
+                                            callback: function ($$v) {
+                                              _vm.$set(
+                                                _vm.form,
+                                                "project_id",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "form.project_id",
+                                          },
+                                        }),
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "v-col",
                                   { attrs: { cols: "6", md: "12" } },
                                   [
                                     _c(
@@ -2311,6 +2535,14 @@ var render = function () {
                                     ]),
                                     _vm._v(" "),
                                     _c("th", { staticClass: "text-left" }, [
+                                      _vm._v("Type"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("th", { staticClass: "text-left" }, [
+                                      _vm._v("Project"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("th", { staticClass: "text-left" }, [
                                       _vm._v("Status"),
                                     ]),
                                     _vm._v(" "),
@@ -2329,6 +2561,20 @@ var render = function () {
                                       ]),
                                       _vm._v(" "),
                                       _c("td", [_vm._v(_vm._s(item.merchant))]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(item.payment_type_text)),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(
+                                            item.project_id > 0
+                                              ? item.project.project_id
+                                              : "N/A"
+                                          )
+                                        ),
+                                      ]),
                                       _vm._v(" "),
                                       _c(
                                         "td",

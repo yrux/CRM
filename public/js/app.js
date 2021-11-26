@@ -2616,6 +2616,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "sidebar",
   components: {},
@@ -3331,6 +3364,18 @@ __webpack_require__.r(__webpack_exports__);
       return __webpack_require__.e(/*! import() */ "resources_js_views_Customer_Chat_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Customer/Chat.vue */ "./resources/js/views/Customer/Chat.vue"));
     },
     name: 'auth.customer.chat'
+  }, {
+    path: 'invoices',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Customer_Invoices_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Customer/Invoices.vue */ "./resources/js/views/Customer/Invoices.vue"));
+    },
+    name: 'auth.customer.invoices'
+  }, {
+    path: 'invoice/:id',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_Customer_Invoice_vue").then(__webpack_require__.bind(__webpack_require__, /*! @/views/Customer/Invoice.vue */ "./resources/js/views/Customer/Invoice.vue"));
+    },
+    name: 'auth.customer.invoice'
   }, {
     path: 'briefs',
     component: function component() {
@@ -22659,914 +22704,1447 @@ var render = function () {
             1
           ),
           _vm._v(" "),
-          !_vm.showsidebar
-            ? _c(
-                "v-navigation-drawer",
+          _c("v-hover", {
+            scopedSlots: _vm._u(
+              [
                 {
-                  attrs: {
-                    permanent: "",
-                    absolute: "",
-                    "mini-variant": "",
-                    dark: "",
-                  },
-                  model: {
-                    value: _vm.drawer,
-                    callback: function ($$v) {
-                      _vm.drawer = $$v
-                    },
-                    expression: "drawer",
-                  },
-                },
-                [
-                  _c("v-system-bar"),
-                  _vm._v(" "),
-                  _c("v-system-bar"),
-                  _vm._v(" "),
-                  _c("v-system-bar"),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item",
-                    {
-                      staticClass: "px-2",
-                      attrs: { link: "", to: { name: "auth.profile" } },
-                    },
-                    [
-                      _c(
-                        "v-list-item-avatar",
-                        [_c("v-img", { attrs: { src: _vm.user.image_url } })],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("v-list-item-title", [_vm._v(_vm._s(_vm.user.name))]),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { icon: "" },
-                          on: {
-                            click: function ($event) {
-                              $event.stopPropagation()
-                              _vm.mini = !_vm.mini
-                            },
-                          },
-                        },
-                        [_c("v-icon", [_vm._v("mdi-chevron-left")])],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-divider"),
-                  _vm._v(" "),
-                  _c(
-                    "v-list",
-                    { attrs: { dense: "" } },
-                    [
-                      _vm.user.role_id == 1
+                  key: "default",
+                  fn: function (ref) {
+                    var hover = ref.hover
+                    return [
+                      !_vm.showsidebar
                         ? _c(
-                            "v-list-item",
+                            "v-navigation-drawer",
                             {
-                              staticClass: "pa-0",
                               attrs: {
-                                link: "",
-                                to: { name: "auth.company.listing" },
+                                permanent: "",
+                                absolute: "",
+                                "mini-variant": "",
+                                dark: "",
+                                color: !hover ? "primary" : undefined,
+                              },
+                              model: {
+                                value: _vm.drawer,
+                                callback: function ($$v) {
+                                  _vm.drawer = $$v
+                                },
+                                expression: "drawer",
                               },
                             },
                             [
+                              _c("v-system-bar"),
+                              _vm._v(" "),
+                              _c("v-system-bar"),
+                              _vm._v(" "),
+                              _c("v-system-bar"),
+                              _vm._v(" "),
                               _c(
-                                "v-menu",
+                                "v-list-item",
                                 {
-                                  staticStyle: { "max-width": "600px" },
+                                  staticClass: "px-2",
                                   attrs: {
-                                    "open-on-hover": "",
-                                    "offset-x": "",
-                                    "close-on-content-click": false,
+                                    link: "",
+                                    to: { name: "auth.profile" },
                                   },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function (ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "v-list-item-icon",
-                                              _vm._g(
-                                                _vm._b(
-                                                  {
-                                                    staticClass: "d-block",
-                                                    staticStyle: {
-                                                      width: "100%",
-                                                      "text-align": "center",
-                                                    },
-                                                    attrs: {
-                                                      color: "primary",
-                                                      dark: "",
-                                                    },
-                                                  },
-                                                  "v-list-item-icon",
-                                                  attrs,
-                                                  false
-                                                ),
-                                                on
-                                              ),
-                                              [
-                                                _c("v-icon", {
-                                                  domProps: {
-                                                    textContent: _vm._s(
-                                                      "mdi-shape-circle-plus"
-                                                    ),
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-item-content",
-                                              [
-                                                _c("v-list-item-title", [
-                                                  _vm._v("Company"),
-                                                ]),
-                                              ],
-                                              1
-                                            ),
-                                          ]
-                                        },
-                                      },
-                                    ],
-                                    null,
-                                    false,
-                                    1635089257
-                                  ),
                                 },
                                 [
-                                  _vm._v(" "),
                                   _c(
-                                    "v-list",
+                                    "v-list-item-avatar",
                                     [
-                                      _c(
-                                        "v-list-item",
-                                        {
-                                          attrs: {
-                                            exact: "",
-                                            link: "",
-                                            to: { name: "auth.company.add" },
-                                          },
-                                        },
-                                        [
-                                          _c("v-list-item-title", [
-                                            _vm._v("Add Company"),
-                                          ]),
-                                        ],
-                                        1
-                                      ),
+                                      _c("v-img", {
+                                        attrs: { src: _vm.user.image_url },
+                                      }),
                                     ],
                                     1
                                   ),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id == 2
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: {
-                                link: "",
-                                to: { name: "auth.brief.listing" },
-                              },
-                            },
-                            [
-                              _c(
-                                "v-menu",
-                                {
-                                  staticStyle: { "max-width": "600px" },
-                                  attrs: {
-                                    "open-on-hover": "",
-                                    "offset-x": "",
-                                    "close-on-content-click": false,
-                                  },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function (ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "v-list-item-icon",
-                                              _vm._g(
-                                                _vm._b(
-                                                  {
-                                                    staticClass: "d-block",
-                                                    staticStyle: {
-                                                      width: "100%",
-                                                      "text-align": "center",
-                                                    },
-                                                    attrs: {
-                                                      color: "primary",
-                                                      dark: "",
-                                                    },
-                                                  },
-                                                  "v-list-item-icon",
-                                                  attrs,
-                                                  false
-                                                ),
-                                                on
-                                              ),
-                                              [
-                                                _c("v-icon", {
-                                                  domProps: {
-                                                    textContent:
-                                                      _vm._s("mdi-form-select"),
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-item-content",
-                                              [
-                                                _c("v-list-item-title", [
-                                                  _vm._v("Brief Form"),
-                                                ]),
-                                              ],
-                                              1
-                                            ),
-                                          ]
-                                        },
-                                      },
-                                    ],
-                                    null,
-                                    false,
-                                    3407107670
-                                  ),
-                                },
-                                [
+                                  _vm._v(" "),
+                                  _c("v-list-item-title", [
+                                    _vm._v(_vm._s(_vm.user.name)),
+                                  ]),
                                   _vm._v(" "),
                                   _c(
-                                    "v-list",
-                                    [
-                                      _c(
-                                        "v-list-item",
-                                        {
-                                          attrs: {
-                                            exact: "",
-                                            link: "",
-                                            to: { name: "auth.brief.add" },
-                                          },
-                                        },
-                                        [
-                                          _c("v-list-item-title", [
-                                            _vm._v("Add Brief Form"),
-                                          ]),
-                                        ],
-                                        1
-                                      ),
-                                    ],
-                                    1
-                                  ),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id == 6
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: {
-                                link: "",
-                                to: { name: "auth.customer.briefs.listing" },
-                              },
-                            },
-                            [
-                              _c("v-menu", {
-                                staticStyle: { "max-width": "600px" },
-                                attrs: {
-                                  "open-on-hover": "",
-                                  "offset-x": "",
-                                  "close-on-content-click": false,
-                                },
-                                scopedSlots: _vm._u(
-                                  [
+                                    "v-btn",
                                     {
-                                      key: "activator",
-                                      fn: function (ref) {
-                                        var on = ref.on
-                                        var attrs = ref.attrs
-                                        return [
-                                          _c(
-                                            "v-list-item-icon",
-                                            _vm._g(
-                                              _vm._b(
-                                                {
-                                                  staticClass: "d-block",
-                                                  staticStyle: {
-                                                    width: "100%",
-                                                    "text-align": "center",
-                                                  },
-                                                  attrs: {
-                                                    color: "primary",
-                                                    dark: "",
-                                                  },
-                                                },
-                                                "v-list-item-icon",
-                                                attrs,
-                                                false
-                                              ),
-                                              on
-                                            ),
-                                            [
-                                              _c("v-icon", {
-                                                domProps: {
-                                                  textContent:
-                                                    _vm._s("mdi-form-select"),
-                                                },
-                                              }),
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-list-item-content",
-                                            [
-                                              _c("v-list-item-title", [
-                                                _vm._v("Briefs"),
-                                              ]),
-                                            ],
-                                            1
-                                          ),
-                                        ]
+                                      attrs: { icon: "" },
+                                      on: {
+                                        click: function ($event) {
+                                          $event.stopPropagation()
+                                          _vm.mini = !_vm.mini
+                                        },
                                       },
                                     },
-                                  ],
-                                  null,
-                                  false,
-                                  763260435
-                                ),
-                              }),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id == 6
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: {
-                                link: "",
-                                to: { name: "auth.customer.chat" },
-                              },
-                            },
-                            [
-                              _c("v-menu", {
-                                staticStyle: { "max-width": "600px" },
-                                attrs: {
-                                  "open-on-hover": "",
-                                  "offset-x": "",
-                                  "close-on-content-click": false,
-                                },
-                                scopedSlots: _vm._u(
-                                  [
-                                    {
-                                      key: "activator",
-                                      fn: function (ref) {
-                                        var on = ref.on
-                                        var attrs = ref.attrs
-                                        return [
+                                    [
+                                      _c("v-icon", [
+                                        _vm._v("mdi-chevron-left"),
+                                      ]),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-divider"),
+                              _vm._v(" "),
+                              _c(
+                                "v-list",
+                                { attrs: { dense: "" } },
+                                [
+                                  _vm.user.role_id == 1
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: {
+                                              name: "auth.company.listing",
+                                            },
+                                          },
+                                        },
+                                        [
                                           _c(
-                                            "v-list-item-icon",
-                                            _vm._g(
-                                              _vm._b(
-                                                {
-                                                  staticClass: "d-block",
-                                                  staticStyle: {
-                                                    width: "100%",
-                                                    "text-align": "center",
-                                                  },
-                                                  attrs: {
-                                                    color: "primary",
-                                                    dark: "",
-                                                  },
-                                                },
-                                                "v-list-item-icon",
-                                                attrs,
-                                                false
-                                              ),
-                                              on
-                                            ),
-                                            [
-                                              _c(
-                                                "v-badge",
-                                                {
-                                                  attrs: {
-                                                    bordered: "",
-                                                    color: "info",
-                                                    content:
-                                                      _vm.user.lead
-                                                        .unseen_messages == 0
-                                                        ? "0"
-                                                        : _vm.user.lead
-                                                            .unseen_messages,
-                                                    overlap: "",
-                                                  },
-                                                },
+                                            "v-menu",
+                                            {
+                                              staticStyle: {
+                                                "max-width": "600px",
+                                              },
+                                              attrs: {
+                                                "open-on-hover": "",
+                                                "offset-x": "",
+                                                "close-on-content-click": false,
+                                              },
+                                              scopedSlots: _vm._u(
                                                 [
-                                                  _c("v-icon", {
-                                                    domProps: {
-                                                      textContent: _vm._s(
-                                                        "mdi-message-bulleted"
-                                                      ),
+                                                  {
+                                                    key: "activator",
+                                                    fn: function (ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-list-item-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticClass:
+                                                                  "d-block",
+                                                                staticStyle: {
+                                                                  width: "100%",
+                                                                  "text-align":
+                                                                    "center",
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "primary",
+                                                                  dark: "",
+                                                                },
+                                                              },
+                                                              "v-list-item-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", {
+                                                              domProps: {
+                                                                textContent:
+                                                                  _vm._s(
+                                                                    "mdi-shape-circle-plus"
+                                                                  ),
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-item-content",
+                                                          [
+                                                            _c(
+                                                              "v-list-item-title",
+                                                              [
+                                                                _vm._v(
+                                                                  "Company"
+                                                                ),
+                                                              ]
+                                                            ),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ]
                                                     },
-                                                  }),
+                                                  },
+                                                ],
+                                                null,
+                                                true
+                                              ),
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list",
+                                                [
+                                                  _c(
+                                                    "v-list-item",
+                                                    {
+                                                      attrs: {
+                                                        exact: "",
+                                                        link: "",
+                                                        to: {
+                                                          name: "auth.company.add",
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("v-list-item-title", [
+                                                        _vm._v("Add Company"),
+                                                      ]),
+                                                    ],
+                                                    1
+                                                  ),
                                                 ],
                                                 1
                                               ),
                                             ],
                                             1
                                           ),
-                                          _vm._v(" "),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.user.role_id == 2
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: { name: "auth.brief.listing" },
+                                          },
+                                        },
+                                        [
                                           _c(
-                                            "v-list-item-content",
+                                            "v-menu",
+                                            {
+                                              staticStyle: {
+                                                "max-width": "600px",
+                                              },
+                                              attrs: {
+                                                "open-on-hover": "",
+                                                "offset-x": "",
+                                                "close-on-content-click": false,
+                                              },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function (ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-list-item-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticClass:
+                                                                  "d-block",
+                                                                staticStyle: {
+                                                                  width: "100%",
+                                                                  "text-align":
+                                                                    "center",
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "primary",
+                                                                  dark: "",
+                                                                },
+                                                              },
+                                                              "v-list-item-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", {
+                                                              domProps: {
+                                                                textContent:
+                                                                  _vm._s(
+                                                                    "mdi-form-select"
+                                                                  ),
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-item-content",
+                                                          [
+                                                            _c(
+                                                              "v-list-item-title",
+                                                              [
+                                                                _vm._v(
+                                                                  "Brief Form"
+                                                                ),
+                                                              ]
+                                                            ),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ]
+                                                    },
+                                                  },
+                                                ],
+                                                null,
+                                                true
+                                              ),
+                                            },
                                             [
-                                              _c("v-list-item-title", [
-                                                _vm._v("Messages"),
-                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list",
+                                                [
+                                                  _c(
+                                                    "v-list-item",
+                                                    {
+                                                      attrs: {
+                                                        exact: "",
+                                                        link: "",
+                                                        to: {
+                                                          name: "auth.brief.add",
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("v-list-item-title", [
+                                                        _vm._v(
+                                                          "Add Brief Form"
+                                                        ),
+                                                      ]),
+                                                    ],
+                                                    1
+                                                  ),
+                                                ],
+                                                1
+                                              ),
                                             ],
                                             1
                                           ),
-                                        ]
-                                      },
-                                    },
-                                  ],
-                                  null,
-                                  false,
-                                  2979256031
-                                ),
-                              }),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id == 1 || _vm.user.role_id == 2
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: {
-                                link: "",
-                                to: { name: "auth.brands.listing" },
-                              },
-                            },
-                            [
-                              _c(
-                                "v-menu",
-                                {
-                                  staticStyle: { "max-width": "600px" },
-                                  attrs: {
-                                    "open-on-hover": "",
-                                    "offset-x": "",
-                                    "close-on-content-click": false,
-                                  },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function (ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "v-list-item-icon",
-                                              _vm._g(
-                                                _vm._b(
-                                                  {
-                                                    staticClass: "d-block",
-                                                    staticStyle: {
-                                                      width: "100%",
-                                                      "text-align": "center",
-                                                    },
-                                                    attrs: {
-                                                      color: "primary",
-                                                      dark: "",
-                                                    },
-                                                  },
-                                                  "v-list-item-icon",
-                                                  attrs,
-                                                  false
-                                                ),
-                                                on
-                                              ),
-                                              [
-                                                _c("v-icon", {
-                                                  domProps: {
-                                                    textContent:
-                                                      _vm._s("mdi-watermark"),
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-item-content",
-                                              [
-                                                _c("v-list-item-title", [
-                                                  _vm._v("Brands"),
-                                                ]),
-                                              ],
-                                              1
-                                            ),
-                                          ]
-                                        },
-                                      },
-                                    ],
-                                    null,
-                                    false,
-                                    4241269793
-                                  ),
-                                },
-                                [
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-list",
-                                    [
-                                      _c(
-                                        "v-list-item",
-                                        {
-                                          attrs: {
-                                            exact: "",
-                                            link: "",
-                                            to: { name: "auth.brands.add" },
-                                          },
-                                        },
-                                        [
-                                          _c("v-list-item-title", [
-                                            _vm._v("Add Brand"),
-                                          ]),
                                         ],
                                         1
-                                      ),
-                                    ],
-                                    1
-                                  ),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id == 1 || _vm.user.role_id == 2
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: {
-                                link: "",
-                                to: { name: "auth.users.listing" },
-                              },
-                            },
-                            [
-                              _c(
-                                "v-menu",
-                                {
-                                  staticStyle: { "max-width": "600px" },
-                                  attrs: {
-                                    "open-on-hover": "",
-                                    "offset-x": "",
-                                    "close-on-content-click": false,
-                                  },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function (ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "v-list-item-icon",
-                                              _vm._g(
-                                                _vm._b(
-                                                  {
-                                                    staticClass: "d-block",
-                                                    staticStyle: {
-                                                      width: "100%",
-                                                      "text-align": "center",
-                                                    },
-                                                    attrs: {
-                                                      color: "primary",
-                                                      dark: "",
-                                                    },
-                                                  },
-                                                  "v-list-item-icon",
-                                                  attrs,
-                                                  false
-                                                ),
-                                                on
-                                              ),
-                                              [
-                                                _c("v-icon", {
-                                                  domProps: {
-                                                    textContent: _vm._s(
-                                                      "mdi-account-multiple-plus-outline"
-                                                    ),
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-item-content",
-                                              [
-                                                _c("v-list-item-title", [
-                                                  _vm._v("Users"),
-                                                ]),
-                                              ],
-                                              1
-                                            ),
-                                          ]
-                                        },
-                                      },
-                                    ],
-                                    null,
-                                    false,
-                                    3636303469
-                                  ),
-                                },
-                                [
+                                      )
+                                    : _vm._e(),
                                   _vm._v(" "),
-                                  _c(
-                                    "v-list",
-                                    [
-                                      _c(
+                                  _vm.user.role_id == 6
+                                    ? _c(
                                         "v-list-item",
                                         {
+                                          staticClass: "pa-0",
                                           attrs: {
-                                            exact: "",
-                                            link: "",
-                                            to: { name: "auth.users.add" },
-                                          },
-                                        },
-                                        [
-                                          _c("v-list-item-title", [
-                                            _vm._v("Add User"),
-                                          ]),
-                                        ],
-                                        1
-                                      ),
-                                    ],
-                                    1
-                                  ),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id == 1 ||
-                      _vm.user.role_id == 2 ||
-                      _vm.user.role_id == 3 ||
-                      _vm.user.role_id == 4 ||
-                      _vm.user.role_id == 5
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: {
-                                link: "",
-                                to: { name: "auth.leads.listing" },
-                              },
-                            },
-                            [
-                              _c(
-                                "v-menu",
-                                {
-                                  staticStyle: { "max-width": "600px" },
-                                  attrs: {
-                                    "open-on-hover": "",
-                                    "offset-x": "",
-                                    "close-on-content-click": false,
-                                  },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function (ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "v-list-item-icon",
-                                              _vm._g(
-                                                _vm._b(
-                                                  {
-                                                    staticClass: "d-block",
-                                                    staticStyle: {
-                                                      width: "100%",
-                                                      "text-align": "center",
-                                                    },
-                                                    attrs: {
-                                                      color: "primary",
-                                                      dark: "",
-                                                    },
-                                                  },
-                                                  "v-list-item-icon",
-                                                  attrs,
-                                                  false
-                                                ),
-                                                on
-                                              ),
-                                              [
-                                                _c("v-icon", {
-                                                  domProps: {
-                                                    textContent:
-                                                      _vm._s("mdi-google-ads"),
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-item-content",
-                                              [
-                                                _c("v-list-item-title", [
-                                                  _vm._v("Leads"),
-                                                ]),
-                                              ],
-                                              1
-                                            ),
-                                          ]
-                                        },
-                                      },
-                                    ],
-                                    null,
-                                    false,
-                                    551225796
-                                  ),
-                                },
-                                [
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-list",
-                                    [
-                                      _c(
-                                        "v-list-item",
-                                        {
-                                          attrs: {
-                                            exact: "",
                                             link: "",
                                             to: {
-                                              name: "auth.leads.listing",
-                                              query: { openAdd: "true" },
+                                              name: "auth.customer.briefs.listing",
                                             },
                                           },
                                         },
                                         [
-                                          _c("v-list-item-title", [
-                                            _vm._v("Add Lead"),
-                                          ]),
+                                          _c("v-menu", {
+                                            staticStyle: {
+                                              "max-width": "600px",
+                                            },
+                                            attrs: {
+                                              "open-on-hover": "",
+                                              "offset-x": "",
+                                              "close-on-content-click": false,
+                                            },
+                                            scopedSlots: _vm._u(
+                                              [
+                                                {
+                                                  key: "activator",
+                                                  fn: function (ref) {
+                                                    var on = ref.on
+                                                    var attrs = ref.attrs
+                                                    return [
+                                                      _c(
+                                                        "v-list-item-icon",
+                                                        _vm._g(
+                                                          _vm._b(
+                                                            {
+                                                              staticClass:
+                                                                "d-block",
+                                                              staticStyle: {
+                                                                width: "100%",
+                                                                "text-align":
+                                                                  "center",
+                                                              },
+                                                              attrs: {
+                                                                color:
+                                                                  "primary",
+                                                                dark: "",
+                                                              },
+                                                            },
+                                                            "v-list-item-icon",
+                                                            attrs,
+                                                            false
+                                                          ),
+                                                          on
+                                                        ),
+                                                        [
+                                                          _c("v-icon", {
+                                                            domProps: {
+                                                              textContent:
+                                                                _vm._s(
+                                                                  "mdi-form-select"
+                                                                ),
+                                                            },
+                                                          }),
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-list-item-content",
+                                                        [
+                                                          _c(
+                                                            "v-list-item-title",
+                                                            [_vm._v("Briefs")]
+                                                          ),
+                                                        ],
+                                                        1
+                                                      ),
+                                                    ]
+                                                  },
+                                                },
+                                              ],
+                                              null,
+                                              true
+                                            ),
+                                          }),
                                         ],
                                         1
-                                      ),
-                                    ],
-                                    1
-                                  ),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id == 4 || _vm.user.role_id == 5
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: {
-                                link: "",
-                                to: { name: "auth.projects.listing" },
-                              },
-                            },
-                            [
-                              _c(
-                                "v-menu",
-                                {
-                                  staticStyle: { "max-width": "600px" },
-                                  attrs: {
-                                    "open-on-hover": "",
-                                    "offset-x": "",
-                                    "close-on-content-click": false,
-                                  },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function (ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "v-list-item-icon",
-                                              _vm._g(
-                                                _vm._b(
-                                                  {
-                                                    staticClass: "d-block",
-                                                    staticStyle: {
-                                                      width: "100%",
-                                                      "text-align": "center",
-                                                    },
-                                                    attrs: {
-                                                      color: "primary",
-                                                      dark: "",
-                                                    },
-                                                  },
-                                                  "v-list-item-icon",
-                                                  attrs,
-                                                  false
-                                                ),
-                                                on
-                                              ),
-                                              [
-                                                _c("v-icon", {
-                                                  domProps: {
-                                                    textContent: _vm._s(
-                                                      "mdi-projector-screen"
-                                                    ),
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-item-content",
-                                              [
-                                                _c("v-list-item-title", [
-                                                  _vm._v("Projects"),
-                                                ]),
-                                              ],
-                                              1
-                                            ),
-                                          ]
-                                        },
-                                      },
-                                    ],
-                                    null,
-                                    false,
-                                    1245394310
-                                  ),
-                                },
-                                [
+                                      )
+                                    : _vm._e(),
                                   _vm._v(" "),
-                                  _c(
-                                    "v-list",
-                                    [
-                                      _c(
+                                  _vm.user.role_id == 6
+                                    ? _c(
                                         "v-list-item",
                                         {
+                                          staticClass: "pa-0",
                                           attrs: {
-                                            exact: "",
                                             link: "",
-                                            to: { name: "auth.projects.add" },
+                                            to: {
+                                              name: "auth.customer.invoices",
+                                            },
                                           },
                                         },
                                         [
-                                          _c("v-list-item-title", [
-                                            _vm._v("Add Project"),
-                                          ]),
+                                          _c("v-menu", {
+                                            staticStyle: {
+                                              "max-width": "600px",
+                                            },
+                                            attrs: {
+                                              "open-on-hover": "",
+                                              "offset-x": "",
+                                              "close-on-content-click": false,
+                                            },
+                                            scopedSlots: _vm._u(
+                                              [
+                                                {
+                                                  key: "activator",
+                                                  fn: function (ref) {
+                                                    var on = ref.on
+                                                    var attrs = ref.attrs
+                                                    return [
+                                                      _c(
+                                                        "v-list-item-icon",
+                                                        _vm._g(
+                                                          _vm._b(
+                                                            {
+                                                              staticClass:
+                                                                "d-block",
+                                                              staticStyle: {
+                                                                width: "100%",
+                                                                "text-align":
+                                                                  "center",
+                                                              },
+                                                              attrs: {
+                                                                color:
+                                                                  "primary",
+                                                                dark: "",
+                                                              },
+                                                            },
+                                                            "v-list-item-icon",
+                                                            attrs,
+                                                            false
+                                                          ),
+                                                          on
+                                                        ),
+                                                        [
+                                                          _c("v-icon", {
+                                                            domProps: {
+                                                              textContent:
+                                                                _vm._s(
+                                                                  "mdi-cash-multiple"
+                                                                ),
+                                                            },
+                                                          }),
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-list-item-content",
+                                                        [
+                                                          _c(
+                                                            "v-list-item-title",
+                                                            [_vm._v("Invoices")]
+                                                          ),
+                                                        ],
+                                                        1
+                                                      ),
+                                                    ]
+                                                  },
+                                                },
+                                              ],
+                                              null,
+                                              true
+                                            ),
+                                          }),
                                         ],
                                         1
-                                      ),
-                                    ],
-                                    1
-                                  ),
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.user.role_id == 6
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: { name: "auth.customer.chat" },
+                                          },
+                                        },
+                                        [
+                                          _c("v-menu", {
+                                            staticStyle: {
+                                              "max-width": "600px",
+                                            },
+                                            attrs: {
+                                              "open-on-hover": "",
+                                              "offset-x": "",
+                                              "close-on-content-click": false,
+                                            },
+                                            scopedSlots: _vm._u(
+                                              [
+                                                {
+                                                  key: "activator",
+                                                  fn: function (ref) {
+                                                    var on = ref.on
+                                                    var attrs = ref.attrs
+                                                    return [
+                                                      _c(
+                                                        "v-list-item-icon",
+                                                        _vm._g(
+                                                          _vm._b(
+                                                            {
+                                                              staticClass:
+                                                                "d-block",
+                                                              staticStyle: {
+                                                                width: "100%",
+                                                                "text-align":
+                                                                  "center",
+                                                              },
+                                                              attrs: {
+                                                                color:
+                                                                  "primary",
+                                                                dark: "",
+                                                              },
+                                                            },
+                                                            "v-list-item-icon",
+                                                            attrs,
+                                                            false
+                                                          ),
+                                                          on
+                                                        ),
+                                                        [
+                                                          _c(
+                                                            "v-badge",
+                                                            {
+                                                              attrs: {
+                                                                bordered: "",
+                                                                color: "info",
+                                                                content:
+                                                                  _vm.user.lead
+                                                                    .unseen_messages ==
+                                                                  0
+                                                                    ? "0"
+                                                                    : _vm.user
+                                                                        .lead
+                                                                        .unseen_messages,
+                                                                overlap: "",
+                                                              },
+                                                            },
+                                                            [
+                                                              _c("v-icon", {
+                                                                domProps: {
+                                                                  textContent:
+                                                                    _vm._s(
+                                                                      "mdi-message-bulleted"
+                                                                    ),
+                                                                },
+                                                              }),
+                                                            ],
+                                                            1
+                                                          ),
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-list-item-content",
+                                                        [
+                                                          _c(
+                                                            "v-list-item-title",
+                                                            [_vm._v("Messages")]
+                                                          ),
+                                                        ],
+                                                        1
+                                                      ),
+                                                    ]
+                                                  },
+                                                },
+                                              ],
+                                              null,
+                                              true
+                                            ),
+                                          }),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.user.role_id == 1 || _vm.user.role_id == 2
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: { name: "auth.brands.listing" },
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "v-menu",
+                                            {
+                                              staticStyle: {
+                                                "max-width": "600px",
+                                              },
+                                              attrs: {
+                                                "open-on-hover": "",
+                                                "offset-x": "",
+                                                "close-on-content-click": false,
+                                              },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function (ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-list-item-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticClass:
+                                                                  "d-block",
+                                                                staticStyle: {
+                                                                  width: "100%",
+                                                                  "text-align":
+                                                                    "center",
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "primary",
+                                                                  dark: "",
+                                                                },
+                                                              },
+                                                              "v-list-item-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", {
+                                                              domProps: {
+                                                                textContent:
+                                                                  _vm._s(
+                                                                    "mdi-watermark"
+                                                                  ),
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-item-content",
+                                                          [
+                                                            _c(
+                                                              "v-list-item-title",
+                                                              [_vm._v("Brands")]
+                                                            ),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ]
+                                                    },
+                                                  },
+                                                ],
+                                                null,
+                                                true
+                                              ),
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list",
+                                                [
+                                                  _c(
+                                                    "v-list-item",
+                                                    {
+                                                      attrs: {
+                                                        exact: "",
+                                                        link: "",
+                                                        to: {
+                                                          name: "auth.brands.add",
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("v-list-item-title", [
+                                                        _vm._v("Add Brand"),
+                                                      ]),
+                                                    ],
+                                                    1
+                                                  ),
+                                                ],
+                                                1
+                                              ),
+                                            ],
+                                            1
+                                          ),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.user.role_id == 1 || _vm.user.role_id == 2
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: { name: "auth.users.listing" },
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "v-menu",
+                                            {
+                                              staticStyle: {
+                                                "max-width": "600px",
+                                              },
+                                              attrs: {
+                                                "open-on-hover": "",
+                                                "offset-x": "",
+                                                "close-on-content-click": false,
+                                              },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function (ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-list-item-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticClass:
+                                                                  "d-block",
+                                                                staticStyle: {
+                                                                  width: "100%",
+                                                                  "text-align":
+                                                                    "center",
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "primary",
+                                                                  dark: "",
+                                                                },
+                                                              },
+                                                              "v-list-item-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", {
+                                                              domProps: {
+                                                                textContent:
+                                                                  _vm._s(
+                                                                    "mdi-account-multiple-plus-outline"
+                                                                  ),
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-item-content",
+                                                          [
+                                                            _c(
+                                                              "v-list-item-title",
+                                                              [_vm._v("Users")]
+                                                            ),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ]
+                                                    },
+                                                  },
+                                                ],
+                                                null,
+                                                true
+                                              ),
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list",
+                                                [
+                                                  _c(
+                                                    "v-list-item",
+                                                    {
+                                                      attrs: {
+                                                        exact: "",
+                                                        link: "",
+                                                        to: {
+                                                          name: "auth.users.add",
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("v-list-item-title", [
+                                                        _vm._v("Add User"),
+                                                      ]),
+                                                    ],
+                                                    1
+                                                  ),
+                                                ],
+                                                1
+                                              ),
+                                            ],
+                                            1
+                                          ),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.user.role_id == 1 ||
+                                  _vm.user.role_id == 2 ||
+                                  _vm.user.role_id == 3 ||
+                                  _vm.user.role_id == 4 ||
+                                  _vm.user.role_id == 5
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: { name: "auth.leads.listing" },
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "v-menu",
+                                            {
+                                              staticStyle: {
+                                                "max-width": "600px",
+                                              },
+                                              attrs: {
+                                                "open-on-hover": "",
+                                                "offset-x": "",
+                                                "close-on-content-click": false,
+                                              },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function (ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-list-item-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticClass:
+                                                                  "d-block",
+                                                                staticStyle: {
+                                                                  width: "100%",
+                                                                  "text-align":
+                                                                    "center",
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "primary",
+                                                                  dark: "",
+                                                                },
+                                                              },
+                                                              "v-list-item-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", {
+                                                              domProps: {
+                                                                textContent:
+                                                                  _vm._s(
+                                                                    "mdi-google-ads"
+                                                                  ),
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-item-content",
+                                                          [
+                                                            _c(
+                                                              "v-list-item-title",
+                                                              [_vm._v("Leads")]
+                                                            ),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ]
+                                                    },
+                                                  },
+                                                ],
+                                                null,
+                                                true
+                                              ),
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list",
+                                                [
+                                                  _c(
+                                                    "v-list-item",
+                                                    {
+                                                      attrs: {
+                                                        exact: "",
+                                                        link: "",
+                                                        to: {
+                                                          name: "auth.leads.listing",
+                                                          query: {
+                                                            openAdd: "true",
+                                                          },
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("v-list-item-title", [
+                                                        _vm._v("Add Lead"),
+                                                      ]),
+                                                    ],
+                                                    1
+                                                  ),
+                                                ],
+                                                1
+                                              ),
+                                            ],
+                                            1
+                                          ),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.user.role_id == 4 || _vm.user.role_id == 5
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: {
+                                              name: "auth.projects.listing",
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "v-menu",
+                                            {
+                                              staticStyle: {
+                                                "max-width": "600px",
+                                              },
+                                              attrs: {
+                                                "open-on-hover": "",
+                                                "offset-x": "",
+                                                "close-on-content-click": false,
+                                              },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function (ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-list-item-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticClass:
+                                                                  "d-block",
+                                                                staticStyle: {
+                                                                  width: "100%",
+                                                                  "text-align":
+                                                                    "center",
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "primary",
+                                                                  dark: "",
+                                                                },
+                                                              },
+                                                              "v-list-item-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", {
+                                                              domProps: {
+                                                                textContent:
+                                                                  _vm._s(
+                                                                    "mdi-projector-screen"
+                                                                  ),
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-item-content",
+                                                          [
+                                                            _c(
+                                                              "v-list-item-title",
+                                                              [
+                                                                _vm._v(
+                                                                  "Projects"
+                                                                ),
+                                                              ]
+                                                            ),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ]
+                                                    },
+                                                  },
+                                                ],
+                                                null,
+                                                true
+                                              ),
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list",
+                                                [
+                                                  _c(
+                                                    "v-list-item",
+                                                    {
+                                                      attrs: {
+                                                        exact: "",
+                                                        link: "",
+                                                        to: {
+                                                          name: "auth.projects.add",
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("v-list-item-title", [
+                                                        _vm._v("Add Project"),
+                                                      ]),
+                                                    ],
+                                                    1
+                                                  ),
+                                                ],
+                                                1
+                                              ),
+                                            ],
+                                            1
+                                          ),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.user.role_id == 4 ||
+                                  _vm.user.role_id == 5 ||
+                                  _vm.user.role_id == 7
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: {
+                                              name: "auth.tasks.type",
+                                              params: { type: "today" },
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "v-tooltip",
+                                            {
+                                              attrs: { right: "" },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function (ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-list-item-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticClass:
+                                                                  "d-block",
+                                                                staticStyle: {
+                                                                  width: "100%",
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "primary",
+                                                                  dark: "",
+                                                                },
+                                                              },
+                                                              "v-list-item-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", {
+                                                              domProps: {
+                                                                textContent:
+                                                                  _vm._s(
+                                                                    "mdi-calendar-today"
+                                                                  ),
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ]
+                                                    },
+                                                  },
+                                                ],
+                                                null,
+                                                true
+                                              ),
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("span", [_vm._v("Today")]),
+                                            ]
+                                          ),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.user.role_id == 4 ||
+                                  _vm.user.role_id == 5 ||
+                                  _vm.user.role_id == 7
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: {
+                                              name: "auth.tasks.type",
+                                              params: { type: "overdue" },
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "v-tooltip",
+                                            {
+                                              attrs: { right: "" },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function (ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-list-item-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticClass:
+                                                                  "d-block",
+                                                                staticStyle: {
+                                                                  width: "100%",
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "primary",
+                                                                  dark: "",
+                                                                },
+                                                              },
+                                                              "v-list-item-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", {
+                                                              domProps: {
+                                                                textContent:
+                                                                  _vm._s(
+                                                                    "mdi-calendar-alert"
+                                                                  ),
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ]
+                                                    },
+                                                  },
+                                                ],
+                                                null,
+                                                true
+                                              ),
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("span", [_vm._v("Overdue")]),
+                                            ]
+                                          ),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.user.role_id == 4 ||
+                                  _vm.user.role_id == 5 ||
+                                  _vm.user.role_id == 7
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: {
+                                              name: "auth.tasks.type",
+                                              params: { type: "upcomming" },
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "v-tooltip",
+                                            {
+                                              attrs: { right: "" },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function (ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-list-item-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticClass:
+                                                                  "d-block",
+                                                                staticStyle: {
+                                                                  width: "100%",
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "primary",
+                                                                  dark: "",
+                                                                },
+                                                              },
+                                                              "v-list-item-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", {
+                                                              domProps: {
+                                                                textContent:
+                                                                  _vm._s(
+                                                                    "mdi-calendar-refresh"
+                                                                  ),
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ]
+                                                    },
+                                                  },
+                                                ],
+                                                null,
+                                                true
+                                              ),
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("span", [_vm._v("Upcomming")]),
+                                            ]
+                                          ),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.user.role_id != 6
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: { name: "auth.chat" },
+                                          },
+                                        },
+                                        [
+                                          _c("v-menu", {
+                                            staticStyle: {
+                                              "max-width": "600px",
+                                            },
+                                            attrs: {
+                                              "open-on-hover": "",
+                                              "offset-x": "",
+                                              "close-on-content-click": false,
+                                            },
+                                            scopedSlots: _vm._u(
+                                              [
+                                                {
+                                                  key: "activator",
+                                                  fn: function (ref) {
+                                                    var on = ref.on
+                                                    var attrs = ref.attrs
+                                                    return [
+                                                      _c(
+                                                        "v-list-item-icon",
+                                                        _vm._g(
+                                                          _vm._b(
+                                                            {
+                                                              staticClass:
+                                                                "d-block",
+                                                              staticStyle: {
+                                                                width: "100%",
+                                                                "text-align":
+                                                                  "center",
+                                                              },
+                                                              attrs: {
+                                                                color:
+                                                                  "primary",
+                                                                dark: "",
+                                                              },
+                                                            },
+                                                            "v-list-item-icon",
+                                                            attrs,
+                                                            false
+                                                          ),
+                                                          on
+                                                        ),
+                                                        [
+                                                          _c("v-icon", {
+                                                            domProps: {
+                                                              textContent:
+                                                                _vm._s(
+                                                                  "mdi-message-bulleted"
+                                                                ),
+                                                            },
+                                                          }),
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-list-item-content",
+                                                        [
+                                                          _c(
+                                                            "v-list-item-title",
+                                                            [_vm._v("Chat")]
+                                                          ),
+                                                        ],
+                                                        1
+                                                      ),
+                                                    ]
+                                                  },
+                                                },
+                                              ],
+                                              null,
+                                              true
+                                            ),
+                                          }),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
                                 ],
                                 1
                               ),
@@ -23574,319 +24152,15 @@ var render = function () {
                             1
                           )
                         : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id == 4 ||
-                      _vm.user.role_id == 5 ||
-                      _vm.user.role_id == 7
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: {
-                                link: "",
-                                to: {
-                                  name: "auth.tasks.type",
-                                  params: { type: "today" },
-                                },
-                              },
-                            },
-                            [
-                              _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { right: "" },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function (ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "v-list-item-icon",
-                                              _vm._g(
-                                                _vm._b(
-                                                  {
-                                                    staticClass: "d-block",
-                                                    staticStyle: {
-                                                      width: "100%",
-                                                    },
-                                                    attrs: {
-                                                      color: "primary",
-                                                      dark: "",
-                                                    },
-                                                  },
-                                                  "v-list-item-icon",
-                                                  attrs,
-                                                  false
-                                                ),
-                                                on
-                                              ),
-                                              [
-                                                _c("v-icon", {
-                                                  domProps: {
-                                                    textContent:
-                                                      _vm._s(
-                                                        "mdi-calendar-today"
-                                                      ),
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                          ]
-                                        },
-                                      },
-                                    ],
-                                    null,
-                                    false,
-                                    2372972325
-                                  ),
-                                },
-                                [_vm._v(" "), _c("span", [_vm._v("Today")])]
-                              ),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id == 4 ||
-                      _vm.user.role_id == 5 ||
-                      _vm.user.role_id == 7
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: {
-                                link: "",
-                                to: {
-                                  name: "auth.tasks.type",
-                                  params: { type: "overdue" },
-                                },
-                              },
-                            },
-                            [
-                              _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { right: "" },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function (ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "v-list-item-icon",
-                                              _vm._g(
-                                                _vm._b(
-                                                  {
-                                                    staticClass: "d-block",
-                                                    staticStyle: {
-                                                      width: "100%",
-                                                    },
-                                                    attrs: {
-                                                      color: "primary",
-                                                      dark: "",
-                                                    },
-                                                  },
-                                                  "v-list-item-icon",
-                                                  attrs,
-                                                  false
-                                                ),
-                                                on
-                                              ),
-                                              [
-                                                _c("v-icon", {
-                                                  domProps: {
-                                                    textContent:
-                                                      _vm._s(
-                                                        "mdi-calendar-alert"
-                                                      ),
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                          ]
-                                        },
-                                      },
-                                    ],
-                                    null,
-                                    false,
-                                    3560503020
-                                  ),
-                                },
-                                [_vm._v(" "), _c("span", [_vm._v("Overdue")])]
-                              ),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id == 4 ||
-                      _vm.user.role_id == 5 ||
-                      _vm.user.role_id == 7
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: {
-                                link: "",
-                                to: {
-                                  name: "auth.tasks.type",
-                                  params: { type: "upcomming" },
-                                },
-                              },
-                            },
-                            [
-                              _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { right: "" },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function (ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "v-list-item-icon",
-                                              _vm._g(
-                                                _vm._b(
-                                                  {
-                                                    staticClass: "d-block",
-                                                    staticStyle: {
-                                                      width: "100%",
-                                                    },
-                                                    attrs: {
-                                                      color: "primary",
-                                                      dark: "",
-                                                    },
-                                                  },
-                                                  "v-list-item-icon",
-                                                  attrs,
-                                                  false
-                                                ),
-                                                on
-                                              ),
-                                              [
-                                                _c("v-icon", {
-                                                  domProps: {
-                                                    textContent: _vm._s(
-                                                      "mdi-calendar-refresh"
-                                                    ),
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                          ]
-                                        },
-                                      },
-                                    ],
-                                    null,
-                                    false,
-                                    1185658431
-                                  ),
-                                },
-                                [_vm._v(" "), _c("span", [_vm._v("Upcomming")])]
-                              ),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.user.role_id != 6
-                        ? _c(
-                            "v-list-item",
-                            {
-                              staticClass: "pa-0",
-                              attrs: { link: "", to: { name: "auth.chat" } },
-                            },
-                            [
-                              _c("v-menu", {
-                                staticStyle: { "max-width": "600px" },
-                                attrs: {
-                                  "open-on-hover": "",
-                                  "offset-x": "",
-                                  "close-on-content-click": false,
-                                },
-                                scopedSlots: _vm._u(
-                                  [
-                                    {
-                                      key: "activator",
-                                      fn: function (ref) {
-                                        var on = ref.on
-                                        var attrs = ref.attrs
-                                        return [
-                                          _c(
-                                            "v-list-item-icon",
-                                            _vm._g(
-                                              _vm._b(
-                                                {
-                                                  staticClass: "d-block",
-                                                  staticStyle: {
-                                                    width: "100%",
-                                                    "text-align": "center",
-                                                  },
-                                                  attrs: {
-                                                    color: "primary",
-                                                    dark: "",
-                                                  },
-                                                },
-                                                "v-list-item-icon",
-                                                attrs,
-                                                false
-                                              ),
-                                              on
-                                            ),
-                                            [
-                                              _c("v-icon", {
-                                                domProps: {
-                                                  textContent: _vm._s(
-                                                    "mdi-message-bulleted"
-                                                  ),
-                                                },
-                                              }),
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-list-item-content",
-                                            [
-                                              _c("v-list-item-title", [
-                                                _vm._v("Chat"),
-                                              ]),
-                                            ],
-                                            1
-                                          ),
-                                        ]
-                                      },
-                                    },
-                                  ],
-                                  null,
-                                  false,
-                                  1140589590
-                                ),
-                              }),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              )
-            : _vm._e(),
+                    ]
+                  },
+                },
+              ],
+              null,
+              false,
+              487317578
+            ),
+          }),
         ],
         1
       )
@@ -86091,7 +86365,7 @@ var index = {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"_args":[["axios@0.21.4","C:\\\\Users\\\\pc\\\\Desktop\\\\projects\\\\CRM"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"C:\\\\Users\\\\pc\\\\Desktop\\\\projects\\\\CRM","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
+module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"axios@^0.21","name":"axios","escapedName":"axios","rawSpec":"^0.21","saveSpec":null,"fetchSpec":"^0.21"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_shasum":"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575","_spec":"axios@^0.21","_where":"C:\\\\Users\\\\Yaseen\\\\Desktop\\\\projects\\\\CRM","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundleDependencies":false,"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"deprecated":false,"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
 
 /***/ })
 
@@ -86202,7 +86476,7 @@ module.exports = JSON.parse('{"_args":[["axios@0.21.4","C:\\\\Users\\\\pc\\\\Des
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Guest_Payment_vue":1,"resources_js_views_Guest_PaymentStripeSuccess_vue":1,"resources_js_views_Guest_Briefs_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brief_Main_vue":1,"resources_js_views_Brief_List_vue":1,"resources_js_views_Brief_Add_vue":1,"resources_js_views_Brief_Edit_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Lead_Main_vue":1,"resources_js_views_Lead_List_vue":1,"resources_js_views_Lead_Messages_vue":1,"resources_js_views_Lead_Payments_Create_vue":1,"resources_js_views_Customer_Main_vue":1,"resources_js_views_Customer_Chat_vue":1,"resources_js_views_Customer_Briefs_List_vue":1,"resources_js_views_Customer_Briefs_Edit_vue":1,"resources_js_views_Chat_Main_vue":1,"resources_js_views_Project_Main_vue":1,"resources_js_views_Project_List_vue":1,"resources_js_views_Project_Add_vue":1,"resources_js_views_Project_OpenTask_vue":1,"resources_js_views_Task_List_vue":1,"resources_js_views_Task_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Auth_Login_vue":1,"resources_js_views_Guest_Payment_vue":1,"resources_js_views_Guest_PaymentStripeSuccess_vue":1,"resources_js_views_Guest_Briefs_vue":1,"resources_js_views_Panel_vue":1,"resources_js_views_Profile_vue":1,"resources_js_views_Company_Add_vue":1,"resources_js_views_Company_Edit_vue":1,"resources_js_views_Company_List_vue":1,"resources_js_views_Brief_Main_vue":1,"resources_js_views_Brief_List_vue":1,"resources_js_views_Brief_Add_vue":1,"resources_js_views_Brief_Edit_vue":1,"resources_js_views_Brand_Main_vue":1,"resources_js_views_Brand_List_vue":1,"resources_js_views_Brand_Add_vue":1,"resources_js_views_Brand_Edit_vue":1,"resources_js_views_User_Main_vue":1,"resources_js_views_User_List_vue":1,"resources_js_views_User_Add_vue":1,"resources_js_views_User_Edit_vue":1,"resources_js_views_Lead_Main_vue":1,"resources_js_views_Lead_List_vue":1,"resources_js_views_Lead_Messages_vue":1,"resources_js_views_Lead_Payments_Create_vue":1,"resources_js_views_Customer_Main_vue":1,"resources_js_views_Customer_Chat_vue":1,"resources_js_views_Customer_Invoices_vue":1,"resources_js_views_Customer_Invoice_vue":1,"resources_js_views_Customer_Briefs_List_vue":1,"resources_js_views_Customer_Briefs_Edit_vue":1,"resources_js_views_Chat_Main_vue":1,"resources_js_views_Project_Main_vue":1,"resources_js_views_Project_List_vue":1,"resources_js_views_Project_Add_vue":1,"resources_js_views_Project_OpenTask_vue":1,"resources_js_views_Task_List_vue":1,"resources_js_views_Task_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
