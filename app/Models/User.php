@@ -28,7 +28,8 @@ class User extends Authenticatable
         'password',
         'api_token',
         'company_id',
-        'role_id'
+        'role_id',
+        'department_id',
     ];
 
     /**
@@ -81,6 +82,9 @@ class User extends Authenticatable
     }
     public function role(){
         return $this->hasOne(Role::class,'id','role_id');
+    }
+    public function department(){
+        return $this->belongsTo(Department::class);
     }
     public function lead(){
         return $this->hasOne(Lead::class,'user_id','id');

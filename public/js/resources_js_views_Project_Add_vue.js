@@ -500,6 +500,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       query += "&role_id=" + this.role;
+
+      if (this.department > 0) {
+        query += "&department_id=" + this.department;
+      }
+
       return _services_auth_user__WEBPACK_IMPORTED_MODULE_1__["default"].getlist(query);
     }
   }
@@ -520,6 +525,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   role: {
     type: Number,
     "default": 7
+  },
+  department: {
+    type: Number,
+    "default": 0
   }
 }), _data$watch$mounted$m);
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{ProjectTask, Project};
+use App\Models\{ProjectTask, Project, User};
 use Illuminate\Http\Request;
 use App\Http\Resources\ProjectTaskResource;
 use App\Repositories\FileRepository;
@@ -25,11 +25,17 @@ class ProjectTaskController extends Controller
         $user = $request->user();
         if($user->role_id==4||$user->role_id==5){
             $tasks = $tasks->where('assigned_by',$request->user()->id);
+            if(!empty($_GET['user_id'])){
+                $tasks = $tasks->where('assigned_on',$_GET['user_id']);
+            }
         }
         if($user->role_id==7){
             $tasks = $tasks->where('assigned_on',$request->user()->id);
         }
-        $tasks = $tasks->orderBy('id','desc')->paginate(25);
+        if($user->role_id==8){
+            $tasks = $tasks->where('developer_id',$request->user()->id);
+        }
+        $tasks = $tasks->orderBy('id','desc')->with('assigned_on_user','developer_user')->paginate(25);
         return ProjectTaskResource::collection($tasks);
     }
 
@@ -98,7 +104,11 @@ class ProjectTaskController extends Controller
     public function allTasks(Request $request){
         if($request->user()->role_id==7){
             $query = ProjectTask::where('assigned_on',$request->user()->id);
-        }else{
+        }
+        else if($request->user()->role_id==8){
+            $query = ProjectTask::where('developer_id',$request->user()->id);
+        }
+        else{
             $query = ProjectTask::where('assigned_by',$request->user()->id);
         }
         if(optional($request)->type!=''){
@@ -115,7 +125,8 @@ class ProjectTaskController extends Controller
         }
         $query->leftJoin('projects','project_tasks.project_id','projects.id');
         $query->leftJoin('users as assigned_user','project_tasks.assigned_on','assigned_user.id');
-        $query->select('project_tasks.title as task_title','customers.name as customer_name','projects.id as project_id_root','customers.email as customer_email','projects.title','projects.project_id','project_tasks.id','project_tasks.due_date','project_tasks.created_at','assigned_user.name as assigned_user_name','assigned_user.email as assigned_user_email');
+        $query->leftJoin('users as developer_user','project_tasks.developer_id','developer_user.id');
+        $query->select('project_tasks.task_type','project_tasks.title as task_title','customers.name as customer_name','projects.id as project_id_root','customers.email as customer_email','projects.title','projects.project_id','project_tasks.id','project_tasks.due_date','project_tasks.created_at','assigned_user.name as assigned_user_name','assigned_user.email as assigned_user_email','developer_user.name as developer_name','developer_user.email as developer_email');
         $query = $query->leftJoin('project_users',function($join){
             $join->on('projects.id','=','project_users.project_id')->where('project_users.role_id',6);
         });
@@ -138,6 +149,8 @@ class ProjectTaskController extends Controller
                 ->orWhere('customers.email', 'like', '%'.$q.'%')
                 ->orWhere('assigned_user.name', 'like', '%'.$q.'%')
                 ->orWhere('assigned_user.email', 'like', '%'.$q.'%')
+                ->orWhere('developer_user.name', 'like', '%'.$q.'%')
+                ->orWhere('developer_user.email', 'like', '%'.$q.'%')
                 ->orWhere('projects.project_id', 'like', '%'.$q.'%');
             });
         }
@@ -147,5 +160,14 @@ class ProjectTaskController extends Controller
             $query=$query->get();
         }
         return $query;
+    }
+    public function usersSummary(Project $project){
+        $tasks = $project->tasks->groupBy('assigned_on');
+        $tasks_summary = [];
+        foreach($tasks as $key=>$value){
+            $tasks_summary[$key] = [];
+            $tasks_summary[$key] = ['user'=>User::find($key),'count'=>count($value)];
+        }
+        return $tasks_summary;
     }
 }

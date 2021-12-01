@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_auth_payment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @services/auth/payment */ "./resources/js/services/auth/payment.js");
+/* harmony import */ var _services_auth_project__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @services/auth/project */ "./resources/js/services/auth/project.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -21,11 +22,92 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      project: {}
+      project: {},
+      payments: []
     };
   },
   mounted: function mounted() {
@@ -39,14 +121,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               pid = _this.$route.params.id;
               _context.next = 3;
-              return _services_auth_payment__WEBPACK_IMPORTED_MODULE_1__["default"].getlist(_this.user.lead.id, '?project_id=' + pid + '&unpaid=true').then(function (e) {
+              return _services_auth_payment__WEBPACK_IMPORTED_MODULE_1__["default"].getlist(_this.user.lead.id, "?project_id=" + pid).then(function (e) {
                 return e.data;
               });
 
             case 3:
               payments = _context.sent;
+              _this.payments = payments;
+              _context.next = 7;
+              return _services_auth_project__WEBPACK_IMPORTED_MODULE_2__["default"].get(pid);
 
-            case 4:
+            case 7:
+              _this.project = _context.sent;
+
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -57,6 +145,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     user: function user() {
       return this.$store.getters.loggedInUser;
+    },
+    total_amount: function total_amount() {
+      var total = 0,
+          paid = 0,
+          balance = 0;
+
+      for (var i = 0; i < this.payments.length; i++) {
+        total += this.payments[i].amount;
+
+        if (this.payments[i].status == 1) {
+          paid += this.payments[i].amount;
+        } else {
+          balance += this.payments[i].amount;
+        }
+      }
+
+      return {
+        total: total,
+        balance: balance,
+        paid: paid
+      };
     }
   }
 });
@@ -303,6 +412,101 @@ var paymentservice = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/services/auth/project.js":
+/*!***********************************************!*\
+  !*** ./resources/js/services/auth/project.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var projectservice = /*#__PURE__*/function () {
+  function projectservice() {
+    _classCallCheck(this, projectservice);
+  }
+
+  _createClass(projectservice, [{
+    key: "getlist",
+    value: function getlist(params) {
+      return axios.get("/api/project".concat(params)).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "validateTask",
+    value: function validateTask(formData) {
+      return axios.post('/api/task-validate', formData).then(function (response) {
+        return {
+          status: 1,
+          data: 'validated'
+        };
+      })["catch"](function (error) {
+        return {
+          status: 0,
+          data: error.response.data.errors
+        };
+      });
+    }
+  }, {
+    key: "createTask",
+    value: function createTask(project_id_int, formData) {
+      return axios.post('/api/project/' + project_id_int + '/task', formData).then(function (response) {
+        return {
+          status: 1,
+          data: response.data
+        };
+      })["catch"](function (error) {
+        return {
+          status: 0,
+          data: error.response.data.errors
+        };
+      });
+    }
+  }, {
+    key: "create",
+    value: function create(formData) {
+      return axios.post('/api/project', formData).then(function (response) {
+        return {
+          status: 1,
+          data: response.data.data
+        };
+      })["catch"](function (error) {
+        return {
+          status: 0,
+          data: error.response.data.errors
+        };
+      });
+    }
+  }, {
+    key: "get",
+    value: function get(projectId) {
+      return axios.get("/api/project/".concat(projectId)).then(function (response) {
+        return response.data.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }]);
+
+  return projectservice;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new projectservice());
+
+/***/ }),
+
 /***/ "./resources/js/views/Customer/Invoice.vue":
 /*!*************************************************!*\
   !*** ./resources/js/views/Customer/Invoice.vue ***!
@@ -387,7 +591,168 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "v-card",
+    { attrs: { elevation: "2" } },
+    [
+      _c("v-card-title", [
+        _vm._v("Invoice #" + _vm._s(_vm.project.project_id)),
+      ]),
+      _vm._v(" "),
+      _c("v-card-subtitle", [_vm._v("Invoice to " + _vm._s(_vm.user.email))]),
+      _vm._v(" "),
+      _c(
+        "v-card-text",
+        { staticClass: "pl-10 pr-10" },
+        [
+          _c("v-simple-table", {
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function () {
+                  return [
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", { staticClass: "text-left" }, [
+                          _vm._v("\n              Description\n            "),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "text-left" }, [
+                          _vm._v("\n              Amount\n            "),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "text-left" }, [
+                          _vm._v("\n              Generated@\n            "),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "text-left" }, [
+                          _vm._v("\n              Status\n            "),
+                        ]),
+                        _vm._v(" "),
+                        _c("th"),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      [
+                        _vm._l(_vm.payments, function (item) {
+                          return _c("tr", { key: item.id }, [
+                            _c("td", [_vm._v(_vm._s(item.description))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(item.amount))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(_vm._s(item.created_at_formatted)),
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(_vm._s(item.payment_status_text)),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              [
+                                item.status != 1
+                                  ? _c(
+                                      "v-btn",
+                                      {
+                                        staticClass: "white--text",
+                                        attrs: {
+                                          link: "",
+                                          to: {
+                                            name: "guest.payment",
+                                            params: { id: parseInt(item.id) },
+                                          },
+                                          small: "",
+                                          color: "blue",
+                                        },
+                                      },
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          { attrs: { left: "", dark: "" } },
+                                          [_vm._v(" mdi-cash ")]
+                                        ),
+                                        _vm._v(
+                                          "\n              Pay Now\n              "
+                                        ),
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
+                              ],
+                              1
+                            ),
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", { attrs: { colspan: "2" } }, [_vm._v(" ")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("Balance")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("strong", [
+                              _vm._v(_vm._s(_vm.total_amount.balance)),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(" ")]),
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", { attrs: { colspan: "2" } }, [_vm._v(" ")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("Paid")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("strong", [
+                              _vm._v(_vm._s(_vm.total_amount.paid)),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(" ")]),
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", { attrs: { colspan: "2" } }, [_vm._v(" ")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("Total Amount")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("strong", [
+                              _vm._v(_vm._s(_vm.total_amount.total)),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(" ")]),
+                        ]),
+                      ],
+                      2
+                    ),
+                  ]
+                },
+                proxy: true,
+              },
+            ]),
+          }),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card-actions",
+        [
+          _c("v-btn", { attrs: { color: "primary" } }, [
+            _vm._v("\n      Download PDF\n    "),
+          ]),
+        ],
+        1
+      ),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

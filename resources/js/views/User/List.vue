@@ -85,6 +85,7 @@ export default {
           value: "email",
         },
         { text: "Role", value: "role_name" },
+        { text: "Department", value: "department_name" },
         { text: "Actions", value: "actions", sortable: false },
       ],
     };

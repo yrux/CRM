@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
 class ProjectTaskRequest extends FormRequest
 {
     /**
@@ -27,6 +27,10 @@ class ProjectTaskRequest extends FormRequest
             'title'=>'required|max:555',
             'task_description'=>'required',
             'due_date'=>'required|date|after_or_equal:'.date('Y-m-d'),
+            'task_type' => [
+                'required',
+                Rule::in(['initial', 'revision', 'innerpages','redraw']),
+            ],
         ];
     }
 }

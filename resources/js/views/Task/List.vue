@@ -11,6 +11,9 @@
     <template v-slot:top>
       <v-text-field v-model="search" label="Search" class="mx-4"></v-text-field>
     </template>
+    <template v-slot:item.task_type="{ item }">
+      <taskType :type="item.task_type" />
+    </template>
     <template v-slot:item.actions="{ item }">
       <v-tooltip top>
         <template v-slot:activator="{ on, attrs }">
@@ -37,7 +40,11 @@
 </template>
 <script>
 import taskservice from "@services/auth/task";
+import taskType from "@components/common/taskType.vue"
 export default {
+  components:{
+    taskType,
+  },
   data() {
     return {
       search: "",
@@ -53,6 +60,12 @@ export default {
           align: "start",
           sortable: true,
           value: "id",
+        },
+        {
+          text: "Type",
+          align: "start",
+          sortable: true,
+          value: "task_type",
         },
         {
           text: "Title",
@@ -71,6 +84,12 @@ export default {
           align: "start",
           sortable: true,
           value: "created_at_formatted",
+        },
+        {
+          text: "Resource Working",
+          align: "start",
+          sortable: true,
+          value: "developer_name",
         },
         {
           text: "Assigned To",

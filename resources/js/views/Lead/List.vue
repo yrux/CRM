@@ -11,6 +11,20 @@
           prepend-inner-icon="mdi-magnify"
           label="Search By Email, Name, Phone, Message"
         ></v-text-field>
+        <v-spacer></v-spacer>
+        <v-select
+          :items="mybrands"
+          item-text="brand_name"
+          item-value="id"
+          label="Filter By Brand"
+          v-model="filterBrand"
+          clearable
+          return-object
+          flat
+          solo-inverted
+          hide-details
+          prepend-inner-icon="mdi-watermark"
+        ></v-select>
         <template v-if="$vuetify.breakpoint.mdAndUp">
           <v-spacer></v-spacer>
           <v-select
@@ -250,6 +264,7 @@ export default {
   data() {
     return {
       search: "",
+      filterBrand: {},
       sortBy: "id",
       keys: [
         { key: "id", value: "ID/Date" },
@@ -304,6 +319,9 @@ export default {
       if (this.search != "" && this.search != null) {
         q += "&search=" + this.search;
       }
+      if(this.filterBrand&&this.filterBrand.id>0){
+        q += "&brand_id=" + this.filterBrand.id;
+      }
       q += "&perpage=" + this.itemsPerPage;
       q += "&sortByDesc=" + (this.sortDesc == true ? 1 : 0);
       q += "&sortCol=" + this.sortBy;
@@ -315,29 +333,8 @@ export default {
     },
     async updateStatus(lead, status, type, index) {
       await leadservice.updateStatus(lead.id, status);
-      if (type == "new") {
-        this.leads.new.splice(index, 1);
-      }
-      if (type == "followup") {
-        this.leads.followup.splice(index, 1);
-      }
-      if (type == "junk") {
-        this.leads.junk.splice(index, 1);
-      }
-      if (type == "paid") {
-        this.leads.paid.splice(index, 1);
-      }
-      //adding in on runtime
-      if (status == 3) {
-        this.leads.followup.push(lead);
-      }
-      if (status == 2) {
-        this.leads.junk.push(lead);
-      }
-      if (status == 1) {
-        this.leads.paid.push(lead);
-      }
       this.$store.commit("setNotification", "Lead Status Updated");
+      this.getLeads()
     },
   },
   computed: {
@@ -355,6 +352,10 @@ export default {
     search() {
       this.page = 1;
       this.getLeads();
+    },
+    filterBrand(){
+      this.page = 1
+      this.getLeads()
     },
     sortDesc() {
       this.page = 1;

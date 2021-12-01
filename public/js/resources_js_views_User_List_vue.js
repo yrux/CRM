@@ -110,6 +110,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "Role",
         value: "role_name"
       }, {
+        text: "Department",
+        value: "department_name"
+      }, {
         text: "Actions",
         value: "actions",
         sortable: false

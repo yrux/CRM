@@ -23820,7 +23820,8 @@ var render = function () {
                                   _vm._v(" "),
                                   _vm.user.role_id == 4 ||
                                   _vm.user.role_id == 5 ||
-                                  _vm.user.role_id == 7
+                                  _vm.user.role_id == 7 ||
+                                  _vm.user.role_id == 8
                                     ? _c(
                                         "v-list-item",
                                         {
@@ -23900,7 +23901,8 @@ var render = function () {
                                   _vm._v(" "),
                                   _vm.user.role_id == 4 ||
                                   _vm.user.role_id == 5 ||
-                                  _vm.user.role_id == 7
+                                  _vm.user.role_id == 7 ||
+                                  _vm.user.role_id == 8
                                     ? _c(
                                         "v-list-item",
                                         {
@@ -23980,7 +23982,8 @@ var render = function () {
                                   _vm._v(" "),
                                   _vm.user.role_id == 4 ||
                                   _vm.user.role_id == 5 ||
-                                  _vm.user.role_id == 7
+                                  _vm.user.role_id == 7 ||
+                                  _vm.user.role_id == 8
                                     ? _c(
                                         "v-list-item",
                                         {
@@ -24158,7 +24161,7 @@ var render = function () {
               ],
               null,
               false,
-              487317578
+              1647293227
             ),
           }),
         ],

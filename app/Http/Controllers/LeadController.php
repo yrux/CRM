@@ -27,9 +27,14 @@ class LeadController extends Controller
             //leads from company
             $leads = $leads->whereIn('brand_id',$request->user()->companybrands->pluck('id'));
         }else if($request->user()->role_id==4){
-            $leads = $leads->where('assigned_to',$request->user()->id);
+            $leads = $leads->leftJoin('lead_assigned','leads.id','=','lead_assigned.lead_id')
+            ->where('lead_assigned.user_id',$request->user()->id);
         }else if($request->user()->role_id==5){
-            $leads = $leads->where('assigned_to',$request->user()->id);
+            $leads = $leads->leftJoin('lead_assigned','leads.id','=','lead_assigned.lead_id')
+            ->where('lead_assigned.user_id',$request->user()->id);
+        }
+        if(!empty($_GET['brand_id'])){
+            $leads = $leads->where('brand_id',$_GET['brand_id']);
         }
         if(!empty($_GET['search'])){
             $leads = $leads->Where(
@@ -43,7 +48,7 @@ class LeadController extends Controller
                 ->orWhere('leads.message', 'like', '%'.$q.'%');
             });
         }
-        return $leads;
+        return $leads->select('leads.*');
     }
     public function index(Request $request)
     {
@@ -128,11 +133,6 @@ class LeadController extends Controller
     public function updateStatus(Lead $lead, $status)
     {
         $lead->lead_status = $status;
-        $lead->save();
-        return response()->json(null, 204);
-    }
-    public function assignUser(Lead $lead, User $user){
-        $lead->assigned_to = $user->id;
         $lead->save();
         return response()->json(null, 204);
     }

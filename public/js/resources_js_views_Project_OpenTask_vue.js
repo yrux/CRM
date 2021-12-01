@@ -142,6 +142,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -201,6 +212,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       task: {
         task_title: "",
         description: "",
+        task_type: 'initial',
         files: [],
         assigned_to: 0,
         picker: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
@@ -209,7 +221,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         title: [],
         task_description: [],
         due_date: [],
-        attachements: []
+        attachements: [],
+        task_type: []
       },
       editorConfig: {},
       editor: (_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_5___default())
@@ -237,6 +250,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData = new FormData();
                 formData.append('title', _this2.task.task_title);
                 formData.append('task_description', _this2.task.description);
+                formData.append('task_type', _this2.task.task_type);
                 formData.append('assigned_on', _this2.task.assigned_to);
                 formData.append('due_date', _this2.task.picker);
                 formData.append('project_id', _this2.task.project_id);
@@ -245,10 +259,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   formData.append('attachements[' + i + ']', _this2.task.files[i]);
                 }
 
-                _context2.next = 9;
+                _context2.next = 10;
                 return _services_auth_project__WEBPACK_IMPORTED_MODULE_3__["default"].createTask(_this2.project_id_int, formData);
 
-              case 9:
+              case 10:
                 task = _context2.sent;
                 sweetalert2__WEBPACK_IMPORTED_MODULE_4___default().fire({
                   title: "Task Assigned",
@@ -269,12 +283,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.task = {
                   task_title: "",
                   description: "",
+                  task_type: 'initial',
                   files: [],
                   assigned_to: 0,
                   picker: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
                 };
 
-              case 19:
+              case 20:
               case "end":
                 return _context2.stop();
             }
@@ -334,7 +349,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         title: [],
         task_description: [],
         due_date: [],
-        attachements: []
+        attachements: [],
+        task_type: []
       };
     },
     validateTask: function validateTask() {
@@ -352,16 +368,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('project_id', _this5.project_id);
                 formData.append('title', _this5.task.task_title);
                 formData.append('task_description', _this5.task.description);
+                formData.append('task_type', _this5.task.task_type);
                 formData.append('due_date', _this5.task.picker);
 
                 for (i = 0; i < _this5.task.files.length; i++) {
                   formData.append('attachements[' + i + ']', _this5.task.files[i]);
                 }
 
-                _context5.next = 9;
+                _context5.next = 10;
                 return _services_auth_project__WEBPACK_IMPORTED_MODULE_3__["default"].validateTask(formData);
 
-              case 9:
+              case 10:
                 res = _context5.sent;
 
                 if (res.status) {
@@ -386,9 +403,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   if (res.data.attachements) {
                     _this5.taskErrors.attachements = res.data.attachements;
                   }
+
+                  if (res.data.task_type) {
+                    _this5.taskErrors.task_type = res.data.task_type;
+                  }
                 }
 
-              case 11:
+              case 12:
               case "end":
                 return _context5.stop();
             }
@@ -700,6 +721,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       query += "&role_id=" + this.role;
+
+      if (this.department > 0) {
+        query += "&department_id=" + this.department;
+      }
+
       return _services_auth_user__WEBPACK_IMPORTED_MODULE_1__["default"].getlist(query);
     }
   }
@@ -720,6 +746,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   role: {
     type: Number,
     "default": 7
+  },
+  department: {
+    type: Number,
+    "default": 0
   }
 }), _data$watch$mounted$m);
 
@@ -4448,6 +4478,36 @@ var render = function () {
                   _c(
                     "v-row",
                     [
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", md: "12" } },
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              items: [
+                                { id: "initial", value: "Initial" },
+                                { id: "revision", value: "Revision" },
+                                { id: "innerpages", value: "Inner Pages" },
+                                { id: "redraw", value: "ReDraw" },
+                              ],
+                              "item-text": "value",
+                              "item-value": "id",
+                              label: "Task Type*",
+                              required: "",
+                              "error-messages": _vm.taskErrors.task_type,
+                            },
+                            model: {
+                              value: _vm.task.task_type,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.task, "task_type", $$v)
+                              },
+                              expression: "task.task_type",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _c(
                         "v-col",
                         { attrs: { cols: "12", md: "12" } },

@@ -104,8 +104,46 @@
             <v-col v-if="form.id > 0 &&user.role_id==2" cols="6">
               <v-btn @click="assignUser" color="success" class="ma-2 white--text">
                 <v-icon left dark> mdi-account </v-icon>
-                Assign/Change User
+                Assign User to this Lead
               </v-btn>
+            </v-col>
+            <v-col v-if="form.id > 0 &&user.role_id==2" cols="12">
+              <v-skeleton-loader
+                  v-for="i in 10"
+                  :key="i"
+                  type="list-item"
+                  v-show="fetchingLeadUsers"
+              ></v-skeleton-loader>
+              <v-simple-table v-if="!fetchingLeadUsers">
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">
+                        Name
+                      </th>
+                      <th class="text-left">
+                        Assigned@
+                      </th>
+                      <th>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="item in assignedUsers"
+                      :key="item.id"
+                    >
+                      <td>{{ item.user.email }}</td>
+                      <td>{{ item.created_at_formatted }}</td>
+                      <td>
+                        <v-btn color="error" fab x-small dark @click="deletassigneduser(item)">
+                          <v-icon>mdi-delete-outline</v-icon>
+                        </v-btn>
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
             </v-col>
           </v-row>
         </v-container>
@@ -116,11 +154,15 @@
 <script>
 import leadservice from "@services/auth/lead";
 import brandservice from "@services/auth/brand";
+import Swal from "sweetalert2";
+import leadassignedservice from "@services/auth/leadassigned";
 export default {
   data() {
     return {
       dialog: false,
       companyusers: [],
+      assignedUsers: [],
+      fetchingLeadUsers: false,
       form: {
         id: 0,
         first_name: "",
@@ -136,12 +178,45 @@ export default {
     };
   },
   methods: {
+    async deletassigneduser(item){
+      const isConfirmed = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          return true;
+        }
+      });
+      if (isConfirmed) {
+        await leadassignedservice.delete({
+          lead_id: item.lead_id,
+          id: item.id,
+        });
+        Swal.fire("Deleted!", "Your record has been deleted.", "success");
+        // this.getLeadUsers();
+      }
+      this.closeMe();
+    },
+    async getLeadUsers(){
+      if(this.form.id>0){
+        this.fetchingLeadUsers = true
+        this.assignedUsers = await leadassignedservice.getlist(this.form.id, '').then(e=>e.data)
+        this.fetchingLeadUsers = false
+      }
+    },
     async assignUser(){
       if(this.form.id>0&&this.form.assigned_to>0){
-        await leadservice.assignUser(this.form.id, this.form.assigned_to)
+        var formdata = new FormData()
+        formdata.append('user_id',this.form.assigned_to)
+        await leadassignedservice.create(this.form.id, formdata)
         this.$store.commit("setNotification", "User Assigned");
         this.$emit("refresh-leads");
-        this.closeMe()
+        this.getLeadUsers()
       }
     },
     closeMe() {
@@ -194,6 +269,7 @@ export default {
         this.form.brand = this.lead.brand;
         this.form.custom_fields = this.lead.custom_fields;
         this.form.assigned_to = this.lead.assigned_to;
+        this.getLeadUsers()
       } else {
         this.form = {
           id: 0,
@@ -207,6 +283,7 @@ export default {
           custom_fields: {},
           assigned_to: 0,
         };
+        this.assignedUsers = []
       }
     },
   },

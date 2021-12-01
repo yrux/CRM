@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mx-auto" outlined v-if="tasks.length > 0" elevation="2">
+    <v-card class="mx-auto" outlined v-if="!tasksLoader" elevation="2">
       <v-card-title>
         {{ project.project_id }} {{ project.title }}
       </v-card-title>
@@ -23,6 +23,22 @@
       <v-divider></v-divider>
       <v-card-text>
         <h3>Tasks</h3>
+        <div v-if="user.role_id!=8&&user.role_id!=7" class="mt-2">
+          <v-chip
+            @click="filterTaskForUser(tsu.user.id)"
+            pill
+            v-for="(tsu, tsuk) in task_summary_users"
+            :key="tsuk"
+            class="overflow-visible chip-with-badge"
+            :color="selected_user_id==tsu.user.id?'primary':''"
+          >
+            <v-avatar left>
+              <v-img :src="tsu.user.image_url"></v-img>
+            </v-avatar>
+            {{tsu.user.name}}
+            <span class="badge">{{tsu.count}}</span>
+          </v-chip>
+        </div>
       </v-card-text>
       <v-expansion-panels v-model="taskOpen" multiple focusable>
         <v-expansion-panel
@@ -37,8 +53,8 @@
           >
             <v-row no-gutters>
               <v-col :cols="open === true ? 12 : 4" :class="'text-break'">
-                <v-chip class="ma-2" color="pink" label text-color="white">
-                  <v-icon left> mdi-label </v-icon>
+                <v-chip @click="copyTaskId(task.id)" class="ma-2" color="pink" label text-color="white">
+                  <!-- <v-icon left> mdi-label </v-icon> -->
                   #{{ task.id }}
                 </v-chip>
                 {{ task.title }}
@@ -47,13 +63,40 @@
                 <v-fade-transition leave-absolute>
                   <span v-if="open"></span>
                   <v-row v-else no-gutters style="width: 100%">
-                    <v-col cols="6">
+                    <v-col cols="4">
+                      <taskType :type="task.task_type" />
+                      <v-chip
+                        pill
+                        class="overflow-visible chip-with-badge"
+                        :color="'primary'"
+                        small
+                      >
+                        <v-avatar left>
+                          <v-img :src="task.assigned_on_user.image_url"></v-img>
+                        </v-avatar>
+                        {{task.assigned_on_user.name}}
+                      </v-chip>
+                      <v-chip
+                        pill
+                        v-if="task.developer_user"
+                        class="overflow-visible chip-with-badge"
+                        :color="'green'"
+                        text-color="white"
+                        small
+                      >
+                        <v-avatar left>
+                          <v-img :src="task.developer_user.image_url"></v-img>
+                        </v-avatar>
+                        {{task.developer_user.name}}
+                      </v-chip>
+                    </v-col>
+                    <v-col cols="4">
                       Start date:
                       <strong>{{
                         task.created_at_formatted || "Not set"
                       }}</strong>
                     </v-col>
-                    <v-col cols="6">
+                    <v-col cols="4">
                       Due date:
                       <strong>{{ task.due_date || "Not set" }}</strong>
                     </v-col>
@@ -96,7 +139,7 @@
             </v-row>
             <v-divider></v-divider>
             <v-row class="mt-3" no-gutters>
-              <v-col cols="4" sm="4">
+              <v-col cols="3" sm="3">
                 <small
                   >Start date:
                   <strong>{{
@@ -104,8 +147,8 @@
                   }}</strong></small
                 >
               </v-col>
-              <v-col cols="4" sm="4">
-                <v-tooltip top>
+              <v-col cols="3" sm="3">
+                <v-tooltip top v-if="task.status!=2">
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn
                       @click="
@@ -127,8 +170,14 @@
                   </template>
                   <span>Change Due Date</span>
                 </v-tooltip>
+                <small v-else
+                  >Close date:
+                  <strong>{{
+                    task.updated_at_formatted || "Not set"
+                  }}</strong></small
+                >
               </v-col>
-              <v-col cols="4" sm="4">
+              <v-col v-if="user.role_id!=8" cols="3" sm="3">
                 <v-btn-toggle rounded>
                   <v-tooltip bottom v-if="task.status!=2">
                     <template v-slot:activator="{ on, attrs }">
@@ -138,21 +187,29 @@
                     </template>
                     <span>Close Task</span>
                   </v-tooltip>
-                  <v-tooltip bottom v-else>
+                  <!-- <v-tooltip bottom v-else>
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn @click="taskStatusUpdate(task.id, 0)" fab small v-bind="attrs" v-on="on">
                         <v-icon>mdi-check</v-icon>
                       </v-btn>
                     </template>
                     <span>Re-Open Task</span>
-                  </v-tooltip>
+                  </v-tooltip> -->
                   <v-tooltip bottom v-if="task.status!=2">
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn fab small v-bind="attrs" v-on="on">
+                      <v-btn @click="changeAssignmentDialog = true;selectedTask = task;" fab small v-bind="attrs" v-on="on">
                         <v-icon>mdi-account-convert</v-icon>
                       </v-btn>
                     </template>
                     <span>Change Assignment</span>
+                  </v-tooltip>
+                  <v-tooltip bottom v-if="user.role_id==7">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn @click="changeAssignmentDevDialog = true;selectedTask = task;" fab small v-bind="attrs" v-on="on">
+                        <v-icon>mdi-code-json</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Assign Resource</span>
                   </v-tooltip>
                   <v-tooltip bottom v-if="task.status!=2">
                     <template v-slot:activator="{ on, attrs }">
@@ -163,6 +220,33 @@
                     <span>Put on Hold</span>
                   </v-tooltip>
                 </v-btn-toggle>
+              </v-col>
+              <v-col v-if="user.role_id!=8" cols="3" sm="3">
+                <taskType :type="task.task_type" />
+                <v-chip
+                  pill
+                  class="overflow-visible chip-with-badge"
+                  :color="'primary'"
+                  small
+                >
+                  <v-avatar left>
+                    <v-img :src="task.assigned_on_user.image_url"></v-img>
+                  </v-avatar>
+                  {{task.assigned_on_user.name}}
+                </v-chip>
+                <v-chip
+                  pill
+                  v-if="task.developer_user"
+                  class="overflow-visible chip-with-badge"
+                  :color="'green'"
+                  text-color="white"
+                  small
+                >
+                  <v-avatar left>
+                    <v-img :src="task.developer_user.image_url"></v-img>
+                  </v-avatar>
+                  {{task.developer_user.name}}
+                </v-chip>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
@@ -202,6 +286,50 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="changeAssignmentDialog" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Change Assigned User</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <user-list v-on:selected-user="changeAssignmentSelectEv" />
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="changeAssignmentDialog = false">
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="changeAssignmentDevDialog" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Change Assigned User</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <user-list :role="8" :department="user.department_id" v-on:selected-user="changeAssignmentDevSelectEv" />
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="changeAssignmentDevDialog = false">
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -209,6 +337,8 @@ import taskservice from "@services/auth/task";
 import projectservice from "@services/auth/project";
 import CommentTask from "./CommentTask.vue";
 import PostTaskComment from "./PostTaskComment.vue";
+import UserList from "@/views/Project/UserList.vue";
+import taskType from "@components/common/taskType.vue"
 export default {
   async mounted() {
     this.$root.snackbar = true
@@ -225,6 +355,7 @@ export default {
         }
       }
     }
+    await this.getTaskUsersSummary()
   },
   data() {
     return {
@@ -232,21 +363,62 @@ export default {
       taskOpen: [],
       tasks: [],
       dialog: false,
+      changeAssignmentDialog: false,
+      changeAssignmentDevDialog: false,
       selectedTask: {},
       project: {},
+      task_summary_users: [],
+      selected_user_id: 0,
+      tasksLoader: true,
     };
   },
   methods: {
+    copyTaskId(task_id){
+      navigator.clipboard.writeText(task_id);
+      this.$store.commit(
+        "setNotification",
+        "Task ID Copied to Clip Board"
+      );
+    },
+    async changeAssignmentSelectEv(data){
+      var formData = new FormData();
+      formData.append("assigned_on", data.id);
+      await taskservice.update(this.project_id, this.selectedTask.id, formData);
+      this.$store.commit('setNotification','Task Updated');
+      this.getTaskUsersSummary()
+      this.refreshTasks()
+    },
+    async changeAssignmentDevSelectEv(data){
+      var formData = new FormData();
+      formData.append("developer_id", data.id);
+      await taskservice.update(this.project_id, this.selectedTask.id, formData);
+      this.$store.commit('setNotification','Developer Assigned');
+      this.getTaskUsersSummary() 
+      this.refreshTasks()
+    },
     async taskStatusUpdate(task_id, status){
       await taskservice.updateStatus(this.project_id, task_id, status)
       this.$store.commit('setNotification','Status Updated');
+      this.refreshTasks()
+    },
+    filterTaskForUser(user_id){
+      if(this.selected_user_id==user_id){
+        this.selected_user_id=0
+      }else{
+        this.selected_user_id = user_id
+      }
       this.refreshTasks()
     },
     refreshTasks() {
       this.getTaskSummary();
     },
     async getTaskSummary() {
-      var res = await taskservice.summary(this.project_id);
+      this.tasksLoader = true
+      var q = ''
+      if(this.selected_user_id>0){
+        q+='?user_id='+this.selected_user_id
+      }
+      var res = await taskservice.summary(this.project_id, q);
       this.tasks = res;
       for(let q = 0; q < this.tasks.length; q++){
         this.tasks[q].class = '';
@@ -260,6 +432,7 @@ export default {
           this.tasks[q].class = 'blue lighten-4'
         }
       }
+      this.tasksLoader = false
     },
     async updateDue(task) {
       //   this.tasks = [];
@@ -269,9 +442,16 @@ export default {
       this.dialog = false;
       //   this.getTaskSummary();
     },
+    async getTaskUsersSummary(){
+      this.task_summary_users = await taskservice.usersSummary(this.project_id)
+    },
   },
-  computed: {},
+  computed: {
+    user() {
+      return this.$store.getters.loggedInUser;
+    },
+  },
   watch: {},
-  components: { CommentTask, PostTaskComment },
+  components: { CommentTask, PostTaskComment, taskType, UserList },
 };
 </script>

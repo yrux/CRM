@@ -68,7 +68,7 @@ CREATE TABLE `brands` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `brands_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `brands` */
 
@@ -80,7 +80,8 @@ insert  into `brands`(`id`,`brand_name`,`brand_code`,`created_at`,`updated_at`,`
 (10,'DS','DS','2021-10-28 17:59:07','2021-10-28 17:59:07',1),
 (11,'Test Company Brand','TCB','2021-10-28 23:33:40','2021-10-28 23:35:18',18),
 (13,'Jesper Brand','JS-B','2021-11-05 01:43:08','2021-11-05 01:43:08',1),
-(14,'Company Brand','CBD','2021-11-16 15:15:50','2021-11-16 15:15:50',19);
+(14,'Company Brand','CBD','2021-11-16 15:15:50','2021-11-16 15:15:50',19),
+(15,'Softcubebrand','SCB','2021-12-01 00:45:21','2021-12-01 00:45:21',19);
 
 /*Table structure for table `brief_forms` */
 
@@ -119,7 +120,7 @@ CREATE TABLE `chat_heads` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chat_heads` */
 
@@ -149,7 +150,8 @@ insert  into `chat_heads`(`id`,`user_id`,`sender_id`,`updated_at`,`created_at`) 
 (47,34,41,'2021-11-26 04:25:33','2021-11-26 04:25:33'),
 (48,34,40,'2021-11-26 05:01:33','2021-11-26 05:01:33'),
 (49,34,35,'2021-11-26 05:01:39','2021-11-26 05:01:39'),
-(50,34,33,'2021-11-26 05:01:40','2021-11-26 05:01:40');
+(50,34,33,'2021-11-26 05:01:40','2021-11-26 05:01:40'),
+(51,33,41,'2021-11-29 22:32:36','2021-11-29 22:32:36');
 
 /*Table structure for table `chats` */
 
@@ -163,7 +165,7 @@ CREATE TABLE `chats` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chats` */
 
@@ -240,7 +242,13 @@ insert  into `chats`(`id`,`chat_head_id`,`message`,`user_id`,`updated_at`,`creat
 (91,45,'123',37,'2021-11-25 05:34:58','2021-11-25 05:34:58'),
 (92,45,'123',37,'2021-11-25 05:34:58','2021-11-25 05:34:58'),
 (93,45,'asd',37,'2021-11-25 05:34:59','2021-11-25 05:34:59'),
-(94,47,'123123',34,'2021-11-26 04:25:38','2021-11-26 04:25:38');
+(94,47,'123123',34,'2021-11-26 04:25:38','2021-11-26 04:25:38'),
+(95,51,'1231231',33,'2021-11-29 22:32:39','2021-11-29 22:32:39'),
+(96,51,'asdasdasd',33,'2021-11-29 22:32:40','2021-11-29 22:32:40'),
+(97,51,'asdasd123123',33,'2021-11-29 22:32:41','2021-11-29 22:32:41'),
+(98,51,'asdasd',33,'2021-11-29 22:32:43','2021-11-29 22:32:43'),
+(99,51,'aasdasd',33,'2021-11-29 22:32:44','2021-11-29 22:32:44'),
+(100,51,'dsadas<br>asdasdasdasdasdasda<br>asdasdasd1231 23a sd<br>123123 .',33,'2021-11-29 22:32:58','2021-11-29 22:32:58');
 
 /*Table structure for table `company` */
 
@@ -267,6 +275,29 @@ insert  into `company`(`id`,`company_name`,`user_id`,`created_at`,`updated_at`) 
 (17,'Company',17,'2021-10-28 14:40:27','2021-10-28 14:40:27'),
 (18,'test company',24,'2021-10-28 23:32:30','2021-10-28 23:32:30'),
 (19,'New Company 3',32,'2021-11-16 15:13:41','2021-11-16 15:13:41');
+
+/*Table structure for table `departments` */
+
+DROP TABLE IF EXISTS `departments`;
+
+CREATE TABLE `departments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `department_name` varchar(255) DEFAULT NULL,
+  `company_id` int(11) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `departments` */
+
+insert  into `departments`(`id`,`department_name`,`company_id`,`updated_at`,`created_at`) values 
+(2,'Design',19,'2021-11-30 02:39:10','2021-11-30 02:27:23'),
+(3,'Wordpress',19,'2021-11-30 02:39:14','2021-11-30 02:39:14'),
+(4,'Frontend',19,'2021-11-30 02:39:21','2021-11-30 02:39:21'),
+(5,'Custom/PHP',19,'2021-11-30 02:39:27','2021-11-30 02:39:27'),
+(6,'Sales',19,'2021-11-30 02:40:20','2021-11-30 02:40:20'),
+(7,'Customer',19,'2021-11-30 02:40:33','2021-11-30 02:40:33');
 
 /*Table structure for table `failed_jobs` */
 
@@ -300,7 +331,7 @@ CREATE TABLE `files` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `fileable_id_type_index` (`fileable_id`,`fileable_type`,`table_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `files` */
 
@@ -432,7 +463,32 @@ insert  into `files`(`id`,`url`,`fileable_id`,`fileable_type`,`table_name`,`crea
 (171,'task_comments/QrHhICrMBxAO0T08Sq8IeqsEXpqeAB4w1G7IBBml.png',18,'App\\Models\\TaskComment','task_comments','2021-11-26 04:34:15','2021-11-26 04:34:15'),
 (172,'task_comments/5ExnPoXuJd3GCtgADPPqVDHxyz7DfJ2y6tlKAttj.png',18,'App\\Models\\TaskComment','task_comments','2021-11-26 04:34:15','2021-11-26 04:34:15'),
 (173,'chat/9AV5so5rCGSOwJEGkdIerHkiZE29udaGtfUlds9J.jpg',85,'App\\Models\\Chat','chat','2021-11-26 04:43:16','2021-11-26 04:43:19'),
-(174,'chat/QCcxQSLbwFgd2mGUaYB1UGxk2J3gp58RVy30AdbF.html',85,'App\\Models\\Chat','chat','2021-11-26 04:43:16','2021-11-26 04:43:19');
+(174,'chat/QCcxQSLbwFgd2mGUaYB1UGxk2J3gp58RVy30AdbF.html',85,'App\\Models\\Chat','chat','2021-11-26 04:43:16','2021-11-26 04:43:19'),
+(175,'chat/fhzbaFEcYud3wnTVQbfN6kiKg9q2HsBLQflqK7Pd.docx',100,'App\\Models\\Chat','chat','2021-11-29 22:32:57','2021-11-29 22:32:58'),
+(176,'brands/QJk1TrxihFAyJa7lyUeDSfNZFl222VM1phNEGM05.png',15,'App\\Models\\Brand','brands','2021-12-01 00:45:22','2021-12-01 00:45:22');
+
+/*Table structure for table `lead_assigned` */
+
+DROP TABLE IF EXISTS `lead_assigned`;
+
+CREATE TABLE `lead_assigned` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `lead_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_active` tinyint(4) DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `lead_assigned` */
+
+insert  into `lead_assigned`(`id`,`user_id`,`lead_id`,`created_at`,`is_active`) values 
+(10,35,32,'2021-12-01 00:20:10',1),
+(12,33,32,'2021-12-01 00:20:18',1),
+(13,34,32,'2021-12-01 00:20:35',1),
+(18,34,33,'2021-12-01 00:30:50',1),
+(20,33,33,'2021-12-01 00:30:54',1),
+(21,35,34,'2021-12-01 01:57:08',1);
 
 /*Table structure for table `lead_messages` */
 
@@ -556,45 +612,63 @@ CREATE TABLE `leads` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT 0,
-  `assigned_to` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `leads` */
 
-insert  into `leads`(`id`,`brand_id`,`first_name`,`last_name`,`company`,`email`,`phone`,`message`,`lead_status`,`custom_fields`,`updated_at`,`created_at`,`user_id`,`assigned_to`) values 
-(1,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'','2021-11-05 05:40:36','2021-11-05 02:08:27',NULL,0),
-(2,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'','2021-11-05 05:40:35','2021-11-05 02:11:29',NULL,0),
-(3,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:34','2021-11-05 02:26:52',NULL,0),
-(4,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:34','2021-11-05 02:34:13',NULL,0),
-(5,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:33','2021-11-05 02:36:17',NULL,0),
-(6,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:33','2021-11-05 02:40:03',NULL,0),
-(7,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:32','2021-11-05 03:21:02',NULL,0),
-(8,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:31','2021-11-05 03:22:09',NULL,0),
-(9,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:30','2021-11-05 03:22:41',NULL,0),
-(10,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:06','2021-11-05 03:23:01',NULL,0),
-(11,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:54','2021-11-05 03:23:01',NULL,0),
-(12,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:39:57','2021-11-05 03:23:01',NULL,0),
-(13,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:48','2021-11-05 03:22:09',NULL,0),
-(14,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:17','2021-11-05 03:23:01',NULL,0),
-(15,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:50','2021-11-05 03:23:01',NULL,0),
-(16,6,'12345678',NULL,NULL,'lead2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:38:23','2021-11-05 03:23:01',NULL,0),
-(17,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:47:49','2021-11-05 03:23:01',NULL,0),
-(18,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:08','2021-11-05 03:23:01',NULL,0),
-(19,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:14','2021-11-05 03:23:01',NULL,0),
-(20,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:54','2021-11-05 03:23:01',NULL,0),
-(21,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-08 23:40:03','2021-11-05 03:23:01',NULL,0),
-(22,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:18','2021-11-05 03:23:01',NULL,0),
-(23,4,'12313',NULL,NULL,'lead4@gmail.com','123123','123123',3,NULL,'2021-11-05 05:38:20','2021-11-05 05:37:40',NULL,0),
-(24,4,'junaid','yrux',NULL,'jesper@gmail.com','123123','123123',3,NULL,'2021-11-13 03:49:55','2021-11-08 15:02:51',30,0),
-(25,9,'lead','llead','Lead Company','lead1@gmail.com','+123123123','Test',3,NULL,'2021-11-16 13:54:19','2021-11-16 13:50:19',31,0),
-(26,14,'N','C','NC','nclead@gmail.com','+12123123123','this is the lead for new brand',1,NULL,'2021-11-26 04:12:31','2021-11-16 15:33:45',39,33),
-(27,14,'test','test','123123','nhlead3@gmail.com','+123123123','123123',3,NULL,'2021-11-16 19:30:35','2021-11-16 19:27:34',38,34),
-(28,14,'jsn','jsnl',NULL,'jsn3@gmail.com','+123123123','123123',3,NULL,'2021-11-16 23:10:28','2021-11-16 23:09:22',0,33),
-(29,14,'Jhon','Doe','JhonMaverick','nhnnlead@gmail.com','1231231231','test',3,NULL,'2021-11-26 04:03:54','2021-11-25 23:34:32',41,34),
-(30,14,'customer','lastname','Jhondoe','customernew1@gmail.com','123123','123',3,NULL,'2021-11-26 04:07:07','2021-11-26 04:06:59',0,0),
-(31,14,'lead new','new','new','newlead32@gmail.com','123123','123',3,NULL,'2021-11-26 04:16:09','2021-11-26 04:12:14',42,0),
-(32,14,'test','123','12','asdasd21@gmail.com','1212','123',0,NULL,'2021-11-26 04:20:56','2021-11-26 04:20:56',0,0);
+insert  into `leads`(`id`,`brand_id`,`first_name`,`last_name`,`company`,`email`,`phone`,`message`,`lead_status`,`custom_fields`,`updated_at`,`created_at`,`user_id`) values 
+(1,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'','2021-11-05 05:40:36','2021-11-05 02:08:27',NULL),
+(2,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'','2021-11-05 05:40:35','2021-11-05 02:11:29',NULL),
+(3,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:34','2021-11-05 02:26:52',NULL),
+(4,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:34','2021-11-05 02:34:13',NULL),
+(5,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:33','2021-11-05 02:36:17',NULL),
+(6,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:33','2021-11-05 02:40:03',NULL),
+(7,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:32','2021-11-05 03:21:02',NULL),
+(8,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:31','2021-11-05 03:22:09',NULL),
+(9,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:30','2021-11-05 03:22:41',NULL),
+(10,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:40:06','2021-11-05 03:23:01',NULL),
+(11,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:54','2021-11-05 03:23:01',NULL),
+(12,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:39:57','2021-11-05 03:23:01',NULL),
+(13,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:48','2021-11-05 03:22:09',NULL),
+(14,6,'12345678',NULL,NULL,'company1@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:17','2021-11-05 03:23:01',NULL),
+(15,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:50','2021-11-05 03:23:01',NULL),
+(16,6,'12345678',NULL,NULL,'lead2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 05:38:23','2021-11-05 03:23:01',NULL),
+(17,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:47:49','2021-11-05 03:23:01',NULL),
+(18,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:08','2021-11-05 03:23:01',NULL),
+(19,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:14','2021-11-05 03:23:01',NULL),
+(20,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',2,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:54','2021-11-05 03:23:01',NULL),
+(21,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',3,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-08 23:40:03','2021-11-05 03:23:01',NULL),
+(22,6,'12345678',NULL,NULL,'company2@gmail.com','test','test',1,'{\"test\":\"123\",\"test2\":\"asdasd\"}','2021-11-05 04:19:18','2021-11-05 03:23:01',NULL),
+(23,4,'12313',NULL,NULL,'lead4@gmail.com','123123','123123',3,NULL,'2021-11-05 05:38:20','2021-11-05 05:37:40',NULL),
+(24,4,'junaid','yrux',NULL,'jesper@gmail.com','123123','123123',3,NULL,'2021-11-13 03:49:55','2021-11-08 15:02:51',30),
+(25,9,'lead','llead','Lead Company','lead1@gmail.com','+123123123','Test',3,NULL,'2021-11-16 13:54:19','2021-11-16 13:50:19',31),
+(26,14,'N','C','NC','nclead@gmail.com','+12123123123','this is the lead for new brand',1,NULL,'2021-11-26 04:12:31','2021-11-16 15:33:45',39),
+(27,14,'test','test','123123','nhlead3@gmail.com','+123123123','123123',3,NULL,'2021-11-16 19:30:35','2021-11-16 19:27:34',38),
+(28,14,'jsn','jsnl',NULL,'jsn3@gmail.com','+123123123','123123',3,NULL,'2021-11-16 23:10:28','2021-11-16 23:09:22',0),
+(29,14,'Jhon','Doe','JhonMaverick','nhnnlead@gmail.com','1231231231','test',3,NULL,'2021-11-26 04:03:54','2021-11-25 23:34:32',41),
+(30,14,'customer','lastname','Jhondoe','customernew1@gmail.com','123123','123',3,NULL,'2021-11-26 04:07:07','2021-11-26 04:06:59',0),
+(31,14,'lead new','new','new','newlead32@gmail.com','123123','123',3,NULL,'2021-11-26 04:16:09','2021-11-26 04:12:14',42),
+(32,14,'test','123','12','asdasd21@gmail.com','1212','123',1,NULL,'2021-12-01 00:33:16','2021-11-26 04:20:56',0),
+(33,14,'123','123','123','newlead124@gmail.com','123','123',3,NULL,'2021-12-01 00:33:23','2021-12-01 00:23:31',0),
+(34,15,'tt','tt','tt','ttlead13@gmail.com','tt','tt',0,NULL,'2021-12-01 00:45:45','2021-12-01 00:45:45',0);
+
+/*Table structure for table `logs` */
+
+DROP TABLE IF EXISTS `logs`;
+
+CREATE TABLE `logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `log` text DEFAULT NULL,
+  `logable_id` int(11) DEFAULT NULL,
+  `logable_type` varchar(255) DEFAULT NULL,
+  `table_name` varchar(255) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `logs` */
 
 /*Table structure for table `merchants` */
 
@@ -669,9 +743,11 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('092b04ab270b0b2986258a42b78fc80d705f10016f746fdf4f7b4df0784934a164b2d54e38be5c95',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 11:07:47','2021-10-28 11:07:47','2022-04-28 11:07:46'),
 ('0a1e401fd0b1848055c622e2903872cdf1890e0b638a44b16b1392fd3ab73b2fee8e29e9c6b24f14',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 04:47:35','2021-11-26 04:47:35','2022-05-26 04:47:35'),
 ('0a242af68fa53d75edefa7e77e97c2f969a024c1d38d50c000f54d9c257d95d384db484bec89579a',38,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 19:32:20','2021-11-16 19:32:20','2022-05-16 19:32:20'),
+('0f38ca5520d891d50fafa695b499f40f37716b96d5d329ee79d3c8d65e5547968cedb2b3e6cd89c1',42,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-29 23:09:26','2021-11-29 23:09:26','2022-05-29 23:09:23'),
 ('0f76dcbbc0fae9328d0e3a7a558c854fad261271dde6dd733cf0df06bd6c6403d096f837198ee1f7',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:39:45','2021-10-12 16:39:45','2022-04-12 16:39:45'),
 ('1079fc1428b0857df0979358a6722911287b615a18d42135c01679b04b1382b65803fb2465fde52c',17,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 13:49:27','2021-11-16 13:49:27','2022-05-16 13:49:26'),
 ('11ef34312c38825bcd42a2d6daff2f47ca1e0aef028a896543c9dd3132a5bb0eb1e16797062d2b60',31,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 13:54:32','2021-11-16 13:54:32','2022-05-16 13:54:32'),
+('12248eafd08bd91b38a9414ccc8159afc8ba1504f34422553441c55a0afd9742b03b7be25ab3f88e',44,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-01 06:39:56','2021-12-01 06:39:56','2022-06-01 06:39:56'),
 ('136469c8c3642e44f1b168829ddde368e2d27d172fe1e4528197c812ec224ccfec88fb6d259d12aa',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:47:12','2021-10-26 13:47:12','2022-04-26 13:47:11'),
 ('1390c0dd3cbfea9be47830756f7fb9d35bd2cb9ce8ff0fbeaa33bc85787bdf8cbd397723d4c5ae3f',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-22 14:58:36','2021-10-22 14:58:36','2022-04-22 14:58:36'),
 ('148b3851abc6a80caafb6ada910a7462c3c6d0af6fccc1a7f162ca9df9f0d5d932bf40c178301d34',34,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 04:21:46','2021-11-26 04:21:46','2022-05-26 04:21:46'),
@@ -685,6 +761,7 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('317b3d6b65a29f87ba990e35cf514e283bced289347de7f39415691682c633337eb3e4f7408db7d0',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 18:53:35','2021-10-28 18:53:35','2022-04-28 18:53:34'),
 ('333c184e33638c8338835f0d75ada1da77f93e0b35ee8bb3a763d75dd14a8818b41cbf3beeb648fd',33,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 23:10:21','2021-11-16 23:10:21','2022-05-16 23:10:21'),
 ('349d576f0b93e721c2c38ca4c89524aacf75ce667f30f5fff5d8005a8f98b0480fc81cb6905dc354',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:51:45','2021-10-26 09:51:45','2022-04-26 09:51:44'),
+('38668a7fa783b42c0ca95af8bd0aa195ab9c681055ab0910b1c67080613c4fce020416252e45407f',33,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-29 23:43:49','2021-11-29 23:43:49','2022-05-29 23:43:49'),
 ('3a5257b35b6c754e9ef3a4667783a36b0d82570718ea9b03b1092d9c62f30d04afd39659dcee9341',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:43:59','2021-10-26 13:43:59','2022-04-26 13:43:59'),
 ('3af0cc37a8b790b89478a7468200c46778209986bb26a782589352f6f97c435ca04b663158970aac',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-20 12:31:47','2021-10-20 12:31:47','2022-04-20 12:31:44'),
 ('3ba7eca5936c948d6d4160f4cf6f29b6063e73cefba521329e19be32d07f2ef9cf7ebe8647ff3ee2',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:47:34','2021-10-26 13:47:34','2022-04-26 13:47:34'),
@@ -697,8 +774,10 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('3e94f75c1e4a30ed4117da89c1b90ef1aa5e020846239f9835c60929dfbe121daed95f4e741c9368',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:43:31','2021-10-12 16:43:31','2022-04-12 16:43:31'),
 ('3fe6d0fddefeb313a005d0ccbc97b9f6ee993878e39192b905e7f6ad1a9f3630e10c0211eb369f44',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:47:46','2021-10-26 13:47:46','2022-04-26 13:47:46'),
 ('3feff9c1fe510a6d0f0ff08c93074d5b837c0f2f5b8f5f926d9d05d06458d75562e3eb84365444a4',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 03:54:43','2021-11-26 03:54:43','2022-05-26 03:54:42'),
+('4025a8cb099238ff13ace24afe323b0509c4a05525d2830b20d7212050daac3a8e174546f69bd4f9',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-30 00:22:13','2021-11-30 00:22:13','2022-05-30 00:22:13'),
 ('45b6097efbdad64feba0b8211ab7ca850c42bd0d33d152a4fae2f2ff2e188c27381faf5f328c70e9',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-25 04:47:31','2021-11-25 04:47:31','2022-05-25 04:47:31'),
 ('4b4f208ec87913f5de7f79f3d77a84d8864e40fde2a622b4e2c71b4577e39e3875dbef9ec25d4854',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:37:21','2021-10-12 16:37:21','2022-04-12 16:37:18'),
+('4d2281b4505800590eb1ab7d31b3cce0938791b42e642b99c15bca542efe147664e301c37ca8557b',43,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-01 06:25:21','2021-12-01 06:25:21','2022-06-01 06:25:21'),
 ('54b5ebb4f1f92b215adaabc2595c3147b6fd3525bad28f091e16d8a07d5760b2a25b87fd7137e652',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-22 14:50:35','2021-10-22 14:50:35','2022-04-22 14:50:34'),
 ('55262ac7ce99755fa871193e5811963ad74c7e3135a2e2fb9b889f20e445df877897a2ce8959ca13',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:41:31','2021-10-12 16:41:31','2022-04-12 16:41:30'),
 ('55384a6b855e55496fa9fdc983dc9e83fd5c12854810e4581cca644f0254a1ced7368c90c90da8af',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:34:14','2021-10-26 09:34:14','2022-04-26 09:34:14'),
@@ -725,7 +804,9 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('78dc0ce2306fa741203799c7adf7bc8e3c9e55536742498089684a07650d2992aa1833d7ec60b619',42,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 04:16:51','2021-11-26 04:16:51','2022-05-26 04:16:51'),
 ('7be9038d5c01d33e85cbf1afd999f12734898f3382a721cc5107827dab0c989e736b57719545aa26',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:51:19','2021-10-26 09:51:19','2022-04-26 09:51:19'),
 ('7f0fe16c10ba315df7a829fb97e0a19ba0b532eedfbdd5c418a36ba543919baeaa2829b158d1e8fa',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-25 04:47:13','2021-11-25 04:47:13','2022-05-25 04:47:10'),
+('80246799f06b73bf90023633af416fceb2330d3c8dc3dda7d56a190217bc6b341997db9ed0abea09',33,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-29 22:20:05','2021-11-29 22:20:05','2022-05-29 22:20:04'),
 ('80573f5cd0aff30aba9a3e6da815807e3fecb42515df9d881b64d98a8861b809f8e70d98b6703788',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-30 00:22:42','2021-10-30 00:22:42','2022-04-30 00:22:41'),
+('80fc2defbef8da49cd6e144ced36c1b983e7dce85d198e1e5ab340e561098461dfeb5ef48cb86ece',43,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-01 06:50:30','2021-12-01 06:50:30','2022-06-01 06:50:30'),
 ('8227a1d5b6ec4aaa5c69e6df6c2bdd58fdc2fe95736ff48e5af118097a22fb18332fa698bed18ce5',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-29 14:10:00','2021-10-29 14:10:00','2022-04-29 14:10:00'),
 ('84ca6c8bd772564f0632c34f0503635f89a2c46bd9726ade609d3d23ce7836c3d731dd029456e34b',34,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 22:21:59','2021-11-26 22:21:59','2022-05-26 22:21:58'),
 ('869ae8747bee378b5db22a30d7160b21d82f7e4a54b75ec393e679ef22cc9a4edb540f255c993157',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 15:09:28','2021-10-28 15:09:28','2022-04-28 15:09:28'),
@@ -748,6 +829,7 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('a6b5605396f7a1a42e2d01d15f5125305ee0ee18333a7ae85c1669a21fd8129fb371f1bcf181d687',34,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 04:08:49','2021-11-26 04:08:49','2022-05-26 04:08:49'),
 ('ac7eae3784f9f44b95284002b3dbd8ba2547cb5f68f9309ab8df0a1eb97c0932d960d4a47b9402be',37,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 00:04:43','2021-11-26 00:04:43','2022-05-26 00:04:43'),
 ('acedffd35f04add26b28c33fa17193e7d94f3e72085f06c24c089b0da2bf316101e87a5baddd95ff',24,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 23:33:03','2021-10-28 23:33:03','2022-04-28 23:33:03'),
+('ad02d0adec931f2c7fa76e8d17d9ef7bc87d68b479004a759556ba22e4f4a8ce420c5c7c6e15b997',35,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-01 01:57:19','2021-12-01 01:57:19','2022-06-02 01:57:19'),
 ('add77761f1e8a5eb54c58c1cebbce190e4adbe262359dc2b23280789207e0bfc69cbeea312d032f2',37,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-17 05:07:50','2021-11-17 05:07:50','2022-05-17 05:07:50'),
 ('af38d85c996e3b2e68be590057a519b3f70880d445d17c2890c0f4805ea3a958252d61c099613d48',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:26:48','2021-10-26 09:26:48','2022-04-26 09:26:48'),
 ('b12cb03f8c2a2927f4ad0ae029ef7a07a2341be9e59e4d0a7fb9cc5be8f27e3659e1b9e6670b9122',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:39:17','2021-10-12 16:39:17','2022-04-12 16:39:17'),
@@ -761,6 +843,7 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('bc97726934ae2c1c2245d1e5b14962ac33b66658848da9c8b1eeadd21a72377ba87a0e694969105c',34,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 00:10:03','2021-11-26 00:10:03','2022-05-26 00:10:03'),
 ('bd32e9a45f247fb720854c3c88510382a6500ad4d52c1337bc3ef8fe2024e6bfdb4451eafbf751d8',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 20:36:26','2021-10-28 20:36:26','2022-04-28 20:36:26'),
 ('bd5bde4934c8ec94293cff223bbff3f35f7d87b6164aee28017a7fdb01fd550a7b6d6bd640da60c8',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:40:00','2021-10-12 16:40:00','2022-04-12 16:40:00'),
+('bf3c30019f4702db43b26902d7d95237f94e8e1601df51b792e01666cc18dfd3939d04648f2b56f4',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-30 02:17:40','2021-11-30 02:17:40','2022-05-30 02:17:40'),
 ('c38745ff67b73da8a432836b8e8d89b8f8a7086186c91e6c12d790dfd456b5b2e71691820888351f',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:38:10','2021-10-12 16:38:10','2022-04-12 16:38:10'),
 ('c59b0c278186605a13f492f22bad66f9a949b9b4baadba8a51772e011010bf737afb36c6626697dd',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:37:51','2021-10-12 16:37:51','2022-04-12 16:37:50'),
 ('c67cf6a56074a59bfc61036220dc02206c1ac68bc1351ba44606ee2f07a4ad97027c2c631edd71a8',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:47:40','2021-10-26 13:47:40','2022-04-26 13:47:40'),
@@ -769,6 +852,7 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('c8ddb38c688c2a8b18e705e2c0b9fbdb37c8e5567e03a62e32ea18241d50c666e220c766a7b1d533',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-22 14:58:56','2021-10-22 14:58:56','2022-04-22 14:58:56'),
 ('ca3d500390d9dcd812517a8763eb6aecbcdb5ab3ea37d3103d3f83d3fca29f2f93959e110ab2ec57',37,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 16:41:43','2021-11-16 16:41:43','2022-05-16 16:41:43'),
 ('cefcd4ab9b462485370ad132bfcbc4d27b5326ee9ffbbeeca95f0be789c1e0967f199f19a3e2539f',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 17:47:42','2021-10-28 17:47:42','2022-04-28 17:47:41'),
+('cf1bdc326199d2df66baec5151a83b998a0d827babb4fee3bc002ad4531488c7cae229cc0b1dfd61',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-01 02:02:54','2021-12-01 02:02:54','2022-06-02 02:02:53'),
 ('d19132202d8977708ddd09633e0e922c4dc6a68b18a460b79af45e21147c551418cf36a8fd97bf73',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-30 00:52:28','2021-10-30 00:52:28','2022-04-30 00:52:28'),
 ('d1d19056f8675a8ef20ef58e6ed52b2b4bcd59a0ac64a7e926a1ab52b979d3ca9c928fc1dae9c3f7',17,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 15:25:09','2021-10-28 15:25:09','2022-04-28 15:25:09'),
 ('d2f339b9ce5f7f8ad4e4386f2450e3c90e156d2811955553d83484914c39b013a0b5cfd5a176313c',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-08 23:38:49','2021-11-08 23:38:49','2022-05-08 23:38:47'),
@@ -938,7 +1022,7 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `permissions` */
 
@@ -977,7 +1061,17 @@ insert  into `permissions`(`id`,`name`,`title`,`updated_at`,`created_at`) values
 (32,'brief-create','Brief Create','2021-11-10 17:55:54','2021-11-10 17:55:44'),
 (33,'brief-edit','Brief Edit','2021-11-10 17:56:06','2021-11-10 17:56:06'),
 (34,'brief-view','Brief View','2021-11-10 17:56:13','2021-11-10 17:56:13'),
-(35,'brief-delete','Brief Delete','2021-11-10 17:56:21','2021-11-10 17:56:21');
+(35,'brief-delete','Brief Delete','2021-11-10 17:56:21','2021-11-10 17:56:21'),
+(36,'department-list','Department List','2021-11-30 01:59:26','2021-11-30 01:59:26'),
+(37,'department-create','Department Create','2021-11-30 01:59:35','2021-11-30 01:59:35'),
+(38,'department-edit','Department Edit','2021-11-30 01:59:43','2021-11-30 01:59:43'),
+(39,'department-view','Department View','2021-11-30 01:59:56','2021-11-30 01:59:52'),
+(40,'department-delete','Department Delete','2021-11-30 02:00:06','2021-11-30 02:00:06'),
+(41,'leadassign-list','Lead Assign List','2021-11-30 23:08:42','2021-11-30 23:08:42'),
+(42,'leadassign-create','Lead Assign Create','2021-11-30 23:08:53','2021-11-30 23:08:53'),
+(43,'leadassign-edit','Lead Assign Edit','2021-11-30 23:09:03','2021-11-30 23:09:03'),
+(44,'leadassign-view','Lead Assign View','2021-11-30 23:09:30','2021-11-30 23:09:11'),
+(45,'leadassign-delete','Lead Assign Delete','2021-11-30 23:09:37','2021-11-30 23:09:23');
 
 /*Table structure for table `personal_access_tokens` */
 
@@ -1012,31 +1106,40 @@ CREATE TABLE `project_tasks` (
   `due_date` date NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=opened,1=inprogress,2=closed/completed,3=onhold',
   `assigned_on` int(11) NOT NULL,
+  `developer_id` int(11) DEFAULT 0,
   `assigned_by` int(11) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `project_tag` varchar(100) DEFAULT NULL,
+  `task_type` enum('initial','revision','innerpages','redraw') DEFAULT 'initial',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `project_tasks` */
 
-insert  into `project_tasks`(`id`,`project_id`,`title`,`task_description`,`due_date`,`status`,`assigned_on`,`assigned_by`,`updated_at`,`created_at`,`project_tag`) values 
-(1,6,NULL,'<p>test</p>','2021-04-19',1,6,4,'2021-10-25 23:39:15','2021-10-25 23:18:15','test'),
-(2,7,'123123','<p>123123123</p>','2021-11-02',0,6,25,'2021-11-02 01:14:58','2021-11-02 01:14:58',NULL),
-(3,7,'123123123','<p>123123123123123</p>','2021-12-31',0,6,25,'2021-11-03 05:50:14','2021-11-02 01:17:39',NULL),
-(4,7,'1231231','<p>23123123</p>','2021-11-04',3,6,25,'2021-11-05 00:32:45','2021-11-02 01:17:57',NULL),
-(5,7,'123123123','<p>123123123</p>','2021-11-25',3,6,25,'2021-11-04 23:00:19','2021-11-02 01:19:36',NULL),
-(6,7,'23123123','<p>1231231</p>','2021-11-01',0,6,25,'2021-11-03 05:50:38','2021-11-02 01:20:07',NULL),
-(7,13,'Create Logo of webnhub','<p>Create Logo of webnhub</p><p>Create Logo of webnhub</p><p>Create Logo of webnhub</p><p>Create Logo of webnhub</p>','2021-11-17',0,6,25,'2021-11-03 06:35:54','2021-11-03 06:35:54',NULL),
-(8,18,'test 3','<p>test 3</p>','2021-11-17',0,37,33,'2021-11-16 16:20:53','2021-11-16 16:20:53',NULL),
-(9,19,'123','<p>123</p>','2021-11-17',0,37,33,'2021-11-16 16:21:45','2021-11-16 16:21:45',NULL),
-(10,21,'test','<p>123</p>','2021-11-24',0,37,33,'2021-11-16 17:01:55','2021-11-16 17:01:19',NULL),
-(11,22,'Test Task','<p>asdasdasd</p>','2021-11-18',0,37,34,'2021-11-16 19:35:34','2021-11-16 19:35:34',NULL),
-(12,23,'Create Logo','<p>XYZ</p>','2021-11-30',0,37,34,'2021-11-26 00:02:48','2021-11-26 00:02:48',NULL),
-(13,27,'213123123','<p>123123</p>','2021-11-29',0,37,34,'2021-11-26 04:24:37','2021-11-26 04:24:37',NULL),
-(14,27,'123123','<p>123123123</p>','2021-11-27',0,37,34,'2021-11-26 04:27:46','2021-11-26 04:27:46',NULL),
-(15,27,'123123','<p>123123</p>','2021-11-27',2,37,34,'2021-11-26 04:30:35','2021-11-26 04:29:49',NULL);
+insert  into `project_tasks`(`id`,`project_id`,`title`,`task_description`,`due_date`,`status`,`assigned_on`,`developer_id`,`assigned_by`,`updated_at`,`created_at`,`project_tag`,`task_type`) values 
+(1,6,NULL,'<p>test</p>','2021-04-19',1,6,0,4,'2021-10-25 23:39:15','2021-10-25 23:18:15','test','initial'),
+(2,7,'123123','<p>123123123</p>','2021-11-02',0,6,0,25,'2021-11-02 01:14:58','2021-11-02 01:14:58',NULL,'initial'),
+(3,7,'123123123','<p>123123123123123</p>','2021-12-31',0,6,0,25,'2021-11-03 05:50:14','2021-11-02 01:17:39',NULL,'initial'),
+(4,7,'1231231','<p>23123123</p>','2021-11-04',3,6,0,25,'2021-11-05 00:32:45','2021-11-02 01:17:57',NULL,'initial'),
+(5,7,'123123123','<p>123123123</p>','2021-11-25',3,6,0,25,'2021-11-04 23:00:19','2021-11-02 01:19:36',NULL,'initial'),
+(6,7,'23123123','<p>1231231</p>','2021-11-01',0,6,0,25,'2021-11-03 05:50:38','2021-11-02 01:20:07',NULL,'initial'),
+(7,13,'Create Logo of webnhub','<p>Create Logo of webnhub</p><p>Create Logo of webnhub</p><p>Create Logo of webnhub</p><p>Create Logo of webnhub</p>','2021-11-17',0,6,0,25,'2021-11-03 06:35:54','2021-11-03 06:35:54',NULL,'initial'),
+(8,18,'test 3','<p>test 3</p>','2021-11-17',0,37,0,33,'2021-11-16 16:20:53','2021-11-16 16:20:53',NULL,'initial'),
+(9,19,'123','<p>123</p>','2021-11-17',0,37,0,33,'2021-11-16 16:21:45','2021-11-16 16:21:45',NULL,'initial'),
+(10,21,'test','<p>123</p>','2021-11-24',0,37,0,33,'2021-11-16 17:01:55','2021-11-16 17:01:19',NULL,'initial'),
+(11,22,'Test Task','<p>asdasdasd</p>','2021-11-18',0,37,0,34,'2021-11-16 19:35:34','2021-11-16 19:35:34',NULL,'initial'),
+(12,23,'Create Logo','<p>XYZ</p>','2021-11-30',0,37,0,34,'2021-11-26 00:02:48','2021-11-26 00:02:48',NULL,'initial'),
+(13,27,'213123123','<p>123123</p>','2021-11-29',0,37,0,34,'2021-11-26 04:24:37','2021-11-26 04:24:37',NULL,'initial'),
+(14,27,'123123','<p>123123123</p>','2021-11-27',0,37,0,34,'2021-11-26 04:27:46','2021-11-26 04:27:46',NULL,'initial'),
+(15,27,'123123','<p>123123</p>','2021-11-27',2,37,0,34,'2021-11-26 04:30:35','2021-11-26 04:29:49',NULL,'initial'),
+(16,19,'Create a New LP','<p>Create a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LP</p><p>Create a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LP</p><p>Create a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LP</p><p>Create a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LP</p><p>Create a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LPCreate a New LP</p>','2021-12-13',2,37,0,33,'2021-11-29 23:46:20','2021-11-29 22:25:07',NULL,'initial'),
+(17,27,'asdasdasd','<p>asdasdasdasd</p><p>asdasdasd</p><p>asdasdasdasd</p>','2021-12-15',0,37,0,35,'2021-12-01 02:47:51','2021-12-01 02:47:51',NULL,'initial'),
+(18,27,'asdasdasd','<p>asdasdasdasd</p><p>asdasdasd</p><p>asdasdasdasd</p>','2021-12-15',0,37,0,35,'2021-12-01 02:49:00','2021-12-01 02:49:00',NULL,'initial'),
+(19,27,'inner pages','<p>inner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pages</p>','2021-12-16',0,37,0,35,'2021-12-01 02:55:55','2021-12-01 02:55:55',NULL,'innerpages'),
+(20,27,'revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision','<p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p><p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p><p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p><p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p>','2021-12-09',0,43,0,35,'2021-12-01 05:55:53','2021-12-01 02:57:27',NULL,'revision'),
+(21,27,'redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw','<p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p><p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p><p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p><p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p>','2021-12-09',0,43,44,35,'2021-12-01 06:50:45','2021-12-01 03:29:38',NULL,'redraw'),
+(22,27,'for custom','<p>for custom</p>','2021-12-09',0,43,44,35,'2021-12-01 06:29:59','2021-12-01 04:12:17',NULL,'innerpages');
 
 /*Table structure for table `project_users` */
 
@@ -1196,7 +1299,7 @@ CREATE TABLE `roles_permissions` (
   KEY `rp_role_id` (`role_id`) USING BTREE,
   CONSTRAINT `roles_permissions_ibfk_1` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`),
   CONSTRAINT `roles_permissions_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `roles_permissions` */
 
@@ -1266,7 +1369,20 @@ insert  into `roles_permissions`(`id`,`role_id`,`permission_id`,`created_at`,`up
 (63,7,25,'2021-11-17 05:27:50','2021-11-17 05:27:50'),
 (64,6,21,'2021-11-26 03:35:12','2021-11-26 03:35:12'),
 (66,6,25,'2021-11-26 23:23:41','2021-11-26 23:23:41'),
-(67,2,21,'2021-11-26 23:34:27','2021-11-26 23:34:27');
+(67,2,21,'2021-11-26 23:34:27','2021-11-26 23:34:27'),
+(68,2,36,'2021-11-30 02:00:24','2021-11-30 02:00:24'),
+(69,2,37,'2021-11-30 02:00:28','2021-11-30 02:00:28'),
+(70,2,38,'2021-11-30 02:00:31','2021-11-30 02:00:31'),
+(71,2,39,'2021-11-30 02:00:33','2021-11-30 02:00:33'),
+(72,2,40,'2021-11-30 02:00:36','2021-11-30 02:00:36'),
+(73,2,41,'2021-11-30 23:10:59','2021-11-30 23:10:59'),
+(74,2,42,'2021-11-30 23:11:01','2021-11-30 23:11:01'),
+(75,2,43,'2021-11-30 23:11:04','2021-11-30 23:11:04'),
+(76,2,44,'2021-11-30 23:11:07','2021-11-30 23:11:07'),
+(78,2,45,'2021-11-30 23:11:12','2021-11-30 23:11:12'),
+(79,5,41,'2021-12-01 01:59:22','2021-12-01 01:59:22'),
+(80,4,41,'2021-12-01 01:59:30','2021-12-01 01:59:30'),
+(82,8,25,'2021-12-01 06:45:30','2021-12-01 06:45:44');
 
 /*Table structure for table `task_comments` */
 
@@ -1280,7 +1396,7 @@ CREATE TABLE `task_comments` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `task_comments` */
 
@@ -1302,7 +1418,10 @@ insert  into `task_comments`(`id`,`task_id`,`comment`,`user_id`,`updated_at`,`cr
 (15,10,'<p>123123123</p>',37,'2021-11-25 04:57:53','2021-11-25 04:57:53'),
 (16,12,'<p>123123123123</p><p>asdasdasd</p>',34,'2021-11-26 00:05:05','2021-11-26 00:05:05'),
 (17,12,'<p>12312313 21</p><p>23 123 1231 231 2312 3123&nbsp;</p><ul><li>asdasd</li><li>asdasdasd</li></ul>',37,'2021-11-26 00:05:24','2021-11-26 00:05:24'),
-(18,14,'<p>123123213</p><ul><li>do this</li><li>do that</li><li>&nbsp;</li></ul>',34,'2021-11-26 04:34:15','2021-11-26 04:34:15');
+(18,14,'<p>123123213</p><ul><li>do this</li><li>do that</li><li>&nbsp;</li></ul>',34,'2021-11-26 04:34:15','2021-11-26 04:34:15'),
+(19,16,'<p>sdafard4asd+46as4</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>',33,'2021-11-29 22:31:59','2021-11-29 22:31:59'),
+(20,16,'<p>sadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasd</p>',33,'2021-11-29 22:32:22','2021-11-29 22:32:22'),
+(21,22,'<p>comment by sabih</p>',44,'2021-12-01 06:40:18','2021-12-01 06:40:18');
 
 /*Table structure for table `user_briefs` */
 
@@ -1351,6 +1470,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `company_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL DEFAULT 0,
+  `department_id` int(11) DEFAULT NULL,
   `country` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
@@ -1362,37 +1482,39 @@ CREATE TABLE `users` (
   KEY `user_role_id_index` (`role_id`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`name`,`email`,`password`,`created_at`,`updated_at`,`company_id`,`role_id`,`country`,`city`,`state`,`phone`,`remember_token`,`email_verified_at`) values 
-(2,'Super Admin','admin@crm.com','$2y$10$ciRzvjIOmC3bf9ZcmIw1JuVb286SxZbAJDvqe8jnsgpEWDLanacSa','2021-10-12 18:07:37','2021-10-28 18:50:41',1,1,NULL,NULL,NULL,NULL,NULL,NULL),
-(3,'Soft Cube','company@softcube.com','$2y$10$41qAKuxphEMLOLYRWp8WEOwMB3x9y69qPJf6qBu9uw8PRPv0Z9PRG','2021-10-22 14:49:58','2021-10-22 14:49:58',1,2,NULL,NULL,NULL,NULL,NULL,NULL),
-(4,'Brand Owner','brandowner@gmail.com','$2y$10$zeSbB.N9ZeD/X8JxZAfjWe5MEka826SlwCbg4B4lnpE2gtKDe9Rcm','2021-10-25 12:05:51','2021-10-25 12:05:51',1,4,NULL,NULL,NULL,NULL,NULL,NULL),
-(5,'Brand Owner','brandsupport@gmail.com','$2y$10$3JZCgeni1webVQ0SJgpJlu5wOb.KVeMwR9pIMw2rHx3Y4j8RArUmG','2021-10-25 12:06:16','2021-10-25 12:06:16',1,5,NULL,NULL,NULL,NULL,NULL,NULL),
-(6,'Production','production@gmail.com','$2y$10$3JZCgeni1webVQ0SJgpJlu5wOb.KVeMwR9pIMw2rHx3Y4j8RArUmG','2021-10-25 12:06:16','2021-11-02 00:45:44',18,7,NULL,NULL,NULL,NULL,NULL,NULL),
-(17,'Company','company@crm.com','$2y$10$K8YJhoKOZovL.yKuR.YrDu3xOL1fqz3lJuwXYUWs.ccATSECmMkcG','2021-10-28 14:40:27','2021-10-28 18:47:54',17,2,NULL,NULL,NULL,NULL,NULL,NULL),
-(18,'test','test@gmail.com','$2y$10$Ad5OoyCldFkxs55KxkJ8sui1jP4EonU/GuuO5.hqnD9AAKkbz/Q12','2021-10-28 18:38:18','2021-10-28 18:38:18',17,5,NULL,NULL,NULL,NULL,NULL,NULL),
-(19,'test','test@gmail.com','$2y$10$JmbWGCSc..DB0gdBtfXgJul3CTlvqBqMheKEFqg/LBN02P3d7WbOW','2021-10-28 18:38:45','2021-10-28 18:38:45',17,5,NULL,NULL,NULL,NULL,NULL,NULL),
-(20,'test','test2@gmail.com','$2y$10$UcCW.ASyHqEg.EyP1Ba3yuGDxqsEks2x5Bf9.nQZk5IgI4gaZRDZ2','2021-10-28 18:39:46','2021-10-28 18:39:46',17,5,NULL,NULL,NULL,NULL,NULL,NULL),
-(21,'support','test@support.com','$2y$10$yMMAAuIkIf2K3EUR7JmreuCQGdcyinu57zoTu./Q.NEFmnB6gaoLi','2021-10-28 18:47:34','2021-10-28 22:10:59',1,5,NULL,NULL,NULL,NULL,NULL,NULL),
-(24,'test company','companytest@gmail.com','$2y$10$w08evdr3BCMj9pHz3g/Jp.SkKv.031DDGzd9kr.PVfOIfWJyZhzTK','2021-10-28 23:32:30','2021-10-28 23:32:30',18,2,NULL,NULL,NULL,NULL,NULL,NULL),
-(25,'tcbowner','tcbowner@gmail.com','$2y$10$TYr/1op6we3ZP4y4MHm94uReXPoqPpYv2amcGFNilDTRGhGBX9mFG','2021-10-28 23:37:14','2021-11-05 00:39:57',18,5,NULL,NULL,NULL,NULL,NULL,NULL),
-(26,'Customer','customer@gmail.com','$2y$10$FSA3VoRa.IwlxSxOCIDlCem7S4J7TYdbTlTSjJWN1xqQGH.EqPJZ6','2021-10-30 02:53:37','2021-10-30 02:53:37',18,6,NULL,NULL,NULL,NULL,NULL,NULL),
-(30,'junaid yrux','jesper@gmail.com','$2y$10$d0Sj0M.8biOSXLl/5vAt7.wkT/rZrB5MmHfIjbxz6mCJqceQHRSQ2','2021-11-13 03:49:55','2021-11-13 03:49:55',1,6,NULL,NULL,NULL,NULL,NULL,NULL),
-(31,'lead llead','lead1@gmail.com','$2y$10$7/XWQAeBeVk6UzxlpVq3MOe2u54VCvPi6XSeV6eH74iJge6E/mPgK','2021-11-16 13:54:19','2021-11-16 13:54:19',17,6,NULL,NULL,NULL,NULL,NULL,NULL),
-(32,'New Company 3','company3@gmail.com','$2y$10$wne6/Jb.pblUyILiojt64ewqCyhhkGS3IQOihV0ExGpD8uINKoyly','2021-11-16 15:13:41','2021-11-16 15:13:41',19,2,NULL,NULL,NULL,NULL,NULL,NULL),
-(33,'Brand Owner 3','brandowner3@gmail.com','$2y$10$w7olRl0i./QYlXGH.be.buw68uZ3sgK7sAuVZbrUh/QYnr3YY7H6a','2021-11-16 15:16:20','2021-11-16 15:16:20',19,4,NULL,NULL,NULL,NULL,NULL,NULL),
-(34,'Brand Sales 3','brandsales3@gmail.com','$2y$10$YhNVFRozlIqHsJuSEVqUD..LZSnBeht0KLYgXt4pUlNo53eOJNwQS','2021-11-16 15:16:36','2021-11-16 15:16:36',19,4,NULL,NULL,NULL,NULL,NULL,NULL),
-(35,'Brand Support 3','brandsupport3@gmail.com','$2y$10$mHj2hkFEhMVwxhQJsfD5i.k0xN3tvt5joBrm50QEB65Q9J8bGgZfa','2021-11-16 15:16:48','2021-11-16 15:16:48',19,5,NULL,NULL,NULL,NULL,NULL,NULL),
-(36,'N C','nclead@gmail.com','$2y$10$2dP17NSNDG7wGHb2uMIBxOVMWWF5uq6xkaiJXPyWYwLEZAVGa1tOa','2021-11-16 16:04:08','2021-11-16 16:04:08',19,6,NULL,NULL,NULL,NULL,NULL,NULL),
-(37,'Design','design3@gmail.com','$2y$10$UGYhklpDerbClNzBUztE4OEGKQkyA19DCiVgFGqPdYpCnfKEdFIDq','2021-11-16 16:20:07','2021-11-16 16:20:07',19,7,NULL,NULL,NULL,NULL,NULL,NULL),
-(38,'test test','nhlead3@gmail.com','$2y$10$ir2KAIdLE.HMj9zpsYseAeRk1uABQ/nDjdLHH1w4ZVFi.7LmcfJUe','2021-11-16 19:30:35','2021-11-16 19:30:35',19,6,NULL,NULL,NULL,NULL,NULL,NULL),
-(39,'N C','nclead@gmail.com','$2y$10$WnFv16RCk2P1PIcAnWSw.O8lX7.eEbOBxDNeH8.I8/Ob.cWNSfuXC','2021-11-25 05:02:56','2021-11-25 05:02:56',19,6,NULL,NULL,NULL,NULL,NULL,NULL),
-(40,'Jhon Doe','nhnnlead@gmail.com','$2y$10$YlBZRHbbwvCUOvFe786g6uYCGn04Hp4rN8UGxHgCDjw6KHU6cGWv.','2021-11-25 23:46:42','2021-11-25 23:46:42',19,6,NULL,NULL,NULL,NULL,NULL,NULL),
-(41,'Jhon Doe','nhnnlead@gmail.com','$2y$10$amJWWF6UjnqK8QfdUHCMTeztmw1xVuXgjP4fNnhRT2hOX.0ifC2lq','2021-11-26 04:03:54','2021-11-26 04:03:54',19,6,NULL,NULL,NULL,NULL,NULL,NULL),
-(42,'lead new new','newlead32@gmail.com','$2y$10$3hqiLhNOPK3HxyBMV2FEB.yTydM.zUpqU5p.ITWEOv./3JyUP2bke','2021-11-26 04:16:09','2021-11-26 04:16:09',19,6,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `users`(`id`,`name`,`email`,`password`,`created_at`,`updated_at`,`company_id`,`role_id`,`department_id`,`country`,`city`,`state`,`phone`,`remember_token`,`email_verified_at`) values 
+(2,'Super Admin','admin@crm.com','$2y$10$ciRzvjIOmC3bf9ZcmIw1JuVb286SxZbAJDvqe8jnsgpEWDLanacSa','2021-10-12 18:07:37','2021-11-30 02:30:05',1,1,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(3,'Soft Cube','company@softcube.com','$2y$10$41qAKuxphEMLOLYRWp8WEOwMB3x9y69qPJf6qBu9uw8PRPv0Z9PRG','2021-10-22 14:49:58','2021-11-30 02:30:05',1,2,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(4,'Brand Owner','brandowner@gmail.com','$2y$10$zeSbB.N9ZeD/X8JxZAfjWe5MEka826SlwCbg4B4lnpE2gtKDe9Rcm','2021-10-25 12:05:51','2021-11-30 02:30:05',1,4,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,'Brand Owner','brandsupport@gmail.com','$2y$10$3JZCgeni1webVQ0SJgpJlu5wOb.KVeMwR9pIMw2rHx3Y4j8RArUmG','2021-10-25 12:06:16','2021-11-30 02:30:05',1,5,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,'Production','production@gmail.com','$2y$10$3JZCgeni1webVQ0SJgpJlu5wOb.KVeMwR9pIMw2rHx3Y4j8RArUmG','2021-10-25 12:06:16','2021-11-30 02:30:05',18,7,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(17,'Company','company@crm.com','$2y$10$K8YJhoKOZovL.yKuR.YrDu3xOL1fqz3lJuwXYUWs.ccATSECmMkcG','2021-10-28 14:40:27','2021-11-30 02:30:05',17,2,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(18,'test','test@gmail.com','$2y$10$Ad5OoyCldFkxs55KxkJ8sui1jP4EonU/GuuO5.hqnD9AAKkbz/Q12','2021-10-28 18:38:18','2021-11-30 02:30:05',17,5,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(19,'test','test@gmail.com','$2y$10$JmbWGCSc..DB0gdBtfXgJul3CTlvqBqMheKEFqg/LBN02P3d7WbOW','2021-10-28 18:38:45','2021-11-30 02:30:05',17,5,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(20,'test','test2@gmail.com','$2y$10$UcCW.ASyHqEg.EyP1Ba3yuGDxqsEks2x5Bf9.nQZk5IgI4gaZRDZ2','2021-10-28 18:39:46','2021-11-30 02:30:05',17,5,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(21,'support','test@support.com','$2y$10$yMMAAuIkIf2K3EUR7JmreuCQGdcyinu57zoTu./Q.NEFmnB6gaoLi','2021-10-28 18:47:34','2021-11-30 02:30:05',1,5,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(24,'test company','companytest@gmail.com','$2y$10$w08evdr3BCMj9pHz3g/Jp.SkKv.031DDGzd9kr.PVfOIfWJyZhzTK','2021-10-28 23:32:30','2021-11-30 02:30:05',18,2,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(25,'tcbowner','tcbowner@gmail.com','$2y$10$TYr/1op6we3ZP4y4MHm94uReXPoqPpYv2amcGFNilDTRGhGBX9mFG','2021-10-28 23:37:14','2021-11-30 02:30:05',18,5,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(26,'Customer','customer@gmail.com','$2y$10$FSA3VoRa.IwlxSxOCIDlCem7S4J7TYdbTlTSjJWN1xqQGH.EqPJZ6','2021-10-30 02:53:37','2021-11-30 02:30:05',18,6,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(30,'junaid yrux','jesper@gmail.com','$2y$10$d0Sj0M.8biOSXLl/5vAt7.wkT/rZrB5MmHfIjbxz6mCJqceQHRSQ2','2021-11-13 03:49:55','2021-11-30 02:30:05',1,6,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(31,'lead llead','lead1@gmail.com','$2y$10$7/XWQAeBeVk6UzxlpVq3MOe2u54VCvPi6XSeV6eH74iJge6E/mPgK','2021-11-16 13:54:19','2021-11-30 02:30:05',17,6,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(32,'New Company 3','company3@gmail.com','$2y$10$wne6/Jb.pblUyILiojt64ewqCyhhkGS3IQOihV0ExGpD8uINKoyly','2021-11-16 15:13:41','2021-11-30 02:30:05',19,2,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(33,'Brand Owner 3','brandowner3@gmail.com','$2y$10$w7olRl0i./QYlXGH.be.buw68uZ3sgK7sAuVZbrUh/QYnr3YY7H6a','2021-11-16 15:16:20','2021-11-30 02:30:05',19,4,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(34,'Brand Sales 3','brandsales3@gmail.com','$2y$10$YhNVFRozlIqHsJuSEVqUD..LZSnBeht0KLYgXt4pUlNo53eOJNwQS','2021-11-16 15:16:36','2021-11-30 02:30:05',19,4,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(35,'Brand Support 3','brandsupport3@gmail.com','$2y$10$mHj2hkFEhMVwxhQJsfD5i.k0xN3tvt5joBrm50QEB65Q9J8bGgZfa','2021-11-16 15:16:48','2021-11-30 02:30:05',19,5,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(36,'N C','nclead@gmail.com','$2y$10$2dP17NSNDG7wGHb2uMIBxOVMWWF5uq6xkaiJXPyWYwLEZAVGa1tOa','2021-11-16 16:04:08','2021-11-30 02:30:05',19,6,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(37,'Design','design3@gmail.com','$2y$10$UGYhklpDerbClNzBUztE4OEGKQkyA19DCiVgFGqPdYpCnfKEdFIDq','2021-11-16 16:20:07','2021-11-30 02:30:05',19,7,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(38,'test test','nhlead3@gmail.com','$2y$10$ir2KAIdLE.HMj9zpsYseAeRk1uABQ/nDjdLHH1w4ZVFi.7LmcfJUe','2021-11-16 19:30:35','2021-11-30 02:30:05',19,6,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(39,'N C','nclead@gmail.com','$2y$10$WnFv16RCk2P1PIcAnWSw.O8lX7.eEbOBxDNeH8.I8/Ob.cWNSfuXC','2021-11-25 05:02:56','2021-11-30 02:30:05',19,6,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(40,'Jhon Doe','nhnnlead@gmail.com','$2y$10$YlBZRHbbwvCUOvFe786g6uYCGn04Hp4rN8UGxHgCDjw6KHU6cGWv.','2021-11-25 23:46:42','2021-11-30 02:30:05',19,6,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(41,'Jhon Doe','nhnnlead@gmail.com','$2y$10$amJWWF6UjnqK8QfdUHCMTeztmw1xVuXgjP4fNnhRT2hOX.0ifC2lq','2021-11-26 04:03:54','2021-11-30 02:30:05',19,6,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(42,'lead new new','newlead32@gmail.com','$2y$10$3hqiLhNOPK3HxyBMV2FEB.yTydM.zUpqU5p.ITWEOv./3JyUP2bke','2021-11-26 04:16:09','2021-11-30 02:30:05',19,6,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(43,'Development','development@gmail.com','$2y$10$HDJdCFR4JYRzwXA5ZR16Wu/fcKLCXkyWZHf2Dc3x/2fkqXaoaJnc6','2021-12-01 04:11:56','2021-12-01 04:11:56',19,7,5,NULL,NULL,NULL,NULL,NULL,NULL),
+(44,'Sabih Shehzad','sabih@gmail.com','$2y$10$yC9j3eTmiHL3Is.S4dmJ.ebiLNYiB.dX1pIgle6neMw7YvhnjL/Qy','2021-12-01 06:17:48','2021-12-01 06:17:49',19,8,5,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /* Trigger structure for table `brands` */
 

@@ -18,7 +18,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // Gate::authorize('viewAny',User::class);
-        $user = User::leftJoin('roles','users.role_id','=','roles.id');
+        $user = User::leftJoin('roles','users.role_id','=','roles.id')
+        ->leftJoin('departments','users.department_id','=','departments.id');
         if(isset($_GET['sortCol'])){
             $user = $user->orderBy($_GET['sortCol'],($_GET['sortByDesc']==1?'desc':'asc'));
         }else{
@@ -29,15 +30,19 @@ class UserController extends Controller
                 function($query) {
                 $q = $_GET['search'];
                 $query->orWhere('users.name', 'like', '%'.$q.'%')->orWhere('users.email', 'like', '%'.$q.'%')
-                ->orWhere('roles.title', 'like', '%'.$q.'%')->orWhere('roles.name', 'like', '%'.$q.'%');
+                ->orWhere('roles.title', 'like', '%'.$q.'%')->orWhere('roles.name', 'like', '%'.$q.'%')
+                ->orWhere('departments.department_name', 'like', '%'.$q.'%');
             });
         }
         if(!empty($_GET['role_id'])){
             $user = $user->where('role_id',$_GET['role_id']);
         }
-        $user=$user->select('users.id','users.email','users.name','roles.title as role_name');
+        if(!empty($_GET['department_id'])){
+            $user = $user->where('department_id',$_GET['department_id']);
+        }
+        $user=$user->select('users.id','users.email','users.name','roles.title as role_name','users.department_id','departments.department_name');
         if($request->user()->role_id!=1){
-            $user=$user->where('company_id',$request->user()->company_id);
+            $user=$user->where('users.company_id',$request->user()->company_id);
         }
         $user=$user->where('users.id','<>',$request->user()->id);
         if(intval($_GET['perpage'])>0){
@@ -57,7 +62,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         Gate::authorize('create',User::class);
-        $user = User::create($request->only('name','email','role_id','password','company_id'));
+        $user = User::create($request->only('name','email','role_id','password','company_id','department_id'));
         $user->password = Hash::make($user->password);
         $user->save();
         return new UserResource($user);

@@ -13,6 +13,17 @@
         <v-expansion-panel-content>
           <v-row>
             <v-col cols="12" md="12">
+              <v-select
+                  :items="[{id: 'initial', value: 'Initial'},{id: 'revision', value: 'Revision'},{id: 'innerpages', value: 'Inner Pages'},{id:'redraw',value:'ReDraw'}]"
+                  item-text="value"
+                  item-value="id"
+                  label="Task Type*"
+                  required
+                  v-model="task.task_type"
+                  :error-messages="taskErrors.task_type"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" md="12">
               <v-text-field
                 v-model="task.task_title"
                 label="Task"
@@ -131,6 +142,7 @@ export default {
       task: {
         task_title: "",
         description: "",
+        task_type: 'initial',
         files: [],
         assigned_to: 0,
         picker: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -142,6 +154,7 @@ export default {
         task_description:[],
         due_date: [],
         attachements: [],
+        task_type: [],
       },
       editorConfig: {},
       editor: ClassicEditor,
@@ -161,6 +174,7 @@ export default {
       var formData = new FormData();
       formData.append('title',this.task.task_title)
       formData.append('task_description',this.task.description)
+      formData.append('task_type',this.task.task_type)
       formData.append('assigned_on',this.task.assigned_to)
       formData.append('due_date',this.task.picker)
       formData.append('project_id',this.task.project_id)
@@ -183,6 +197,7 @@ export default {
       this.task = {
         task_title: "",
         description: "",
+        task_type: 'initial',
         files: [],
         assigned_to: 0,
         picker: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -211,6 +226,7 @@ export default {
         task_description:[],
         due_date: [],
         attachements: [],
+        task_type: [],
       }
     },
     async validateTask(){
@@ -219,6 +235,7 @@ export default {
       formData.append('project_id',this.project_id)
       formData.append('title',this.task.task_title)
       formData.append('task_description',this.task.description)
+      formData.append('task_type',this.task.task_type)
       formData.append('due_date',this.task.picker)
       for(let i = 0; i < this.task.files.length; i++){
         formData.append('attachements['+i+']',this.task.files[i])
@@ -242,6 +259,10 @@ export default {
           if(res.data.attachements){
               this.taskErrors.attachements = res.data.attachements
           }
+          if(res.data.task_type){
+              this.taskErrors.task_type = res.data.task_type
+          }
+          
       }
     }
   },

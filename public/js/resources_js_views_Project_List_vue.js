@@ -490,7 +490,8 @@ var taskservice = /*#__PURE__*/function () {
   _createClass(taskservice, [{
     key: "summary",
     value: function summary(project_id) {
-      return axios.get("/api/project/".concat(project_id, "/task")).then(function (response) {
+      var query = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      return axios.get("/api/project/".concat(project_id, "/task").concat(query)).then(function (response) {
         return response.data.data;
       })["catch"](function (error) {
         return error;
@@ -528,6 +529,15 @@ var taskservice = /*#__PURE__*/function () {
     key: "updateStatus",
     value: function updateStatus(project_id, task_id, status) {
       return axios.post("/api/project/".concat(project_id, "/").concat(task_id, "/status/").concat(status)).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "usersSummary",
+    value: function usersSummary(project_id) {
+      return axios.get('/api/task/' + project_id + '/usersSummary').then(function (response) {
         return response.data;
       })["catch"](function (error) {
         return error;

@@ -59,6 +59,23 @@ lazy-validation
     :error-messages="errors.role_id"
 ></v-select>
 </v-col>
+
+<v-col
+  cols="12"
+  sm="12"
+  class="pb-0"
+>
+<v-select
+    :items="departments"
+    item-text="department_name"
+    item-value="id"
+    label="Department*"
+    required
+    v-model="department_id"
+    :error-messages="errors.department_id"
+></v-select>
+</v-col>
+
 <v-col
   cols="12"
   sm="12"
@@ -99,6 +116,7 @@ lazy-validation
 
 <script>
 import userervice from "@services/auth/user";
+import departmentservice from "@services/auth/department";
 export default {
   name: "auth.users.add",
   async mounted(){
@@ -108,6 +126,10 @@ export default {
     this.email = res.email
     this.password = res.password
     this.role_id = res.role_id
+    this.department_id = res.department_id
+    departmentservice.getlist('').then(e=>{
+      this.departments = e.data
+    })
   },
   methods: {
     resetError(){
@@ -116,6 +138,7 @@ export default {
           email: [],
           password: [],
           role_id: [],
+          department_id: [],
       }
     },
     addbrand: async function () {
@@ -130,6 +153,7 @@ export default {
         }
         formdata.append("role_id", this.role_id);
         formdata.append("company_id", this.user.company_id);
+        formdata.append("department_id", this.department_id);
         this.btnloading = false;
         var res = await userervice.update(formdata, this.id)
         if(!res.status){
@@ -144,6 +168,9 @@ export default {
             }
             if(res.data.role_id){
                 this.errors.role_id = res.data.role_id
+            }
+            if(res.data.department_id){
+                this.errors.department_id = res.data.department_id
             }
             //errors here
         }else{
@@ -164,12 +191,15 @@ export default {
       email: '',
       password: '',
       role_id: '',
+      department_id: '',
+      departments: [],
       id: 0,
       errors: {
           name:[],
           email: [],
           password: [],
           role_id: [],
+          department_id: [],
       },
       bread: [
         {

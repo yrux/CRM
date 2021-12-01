@@ -1,7 +1,7 @@
 const axios = require('axios');
 class taskservice{
-	summary(project_id){
-		return axios.get(`/api/project/${project_id}/task`)
+	summary(project_id, query=''){
+		return axios.get(`/api/project/${project_id}/task${query}`)
 		.then(function (response) {
 			return response.data.data;
 		})
@@ -33,6 +33,13 @@ class taskservice{
 	}
 	updateStatus(project_id, task_id, status){
 		return axios.post(`/api/project/${project_id}/${task_id}/status/${status}`).then(function(response){
+			return response.data
+		}).catch(function(error){
+			return error
+		})
+	}
+	usersSummary(project_id){
+		return axios.get('/api/task/'+project_id+'/usersSummary').then(function(response){
 			return response.data
 		}).catch(function(error){
 			return error

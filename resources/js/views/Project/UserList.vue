@@ -89,6 +89,9 @@ export default {
         query += "&search=" + this.search;
       }
       query += "&role_id="+this.role;
+      if(this.department>0){
+        query += "&department_id="+this.department;
+      }
       return userservice.getlist(query);
     },
   },
@@ -110,6 +113,10 @@ export default {
     role: {
       type: Number,
       default: 7
+    },
+    department: {
+      type: Number,
+      default: 0
     },
   }
 };

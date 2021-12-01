@@ -456,7 +456,7 @@
           </v-menu>
         </v-list-item>
         <v-list-item
-          v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 7"
+          v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 7 || user.role_id == 8"
           class="pa-0"
           link
           :to="{ name: 'auth.tasks.type', params: { type: 'today' } }"
@@ -478,7 +478,7 @@
           </v-tooltip>
         </v-list-item>
         <v-list-item
-          v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 7"
+          v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 7 || user.role_id == 8"
           class="pa-0"
           link
           :to="{ name: 'auth.tasks.type', params: { type: 'overdue' } }"
@@ -500,7 +500,7 @@
           </v-tooltip>
         </v-list-item>
         <v-list-item
-          v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 7"
+          v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 7 || user.role_id == 8"
           class="pa-0"
           link
           :to="{ name: 'auth.tasks.type', params: { type: 'upcomming' } }"
