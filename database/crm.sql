@@ -120,7 +120,7 @@ CREATE TABLE `chat_heads` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chat_heads` */
 
@@ -151,7 +151,9 @@ insert  into `chat_heads`(`id`,`user_id`,`sender_id`,`updated_at`,`created_at`) 
 (48,34,40,'2021-11-26 05:01:33','2021-11-26 05:01:33'),
 (49,34,35,'2021-11-26 05:01:39','2021-11-26 05:01:39'),
 (50,34,33,'2021-11-26 05:01:40','2021-11-26 05:01:40'),
-(51,33,41,'2021-11-29 22:32:36','2021-11-29 22:32:36');
+(51,33,41,'2021-11-29 22:32:36','2021-11-29 22:32:36'),
+(52,43,40,'2021-12-03 06:25:40','2021-12-03 06:25:40'),
+(53,43,44,'2021-12-03 06:25:42','2021-12-03 06:25:42');
 
 /*Table structure for table `chats` */
 
@@ -165,7 +167,7 @@ CREATE TABLE `chats` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chats` */
 
@@ -248,7 +250,9 @@ insert  into `chats`(`id`,`chat_head_id`,`message`,`user_id`,`updated_at`,`creat
 (97,51,'asdasd123123',33,'2021-11-29 22:32:41','2021-11-29 22:32:41'),
 (98,51,'asdasd',33,'2021-11-29 22:32:43','2021-11-29 22:32:43'),
 (99,51,'aasdasd',33,'2021-11-29 22:32:44','2021-11-29 22:32:44'),
-(100,51,'dsadas<br>asdasdasdasdasdasda<br>asdasdasd1231 23a sd<br>123123 .',33,'2021-11-29 22:32:58','2021-11-29 22:32:58');
+(100,51,'dsadas<br>asdasdasdasdasdasda<br>asdasdasd1231 23a sd<br>123123 .',33,'2021-11-29 22:32:58','2021-11-29 22:32:58'),
+(101,53,'sabih kiya kr rage gi?',43,'2021-12-03 06:25:50','2021-12-03 06:25:50'),
+(102,53,'test',43,'2021-12-03 06:26:01','2021-12-03 06:26:01');
 
 /*Table structure for table `company` */
 
@@ -331,7 +335,7 @@ CREATE TABLE `files` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `fileable_id_type_index` (`fileable_id`,`fileable_type`,`table_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `files` */
 
@@ -465,7 +469,8 @@ insert  into `files`(`id`,`url`,`fileable_id`,`fileable_type`,`table_name`,`crea
 (173,'chat/9AV5so5rCGSOwJEGkdIerHkiZE29udaGtfUlds9J.jpg',85,'App\\Models\\Chat','chat','2021-11-26 04:43:16','2021-11-26 04:43:19'),
 (174,'chat/QCcxQSLbwFgd2mGUaYB1UGxk2J3gp58RVy30AdbF.html',85,'App\\Models\\Chat','chat','2021-11-26 04:43:16','2021-11-26 04:43:19'),
 (175,'chat/fhzbaFEcYud3wnTVQbfN6kiKg9q2HsBLQflqK7Pd.docx',100,'App\\Models\\Chat','chat','2021-11-29 22:32:57','2021-11-29 22:32:58'),
-(176,'brands/QJk1TrxihFAyJa7lyUeDSfNZFl222VM1phNEGM05.png',15,'App\\Models\\Brand','brands','2021-12-01 00:45:22','2021-12-01 00:45:22');
+(176,'brands/QJk1TrxihFAyJa7lyUeDSfNZFl222VM1phNEGM05.png',15,'App\\Models\\Brand','brands','2021-12-01 00:45:22','2021-12-01 00:45:22'),
+(177,'chat/1qftQOCha4JHx2JhJnz7BSrqKwA97SnN9KS7CHnG.png',102,'App\\Models\\Chat','chat','2021-12-03 06:25:59','2021-12-03 06:26:01');
 
 /*Table structure for table `lead_assigned` */
 
@@ -478,7 +483,7 @@ CREATE TABLE `lead_assigned` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_active` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `lead_assigned` */
 
@@ -488,7 +493,8 @@ insert  into `lead_assigned`(`id`,`user_id`,`lead_id`,`created_at`,`is_active`) 
 (13,34,32,'2021-12-01 00:20:35',1),
 (18,34,33,'2021-12-01 00:30:50',1),
 (20,33,33,'2021-12-01 00:30:54',1),
-(21,35,34,'2021-12-01 01:57:08',1);
+(21,35,34,'2021-12-01 01:57:08',1),
+(22,35,31,'2021-12-03 05:35:20',1);
 
 /*Table structure for table `lead_messages` */
 
@@ -503,7 +509,7 @@ CREATE TABLE `lead_messages` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `lead_messages` */
 
@@ -548,12 +554,12 @@ insert  into `lead_messages`(`id`,`lead_id`,`user_id`,`message`,`is_seen`,`creat
 (38,26,33,'ss',1,'2021-11-17 00:44:33','2021-11-17 02:10:19'),
 (39,26,33,'s',1,'2021-11-17 00:44:33','2021-11-17 02:10:19'),
 (40,27,33,'123',1,'2021-11-17 00:52:13','2021-11-17 01:53:09'),
-(41,27,38,'123',0,'2021-11-17 00:52:15','2021-11-17 00:52:15'),
+(41,27,38,'123',1,'2021-11-17 00:52:15','2021-12-03 04:58:58'),
 (42,27,33,'123123asdasd',1,'2021-11-17 00:52:17','2021-11-17 01:53:09'),
-(43,27,38,'user here',0,'2021-11-17 00:52:24','2021-11-17 00:52:24'),
+(43,27,38,'user here',1,'2021-11-17 00:52:24','2021-12-03 04:58:58'),
 (44,27,33,'hello',1,'2021-11-17 00:52:27','2021-11-17 01:53:09'),
-(45,27,38,'123123',0,'2021-11-17 01:12:39','2021-11-17 01:12:39'),
-(46,27,38,'asdasd',0,'2021-11-17 01:12:40','2021-11-17 01:12:40'),
+(45,27,38,'123123',1,'2021-11-17 01:12:39','2021-12-03 04:58:58'),
+(46,27,38,'asdasd',1,'2021-11-17 01:12:40','2021-12-03 04:58:58'),
 (47,26,36,'123',1,'2021-11-17 02:10:22','2021-11-17 02:12:08'),
 (48,26,36,'1231',1,'2021-11-17 02:10:42','2021-11-17 02:12:08'),
 (49,26,36,'123',1,'2021-11-17 02:10:42','2021-11-17 02:12:08'),
@@ -591,8 +597,11 @@ insert  into `lead_messages`(`id`,`lead_id`,`user_id`,`message`,`is_seen`,`creat
 (81,31,32,'123123',1,'2021-11-26 04:17:35','2021-11-26 04:17:47'),
 (82,31,32,'asdasd',1,'2021-11-26 04:17:36','2021-11-26 04:17:47'),
 (83,31,32,'123123',1,'2021-11-26 04:17:43','2021-11-26 04:17:47'),
-(84,31,42,'123213',0,'2021-11-26 04:26:30','2021-11-26 04:26:30'),
-(85,31,42,'test',0,'2021-11-26 04:43:19','2021-11-26 04:43:19');
+(84,31,42,'123213',1,'2021-11-26 04:26:30','2021-12-03 06:26:51'),
+(85,31,42,'test',1,'2021-11-26 04:43:19','2021-12-03 06:26:51'),
+(86,31,42,'bhosrike',1,'2021-12-03 06:26:42','2021-12-03 06:26:51'),
+(87,31,35,'123123',1,'2021-12-03 06:27:37','2021-12-03 06:27:47'),
+(88,31,42,'123123',0,'2021-12-03 06:27:51','2021-12-03 06:27:51');
 
 /*Table structure for table `leads` */
 
@@ -701,7 +710,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `migrations` */
 
@@ -713,7 +722,55 @@ insert  into `migrations`(`id`,`migration`,`batch`) values
 (13,'2016_06_01_000004_create_oauth_clients_table',1),
 (14,'2016_06_01_000005_create_oauth_personal_access_clients_table',1),
 (15,'2019_08_19_000000_create_failed_jobs_table',1),
-(16,'2019_12_14_000001_create_personal_access_tokens_table',1);
+(16,'2019_12_14_000001_create_personal_access_tokens_table',1),
+(17,'2021_12_04_014853_create_notifications_table',2);
+
+/*Table structure for table `notifications` */
+
+DROP TABLE IF EXISTS `notifications`;
+
+CREATE TABLE `notifications` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_id` bigint(20) unsigned NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `notifications` */
+
+insert  into `notifications`(`id`,`type`,`notifiable_type`,`notifiable_id`,`data`,`read_at`,`created_at`,`updated_at`) values 
+('2519ba52-e781-4344-8166-7d93d334e50a','App\\Notifications\\taskComment','App\\Models\\User',35,'{\"task_id\":42,\"line\":\"Sabih Shehzad Commented On #20\"}',NULL,'2021-12-04 06:14:34','2021-12-04 06:14:34'),
+('2f993e7d-b9ca-4dce-951d-d15baaa01a84','App\\Notifications\\taskComment','App\\Models\\User',44,'{\"task_id\":45,\"line\":\"Development Commented On #20\"}',NULL,'2021-12-04 06:15:13','2021-12-04 06:15:13'),
+('4c6f63fe-680b-4c1f-9d74-c63acdd1a10d','App\\Notifications\\taskComment','App\\Models\\User',43,'{\"task_id\":42,\"line\":\"Sabih Shehzad Commented On #20\"}',NULL,'2021-12-04 06:14:34','2021-12-04 06:14:34'),
+('4eb85ba3-a984-4e77-840b-777a891ad768','App\\Notifications\\taskComment','App\\Models\\User',44,'{\"task_id\":44,\"line\":\"Development Commented On #20\"}',NULL,'2021-12-04 06:15:09','2021-12-04 06:15:09'),
+('522de9af-3e9d-4094-a9d5-b25219d8eb32','App\\Notifications\\taskComment','App\\Models\\User',35,'{\"task_id\":44,\"line\":\"Development Commented On #20\"}',NULL,'2021-12-04 06:15:09','2021-12-04 06:15:09'),
+('63b02770-f571-4fbb-b780-8a72019780d4','App\\Notifications\\taskComment','App\\Models\\User',35,'{\"task_id\":43,\"line\":\"Sabih Shehzad Commented On #20\"}',NULL,'2021-12-04 06:14:52','2021-12-04 06:14:52'),
+('6712a349-ff68-495f-b83d-62afb2727f8b','App\\Notifications\\taskComment','App\\Models\\User',37,'{\"task_id\":30}',NULL,'2021-12-04 02:02:32','2021-12-04 02:02:32'),
+('6d6c873d-bb90-4c15-927d-f9cd10f0bf44','App\\Notifications\\taskComment','App\\Models\\User',35,'{\"task_id\":48,\"line\":\"Development Commented On #20\"}',NULL,'2021-12-04 06:15:37','2021-12-04 06:15:37'),
+('8aab8990-2ed1-4254-b8f3-808fd8038f07','App\\Notifications\\taskComment','App\\Models\\User',37,'{\"task_id\":38,\"line\":\"Brand Support 3 Commented On #21\"}',NULL,'2021-12-04 05:51:00','2021-12-04 05:51:00'),
+('8d904bb2-9ad1-41ba-a69d-e1f3d09d0803','App\\Notifications\\taskComment','App\\Models\\User',35,'{\"task_id\":49,\"line\":\"Sabih Shehzad Commented On #20\"}',NULL,'2021-12-04 06:15:42','2021-12-04 06:15:42'),
+('8df486df-e7eb-4138-821a-c007099e7164','App\\Notifications\\taskComment','App\\Models\\User',37,'[]',NULL,'2021-12-04 02:00:24','2021-12-04 02:00:24'),
+('90cc3f8f-c098-4e29-acc2-49455326f683','App\\Notifications\\taskComment','App\\Models\\User',35,'{\"task_id\":45,\"line\":\"Development Commented On #20\"}',NULL,'2021-12-04 06:15:13','2021-12-04 06:15:13'),
+('9bc02642-96a2-4751-a4ae-6c69c88f2f01','App\\Notifications\\taskComment','App\\Models\\User',37,'[]',NULL,'2021-12-04 02:00:58','2021-12-04 02:00:58'),
+('c31573bd-8490-4fb4-a24a-316996e85397','App\\Notifications\\taskComment','App\\Models\\User',35,'{\"task_id\":41,\"line\":\"Sabih Shehzad Commented On #20\"}',NULL,'2021-12-04 06:14:22','2021-12-04 06:14:22'),
+('cca5914b-622a-423a-8728-5407e92ba104','App\\Notifications\\taskComment','App\\Models\\User',43,'{\"task_id\":43,\"line\":\"Sabih Shehzad Commented On #20\"}',NULL,'2021-12-04 06:14:52','2021-12-04 06:14:52'),
+('d054307c-cd55-4edb-8735-18546d0c0141','App\\Notifications\\taskComment','App\\Models\\User',35,'{\"task_id\":47,\"line\":\"Development Commented On #20\"}',NULL,'2021-12-04 06:15:27','2021-12-04 06:15:27'),
+('d93124cc-408a-49a1-894b-c478f4fa3a0c','App\\Notifications\\taskComment','App\\Models\\User',44,'{\"task_id\":46,\"line\":\"Development Commented On #20\"}',NULL,'2021-12-04 06:15:18','2021-12-04 06:15:18'),
+('d9b44958-3c1e-4330-b667-640eb6142756','App\\Notifications\\taskComment','App\\Models\\User',44,'{\"task_id\":47,\"line\":\"Development Commented On #20\"}',NULL,'2021-12-04 06:15:27','2021-12-04 06:15:27'),
+('dcbda161-0760-43bb-a50c-6d00bc95baa9','App\\Notifications\\taskComment','App\\Models\\User',37,'{\"task_id\":37,\"line\":\"Brand Support 3 Commented On #21\"}',NULL,'2021-12-04 05:49:16','2021-12-04 05:49:16'),
+('df81b84e-89b6-4983-bf9e-c87da9b5d1db','App\\Notifications\\taskComment','App\\Models\\User',43,'{\"task_id\":41,\"line\":\"Sabih Shehzad Commented On #20\"}',NULL,'2021-12-04 06:14:22','2021-12-04 06:14:22'),
+('e0923d17-34a4-425a-8877-4b787ee2713f','App\\Notifications\\taskComment','App\\Models\\User',37,'{\"task_id\":34,\"line\":\"Brand Support 3 Commented On #21\"}',NULL,'2021-12-04 02:05:28','2021-12-04 02:05:28'),
+('e16b5e0c-161a-41b0-98d2-02f85411afac','App\\Notifications\\taskComment','App\\Models\\User',44,'{\"task_id\":48,\"line\":\"Development Commented On #20\"}',NULL,'2021-12-04 06:15:37','2021-12-04 06:15:37'),
+('e355f79b-8db6-49e1-98fb-edcf77ed3476','App\\Notifications\\taskComment','App\\Models\\User',37,'[]',NULL,'2021-12-04 02:01:19','2021-12-04 02:01:19'),
+('ec102060-41ec-4ec4-8340-81cbe9c87f2c','App\\Notifications\\taskComment','App\\Models\\User',43,'{\"task_id\":49,\"line\":\"Sabih Shehzad Commented On #20\"}',NULL,'2021-12-04 06:15:42','2021-12-04 06:15:42'),
+('f2fb1f29-0ed1-4f18-867a-61e9bb09f70a','App\\Notifications\\taskComment','App\\Models\\User',37,'{\"task_id\":40,\"line\":\"Brand Support 3 Commented On #21\"}',NULL,'2021-12-04 05:51:56','2021-12-04 05:51:56'),
+('fde6e816-7296-40fd-a647-ffc7f0a32e90','App\\Notifications\\taskComment','App\\Models\\User',35,'{\"task_id\":46,\"line\":\"Development Commented On #20\"}',NULL,'2021-12-04 06:15:18','2021-12-04 06:15:18');
 
 /*Table structure for table `oauth_access_tokens` */
 
@@ -751,16 +808,21 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('136469c8c3642e44f1b168829ddde368e2d27d172fe1e4528197c812ec224ccfec88fb6d259d12aa',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:47:12','2021-10-26 13:47:12','2022-04-26 13:47:11'),
 ('1390c0dd3cbfea9be47830756f7fb9d35bd2cb9ce8ff0fbeaa33bc85787bdf8cbd397723d4c5ae3f',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-22 14:58:36','2021-10-22 14:58:36','2022-04-22 14:58:36'),
 ('148b3851abc6a80caafb6ada910a7462c3c6d0af6fccc1a7f162ca9df9f0d5d932bf40c178301d34',34,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 04:21:46','2021-11-26 04:21:46','2022-05-26 04:21:46'),
+('17169b8db2f876551c952e89e08fae566e445697bcbb29b2535d05dd4a8dd35cd73dfe97a3fd58fd',43,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-04 06:13:54','2021-12-04 06:13:54','2022-06-04 06:13:53'),
 ('17a9c7bdfd4ea205b2c7b1e0cd4330c453fa3fac047c99e7bd7304302f9a8a85e05634ed242be635',25,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-30 00:22:18','2021-10-30 00:22:18','2022-04-30 00:22:18'),
 ('1a1f8eaa77bc3446901836381caaedf23c405ea48e5a6d2a2a544a36ceb025e0dcce15bd7cdec4a6',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:55:34','2021-10-26 13:55:34','2022-04-26 13:55:34'),
 ('1b35f13f73bbdaca6c9e0b3a43c8221289eaaf47005ea450d5d27050528b45787b93d8cdac942ea6',25,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-02 00:11:04','2021-11-02 00:11:04','2022-05-02 00:11:04'),
+('1b50de2a8b1144b2eda2bfb9c762bb2039eebd3b52f8f9d2552d9a9a6044398b54cb11032b6d654b',44,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-04 05:54:25','2021-12-04 05:54:25','2022-06-04 05:54:25'),
 ('22350313909524347974c0a1cd07c9a921d018dca6c7bca4245d0c4e3fd17ca5cc152677542f369c',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:32:26','2021-10-26 09:32:26','2022-04-26 09:32:26'),
 ('24cb3dd7486805da1d6a082d3ee2c18314b009fe9e8501ed82ea67a71444adee8b63b45daf1a577a',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:51:50','2021-10-26 09:51:50','2022-04-26 09:51:49'),
 ('251f4718200f9918d2cf1e11b9ce4520079ebb7d14d1c0b822e3bd899d70b7c2b2ca7495a50b06af',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 19:24:48','2021-11-16 19:24:48','2022-05-16 19:24:47'),
+('28e4a5a956f9c26215df7b2d0d7b49be21ec695852ac109acaf1160570b1c628214137fde9b0d0d4',34,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-02 03:05:20','2021-12-02 03:05:20','2022-06-02 03:05:20'),
+('2a685365cf27cc84d43b860762c7df38a62a24e796567f2c1d56fe3c81d85a72e6e5afd59f52ff71',33,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-02 03:05:37','2021-12-02 03:05:37','2022-06-02 03:05:37'),
 ('2ddf12bfb85cf5a3765e75e037ab7d4c59a12c32ae87638755bc54b0beca8dc9582e002083b19623',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-02 00:10:24','2021-11-02 00:10:24','2022-05-02 00:10:22'),
 ('317b3d6b65a29f87ba990e35cf514e283bced289347de7f39415691682c633337eb3e4f7408db7d0',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 18:53:35','2021-10-28 18:53:35','2022-04-28 18:53:34'),
 ('333c184e33638c8338835f0d75ada1da77f93e0b35ee8bb3a763d75dd14a8818b41cbf3beeb648fd',33,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 23:10:21','2021-11-16 23:10:21','2022-05-16 23:10:21'),
 ('349d576f0b93e721c2c38ca4c89524aacf75ce667f30f5fff5d8005a8f98b0480fc81cb6905dc354',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:51:45','2021-10-26 09:51:45','2022-04-26 09:51:44'),
+('36220cdd539ad56c433427dc8ed55cfa763e5712c071c0fa84039b8a27952c9a5f5ef98000a42031',43,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-03 04:37:30','2021-12-03 04:37:30','2022-06-03 04:37:29'),
 ('38668a7fa783b42c0ca95af8bd0aa195ab9c681055ab0910b1c67080613c4fce020416252e45407f',33,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-29 23:43:49','2021-11-29 23:43:49','2022-05-29 23:43:49'),
 ('3a5257b35b6c754e9ef3a4667783a36b0d82570718ea9b03b1092d9c62f30d04afd39659dcee9341',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:43:59','2021-10-26 13:43:59','2022-04-26 13:43:59'),
 ('3af0cc37a8b790b89478a7468200c46778209986bb26a782589352f6f97c435ca04b663158970aac',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-20 12:31:47','2021-10-20 12:31:47','2022-04-20 12:31:44'),
@@ -775,12 +837,17 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('3fe6d0fddefeb313a005d0ccbc97b9f6ee993878e39192b905e7f6ad1a9f3630e10c0211eb369f44',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:47:46','2021-10-26 13:47:46','2022-04-26 13:47:46'),
 ('3feff9c1fe510a6d0f0ff08c93074d5b837c0f2f5b8f5f926d9d05d06458d75562e3eb84365444a4',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 03:54:43','2021-11-26 03:54:43','2022-05-26 03:54:42'),
 ('4025a8cb099238ff13ace24afe323b0509c4a05525d2830b20d7212050daac3a8e174546f69bd4f9',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-30 00:22:13','2021-11-30 00:22:13','2022-05-30 00:22:13'),
+('409e8f52d9186b34d74d649eb8359051934363a6b93b86a12a78f2f788e5d05092a99b7a0dc42af5',43,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-02 03:04:46','2021-12-02 03:04:46','2022-06-02 03:04:45'),
 ('45b6097efbdad64feba0b8211ab7ca850c42bd0d33d152a4fae2f2ff2e188c27381faf5f328c70e9',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-25 04:47:31','2021-11-25 04:47:31','2022-05-25 04:47:31'),
+('490a1ac9b73e5616b046d8291f457efa03f7ac09b74cf650dd619272942847457484942b55cc24cf',35,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-02 03:05:06','2021-12-02 03:05:06','2022-06-02 03:05:05'),
 ('4b4f208ec87913f5de7f79f3d77a84d8864e40fde2a622b4e2c71b4577e39e3875dbef9ec25d4854',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:37:21','2021-10-12 16:37:21','2022-04-12 16:37:18'),
 ('4d2281b4505800590eb1ab7d31b3cce0938791b42e642b99c15bca542efe147664e301c37ca8557b',43,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-01 06:25:21','2021-12-01 06:25:21','2022-06-01 06:25:21'),
+('519b25e114781274d7c8ee8deedecc45618c6c6c31ff78e3edd15d676247a2f224b979f2bdd17829',42,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-03 06:26:35','2021-12-03 06:26:35','2022-06-03 06:26:35'),
 ('54b5ebb4f1f92b215adaabc2595c3147b6fd3525bad28f091e16d8a07d5760b2a25b87fd7137e652',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-22 14:50:35','2021-10-22 14:50:35','2022-04-22 14:50:34'),
+('54e25ab877cfcf201bece55a577268cb99989a7c967e00e13ab40133bfffc2269bd258eecba3567d',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-03 04:58:25','2021-12-03 04:58:25','2022-06-03 04:58:25'),
 ('55262ac7ce99755fa871193e5811963ad74c7e3135a2e2fb9b889f20e445df877897a2ce8959ca13',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:41:31','2021-10-12 16:41:31','2022-04-12 16:41:30'),
 ('55384a6b855e55496fa9fdc983dc9e83fd5c12854810e4581cca644f0254a1ced7368c90c90da8af',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:34:14','2021-10-26 09:34:14','2022-04-26 09:34:14'),
+('5677c4eef9fcb3947fd89380f2c1aeec6c3c39275621ceaac38209449219c71f49366de3773c3a75',35,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-03 06:10:06','2021-12-03 06:10:06','2022-06-03 06:10:06'),
 ('57fd6f33e527e65409201058b80299036d14c5ca9c4995ccb846b00fe0d09e5104e16904fc333815',25,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-02 00:16:24','2021-11-02 00:16:24','2022-05-02 00:16:24'),
 ('5ae54b16df276ff6a101e51a3052df4b25dc63bbbdc313c083fc584adf444ac5d229d02588cba559',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:32:52','2021-10-26 09:32:52','2022-04-26 09:32:52'),
 ('5b8a05a9c1de000081a27a9f7cdee15bad373a8ab038a0d225b6c48874ed1b564e15965477e98b95',17,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 14:40:41','2021-10-28 14:40:41','2022-04-28 14:40:41'),
@@ -801,17 +868,22 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('737043d6887153febecbb326dc53b38f13476ef8ede7e23a238d24d8d624bda9acc80c97ade95ef8',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 14:43:01','2021-10-28 14:43:01','2022-04-28 14:43:01'),
 ('767be33136f464d7c7b0cafa330798bf34bf50accd3716e4a55aa81cfef7f6286ff56d03a3723f26',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 15:12:07','2021-11-16 15:12:07','2022-05-16 15:12:07'),
 ('777890fee8591160c7764c9a0c4d2832eb5ba01d9cfd3e0b8a7037df713a48a1d2fdfbcc7be25d04',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-22 14:59:56','2021-10-22 14:59:56','2022-04-22 14:59:56'),
+('78bf0c4866c2bb2e2f82cf9b7cbebc120f61e28d502c244a2ecf2d47e15dad936d1baef0b059af84',43,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-02 03:39:05','2021-12-02 03:39:05','2022-06-02 03:39:05'),
 ('78dc0ce2306fa741203799c7adf7bc8e3c9e55536742498089684a07650d2992aa1833d7ec60b619',42,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 04:16:51','2021-11-26 04:16:51','2022-05-26 04:16:51'),
+('7a6957f90c08230230261235a216daf2b9f5802ffcf67228f35e5efb8a067632e18feac73ef4f733',44,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-02 04:56:05','2021-12-02 04:56:05','2022-06-02 04:56:05'),
 ('7be9038d5c01d33e85cbf1afd999f12734898f3382a721cc5107827dab0c989e736b57719545aa26',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 09:51:19','2021-10-26 09:51:19','2022-04-26 09:51:19'),
 ('7f0fe16c10ba315df7a829fb97e0a19ba0b532eedfbdd5c418a36ba543919baeaa2829b158d1e8fa',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-25 04:47:13','2021-11-25 04:47:13','2022-05-25 04:47:10'),
 ('80246799f06b73bf90023633af416fceb2330d3c8dc3dda7d56a190217bc6b341997db9ed0abea09',33,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-29 22:20:05','2021-11-29 22:20:05','2022-05-29 22:20:04'),
+('804769f8f2a697c318b84cb2c3dd471c9ba77978c5f20d7d1b6da3f4449cca609479ae12a9466a1f',44,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-04 06:14:08','2021-12-04 06:14:08','2022-06-04 06:14:07'),
 ('80573f5cd0aff30aba9a3e6da815807e3fecb42515df9d881b64d98a8861b809f8e70d98b6703788',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-30 00:22:42','2021-10-30 00:22:42','2022-04-30 00:22:41'),
 ('80fc2defbef8da49cd6e144ced36c1b983e7dce85d198e1e5ab340e561098461dfeb5ef48cb86ece',43,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-01 06:50:30','2021-12-01 06:50:30','2022-06-01 06:50:30'),
 ('8227a1d5b6ec4aaa5c69e6df6c2bdd58fdc2fe95736ff48e5af118097a22fb18332fa698bed18ce5',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-29 14:10:00','2021-10-29 14:10:00','2022-04-29 14:10:00'),
 ('84ca6c8bd772564f0632c34f0503635f89a2c46bd9726ade609d3d23ce7836c3d731dd029456e34b',34,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 22:21:59','2021-11-26 22:21:59','2022-05-26 22:21:58'),
+('8662d1cf4ef95af0050d77ba5be4416c15d5d4c0e1831893d0050ef601fccadcb22956f98c4d3fad',33,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-03 05:00:42','2021-12-03 05:00:42','2022-06-03 05:00:42'),
 ('869ae8747bee378b5db22a30d7160b21d82f7e4a54b75ec393e679ef22cc9a4edb540f255c993157',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 15:09:28','2021-10-28 15:09:28','2022-04-28 15:09:28'),
 ('87647d0e628ba04970eb83f50e10434cbe5b2b51c2f8cc97d20e187217da147de7b9e87acfc8954a',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-08 23:39:03','2021-11-08 23:39:03','2022-05-08 23:39:03'),
 ('8987ff37cfa2331cf6baa5878178dfd8fe0bcb8488283eea1f65179c5025417dab5a7d9d36b01dff',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-16 15:13:04','2021-11-16 15:13:04','2022-05-16 15:13:04'),
+('8a7e3487047d8aa661ddc4958400f032f1456fbef6e9dda8bf797874544d9b6a139503be57a41c03',44,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-02 03:37:23','2021-12-02 03:37:23','2022-06-02 03:37:23'),
 ('8be153733650bc19c1a18d118d6142c8b51e351f3126db1542321c080342e853e8f3b1320eb2931e',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 11:37:51','2021-10-28 11:37:51','2022-04-28 11:37:51'),
 ('8d4da5df14c6047d24e21dc9b06a5c44ad546d8ed2fb74118b304c3f13c1be11a2a4dc4bc68150e3',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-30 00:23:00','2021-10-30 00:23:00','2022-04-30 00:23:00'),
 ('8e5cf5bcaf38fc57f0f368002844a83a1cf75716f7d276bd7d30bd0cac4710ee0830c940dce06880',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 23:21:08','2021-11-26 23:21:08','2022-05-26 23:21:08'),
@@ -840,6 +912,7 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('b4c0cf73f8bb741e6be2309d318da250a9986d734f2f68d0376644d33c092fb57a29f176ef0de88b',36,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-17 02:10:18','2021-11-17 02:10:18','2022-05-17 02:10:17'),
 ('b5e6765a411b195f27f74630775035c6ab47be235a15707b0b8c9904223f5aaff4a379d5d7698551',42,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 04:48:07','2021-11-26 04:48:07','2022-05-26 04:48:07'),
 ('b61b44df11469ea135b44ade71422f2ee19b2cb4ca2839931e00f9358fe8f2e3c5bc4fe11a5bd0e9',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 00:08:50','2021-11-26 00:08:50','2022-05-26 00:08:50'),
+('b9f1e5b261f6c8df8c96e8acad39f27e8c3c2c7e98ad763dcb03283b8f1c5a24a01c8f97c58eaa89',44,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-03 06:22:16','2021-12-03 06:22:16','2022-06-03 06:22:16'),
 ('bc97726934ae2c1c2245d1e5b14962ac33b66658848da9c8b1eeadd21a72377ba87a0e694969105c',34,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 00:10:03','2021-11-26 00:10:03','2022-05-26 00:10:03'),
 ('bd32e9a45f247fb720854c3c88510382a6500ad4d52c1337bc3ef8fe2024e6bfdb4451eafbf751d8',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-28 20:36:26','2021-10-28 20:36:26','2022-04-28 20:36:26'),
 ('bd5bde4934c8ec94293cff223bbff3f35f7d87b6164aee28017a7fdb01fd550a7b6d6bd640da60c8',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 16:40:00','2021-10-12 16:40:00','2022-04-12 16:40:00'),
@@ -860,6 +933,7 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('d4f6c4c94b154def3c1f0b7852dae2869840b93cc2ee48be98efda4a7776a4f2b732d3b00a0704a0',25,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-30 01:19:11','2021-10-30 01:19:11','2022-04-30 01:19:11'),
 ('d58fe65d575406a1e0dc5ecde1dcb4221033d8eff6a4b39eb04a640c78cc0ab6a7cc375f36f7c6f0',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 04:11:34','2021-11-26 04:11:34','2022-05-26 04:11:34'),
 ('d5e29a68287a53419c5ee196a312687c52eef104911d21409993a312a1663f2630d00bc15b12a38d',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:47:24','2021-10-26 13:47:24','2022-04-26 13:47:24'),
+('d66f2b6fcd023d2ca5c8f309a786a0bb34eed1cceec7aea27123f86cb1e3f2be5db052149bd6c218',37,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-04 05:55:25','2021-12-04 05:55:25','2022-06-04 05:55:25'),
 ('d68b6727da91f2c8eea907bbede640077be649116b09203d47f2891c27f920d2005078a97fcd05aa',35,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-25 23:07:24','2021-11-25 23:07:24','2022-05-25 23:07:23'),
 ('d885eb2c0904f94ba7eaa6cb027fe58b5afb4dddb01b97b2d63b1139a1045e3c5971380450fe3da9',40,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-25 23:53:26','2021-11-25 23:53:26','2022-05-25 23:53:26'),
 ('d8a3eb2354823b6b436b5d15993ba915d360b9c9288f1445d29d9a3260d1ef913860aa7a28223798',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:45:16','2021-10-26 13:45:16','2022-04-26 13:45:16'),
@@ -869,12 +943,14 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 ('e4fd8faa95e8853c5454b9c00089b023828ac9f2749a57e57b1dc50fe2cc10e769e3bb0c122a0492',40,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 04:05:48','2021-11-26 04:05:48','2022-05-26 04:05:48'),
 ('e96353545672efae96cabdadbfd61fe76c85b8640c9f3a66ea26793cad9bad7b5d1c77499f3499b6',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-08 18:30:40','2021-11-08 18:30:40','2022-05-08 18:30:40'),
 ('ea040bec5ed98f506ff88ff8cb89b82b8f24a3020cc5d21385caf45d0aa52fab5f4d91327e5ec3bf',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 13:46:06','2021-10-26 13:46:06','2022-04-26 13:46:06'),
+('ec157cec6ec12180385e3b132594dab18557dac60b7d8b7b0ec985ca636f53bf6510d9fcb1bb6fa0',43,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-03 06:23:38','2021-12-03 06:23:38','2022-06-03 06:23:38'),
 ('ec5a63dad8e368cacdf8cb58aadb9d0b3a838a943733e460ad1467d72ec26ebe9c7ed3cd0675a2b7',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-12 14:09:43','2021-10-12 14:09:43','2022-04-12 14:09:43'),
 ('ed3409f49ec7d6b7bfc94b3e1e052e63044996be9e598c06a91d921f232c5b2cf95a0a6b6cb3bcbf',2,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-25 11:39:16','2021-10-25 11:39:16','2022-04-25 11:39:15'),
 ('edad4e387a0898b3c5cd43da389505f9f90c1a6e078ecd5b24c2e5c5d5ed992b1bbcd7a50aa75660',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-25 23:32:11','2021-11-25 23:32:11','2022-05-25 23:32:11'),
 ('f0b682dd91c7a72da53aad92abe92b18938ab33100ff5f5c6df0d31c79635d86be48edbd207beae9',40,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 02:43:23','2021-11-26 02:43:23','2022-05-26 02:43:23'),
 ('f46b30fdc8d6a24026b00e71e7fc9b648962af7fbe02ccb8a7a159cb351784b46ba40246145a12a9',34,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-26 04:50:00','2021-11-26 04:50:00','2022-05-26 04:50:00'),
 ('f649aca538df8bdfc7ebc6987df99710db65ea879e9c4254f7ffbb77a5d6970edd705ebfa9c03aae',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-25 05:01:39','2021-11-25 05:01:39','2022-05-25 05:01:39'),
+('f68445333df3ace0cad010676f6129d749ca4949e572e0cf174ddb2b5c9fe6a875141bf40fc90a25',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-12-03 05:04:19','2021-12-03 05:04:19','2022-06-03 05:04:19'),
 ('f8978eeff91bd6ae052420b9707e13eeadffd91b3e6993f7f867d518d81f8c0d2c0a0298a64bac69',32,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-25 23:47:38','2021-11-25 23:47:38','2022-05-25 23:47:38'),
 ('fb9c6ea8cdd5fc6bb0fdcc67f6da33baf44cce9a81c72ae55c3ba167f3f8440bfe0f7c81c2e24ab5',3,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-11-10 18:10:41','2021-11-10 18:10:41','2022-05-10 18:10:40'),
 ('fe4bde475f338caee5ee00a02ca99adaa289989e0ce26f78c6ffa4a805be9ba0024c936818185fc4',4,'949d9205-b060-4a02-b12c-d7b0c317359e','Laravel Password Grant Client','[]',0,'2021-10-26 14:11:13','2021-10-26 14:11:13','2022-04-26 14:11:12'),
@@ -1137,9 +1213,9 @@ insert  into `project_tasks`(`id`,`project_id`,`title`,`task_description`,`due_d
 (17,27,'asdasdasd','<p>asdasdasdasd</p><p>asdasdasd</p><p>asdasdasdasd</p>','2021-12-15',0,37,0,35,'2021-12-01 02:47:51','2021-12-01 02:47:51',NULL,'initial'),
 (18,27,'asdasdasd','<p>asdasdasdasd</p><p>asdasdasd</p><p>asdasdasdasd</p>','2021-12-15',0,37,0,35,'2021-12-01 02:49:00','2021-12-01 02:49:00',NULL,'initial'),
 (19,27,'inner pages','<p>inner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pagesinner pages</p>','2021-12-16',0,37,0,35,'2021-12-01 02:55:55','2021-12-01 02:55:55',NULL,'innerpages'),
-(20,27,'revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision','<p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p><p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p><p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p><p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p>','2021-12-09',0,43,0,35,'2021-12-01 05:55:53','2021-12-01 02:57:27',NULL,'revision'),
-(21,27,'redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw','<p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p><p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p><p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p><p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p>','2021-12-09',0,43,44,35,'2021-12-01 06:50:45','2021-12-01 03:29:38',NULL,'redraw'),
-(22,27,'for custom','<p>for custom</p>','2021-12-09',0,43,44,35,'2021-12-01 06:29:59','2021-12-01 04:12:17',NULL,'innerpages');
+(20,27,'revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision','<p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p><p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p><p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p><p>revisionrevisionrevisionrevisionrevisionrevisionrevisionrevision</p>','2021-12-09',0,43,44,35,'2021-12-03 06:25:16','2021-12-01 02:57:27',NULL,'revision'),
+(21,27,'redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw','<p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p><p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p><p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p><p>redraw redrawredrawredrawredrawredrawredrawredrawredrawredrawredrawredraw</p>','2021-12-09',0,37,0,35,'2021-12-03 06:24:35','2021-12-01 03:29:38',NULL,'redraw'),
+(22,27,'for custom','<p>for custom</p>','2021-12-09',2,43,44,35,'2021-12-02 03:39:16','2021-12-01 04:12:17',NULL,'innerpages');
 
 /*Table structure for table `project_users` */
 
@@ -1384,6 +1460,31 @@ insert  into `roles_permissions`(`id`,`role_id`,`permission_id`,`created_at`,`up
 (80,4,41,'2021-12-01 01:59:30','2021-12-01 01:59:30'),
 (82,8,25,'2021-12-01 06:45:30','2021-12-01 06:45:44');
 
+/*Table structure for table `task_comment_user_notifications` */
+
+DROP TABLE IF EXISTS `task_comment_user_notifications`;
+
+CREATE TABLE `task_comment_user_notifications` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `task_comment_user_notifications` */
+
+insert  into `task_comment_user_notifications`(`id`,`task_id`,`user_id`) values 
+(5,20,35),
+(7,20,35),
+(9,20,35),
+(11,20,35),
+(13,20,35),
+(15,20,35),
+(17,20,35),
+(19,20,35),
+(20,20,43),
+(21,20,35);
+
 /*Table structure for table `task_comments` */
 
 DROP TABLE IF EXISTS `task_comments`;
@@ -1396,7 +1497,7 @@ CREATE TABLE `task_comments` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `task_comments` */
 
@@ -1421,7 +1522,68 @@ insert  into `task_comments`(`id`,`task_id`,`comment`,`user_id`,`updated_at`,`cr
 (18,14,'<p>123123213</p><ul><li>do this</li><li>do that</li><li>&nbsp;</li></ul>',34,'2021-11-26 04:34:15','2021-11-26 04:34:15'),
 (19,16,'<p>sdafard4asd+46as4</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>',33,'2021-11-29 22:31:59','2021-11-29 22:31:59'),
 (20,16,'<p>sadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasdsadasdasdasd</p>',33,'2021-11-29 22:32:22','2021-11-29 22:32:22'),
-(21,22,'<p>comment by sabih</p>',44,'2021-12-01 06:40:18','2021-12-01 06:40:18');
+(21,22,'<p>comment by sabih</p>',44,'2021-12-01 06:40:18','2021-12-01 06:40:18'),
+(22,20,'<p>1</p>',43,'2021-12-03 06:24:54','2021-12-03 06:24:54'),
+(23,21,'<p>123123</p>',35,'2021-12-04 01:58:27','2021-12-04 01:58:27'),
+(24,21,'<p>123123</p>',35,'2021-12-04 01:58:47','2021-12-04 01:58:47'),
+(25,21,'<p>123123</p>',35,'2021-12-04 01:59:18','2021-12-04 01:59:18'),
+(26,21,'<p>123123</p>',35,'2021-12-04 02:00:24','2021-12-04 02:00:24'),
+(27,21,'<p>123123</p>',35,'2021-12-04 02:00:46','2021-12-04 02:00:46'),
+(28,21,'<p>123123</p>',35,'2021-12-04 02:00:58','2021-12-04 02:00:58'),
+(29,21,'<p>123123</p>',35,'2021-12-04 02:01:19','2021-12-04 02:01:19'),
+(30,21,'<p>123123</p>',35,'2021-12-04 02:02:32','2021-12-04 02:02:32'),
+(31,21,'<p>123123</p>',35,'2021-12-04 02:04:50','2021-12-04 02:04:50'),
+(32,21,'<p>123123</p>',35,'2021-12-04 02:05:06','2021-12-04 02:05:06'),
+(33,21,'<p>123123</p>',35,'2021-12-04 02:05:21','2021-12-04 02:05:21'),
+(34,21,'<p>123123</p>',35,'2021-12-04 02:05:28','2021-12-04 02:05:28'),
+(35,21,'<p>12312312</p>',35,'2021-12-04 05:48:49','2021-12-04 05:48:49'),
+(36,21,'<p>12312312</p>',35,'2021-12-04 05:49:02','2021-12-04 05:49:02'),
+(37,21,'<p>12312312</p>',35,'2021-12-04 05:49:16','2021-12-04 05:49:16'),
+(38,21,'<p>12312312</p>',35,'2021-12-04 05:51:00','2021-12-04 05:51:00'),
+(39,21,'<p>12312312</p>',35,'2021-12-04 05:51:26','2021-12-04 05:51:26'),
+(40,21,'<p>12312312</p>',35,'2021-12-04 05:51:56','2021-12-04 05:51:56'),
+(41,20,'<p>test sabih</p>',44,'2021-12-04 06:14:22','2021-12-04 06:14:22'),
+(42,20,'<p>working bro</p>',44,'2021-12-04 06:14:34','2021-12-04 06:14:34'),
+(43,20,'<p>ok bhai,</p>',44,'2021-12-04 06:14:52','2021-12-04 06:14:52'),
+(44,20,'<p>testing notification for sabih</p>',43,'2021-12-04 06:15:09','2021-12-04 06:15:09'),
+(45,20,'<p>testing notification for sabih 2</p>',43,'2021-12-04 06:15:13','2021-12-04 06:15:13'),
+(46,20,'<p>testing notification for sabih 3</p>',43,'2021-12-04 06:15:18','2021-12-04 06:15:18'),
+(47,20,'<p>testing notification for sabih 4</p>',43,'2021-12-04 06:15:26','2021-12-04 06:15:26'),
+(48,20,'<p>testing notification for sabih 5</p>',43,'2021-12-04 06:15:37','2021-12-04 06:15:37'),
+(49,20,'<p>thanks</p>',44,'2021-12-04 06:15:42','2021-12-04 06:15:42');
+
+/*Table structure for table `task_times` */
+
+DROP TABLE IF EXISTS `task_times`;
+
+CREATE TABLE `task_times` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `start_time` time DEFAULT NULL,
+  `end_time` time DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `task_times` */
+
+insert  into `task_times`(`id`,`task_id`,`date`,`start_time`,`end_time`,`user_id`) values 
+(1,21,'2021-12-02','04:58:42','04:59:04',44),
+(2,21,'2021-12-02','05:08:27','05:09:16',44),
+(3,21,'2021-12-02','05:12:49','05:13:12',44),
+(4,21,'2021-12-02','05:36:28','05:36:32',44),
+(5,21,'2021-12-02','05:36:35','05:36:38',44),
+(6,21,'2021-12-03','04:20:52','04:21:07',44),
+(7,21,'2021-12-03','04:21:08','04:21:25',44),
+(8,21,'2021-12-03','04:22:11','04:22:31',44),
+(9,21,'2021-12-03','04:22:34','04:22:58',44),
+(10,21,'2021-12-03','04:23:05','04:23:32',44),
+(11,21,'2021-12-03','04:37:39','04:40:33',44),
+(12,21,'2021-12-03','04:41:11','04:42:46',44),
+(13,21,'2021-12-03','04:44:12','04:52:37',44),
+(14,21,'2021-12-03','04:53:14','04:54:05',44),
+(15,21,'2021-12-03','06:22:20','06:22:43',44);
 
 /*Table structure for table `user_briefs` */
 

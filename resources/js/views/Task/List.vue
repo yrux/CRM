@@ -7,6 +7,7 @@
     :loading="loading"
     class="elevation-1"
     item-key="id"
+    :item-class="setRowCls"
   >
     <template v-slot:top>
       <v-text-field v-model="search" label="Search" class="mx-4"></v-text-field>
@@ -14,26 +15,63 @@
     <template v-slot:item.task_type="{ item }">
       <taskType :type="item.task_type" />
     </template>
+    <template v-slot:item.total_time_on_task="{ item }">
+      <taskTimer :status="item.status" :time="item.total_time_on_task" />
+    </template>
     <template v-slot:item.actions="{ item }">
       <v-tooltip top>
         <template v-slot:activator="{ on, attrs }">
+          <v-badge
+            :content="item.unseen_comments"
+            :value="item.unseen_comments"
+            color="green"
+            overlap
+          >
+            <v-btn
+              color="info"
+              fab
+              x-small
+              dark
+              :to="{
+                name: 'auth.task.summary',
+                params: { project: item.project_id_root },
+                query: { task:item.id },
+              }"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>mdi-file-tree</v-icon>
+            </v-btn>
+          </v-badge>
+        </template>
+        <span>Task Detail</span>
+      </v-tooltip>
+      <v-tooltip v-if="user.role_id==8&&(item.status==0||item.status==1)" top>
+        <template v-slot:activator="{ on, attrs }">
           <v-btn
-            color="info"
+            :color="item.task_started==0?'primary':'error'"
             fab
             x-small
             dark
-            :to="{
-              name: 'auth.task.summary',
-              params: { project: item.project_id_root },
-              query: { task:item.id },
-            }"
+            @click="timeUpdate(item)"
             v-bind="attrs"
             v-on="on"
           >
-            <v-icon>mdi-file-tree</v-icon>
+            <v-icon>mdi-watch</v-icon>
           </v-btn>
         </template>
-        <span>Task Detail</span>
+        <span>{{item.task_started==0?'Start Timer':'Stop Timer'}}</span>
+      </v-tooltip>
+      <v-tooltip v-if="user.role_id!=8&&item.task_started==1" top>
+        <template v-slot:activator="{ on, attrs }">
+          <v-progress-circular
+            indeterminate
+            color="primary"
+            v-bind="attrs"
+            v-on="on"
+          ></v-progress-circular>
+        </template>
+        <span>Timer in Progress</span>
       </v-tooltip>
     </template>
   </v-data-table>
@@ -41,9 +79,11 @@
 <script>
 import taskservice from "@services/auth/task";
 import taskType from "@components/common/taskType.vue"
+import taskTimer from "@components/common/taskTimer.vue"
 export default {
   components:{
     taskType,
+    taskTimer
   },
   data() {
     return {
@@ -100,14 +140,37 @@ export default {
         {
           text: "Due",
           align: "start",
-          sortable: false,
+          sortable: true,
           value: "due_date",
+        },
+        {
+          text: "Time Worked",
+          align: "start",
+          sortable: false,
+          value: "total_time_on_task",
         },
         { text: "Actions", value: "actions", sortable: false },
       ],
     };
   },
   methods: {
+    async timeUpdate(item){
+      this.tasks = []
+      this.loading = true;
+      await taskservice.timeUpdate(item.id)
+      this.getTasks()
+    },
+    setRowCls(item){
+      if(item.status==3){
+        return 'orange lighten-4'
+      }
+      if(item.status==2){
+        return 'green lighten-4'
+      }
+      if(item.status==1){
+        return 'blue lighten-4'
+      }
+    },
     async getTasks() {
       this.loading = true;
       var q = "";
@@ -156,6 +219,10 @@ export default {
       this.getTasks();
     },
   },
-  computed: {},
+  computed: {
+    user() {
+      return this.$store.getters.loggedInUser;
+    },
+  },
 };
 </script>

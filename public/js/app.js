@@ -2649,6 +2649,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "sidebar",
   components: {},
@@ -24061,6 +24083,87 @@ var render = function () {
                                       )
                                     : _vm._e(),
                                   _vm._v(" "),
+                                  _vm.user.role_id == 4 ||
+                                  _vm.user.role_id == 5 ||
+                                  _vm.user.role_id == 7 ||
+                                  _vm.user.role_id == 8
+                                    ? _c(
+                                        "v-list-item",
+                                        {
+                                          staticClass: "pa-0",
+                                          attrs: {
+                                            link: "",
+                                            to: {
+                                              name: "auth.tasks.type",
+                                              params: { type: "all" },
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "v-tooltip",
+                                            {
+                                              attrs: { right: "" },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function (ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-list-item-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticClass:
+                                                                  "d-block",
+                                                                staticStyle: {
+                                                                  width: "100%",
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "primary",
+                                                                  dark: "",
+                                                                },
+                                                              },
+                                                              "v-list-item-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", {
+                                                              domProps: {
+                                                                textContent:
+                                                                  _vm._s(
+                                                                    "mdi-calendar"
+                                                                  ),
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ]
+                                                    },
+                                                  },
+                                                ],
+                                                null,
+                                                true
+                                              ),
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("span", [_vm._v("All")]),
+                                            ]
+                                          ),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
                                   _vm.user.role_id != 6
                                     ? _c(
                                         "v-list-item",
@@ -24161,7 +24264,7 @@ var render = function () {
               ],
               null,
               false,
-              1647293227
+              2130145448
             ),
           }),
         ],

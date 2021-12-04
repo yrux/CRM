@@ -23,5 +23,8 @@ class leadmessagesservice{
 	saveMsg(lead_id, formData){
 		axios.post('/api/lead-message-send/'+lead_id,formData);
 	}
+	async unseenMessages(){
+		return axios.get('/api/unseen-lead-messages').then(e=>e.data)
+	}
 }
 export default new leadmessagesservice();

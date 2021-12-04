@@ -543,6 +543,24 @@ var taskservice = /*#__PURE__*/function () {
         return error;
       });
     }
+  }, {
+    key: "timeUpdate",
+    value: function timeUpdate(task_id) {
+      return axios.post("/api/task/".concat(task_id, "/update-time")).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "markCommentsread",
+    value: function markCommentsread(task_id) {
+      return axios.post("/api/task/".concat(task_id, "/mark-comments-read")).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
   }]);
 
   return taskservice;

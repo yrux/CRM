@@ -8,7 +8,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\{LeadController, PaymentController, LeadMessageController, LeadAssignedController};
 use App\Http\Controllers\{BrandController, BrandUserController};
 use App\Http\Controllers\{UserController, ChatController};
-use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController, TaskCommentController};
+use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController, TaskCommentController, TaskTimeController};
 use App\Http\Controllers\Auth\ApiAuthController;
 /*
 |--------------------------------------------------------------------------
@@ -55,10 +55,13 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::apiResource('project/{project}/u', ProjectUserController::class);
     //task
     Route::apiResource('project/{project}/task', ProjectTaskController::class);
+    
     Route::post('/task-validate', [ProjectTaskController::class,'validateTask']);
     Route::get('/tasks', [ProjectTaskController::class,'allTasks']);
     Route::get('/task/{project}/usersSummary', [ProjectTaskController::class,'usersSummary']);
     Route::post('/project/{project}/{task}/status/{status}', [ProjectTaskController::class,'updateStatus']);
+    Route::post('/task/{task}/mark-comments-read', [ProjectTaskController::class,'markCommentsread']);
+    Route::post('/task/{task}/update-time', [TaskTimeController::class,'updateTime']);
     Route::apiResource('task/{task}/comment', TaskCommentController::class);
     //task end
     Route::apiResource('file', FileController::class)->only([
@@ -73,6 +76,9 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     //lead messages
     Route::get('/lead-messages/{lead}', [LeadMessageController::class,'chatHistory']);
     Route::post('/lead-message-send/{lead}', [LeadMessageController::class,'chatSend']);
+
+    //support home widgets
+    Route::get('/unseen-lead-messages', [LeadMessageController::class,'unseenMessages']);
 });
 Route::middleware('auth:api')->get('/me', function (Request $request) {
     return $request->user();

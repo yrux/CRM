@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Auth;
 class ProjectTask extends Model
 {
     use HasFactory;
-    protected $appends = ['due_type','created_at_formatted','updated_at_formatted','task_type_text'];
+    protected $appends = ['due_type','created_at_formatted','updated_at_formatted','task_type_text','unseen_comments'];
     protected $with = ['files','comments'];
     protected $task_type_arr = ['initial'=>'Initial','revision'=>'Revision','innerpages'=>'Inner Pages','redraw'=>'ReDraw'];
     protected $fillable = [
@@ -29,8 +29,14 @@ class ProjectTask extends Model
     public function comments(){
         return $this->hasMany(TaskComment::class,'task_id');
     }
+    public function comment_notifications(){
+        return $this->hasMany(TaskCommentUserNotification::class,'task_id')->where('user_id',Auth::user()->id);
+    }
     public function files(){
         return $this->morphMany(File::class,'fileable');
+    }
+    public function getUnseenCommentsAttribute(){
+        return $this->comment_notifications()->count();
     }
     public function getTaskTypeTextAttribute(){
         return isset($this->task_type_arr[$this->task_type])?$this->task_type_arr[$this->task_type]:'';

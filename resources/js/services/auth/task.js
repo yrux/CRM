@@ -45,5 +45,19 @@ class taskservice{
 			return error
 		})
 	}
+	timeUpdate(task_id){
+		return axios.post(`/api/task/${task_id}/update-time`).then(function(response){
+			return response.data
+		}).catch(function(error){
+			return error
+		})
+	}
+	markCommentsread(task_id){
+		return axios.post(`/api/task/${task_id}/mark-comments-read`).then(function(response){
+			return response.data
+		}).catch(function(error){
+			return error
+		})
+	}
 }
 export default new taskservice();

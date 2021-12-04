@@ -211,7 +211,7 @@
                     </template>
                     <span>Assign Resource</span>
                   </v-tooltip>
-                  <v-tooltip bottom v-if="task.status!=2">
+                  <v-tooltip bottom v-if="task.status!=2&&task.status!=3">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn @click="taskStatusUpdate(task.id, 3)" fab small v-bind="attrs" v-on="on">
                         <v-icon>mdi-car-brake-hold</v-icon>
@@ -219,6 +219,15 @@
                     </template>
                     <span>Put on Hold</span>
                   </v-tooltip>
+                  <v-tooltip bottom v-if="task.status==3">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn @click="taskStatusUpdate(task.id, 0)" fab small v-bind="attrs" v-on="on">
+                        <v-icon>mdi-car-brake-hold</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Resume from Hold</span>
+                  </v-tooltip>
+
                 </v-btn-toggle>
               </v-col>
               <v-col v-if="user.role_id!=8" cols="3" sm="3">
@@ -370,6 +379,7 @@ export default {
       task_summary_users: [],
       selected_user_id: 0,
       tasksLoader: true,
+      notificationsRead: []
     };
   },
   methods: {
@@ -451,7 +461,21 @@ export default {
       return this.$store.getters.loggedInUser;
     },
   },
-  watch: {},
+  watch: {
+    taskOpen(n, o){
+      if(n.length>o.length){
+        //means new task opened
+        //getting task opened in accordion
+        let task_id = this.tasks[n[(n.length-1)]].id
+        console.log(this.notificationsRead.indexOf(task_id))
+        if(this.notificationsRead.indexOf(task_id)<0){
+          //to hit only once over read api
+          this.notificationsRead.push(task_id)
+          taskservice.markCommentsread(task_id)
+        }
+      }
+    }
+  },
   components: { CommentTask, PostTaskComment, taskType, UserList },
 };
 </script>

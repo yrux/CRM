@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{LeadMessage, File, Lead};
+use App\Models\{LeadMessage, File, Lead, LeadAssigned};
 use Illuminate\Http\Request;
 use App\Repositories\{FileRepository};
+use DB;
 class LeadMessageController extends Controller
 {
     protected $file;
@@ -43,5 +44,18 @@ class LeadMessageController extends Controller
                 $this->file->updateRefById($attachement, $chat_id->id);
             }
         }
+    }
+    public function unseenMessages(Request $request){
+        $uid = $request->user()->id;
+        return LeadMessage::where('lead_assigned.user_id',$uid)->where('lead_messages.is_seen',0)
+        ->leftJoin('leads','leads.id','lead_messages.lead_id')
+        ->leftJoin('brands','brands.id','leads.brand_id')
+        ->leftJoin('lead_assigned',function($join) use($uid) {
+            $join->on('lead_assigned.lead_id','=','lead_messages.lead_id')->where('lead_assigned.user_id',$uid);
+        })
+        ->select(DB::raw('COUNT(lead_messages.id) AS unseen_count'),'lead_messages.lead_id','leads.email','leads.email','leads.first_name','leads.last_name','leads.phone','brands.brand_name','brands.brand_code')
+        ->orderBy('lead_messages.created_at','desc')
+        ->groupBy('lead_messages.lead_id')
+        ->get();
     }
 }

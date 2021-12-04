@@ -522,6 +522,28 @@
           </v-tooltip>
         </v-list-item>
         <v-list-item
+          v-if="user.role_id == 4 || user.role_id == 5 || user.role_id == 7 || user.role_id == 8"
+          class="pa-0"
+          link
+          :to="{ name: 'auth.tasks.type', params: { type: 'all' } }"
+        >
+          <v-tooltip right>
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-icon
+                color="primary"
+                dark
+                class="d-block"
+                style="width: 100%"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon v-text="'mdi-calendar'"></v-icon>
+              </v-list-item-icon>
+            </template>
+            <span>All</span>
+          </v-tooltip>
+        </v-list-item>
+        <v-list-item
           v-if="user.role_id != 6"
           class="pa-0"
           link

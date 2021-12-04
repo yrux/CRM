@@ -804,6 +804,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -866,7 +875,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       project: {},
       task_summary_users: [],
       selected_user_id: 0,
-      tasksLoader: true
+      tasksLoader: true,
+      notificationsRead: []
     };
   },
   methods: {
@@ -1069,7 +1079,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.$store.getters.loggedInUser;
     }
   },
-  watch: {},
+  watch: {
+    taskOpen: function taskOpen(n, o) {
+      if (n.length > o.length) {
+        //means new task opened
+        //getting task opened in accordion
+        var task_id = this.tasks[n[n.length - 1]].id;
+        console.log(this.notificationsRead.indexOf(task_id));
+
+        if (this.notificationsRead.indexOf(task_id) < 0) {
+          //to hit only once over read api
+          this.notificationsRead.push(task_id);
+          _services_auth_task__WEBPACK_IMPORTED_MODULE_1__["default"].markCommentsread(task_id);
+        }
+      }
+    }
+  },
   components: {
     CommentTask: _CommentTask_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     PostTaskComment: _PostTaskComment_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
@@ -1251,6 +1276,24 @@ var taskservice = /*#__PURE__*/function () {
     key: "usersSummary",
     value: function usersSummary(project_id) {
       return axios.get('/api/task/' + project_id + '/usersSummary').then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "timeUpdate",
+    value: function timeUpdate(task_id) {
+      return axios.post("/api/task/".concat(task_id, "/update-time")).then(function (response) {
+        return response.data;
+      })["catch"](function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: "markCommentsread",
+    value: function markCommentsread(task_id) {
+      return axios.post("/api/task/".concat(task_id, "/mark-comments-read")).then(function (response) {
         return response.data;
       })["catch"](function (error) {
         return error;
@@ -3000,7 +3043,7 @@ var render = function () {
                                               )
                                             : _vm._e(),
                                           _vm._v(" "),
-                                          task.status != 2
+                                          task.status != 2 && task.status != 3
                                             ? _c(
                                                 "v-tooltip",
                                                 {
@@ -3061,6 +3104,72 @@ var render = function () {
                                                   _vm._v(" "),
                                                   _c("span", [
                                                     _vm._v("Put on Hold"),
+                                                  ]),
+                                                ]
+                                              )
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          task.status == 3
+                                            ? _c(
+                                                "v-tooltip",
+                                                {
+                                                  attrs: { bottom: "" },
+                                                  scopedSlots: _vm._u(
+                                                    [
+                                                      {
+                                                        key: "activator",
+                                                        fn: function (ref) {
+                                                          var on = ref.on
+                                                          var attrs = ref.attrs
+                                                          return [
+                                                            _c(
+                                                              "v-btn",
+                                                              _vm._g(
+                                                                _vm._b(
+                                                                  {
+                                                                    attrs: {
+                                                                      fab: "",
+                                                                      small: "",
+                                                                    },
+                                                                    on: {
+                                                                      click:
+                                                                        function (
+                                                                          $event
+                                                                        ) {
+                                                                          return _vm.taskStatusUpdate(
+                                                                            task.id,
+                                                                            0
+                                                                          )
+                                                                        },
+                                                                    },
+                                                                  },
+                                                                  "v-btn",
+                                                                  attrs,
+                                                                  false
+                                                                ),
+                                                                on
+                                                              ),
+                                                              [
+                                                                _c("v-icon", [
+                                                                  _vm._v(
+                                                                    "mdi-car-brake-hold"
+                                                                  ),
+                                                                ]),
+                                                              ],
+                                                              1
+                                                            ),
+                                                          ]
+                                                        },
+                                                      },
+                                                    ],
+                                                    null,
+                                                    true
+                                                  ),
+                                                },
+                                                [
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v("Resume from Hold"),
                                                   ]),
                                                 ]
                                               )
