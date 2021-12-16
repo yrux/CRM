@@ -124,10 +124,27 @@
               <h3>Comments</h3>
               <v-col cols="12" md="12">
                 <v-row v-if="task.comments.length > 0">
+                  <v-col cols="12" md="12">
+                    <v-btn-toggle
+                      v-model.number="task.is_internal"
+                      tile
+                      color="deep-purple accent-3"
+                      group
+                      v-if="user.role_id==7"
+                    >
+                      <v-btn :value="parseInt(0)">
+                        External
+                      </v-btn>
+                      <v-btn :value="parseInt(1)">
+                        Internal
+                      </v-btn>
+                    </v-btn-toggle>
+                  </v-col>
                   <comment-task
                     v-for="comment in task.comments"
                     :key="comment.id"
                     :comment="comment"
+                    :currenttype="task.is_internal"
                   />
                 </v-row>
               </v-col>
@@ -135,6 +152,7 @@
                 v-if="task.status != 2"
                 v-on:comment-task="refreshTasks()"
                 :task_id="task.id"
+                :currenttype="task.is_internal"
               />
             </v-row>
             <v-divider></v-divider>
@@ -429,19 +447,27 @@ export default {
         q+='?user_id='+this.selected_user_id
       }
       var res = await taskservice.summary(this.project_id, q);
-      this.tasks = res;
-      for(let q = 0; q < this.tasks.length; q++){
-        this.tasks[q].class = '';
-        if(this.tasks[q].status==3){
-          this.tasks[q].class = 'orange lighten-4'
+      let tasks = res;
+      for(let q = 0; q < tasks.length; q++){
+        tasks[q].class = '';
+        tasks[q].is_internal = 0;
+        if(tasks[q].status==3){
+          tasks[q].class = 'orange lighten-4'
         }
-        if(this.tasks[q].status==2){
-          this.tasks[q].class = 'green lighten-4'
+        if(tasks[q].status==2){
+          tasks[q].class = 'green lighten-4'
         }
-        if(this.tasks[q].status==1){
-          this.tasks[q].class = 'blue lighten-4'
+        if(tasks[q].status==1){
+          tasks[q].class = 'blue lighten-4'
+        }
+        if(this.user.role_id==8){
+          tasks[q].is_internal = 1;
+        }
+        else{
+          tasks[q].is_internal = 0;
         }
       }
+      this.tasks = tasks
       this.tasksLoader = false
     },
     async updateDue(task) {

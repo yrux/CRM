@@ -37,7 +37,8 @@ class TaskCommentController extends Controller
         $task->comment_notifications()->delete();
         $comment = $task->comments()->create([
             'user_id'=>$request->user()->id,
-            'comment'=>$request->comment
+            'comment'=>$request->comment,
+            'is_internal'=>$request->is_internal,
         ]);
         if($request->attachements){
             $this->file->create($request->attachements, 'task_comments', $comment->id, 2);

@@ -8,7 +8,18 @@
       </div>
 
       <v-spacer></v-spacer>
-
+      <v-btn :to="{ name: 'auth.notifications' }" text>
+        <v-badge
+          :content="user.notification_count"
+          :value="user.notification_count"
+          color="green"
+          overlap
+        >
+          <v-icon >
+            mdi-bell-outline
+          </v-icon>
+        </v-badge>
+      </v-btn>
       <v-btn :to="{ name: 'auth.dashboard' }" text>
         <span class="mr-2">Dashboard</span>
         <v-icon>mdi-account-circle</v-icon>

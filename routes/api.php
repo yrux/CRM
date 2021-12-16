@@ -81,5 +81,8 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::get('/unseen-lead-messages', [LeadMessageController::class,'unseenMessages']);
 });
 Route::middleware('auth:api')->get('/me', function (Request $request) {
-    return $request->user();
+    $notificationsCount = $request->user()->unreadNotifications()->count();
+    $user = $request->user();
+    $user->notification_count = $notificationsCount;
+    return $user;
 });

@@ -9,6 +9,11 @@ export default [
         component: () => import('@/views/Panel.vue'),
     },
     {
+        path: '/notifications',
+        name: 'auth.notifications',
+        component: () => import('@/views/Notifications.vue'),
+    },
+    {
         path: '/profile',
         name: 'auth.profile',
         component: () => import('@/views/Profile.vue'),

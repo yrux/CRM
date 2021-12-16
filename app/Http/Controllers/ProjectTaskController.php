@@ -8,6 +8,7 @@ use App\Http\Resources\ProjectTaskResource;
 use App\Repositories\FileRepository;
 use App\Http\Requests\ProjectTaskRequest;
 use DB;
+use App\Notifications\taskAssigned;
 class ProjectTaskController extends Controller
 {
     protected $file;
@@ -50,7 +51,9 @@ class ProjectTaskController extends Controller
     {
         $arr = $request->except(['__token']);
         $arr['assigned_by'] = $request->user()->id;
+        $manager = User::find($request->assigned_on);
         $task = $project->tasks()->create($arr);
+        $manager->notify(new taskAssigned($task));
         if($request->attachements){
             $this->file->create($request->attachements, 'project_tasks', $task->id, 2);
         }
@@ -77,6 +80,18 @@ class ProjectTaskController extends Controller
      */
     public function update(Request $request, Project $project, ProjectTask $task)
     {
+        if(isset($request->assigned_on)){
+            if($task->assigned_on!=$request->assigned_on){
+                $manager = User::find($request->assigned_on);
+                $manager->notify(new taskAssigned($task));
+            }
+        }
+        if(isset($request->developer_id)){
+            if($task->developer_id!=$request->developer_id){
+                $manager = User::find($request->developer_id);
+                $manager->notify(new taskAssigned($task, true));
+            }
+        }
         $arr = $request->except(['__token']);
         $task->update($arr);
         return new ProjectTaskResource($task);
@@ -186,8 +201,8 @@ class ProjectTaskController extends Controller
         }
         return $query;
     }
-    public function usersSummary(Project $project){
-        $tasks = $project->tasks->groupBy('assigned_on');
+    public function usersSummary(Project $project, Request $request){
+        $tasks = $project->tasks()->where('assigned_by',$request->user()->id)->get()->groupBy('assigned_on');
         $tasks_summary = [];
         foreach($tasks as $key=>$value){
             $tasks_summary[$key] = [];

@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12" md="12">
+  <v-col v-if="currenttype==comment.is_internal" cols="12" md="12">
     <v-list-item class="grow">
       <v-list-item-avatar color="grey darken-3">
         <v-img
@@ -41,6 +41,16 @@
 </template>
 <script>
 export default {
-    props: ['comment'],
+    props:{
+      comment:{
+        type: Object,
+        default: {},
+      },
+      currenttype:{
+        type: Number,
+        default: 0,
+      }
+    }
+    // props: ['comment','currenttype'],
 }
 </script>

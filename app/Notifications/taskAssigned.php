@@ -6,9 +6,10 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\TaskComment as taskCommentModel;
+use App\Models\ProjectTask;
 
-class taskComment extends Notification
+
+class taskAssigned extends Notification
 {
     use Queueable;
 
@@ -17,10 +18,12 @@ class taskComment extends Notification
      *
      * @return void
      */
-    public $comment;
-    public function __construct(taskCommentModel $comment)
+    public $task;
+    public $isDeveloper;
+    public function __construct(ProjectTask $task, $isDeveloper= false)
     {
-        $this->comment = $comment;
+        $this->task = $task;
+        $this->isDeveloper = $isDeveloper;
     }
 
     /**
@@ -43,8 +46,9 @@ class taskComment extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('New comment on Task #'.$this->comment->task_id);
-                    //->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -56,9 +60,9 @@ class taskComment extends Notification
     public function toArray($notifiable)
     {
         return [
-            'task_id'=>$this->comment->id,
-            'line'=>$this->comment->user->name.' Commented On #'.$this->comment->task_id,
-            'project_id'=>$this->comment->task->project->project_id,
+            'task_id'=>$this->task->id,
+            'project_id'=>$this->task->project->project_id,
+            //'line'=>($this->isDeveloper==true?'Assigned to ')
         ];
     }
 }

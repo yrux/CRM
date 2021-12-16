@@ -27,7 +27,15 @@ class ProjectTask extends Model
         return $this->belongsTo(Project::class);
     }
     public function comments(){
-        return $this->hasMany(TaskComment::class,'task_id');
+        if(Auth::user()->role_id==7){
+            return $this->hasMany(TaskComment::class,'task_id');
+        }
+        else if(Auth::user()->role_id==8){
+            return $this->hasMany(TaskComment::class,'task_id')->where('is_internal',1);
+        }
+        else{
+            return $this->hasMany(TaskComment::class,'task_id')->where('is_internal',0);
+        }
     }
     public function comment_notifications(){
         return $this->hasMany(TaskCommentUserNotification::class,'task_id')->where('user_id',Auth::user()->id);

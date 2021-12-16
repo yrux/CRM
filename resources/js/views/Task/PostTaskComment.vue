@@ -61,7 +61,16 @@
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import taskservice from "@services/auth/task.js";
 export default {
-  props: ["task_id"],
+  props: {
+    task_id:{
+      type: Number,
+      default: 0,
+    },
+    currenttype:{
+      type: Number,
+      default: 0,
+    }
+  },
   data() {
     return {
       files: [],
@@ -80,6 +89,7 @@ export default {
       this.btnloading = true;
       var formData = new FormData();
       formData.append("comment", this.description);
+      formData.append("is_internal", this.currenttype);
       for (let i = 0; i < this.files.length; i++) {
         formData.append("attachements[" + i + "]", this.files[i]);
       }

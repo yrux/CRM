@@ -11,7 +11,7 @@ class TaskComment extends Model
     protected $appends = ['created_at_formatted'];
     protected $with = ['user','files'];
     protected $fillable = [
-        'task_id','comment','user_id',
+        'task_id','comment','user_id','is_internal',
     ];
     public function user(){
         return $this->belongsTo(User::class);

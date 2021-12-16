@@ -300,7 +300,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['comment']
+  props: {
+    comment: {
+      type: Object,
+      "default": {}
+    },
+    currenttype: {
+      type: Number,
+      "default": 0
+    }
+  } // props: ['comment','currenttype'],
+
 });
 
 /***/ }),
@@ -389,7 +399,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["task_id"],
+  props: {
+    task_id: {
+      type: Number,
+      "default": 0
+    },
+    currenttype: {
+      type: Number,
+      "default": 0
+    }
+  },
   data: function data() {
     return {
       files: [],
@@ -416,15 +435,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.btnloading = true;
                 formData = new FormData();
                 formData.append("comment", _this.description);
+                formData.append("is_internal", _this.currenttype);
 
                 for (i = 0; i < _this.files.length; i++) {
                   formData.append("attachements[" + i + "]", _this.files[i]);
                 }
 
-                _context.next = 6;
+                _context.next = 7;
                 return _services_auth_task_js__WEBPACK_IMPORTED_MODULE_2__["default"].comment(_this.task_id, formData);
 
-              case 6:
+              case 7:
                 _this.btnloading = false;
 
                 _this.$emit("comment-task");
@@ -432,7 +452,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.description = '';
                 _this.files = [];
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -470,6 +490,24 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -982,7 +1020,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        var q, res, _q;
+        var q, res, tasks, _q;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
@@ -1000,27 +1038,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
                 res = _context5.sent;
-                _this5.tasks = res;
+                tasks = res;
 
-                for (_q = 0; _q < _this5.tasks.length; _q++) {
-                  _this5.tasks[_q]["class"] = '';
+                for (_q = 0; _q < tasks.length; _q++) {
+                  tasks[_q]["class"] = '';
+                  tasks[_q].is_internal = 0;
 
-                  if (_this5.tasks[_q].status == 3) {
-                    _this5.tasks[_q]["class"] = 'orange lighten-4';
+                  if (tasks[_q].status == 3) {
+                    tasks[_q]["class"] = 'orange lighten-4';
                   }
 
-                  if (_this5.tasks[_q].status == 2) {
-                    _this5.tasks[_q]["class"] = 'green lighten-4';
+                  if (tasks[_q].status == 2) {
+                    tasks[_q]["class"] = 'green lighten-4';
                   }
 
-                  if (_this5.tasks[_q].status == 1) {
-                    _this5.tasks[_q]["class"] = 'blue lighten-4';
+                  if (tasks[_q].status == 1) {
+                    tasks[_q]["class"] = 'blue lighten-4';
+                  }
+
+                  if (_this5.user.role_id == 8) {
+                    tasks[_q].is_internal = 1;
+                  } else {
+                    tasks[_q].is_internal = 0;
                   }
                 }
 
+                _this5.tasks = tasks;
                 _this5.tasksLoader = false;
 
-              case 9:
+              case 10:
               case "end":
                 return _context5.stop();
             }
@@ -1970,97 +2016,103 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-col",
-    { attrs: { cols: "12", md: "12" } },
-    [
-      _c(
-        "v-list-item",
-        { staticClass: "grow" },
+  return _vm.currenttype == _vm.comment.is_internal
+    ? _c(
+        "v-col",
+        { attrs: { cols: "12", md: "12" } },
         [
           _c(
-            "v-list-item-avatar",
-            { attrs: { color: "grey darken-3" } },
+            "v-list-item",
+            { staticClass: "grow" },
             [
-              _c("v-img", {
-                staticClass: "elevation-6",
-                attrs: { alt: "", src: _vm.comment.user.image_url },
-              }),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-list-item-content",
-            [
-              _c("v-list-item-title", [_vm._v(_vm._s(_vm.comment.user.name))]),
+              _c(
+                "v-list-item-avatar",
+                { attrs: { color: "grey darken-3" } },
+                [
+                  _c("v-img", {
+                    staticClass: "elevation-6",
+                    attrs: { alt: "", src: _vm.comment.user.image_url },
+                  }),
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
-                "v-card",
-                { staticClass: "pa-2", attrs: { outlined: "", tile: "" } },
+                "v-list-item-content",
                 [
-                  _c("div", {
-                    domProps: { innerHTML: _vm._s(_vm.comment.comment) },
-                  }),
+                  _c("v-list-item-title", [
+                    _vm._v(_vm._s(_vm.comment.user.name)),
+                  ]),
                   _vm._v(" "),
                   _c(
-                    "div",
-                    { staticClass: "mt-2" },
-                    _vm._l(_vm.comment.files, function (project_files) {
-                      return _c(
-                        "a",
-                        {
-                          key: project_files.id,
-                          attrs: {
-                            target: "_blank",
-                            href: project_files.full_url,
-                          },
-                        },
-                        [
-                          _c(
-                            "v-chip",
+                    "v-card",
+                    { staticClass: "pa-2", attrs: { outlined: "", tile: "" } },
+                    [
+                      _c("div", {
+                        domProps: { innerHTML: _vm._s(_vm.comment.comment) },
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-2" },
+                        _vm._l(_vm.comment.files, function (project_files) {
+                          return _c(
+                            "a",
                             {
-                              staticClass: "ma-2",
-                              attrs: { small: "", color: "secondary" },
+                              key: project_files.id,
+                              attrs: {
+                                target: "_blank",
+                                href: project_files.full_url,
+                              },
                             },
                             [
-                              _vm._v(
-                                "\n              " +
-                                  _vm._s(project_files.url) +
-                                  "\n            "
+                              _c(
+                                "v-chip",
+                                {
+                                  staticClass: "ma-2",
+                                  attrs: { small: "", color: "secondary" },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(project_files.url) +
+                                      "\n            "
+                                  ),
+                                ]
                               ),
-                            ]
-                          ),
-                        ],
-                        1
-                      )
-                    }),
-                    0
+                            ],
+                            1
+                          )
+                        }),
+                        0
+                      ),
+                    ]
                   ),
-                ]
+                ],
+                1
               ),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-row",
-            { attrs: { align: "center", justify: "end" } },
-            [
-              _c("v-icon", { staticClass: "mr-1" }, [_vm._v(" mdi-calendar ")]),
               _vm._v(" "),
-              _c("span", { staticClass: "subheading mr-2" }, [
-                _vm._v(_vm._s(_vm.comment.created_at_formatted)),
-              ]),
+              _c(
+                "v-row",
+                { attrs: { align: "center", justify: "end" } },
+                [
+                  _c("v-icon", { staticClass: "mr-1" }, [
+                    _vm._v(" mdi-calendar "),
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "subheading mr-2" }, [
+                    _vm._v(_vm._s(_vm.comment.created_at_formatted)),
+                  ]),
+                ],
+                1
+              ),
             ],
             1
           ),
         ],
         1
-      ),
-    ],
-    1
-  )
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -2684,16 +2736,86 @@ var render = function () {
                                   task.comments.length > 0
                                     ? _c(
                                         "v-row",
-                                        _vm._l(
-                                          task.comments,
-                                          function (comment) {
-                                            return _c("comment-task", {
-                                              key: comment.id,
-                                              attrs: { comment: comment },
-                                            })
-                                          }
-                                        ),
-                                        1
+                                        [
+                                          _c(
+                                            "v-col",
+                                            { attrs: { cols: "12", md: "12" } },
+                                            [
+                                              _vm.user.role_id == 7
+                                                ? _c(
+                                                    "v-btn-toggle",
+                                                    {
+                                                      attrs: {
+                                                        tile: "",
+                                                        color:
+                                                          "deep-purple accent-3",
+                                                        group: "",
+                                                      },
+                                                      model: {
+                                                        value: task.is_internal,
+                                                        callback: function (
+                                                          $$v
+                                                        ) {
+                                                          _vm.$set(
+                                                            task,
+                                                            "is_internal",
+                                                            _vm._n($$v)
+                                                          )
+                                                        },
+                                                        expression:
+                                                          "task.is_internal",
+                                                      },
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: {
+                                                            value: parseInt(0),
+                                                          },
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                      External\n                    "
+                                                          ),
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: {
+                                                            value: parseInt(1),
+                                                          },
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                      Internal\n                    "
+                                                          ),
+                                                        ]
+                                                      ),
+                                                    ],
+                                                    1
+                                                  )
+                                                : _vm._e(),
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _vm._l(
+                                            task.comments,
+                                            function (comment) {
+                                              return _c("comment-task", {
+                                                key: comment.id,
+                                                attrs: {
+                                                  comment: comment,
+                                                  currenttype: task.is_internal,
+                                                },
+                                              })
+                                            }
+                                          ),
+                                        ],
+                                        2
                                       )
                                     : _vm._e(),
                                 ],
@@ -2702,7 +2824,10 @@ var render = function () {
                               _vm._v(" "),
                               task.status != 2
                                 ? _c("post-task-comment", {
-                                    attrs: { task_id: task.id },
+                                    attrs: {
+                                      task_id: task.id,
+                                      currenttype: task.is_internal,
+                                    },
                                     on: {
                                       "comment-task": function ($event) {
                                         return _vm.refreshTasks()
