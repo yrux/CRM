@@ -82,7 +82,6 @@ export default {
     this.getList()
   },
   watch: {},
-  computed: {},
   methods: {
     async getList(){
       if(this.page==1){
@@ -98,6 +97,11 @@ export default {
     taskAssigned,
     taskComment,
     BriefSubmit
-  }
+  },
+  computed: {
+    user() {
+        return this.$store.getters.loggedInUser;
+    },
+  },
 };
 </script>

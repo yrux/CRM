@@ -309,7 +309,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getList();
   },
   watch: {},
-  computed: {},
   methods: {
     getList: function getList() {
       var _this = this;
@@ -349,6 +348,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     taskAssigned: _components_notifications_taskAssigned_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     taskComment: _components_notifications_taskComment_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     BriefSubmit: _components_notifications_BriefSubmit_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  computed: {
+    user: function user() {
+      return this.$store.getters.loggedInUser;
+    }
   }
 });
 
