@@ -6,9 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\TaskComment as taskCommentModel;
+use App\Models\Payment;
 
-class taskComment extends Notification
+class PaymentPaidByCustomer extends Notification
 {
     use Queueable;
 
@@ -17,10 +17,10 @@ class taskComment extends Notification
      *
      * @return void
      */
-    public $comment;
-    public function __construct(taskCommentModel $comment)
+    public $payment;
+    public function __construct(Payment $payment)
     {
-        $this->comment = $comment;
+        $this->payment = $payment;
     }
 
     /**
@@ -43,8 +43,9 @@ class taskComment extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('New comment on Task #'.$this->comment->task_id);
-                    //->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -56,9 +57,9 @@ class taskComment extends Notification
     public function toArray($notifiable)
     {
         return [
-            'task_id'=>$this->comment->task_id,
-            'line'=>$this->comment->user->name.' Commented On #'.$this->comment->task_id,
-            'project_id'=>$this->comment->task->project->project_id,
+            'payment_id'=>$this->payment->id,
+            'lead_id'=>$this->payment->lead_id,
+            'status'=>$this->payment->payment_status_text
         ];
     }
 }

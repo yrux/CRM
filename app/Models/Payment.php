@@ -13,7 +13,7 @@ class Payment extends Model
     protected $payment_status_arr = [0=>'Pending/Waiting',1=>'Paid',2=>'Failed'];
     protected $payment_type_arr = ['sell'=>'Sell','upsell'=>'UpSell','bonus'=>'Bonus'];
     protected $fillable = [
-        'lead_id','amount','status','merchant','description','payment_type','project_id',
+        'lead_id','amount','status','merchant','description','payment_type','project_id', 'currency', 'user_id'
     ];
     public function getCreatedAtFormattedAttribute(){
         return date('Y-m-d h:i a',strtotime($this->created_at));

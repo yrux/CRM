@@ -9,7 +9,18 @@
       type="warning"
       elevation="2"
     >
-      Thank you for you Payment, Our Project manager will be in touch with you shortly. With your login credentials and everything
+      Thank you for you Payment
+      <v-btn
+        color="info"
+        dark
+        :to="{
+          name: 'auth.dashboard',
+        }"
+        v-bind="attrs"
+        v-on="on"
+      >
+        Login Now
+      </v-btn>
     </v-alert>
 </v-card>
 </template>

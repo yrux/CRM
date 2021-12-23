@@ -8,6 +8,7 @@ use App\Http\Requests\PaymentRequest;
 use App\Http\Resources\PaymentResource;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\PaymentPaidByCustomer;
 
 class PaymentController extends Controller
 {
@@ -37,7 +38,9 @@ class PaymentController extends Controller
      */
     public function store(Lead $lead, PaymentRequest $request)
     {
-        $payment = $lead->payments()->create($request->only('amount', 'description', 'status', 'merchant','payment_type','project_id'));
+        $arr = $request->only('amount', 'description', 'status', 'merchant','payment_type','project_id', 'currency');
+        $arr['user_id'] = $request->user()->id;
+        $payment = $lead->payments()->create($arr);
         return new PaymentResource($payment);
     }
 
@@ -61,7 +64,10 @@ class PaymentController extends Controller
      */
     public function update(Lead $lead, Payment $payment, PaymentRequest $request)
     {
-        $payment->update($request->only('amount', 'description', 'status', 'merchant','payment_type','project_id'));
+        
+        $arr = $request->only('amount', 'description', 'status', 'merchant','payment_type','project_id', 'currency');
+        $arr['user_id'] = $request->user()->id;
+        $payment->update($arr);
         return new PaymentResource($payment);
     }
 
@@ -140,7 +146,7 @@ class PaymentController extends Controller
                     try {
                         $payment_1 = \Stripe\PaymentIntent::create([
                             'amount' => ($amount_first * 100),
-                            'currency' => 'usd',
+                            'currency' => strtolower($payment->currency),
                             'customer' => $res->customer,
                             'payment_method' => $payment_methods->data[0]->id,
                             'off_session' => true,
@@ -156,7 +162,7 @@ class PaymentController extends Controller
                     try {
                         $payment_2 = \Stripe\PaymentIntent::create([
                             'amount' => ($rand * 100),
-                            'currency' => 'usd',
+                            'currency' => strtolower($payment->currency),
                             'customer' => $res->customer,
                             'payment_method' => $payment_methods->data[0]->id,
                             'off_session' => true,
@@ -171,7 +177,7 @@ class PaymentController extends Controller
                     try {
                         $payment_3 = \Stripe\PaymentIntent::create([
                             'amount' => ($rand2 * 100),
-                            'currency' => 'usd',
+                            'currency' => strtolower($payment->currency),
                             'customer' => $res->customer,
                             'payment_method' => $payment_methods->data[0]->id,
                             'off_session' => true,
@@ -186,13 +192,22 @@ class PaymentController extends Controller
                     //$payment_methods->data[0]->id
                     $payment->status = 1;
                     $payment->save();
-                    $user = User::create([
-                        'company_id'=>$payment->lead->brand->company->id,
-                        'email'=>$payment->lead->email,
-                        'name'=>$payment->lead->first_name.' '.$payment->lead->last_name,
-                        'password'=>Hash::make('12345678'),
-                        'role_id'=>6,
-                    ]);
+                    $sell_person = User::find($payment->user_id);
+                    if($sell_person){
+                        dd($sell_person->notify(new PaymentPaidByCustomer($payment)));
+                    }
+                    $userCheck = User::where('email',$payment->lead->email)->count();
+                    if($userCheck==0){
+                        $user = User::create([
+                            'company_id'=>$payment->lead->brand->company->id,
+                            'email'=>$payment->lead->email,
+                            'name'=>$payment->lead->first_name.' '.$payment->lead->last_name,
+                            'password'=>Hash::make('12345678'),
+                            'role_id'=>6,
+                        ]);
+                    }else{
+                        $user = User::where('email',$payment->lead->email)->first();
+                    }
                     // dd($payment->lead->id, $user);
                     $lead_update = Lead::find($payment->lead->id);
                     $lead_update->user_id = $user->id;

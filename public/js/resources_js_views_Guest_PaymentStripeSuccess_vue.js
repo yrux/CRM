@@ -83,10 +83,30 @@ var render = function () {
           },
         },
         [
-          _vm._v(
-            "\r\n      Thank you for you Payment, Our Project manager will be in touch with you shortly. With your login credentials and everything\r\n    "
+          _vm._v("\r\n      Thank you for you Payment\r\n      "),
+          _c(
+            "v-btn",
+            _vm._g(
+              _vm._b(
+                {
+                  attrs: {
+                    color: "info",
+                    dark: "",
+                    to: {
+                      name: "auth.dashboard",
+                    },
+                  },
+                },
+                "v-btn",
+                _vm.attrs,
+                false
+              ),
+              _vm.on
+            ),
+            [_vm._v("\r\n        Login Now\r\n      ")]
           ),
-        ]
+        ],
+        1
       ),
     ],
     1

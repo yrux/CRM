@@ -14,7 +14,7 @@
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="projects.length>0">
         <tr
           v-for="project in projects"
           :key="project.project_id_int"
@@ -34,6 +34,11 @@
                 See Details
                 </v-btn>
           </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr>
+          <td colspan="4">If you are not seeing any invoice, this is because project manager haven't yet created your project.</td>
         </tr>
       </tbody>
     </template>

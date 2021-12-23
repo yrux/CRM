@@ -409,6 +409,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -432,7 +445,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         merchant: "stripe",
         description: "",
         payment_type: 'sell',
-        project_id: 0
+        project_id: 0,
+        currency: 'USD'
       },
       briefform: {
         name: "",
@@ -445,7 +459,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         merchant: [],
         description: [],
         payment_type: [],
-        project_id: []
+        project_id: [],
+        currency: []
       },
       merchants: [{
         key: "stripe",
@@ -657,7 +672,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   merchant: [],
                   description: [],
                   project_id: [],
-                  payment_type: []
+                  payment_type: [],
+                  currency: []
                 };
                 formData = new FormData();
                 formData.append("amount", _this5.form.amount);
@@ -666,14 +682,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append("description", _this5.form.description);
                 formData.append("payment_type", _this5.form.payment_type);
                 formData.append("project_id", _this5.form.project_id);
-                _context5.next = 10;
+                formData.append("currency", _this5.form.currency);
+                _context5.next = 11;
                 return _services_auth_payment__WEBPACK_IMPORTED_MODULE_3__["default"].create(_this5.lead.id, formData);
 
-              case 10:
+              case 11:
                 res = _context5.sent;
 
                 if (!res.status) {
-                  _context5.next = 21;
+                  _context5.next = 22;
                   break;
                 }
 
@@ -683,26 +700,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   amount: 0,
                   status: 0,
                   merchant: "stripe",
-                  description: ""
+                  description: "",
+                  currency: 'USD'
                 };
                 _this5.createPaymentTgl = false;
 
                 if (!_this5.lead) {
-                  _context5.next = 19;
+                  _context5.next = 20;
                   break;
                 }
 
-                _context5.next = 18;
+                _context5.next = 19;
                 return _services_auth_payment__WEBPACK_IMPORTED_MODULE_3__["default"].get(_this5.lead.id, "");
 
-              case 18:
+              case 19:
                 _this5.payments = _context5.sent;
 
-              case 19:
-                _context5.next = 27;
+              case 20:
+                _context5.next = 29;
                 break;
 
-              case 21:
+              case 22:
                 if (res.data.amount) {
                   _this5.formerrors.amount = res.data.amount;
                 }
@@ -727,7 +745,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this5.formerrors.project_id = res.data.project_id;
                 }
 
-              case 27:
+                if (res.data.currency) {
+                  _this5.formerrors.currency = res.data.currency;
+                }
+
+              case 29:
               case "end":
                 return _context5.stop();
             }
@@ -2284,7 +2306,7 @@ var render = function () {
                                 _vm._v(" "),
                                 _c(
                                   "v-col",
-                                  { attrs: { cols: "6", md: "6" } },
+                                  { attrs: { cols: "3", md: "3" } },
                                   [
                                     _c("v-select", {
                                       attrs: {
@@ -2305,6 +2327,35 @@ var render = function () {
                                           )
                                         },
                                         expression: "form.payment_type",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-col",
+                                  { attrs: { cols: "3", md: "3" } },
+                                  [
+                                    _c("v-select", {
+                                      attrs: {
+                                        items: [
+                                          { key: "USD", value: "USD" },
+                                          { key: "GBP", value: "GBP" },
+                                        ],
+                                        label: "Currency",
+                                        "item-text": "key",
+                                        "item-value": "value",
+                                        required: "",
+                                        "error-messages":
+                                          _vm.formerrors.currency,
+                                      },
+                                      model: {
+                                        value: _vm.form.currency,
+                                        callback: function ($$v) {
+                                          _vm.$set(_vm.form, "currency", $$v)
+                                        },
+                                        expression: "form.currency",
                                       },
                                     }),
                                   ],
@@ -2352,7 +2403,7 @@ var render = function () {
                                       {
                                         staticClass: "white--text",
                                         attrs: {
-                                          color: "blue-grey float-right",
+                                          color: "blue-grey float-left",
                                         },
                                         on: { click: _vm.createPayment },
                                       },
@@ -2539,6 +2590,10 @@ var render = function () {
                                     ]),
                                     _vm._v(" "),
                                     _c("th", { staticClass: "text-left" }, [
+                                      _vm._v("Currency"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("th", { staticClass: "text-left" }, [
                                       _vm._v("Project"),
                                     ]),
                                     _vm._v(" "),
@@ -2565,6 +2620,8 @@ var render = function () {
                                       _c("td", [
                                         _vm._v(_vm._s(item.payment_type_text)),
                                       ]),
+                                      _vm._v(" "),
+                                      _c("td", [_vm._v(_vm._s(item.currency))]),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(

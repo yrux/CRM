@@ -86,3 +86,8 @@ Route::middleware('auth:api')->get('/me', function (Request $request) {
     $user->notification_count = $notificationsCount;
     return $user;
 });
+Route::middleware('auth:api')->get('/notifications', function (Request $request) {
+    $notifications = $request->user()->notifications()->paginate(50);
+    $request->user()->notifications()->paginate(50)->markAsRead();
+    return $notifications;
+});

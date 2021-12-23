@@ -158,7 +158,7 @@
                       :error-messages="formerrors.status"
                     ></v-select>
                   </v-col>
-                  <v-col cols="6" md="6">
+                  <v-col cols="3" md="3">
                     <v-select
                       v-model="form.payment_type"
                       :items="payment_types"
@@ -167,6 +167,17 @@
                       item-value="key"
                       required
                       :error-messages="formerrors.status"
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="3" md="3">
+                    <v-select
+                      v-model="form.currency"
+                      :items="[{key: 'USD', value: 'USD'},{key: 'GBP', value: 'GBP'}]"
+                      label="Currency"
+                      item-text="key"
+                      item-value="value"
+                      required
+                      :error-messages="formerrors.currency"
                     ></v-select>
                   </v-col>
                   <v-col v-if="lead.user_id>0" cols="6" md="6">
@@ -183,7 +194,7 @@
                   <v-col cols="6" md="12">
                     <v-btn
                       @click="createPayment"
-                      color="blue-grey float-right"
+                      color="blue-grey float-left"
                       class="white--text"
                     >
                       <v-icon left dark> mdi-currency-usd </v-icon>
@@ -250,6 +261,7 @@
                     <th class="text-left">Description</th>
                     <th class="text-left">Merchant</th>
                     <th class="text-left">Type</th>
+                    <th class="text-left">Currency</th>
                     <th class="text-left">Project</th>
                     <th class="text-left">Status</th>
                     <th class="text-left"></th>
@@ -261,6 +273,7 @@
                     <td>{{ item.description }}</td>
                     <td>{{ item.merchant }}</td>
                     <td>{{ item.payment_type_text }}</td>
+                    <td>{{ item.currency }}</td>
                     <td>{{ item.project_id>0?item.project.project_id:'N/A' }}</td>
                     <td>
                       <StatusChip
@@ -380,7 +393,8 @@ export default {
         merchant: "stripe",
         description: "",
         payment_type:'sell',
-        project_id:0
+        project_id:0,
+        currency: 'USD',
       },
       briefform: {
         name: "",
@@ -393,7 +407,8 @@ export default {
         merchant: [],
         description: [],
         payment_type:[],
-        project_id: []
+        project_id: [],
+        currency: [],
       },
       merchants: [
         { key: "stripe", value: "Stripe" },
@@ -472,7 +487,8 @@ export default {
         merchant: [],
         description: [],
         project_id:[],
-        payment_type: []
+        payment_type: [],
+        currency: [],
       };
       var formData = new FormData();
       formData.append("amount", this.form.amount);
@@ -481,6 +497,8 @@ export default {
       formData.append("description", this.form.description);
       formData.append("payment_type", this.form.payment_type);
       formData.append("project_id", this.form.project_id);
+      formData.append("currency", this.form.currency);
+
       var res = await paymentservice.create(this.lead.id, formData);
       if (res.status) {
         this.$store.commit("setNotification", "Payment Created");
@@ -489,6 +507,7 @@ export default {
           status: 0,
           merchant: "stripe",
           description: "",
+          currency: 'USD'
         };
         this.createPaymentTgl = false;
         if (this.lead) {
@@ -512,6 +531,9 @@ export default {
         }
         if (res.data.project_id) {
           this.formerrors.project_id = res.data.project_id;
+        }
+        if (res.data.currency) {
+          this.formerrors.currency = res.data.currency;
         }
       }
     },

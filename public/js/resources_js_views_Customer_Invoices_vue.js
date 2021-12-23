@@ -61,6 +61,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -297,48 +302,62 @@ var render = function () {
               ]),
             ]),
             _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.projects, function (project) {
-                return _c("tr", { key: project.project_id_int }, [
-                  _c("td", [_vm._v(_vm._s(project.project_id))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(project.total_paid))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(project.total_balance))]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
+            _vm.projects.length > 0
+              ? _c(
+                  "tbody",
+                  _vm._l(_vm.projects, function (project) {
+                    return _c("tr", { key: project.project_id_int }, [
+                      _c("td", [_vm._v(_vm._s(project.project_id))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(project.total_paid))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(project.total_balance))]),
+                      _vm._v(" "),
                       _c(
-                        "v-btn",
-                        {
-                          staticClass: "white--text",
-                          attrs: {
-                            link: "",
-                            to: {
-                              name: "auth.customer.invoice",
-                              params: { id: parseInt(project.project_id_int) },
-                            },
-                            small: "",
-                            color: "blue float-right",
-                          },
-                        },
+                        "td",
                         [
-                          _c("v-icon", { attrs: { left: "", dark: "" } }, [
-                            _vm._v(" mdi-cash "),
-                          ]),
-                          _vm._v("\n              See Details\n              "),
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "white--text",
+                              attrs: {
+                                link: "",
+                                to: {
+                                  name: "auth.customer.invoice",
+                                  params: {
+                                    id: parseInt(project.project_id_int),
+                                  },
+                                },
+                                small: "",
+                                color: "blue float-right",
+                              },
+                            },
+                            [
+                              _c("v-icon", { attrs: { left: "", dark: "" } }, [
+                                _vm._v(" mdi-cash "),
+                              ]),
+                              _vm._v(
+                                "\n              See Details\n              "
+                              ),
+                            ],
+                            1
+                          ),
                         ],
                         1
                       ),
-                    ],
-                    1
-                  ),
-                ])
-              }),
-              0
-            ),
+                    ])
+                  }),
+                  0
+                )
+              : _c("tbody", [
+                  _c("tr", [
+                    _c("td", { attrs: { colspan: "4" } }, [
+                      _vm._v(
+                        "If you are not seeing any invoice, this is because project manager haven't yet created your project."
+                      ),
+                    ]),
+                  ]),
+                ]),
           ]
         },
         proxy: true,
