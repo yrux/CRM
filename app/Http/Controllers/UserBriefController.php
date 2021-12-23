@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{UserBrief, BriefForm};
+use App\Models\{UserBrief, BriefForm, User};
 use Illuminate\Http\Request;
 use App\Http\Resources\UserBriefResource;
+use App\Notifications\BriefSubmit;
 class UserBriefController extends Controller
 {
     /**
@@ -39,6 +40,9 @@ class UserBriefController extends Controller
         $arr['sender_id'] = $request->user()->id;
         $user_briefs = UserBrief::create($arr);
         //send mail to user here
+        $message = 'New Brief has been sent, Kindly fill it up';
+        $customer = User::find($user_briefs->user_id);
+        $customer->notify(new BriefSubmit($user_briefs, $message));
         return new UserBriefResource($user_briefs);
     }
 
@@ -64,8 +68,11 @@ class UserBriefController extends Controller
     {
         $arr = $request->only('form_fields');
         $arr['status'] = 1;
-        $user_briefs = $userBrief->update($arr);
+          $userBrief->update($arr);
         //send mail to user here
+        $message = $request->user()->name.' has filled the brief';
+        $sender = User::find($userBrief->sender_id);
+        $sender->notify(new BriefSubmit($userBrief, $message));
         return new UserBriefResource($userBrief);
     }
 

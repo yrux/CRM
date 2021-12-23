@@ -23,6 +23,7 @@
         <PaymentPaidByCustomer :notification="notification" v-if="notification.type=='App\\Notifications\\PaymentPaidByCustomer'" />
         <taskAssigned :notification="notification" v-if="notification.type=='App\\Notifications\\taskAssigned'" />
         <taskComment :notification="notification" v-if="notification.type=='App\\Notifications\\taskComment'" />
+        <BriefSubmit :notification="notification" v-if="notification.type=='App\\Notifications\\BriefSubmit'" />
       </v-sheet>
     </v-col>
     <v-col cols="3">
@@ -51,6 +52,7 @@
 <script>
 import notificationsservice from "@services/auth/notifications";
 import PaymentPaidByCustomer from "@/components/notifications/PaymentPaidByCustomer.vue";
+import BriefSubmit from "@/components/notifications/BriefSubmit.vue";
 import taskAssigned from "@/components/notifications/taskAssigned.vue";
 import taskComment from "@/components/notifications/taskComment.vue";
 export default {
@@ -94,7 +96,8 @@ export default {
   components:{
     PaymentPaidByCustomer,
     taskAssigned,
-    taskComment
+    taskComment,
+    BriefSubmit
   }
 };
 </script>
