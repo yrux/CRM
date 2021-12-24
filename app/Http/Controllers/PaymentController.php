@@ -194,7 +194,7 @@ class PaymentController extends Controller
                     $payment->save();
                     $sell_person = User::find($payment->user_id);
                     if($sell_person){
-                        dd($sell_person->notify(new PaymentPaidByCustomer($payment)));
+                        $sell_person->notify(new PaymentPaidByCustomer($payment));
                     }
                     $userCheck = User::where('email',$payment->lead->email)->count();
                     if($userCheck==0){
