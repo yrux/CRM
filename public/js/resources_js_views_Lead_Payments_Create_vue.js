@@ -422,6 +422,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -496,7 +498,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         value: 'Bonus'
       }],
       lead_projects: [],
-      valid: false
+      valid: false,
+      loaders: [0]
     };
   },
   mounted: function mounted() {
@@ -507,28 +510,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _this.getLead(_this.$route.params.id);
+              _this.startupreqs();
 
-              _context.next = 3;
-              return _services_auth_briefform__WEBPACK_IMPORTED_MODULE_4__["default"].get("?all=true");
-
-            case 3:
-              _this.briefforms = _context.sent;
-
-              if (!(parseInt(_this.lead.user_id) > 0)) {
-                _context.next = 8;
-                break;
-              }
-
-              _context.next = 7;
-              return _services_auth_project__WEBPACK_IMPORTED_MODULE_2__["default"].getlist('?perpage=0&customer_id=' + _this.lead.user_id).then(function (e) {
-                return e.data;
-              });
-
-            case 7:
-              _this.lead_projects = _context.sent;
-
-            case 8:
+            case 1:
             case "end":
               return _context.stop();
           }
@@ -755,6 +739,70 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee5);
+      }))();
+    },
+    signupUserManually: function signupUserManually() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _this6.loaders[0] = 1;
+                _context6.next = 3;
+                return _services_auth_lead__WEBPACK_IMPORTED_MODULE_1__["default"].createCustomer(_this6.lead.id).then(function (e) {
+                  _this6.lead = e;
+                });
+
+              case 3:
+                _this6.loaders[0] = 0;
+
+                _this6.startupreqs();
+
+              case 5:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    startupreqs: function startupreqs() {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _this7.getLead(_this7.$route.params.id);
+
+                _context7.next = 3;
+                return _services_auth_briefform__WEBPACK_IMPORTED_MODULE_4__["default"].get("?all=true");
+
+              case 3:
+                _this7.briefforms = _context7.sent;
+
+                if (!(parseInt(_this7.lead.user_id) > 0)) {
+                  _context7.next = 8;
+                  break;
+                }
+
+                _context7.next = 7;
+                return _services_auth_project__WEBPACK_IMPORTED_MODULE_2__["default"].getlist('?perpage=0&customer_id=' + _this7.lead.user_id).then(function (e) {
+                  return e.data;
+                });
+
+              case 7:
+                _this7.lead_projects = _context7.sent;
+
+              case 8:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
       }))();
     }
   },
@@ -1142,6 +1190,42 @@ var leadservice = /*#__PURE__*/function () {
       }
 
       return assignUser;
+    }()
+  }, {
+    key: "createCustomer",
+    value: function () {
+      var _createCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6(lead_id) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return axios.post('/api/leads-create-user/' + lead_id).then(function (e) {
+                  return e.data;
+                })["catch"](function (e) {
+                  return {
+                    status: 0
+                  };
+                });
+
+              case 2:
+                res = _context6.sent;
+                return _context6.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      function createCustomer(_x9) {
+        return _createCustomer.apply(this, arguments);
+      }
+
+      return createCustomer;
     }()
   }]);
 
@@ -2112,7 +2196,18 @@ var render = function () {
                             ? _c("v-btn", { attrs: { color: "success" } }, [
                                 _vm._v("User Signedup"),
                               ])
-                            : _vm._e(),
+                            : _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "success",
+                                    loading: _vm.loaders[0] == 1,
+                                    disabled: _vm.loaders[0] == 1,
+                                  },
+                                  on: { click: _vm.signupUserManually },
+                                },
+                                [_vm._v("Create User")]
+                              ),
                           _vm._v(" "),
                           _vm.lead.user_id > 0
                             ? _c(

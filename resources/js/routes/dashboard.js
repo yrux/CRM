@@ -2,6 +2,7 @@ import admin from '@/middleware/admin'
 import company from '@/middleware/company'
 import customer from '@/middleware/customer'
 import companysalesupport from '@/middleware/companysalesupport'
+import companymarketing from '@/middleware/companymarketing'
 export default [
 	{
         path: '/dashboard',
@@ -115,6 +116,29 @@ export default [
         beforeEnter: company,
     },
     {
+        path: '/marketing_budgets/',
+        name: 'auth.marketing_budgets',
+        component: ()=> import('@/views/MarketingBudget/Main.vue'),
+        children: [
+            {
+                path: '',
+                component: ()=> import('@/views/MarketingBudget/List.vue'),
+                name: 'auth.marketing_budgets.listing'
+            },
+            {
+                path: 'add',
+                component: ()=> import('@/views/MarketingBudget/Add.vue'),
+                name: 'auth.marketing_budgets.add'
+            },
+            {
+                path: 'edit/:id',
+                component: ()=> import('@/views/MarketingBudget/Edit.vue'),
+                name: 'auth.marketing_budgets.edit'
+            }
+        ],
+        beforeEnter: company,
+    },
+    {
         path: '/leads/',
         name: 'auth.leads',
         component: ()=> import('@/views/Lead/Main.vue'),
@@ -169,5 +193,34 @@ export default [
             }
         ],
         beforeEnter: customer,
+    },
+    {
+        path: '/daily-marketing-budget',
+        name: 'auth.daily_marketing_budget',
+        component: ()=> import('@/views/DailyMarketingBudget/Index.vue'),
+        beforeEnter: companymarketing,
+    },
+    {
+        path: '/lead_type/',
+        name: 'auth.lead_type',
+        component: ()=> import('@/views/LeadType/Main.vue'),
+        children: [
+            {
+                path: '',
+                component: ()=> import('@/views/LeadType/List.vue'),
+                name: 'auth.lead_type.listing'
+            },
+            {
+                path: 'add',
+                component: ()=> import('@/views/LeadType/Add.vue'),
+                name: 'auth.lead_type.add'
+            },
+            {
+                path: 'edit/:id',
+                component: ()=> import('@/views/LeadType/Edit.vue'),
+                name: 'auth.lead_type.edit'
+            }
+        ],
+        beforeEnter: companymarketing,
     },
 ];

@@ -15,7 +15,7 @@
         >
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn v-if="user.role_id==2" dark text @click="updateLead">
+          <v-btn v-if="(user.role_id==2||user.role_id==9)" dark text @click="updateLead">
             {{ form.id > 0 ? "Update Lead" : "Save Lead" }}
           </v-btn>
         </v-toolbar-items>
@@ -54,6 +54,17 @@
             <v-col cols="4">
               <v-text-field label="Phone" v-model="form.phone"></v-text-field>
             </v-col>
+            <v-col cols="4">
+              <v-select
+                required
+                :items="lead_types"
+                item-text="type"
+                item-value="id"
+                label="Lead Type*"
+                v-model="form.lead_type"
+                return-object
+              ></v-select>
+            </v-col>
             <v-col cols="6">
               <v-text-field
                 label="Message"
@@ -91,7 +102,7 @@
                 Goto Client Summary
               </v-btn>
             </v-col>
-            <v-col v-if="form.id > 0 &&user.role_id==2" cols="6">
+            <v-col v-if="form.id > 0 &&(user.role_id==2||user.role_id==9)" cols="6">
               <v-select
                 required
                 :items="companyusers"
@@ -101,13 +112,13 @@
                 v-model="form.assigned_to"
               ></v-select>
             </v-col>
-            <v-col v-if="form.id > 0 &&user.role_id==2" cols="6">
+            <v-col v-if="form.id > 0 &&(user.role_id==2||user.role_id==9)" cols="6">
               <v-btn @click="assignUser" color="success" class="ma-2 white--text">
                 <v-icon left dark> mdi-account </v-icon>
                 Assign User to this Lead
               </v-btn>
             </v-col>
-            <v-col v-if="form.id > 0 &&user.role_id==2" cols="12">
+            <v-col v-if="form.id > 0 &&(user.role_id==2||user.role_id==9)" cols="12">
               <v-skeleton-loader
                   v-for="i in 10"
                   :key="i"
@@ -153,6 +164,7 @@
 </template>
 <script>
 import leadservice from "@services/auth/lead";
+import lead_typeservice from "@services/auth/lead_type";
 import brandservice from "@services/auth/brand";
 import Swal from "sweetalert2";
 import leadassignedservice from "@services/auth/leadassigned";
@@ -162,6 +174,7 @@ export default {
       dialog: false,
       companyusers: [],
       assignedUsers: [],
+      lead_types: [],
       fetchingLeadUsers: false,
       form: {
         id: 0,
@@ -174,6 +187,7 @@ export default {
         brand: {},
         custom_fields: {},
         assigned_to: 0,
+        lead_type: {},
       },
     };
   },
@@ -232,6 +246,7 @@ export default {
       formData.append("email", this.form.email);
       formData.append("message", this.form.message);
       formData.append("brand_id", this.form.brand.id);
+      formData.append("lead_type", this.form.lead_type.id);
       if (this.form.id > 0) {
         await leadservice.update(formData, this.form.id);
         this.$store.commit("setNotification", "Lead Updated");
@@ -252,6 +267,9 @@ export default {
     brandservice.getAllCompanyUsers().then(e=>{
       this.companyusers = e
     })
+    lead_typeservice.getlist("").then(e=>{
+      this.lead_types = e.data
+    })
   },
   watch: {
     openLeadForm() {
@@ -269,6 +287,7 @@ export default {
         this.form.brand = this.lead.brand;
         this.form.custom_fields = this.lead.custom_fields;
         this.form.assigned_to = this.lead.assigned_to;
+        this.form.lead_type = this.lead.type;
         this.getLeadUsers()
       } else {
         this.form = {

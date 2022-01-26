@@ -4,12 +4,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{CompanyController, BriefFormController, UserBriefController};
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\{MarketingBudgetController, MarketingBudgetSpendingController};
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\{LeadController, PaymentController, LeadMessageController, LeadAssignedController};
+use App\Http\Controllers\{LeadController, PaymentController, LeadMessageController, LeadAssignedController, LeadTypeController};
 use App\Http\Controllers\{BrandController, BrandUserController};
 use App\Http\Controllers\{UserController, ChatController};
 use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController, TaskCommentController, TaskTimeController};
 use App\Http\Controllers\Auth\ApiAuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,17 +41,19 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::apiResource('departments', DepartmentController::class);
     Route::apiResource('brief-form', BriefFormController::class);
     Route::apiResource('user-briefs', UserBriefController::class);
+    Route::apiResource('lead_type', LeadTypeController::class);
     Route::apiResource('leads', LeadController::class);
     Route::apiResource('leads.payments', PaymentController::class);
     Route::apiResource('leads.assigned', LeadAssignedController::class);
     Route::post('leads/{lead}/{status}', [LeadController::class,'updateStatus']);
+    Route::post('leads-create-user/{lead}', [LeadController::class,'createUser']);
     // Route::post('leads/{lead}/user/{user}', [LeadController::class,'assignUser']);
     Route::get('/company/user/getallusers', [CompanyController::class,'getallusers']);
     Route::apiResource('brand', BrandController::class);
     Route::apiResource('brand/{brand}/user', BrandUserController::class);
     Route::get('/brands/me', [BrandUserController::class,'myBrands']);
     Route::post('brand/{brand}/assign-user', [BrandUserController::class,'assignUser']);
-
+    
     // Route::apiResource('brand/{brand}/customer', BrandCustomerController::class);
     Route::apiResource('project', ProjectController::class);
     Route::apiResource('project/{project}/u', ProjectUserController::class);
@@ -72,13 +76,17 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::post('/chat', [ChatController::class,'index']);
     Route::get('/chat-history/{ChatHead}', [ChatController::class,'chatHistory']);
     Route::post('/chat-send/{ChatHead}', [ChatController::class,'chatSend']);
-
+    
     //lead messages
     Route::get('/lead-messages/{lead}', [LeadMessageController::class,'chatHistory']);
     Route::post('/lead-message-send/{lead}', [LeadMessageController::class,'chatSend']);
-
+    
     //support home widgets
     Route::get('/unseen-lead-messages', [LeadMessageController::class,'unseenMessages']);
+
+    Route::apiResource('marketing_budgets', MarketingBudgetController::class);
+    Route::get('/current-budget', [MarketingBudgetController::class,'currentMonthBudget']);
+    Route::apiResource('marketing_budgets.spendings', MarketingBudgetSpendingController::class);
 });
 Route::middleware('auth:api')->get('/me', function (Request $request) {
     $notificationsCount = $request->user()->unreadNotifications()->count();

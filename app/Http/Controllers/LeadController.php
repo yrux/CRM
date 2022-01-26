@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LeadRequest;
 use App\Http\Resources\LeadResource;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class LeadController extends Controller
 {
@@ -36,6 +37,7 @@ class LeadController extends Controller
         if(!empty($_GET['brand_id'])){
             $leads = $leads->where('brand_id',$_GET['brand_id']);
         }
+        $leads = $leads->leftJoin('lead_types','leads.lead_type','=','lead_types.id');
         if(!empty($_GET['search'])){
             $leads = $leads->Where(
                 function($query) {
@@ -45,7 +47,8 @@ class LeadController extends Controller
                 ->orWhere('leads.company', 'like', '%'.$q.'%')
                 ->orWhere('leads.email', 'like', '%'.$q.'%')
                 ->orWhere('leads.phone', 'like', '%'.$q.'%')
-                ->orWhere('leads.message', 'like', '%'.$q.'%');
+                ->orWhere('leads.message', 'like', '%'.$q.'%')
+                ->orWhere('lead_types.type', 'like', '%'.$q.'%');
             });
         }
         return $leads->select('leads.*');
@@ -53,7 +56,7 @@ class LeadController extends Controller
     public function index(Request $request)
     {
         $brands = [];
-        if($request->user()->role_id==2){
+        if($request->user()->role_id==2||$request->user()->role_id==9){
             $brands = $request->user()->companybrands;
         }
         $new = $this->filtersLead($request);
@@ -89,7 +92,9 @@ class LeadController extends Controller
      */
     public function store(LeadRequest $request)
     {
-        $lead = Lead::create($request->only('brand_id','first_name','last_name','company','email','phone','message','custom_fields'));
+        $arr = $request->only('brand_id','first_name','last_name','company','email','phone','message','custom_fields','lead_type');
+        $arr['marketing_user_id'] = $request->user()->id;
+        $lead = Lead::create($arr);
         return new LeadResource($lead);
     }
 
@@ -114,7 +119,7 @@ class LeadController extends Controller
      */
     public function update(LeadRequest $request, Lead $lead)
     {
-        $lead->update($request->only(['brand_id','first_name','last_name','company','email','phone','message','custom_fields']));
+        $lead->update($request->only(['brand_id','first_name','last_name','company','email','phone','message','custom_fields','lead_type']));
         return new LeadResource($lead);
     }
 
@@ -135,5 +140,21 @@ class LeadController extends Controller
         $lead->lead_status = $status;
         $lead->save();
         return response()->json(null, 204);
+    }
+    public function createUser(Lead $lead){
+        if(intval($lead->user_id)==0){
+            $user = User::create([
+                'company_id'=>$lead->brand->company->id,
+                'email'=>$lead->email,
+                'name'=>$lead->first_name.' '.$lead->last_name,
+                'password'=>Hash::make('12345678'),
+                'role_id'=>6,
+            ]);
+            $lead->user_id = $user->id;
+            $lead->save();
+            return response()->json($lead, 200);
+        }else{
+            return response()->json($lead, 200);
+        }
     }
 }

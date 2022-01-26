@@ -789,6 +789,7 @@ var render = function () {
                                 { id: 6, value: "Customer" },
                                 { id: 7, value: "Production Manager" },
                                 { id: 8, value: "Developer" },
+                                { id: 9, value: "Marketing" },
                               ],
                               "item-text": "value",
                               "item-value": "id",

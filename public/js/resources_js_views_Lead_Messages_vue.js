@@ -278,7 +278,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var _require = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/build/cjs/index.js"),
     io = _require.io;
 
-var socket = io("http://localhost:9000");
+var socket = io("https://himsportal.com:9002");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['leadid'],
   watch: {

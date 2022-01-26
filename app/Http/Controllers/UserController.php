@@ -90,8 +90,8 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user)
     {
         Gate::authorize('update',$user);
-        $user->update($request->only('name','email','role_id','company_id'));
-        if($request->password!=''){
+        $user->update($request->only('name','email','role_id','company_id','department_id'));
+        if($request->password){
             $user->password = Hash::make($request->password);
             $user->save();
         }

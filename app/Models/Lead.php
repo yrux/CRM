@@ -10,19 +10,22 @@ class Lead extends Model
 {
     use HasFactory;
     protected $appends = ['created_at_formatted','lead_status_text','brand_code','unseen_messages'];
-    protected $with = ['brand'];
+    protected $with = ['brand', 'type'];
     protected $lead_status_arr = [0=>'pending',1=>'success',2=>'junk',3=>'followup'];
     protected $fillable = [
-        'brand_id','first_name','last_name','email','phone','message','lead_status','custom_fields','company','user_id'
+        'brand_id','first_name','last_name','email','phone','message','lead_status','custom_fields','company','user_id','marketing_user_id','lead_type'
     ];
     public function getCreatedAtFormattedAttribute(){
         return date('Y-m-d h:i a',strtotime($this->created_at));
     }
     public function getBrandCodeAttribute(){
-        return $this->brand->brand_code;
+        return $this->brand?$this->brand->brand_code:'N/A';
     }
     public function brand(){
         return $this->belongsTo(Brand::class);
+    }
+    public function type(){
+        return $this->belongsTo(LeadType::class,'lead_type');
     }
     public function user(){
         return $this->belongsTo(User::class);

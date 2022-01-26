@@ -49,5 +49,13 @@ class leadservice{
         });
         return res;
 	}
+	async createCustomer(lead_id){
+		var res = await  axios.post('/api/leads-create-user/'+lead_id).then(function(e){
+            return e.data
+        }).catch(function(e){
+            return {status: 0};
+        });
+        return res;
+	}
 }
 export default new leadservice();

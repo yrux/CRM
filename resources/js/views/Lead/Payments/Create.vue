@@ -84,9 +84,11 @@
                   createPaymentTgl ? "mdi-chevron-up" : "mdi-chevron-down"
                 }}</v-icon>
               </v-btn>
-
               <v-btn color="success" v-if="lead.user_id > 0"
                 >User Signedup</v-btn
+              >
+              <v-btn color="success" @click="signupUserManually" v-else :loading="loaders[0]==1" :disabled="loaders[0]==1"
+                >Create User</v-btn
               >
 
               <v-btn
@@ -428,14 +430,11 @@ export default {
       ],
       lead_projects:[],
       valid: false,
+      loaders:[0]
     };
   },
   async mounted() {
-    this.getLead(this.$route.params.id);
-    this.briefforms = await briefformservice.get("?all=true");
-    if(parseInt(this.lead.user_id)>0){
-      this.lead_projects = await projectservice.getlist('?perpage=0&customer_id='+this.lead.user_id).then(e=>e.data);
-    }
+    this.startupreqs()
   },
   methods: {
     async sendForm() {
@@ -537,6 +536,21 @@ export default {
         }
       }
     },
+    async signupUserManually(){
+      this.loaders[0] = 1
+      await leadservice.createCustomer(this.lead.id).then(e=>{
+        this.lead = e
+      })
+      this.loaders[0] = 0
+      this.startupreqs()
+    },
+    async startupreqs(){
+      this.getLead(this.$route.params.id);
+      this.briefforms = await briefformservice.get("?all=true");
+      if(parseInt(this.lead.user_id)>0){
+        this.lead_projects = await projectservice.getlist('?perpage=0&customer_id='+this.lead.user_id).then(e=>e.data);
+      }
+    }
   },
   watch: {},
   computed: {},

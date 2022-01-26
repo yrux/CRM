@@ -30,6 +30,7 @@ class LeadRequest extends FormRequest
             'email'=>'required|max:255|email',
             'brand_id'=>'required|exists:brands,id',
             'phone'=>'max:20',
+            'lead_type'=>'required',
         ];
     }
 }

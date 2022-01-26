@@ -89,6 +89,7 @@
               user.role_id == 5 ||
               user.role_id == 3 ||
               user.role_id == 2 ||
+              user.role_id == 9 ||
               user.role_id == 1
             "
             link
@@ -213,6 +214,106 @@
                 <v-list-item-title>Add Brief Form</v-list-item-title>
               </v-list-item>
             </v-list>
+          </v-menu>
+        </v-list-item>
+        <v-list-item
+          v-if="user.role_id == 2"
+          class="pa-0"
+          link
+          :to="{ name: 'auth.marketing_budgets.listing' }"
+        >
+          <v-menu
+            open-on-hover
+            offset-x
+            style="max-width: 600px"
+            :close-on-content-click="false"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-icon
+                color="primary"
+                dark
+                class="d-block"
+                style="width: 100%; text-align: center"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon v-text="'mdi-advertisements'"></v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Marketing Budget</v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list>
+              <v-list-item exact link :to="{ name: 'auth.marketing_budgets.add' }">
+                <v-list-item-title>Add Marketing Budget</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-list-item>
+        <v-list-item
+          v-if="user.role_id == 2 || user.role_id == 9"
+          class="pa-0"
+          link
+          :to="{ name: 'auth.lead_type.listing' }"
+        >
+          <v-menu
+            open-on-hover
+            offset-x
+            style="max-width: 600px"
+            :close-on-content-click="false"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-icon
+                color="primary"
+                dark
+                class="d-block"
+                style="width: 100%; text-align: center"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon v-text="'mdi-playlist-star'"></v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Lead Type</v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list>
+              <v-list-item exact link :to="{ name: 'auth.lead_type.add' }">
+                <v-list-item-title>Add Lead Type</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-list-item>
+        <v-list-item
+          v-if="user.role_id == 2 || user.role_id == 9"
+          class="pa-0"
+          link
+          :to="{ name: 'auth.daily_marketing_budget' }"
+        >
+          <v-menu
+            open-on-hover
+            offset-x
+            style="max-width: 600px"
+            :close-on-content-click="false"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-icon
+                color="primary"
+                dark
+                class="d-block"
+                style="width: 100%; text-align: center"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon v-text="'mdi-view-day-outline'"></v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Daily Marketing Budget</v-list-item-title>
+              </v-list-item-content>
+            </template>
           </v-menu>
         </v-list-item>
         <v-list-item
@@ -392,6 +493,7 @@
             user.role_id == 2 ||
             user.role_id == 3 ||
             user.role_id == 4 ||
+            user.role_id == 9 ||
             user.role_id == 5
           "
           class="pa-0"
