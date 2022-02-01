@@ -1345,7 +1345,7 @@ var render = function () {
                               "item-text": "brand.brand_code",
                               "item-value": "brand_id",
                               label: "Brand",
-                              required: "",
+                              rules: [_vm.rules.required],
                               "error-messages": _vm.errors.brand_id,
                             },
                             model: {

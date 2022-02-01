@@ -49,7 +49,7 @@ lazy-validation
     item-text="brand.brand_code"
     item-value="brand_id"
     label="Brand"
-    required
+    :rules="[rules.required]"
     v-model="brand_id"
     :error-messages="errors.brand_id"
 ></v-select>
