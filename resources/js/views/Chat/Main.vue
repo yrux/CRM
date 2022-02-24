@@ -31,7 +31,9 @@ export default {
                 query+='&search='+this.search
             }
             var res = await userservice.getlist(query);
-            this.users = res.data
+            this.users = res.data.filter(e=>{
+                return e.role_name!='Customer'
+            })
         },
         setSearch(q){
             this.search = q;

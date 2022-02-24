@@ -254,7 +254,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 res = _context.sent;
-                _this.users = res.data;
+                _this.users = res.data.filter(function (e) {
+                  return e.role_name != 'Customer';
+                });
 
               case 6:
               case "end":
