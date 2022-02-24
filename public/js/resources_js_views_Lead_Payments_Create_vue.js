@@ -467,13 +467,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       merchants: [{
         key: "stripe",
         value: "Stripe"
-      }, {
-        key: "paypal",
-        value: "paypal"
-      }, {
-        key: "authorize.net",
-        value: "Authorize.Net"
-      }, {
+      }, // { key: "paypal", value: "paypal" },
+      // { key: "authorize.net", value: "Authorize.Net" },
+      {
         key: "other",
         value: "Other"
       }],
@@ -483,10 +479,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         key: 1,
         value: "Paid"
-      }, {
-        key: 2,
-        value: "Failed"
-      }],
+      } // { key: 2, value: "Failed" },
+      ],
       payment_types: [{
         key: 'sell',
         value: 'Sell'
@@ -785,7 +779,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this7.briefforms = _context7.sent;
 
                 if (!(parseInt(_this7.lead.user_id) > 0)) {
-                  _context7.next = 8;
+                  _context7.next = 9;
                   break;
                 }
 
@@ -797,7 +791,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _this7.lead_projects = _context7.sent;
 
-              case 8:
+                if (_this7.lead_projects.length > 0) {
+                  _this7.form.project_id = _this7.lead_projects[0].project_id_int;
+                }
+
+              case 9:
               case "end":
                 return _context7.stop();
             }
@@ -1955,7 +1953,13 @@ var render = function () {
                             "text-color": "white",
                           },
                         },
-                        [_vm._v("\n          Tags\n        ")]
+                        [
+                          _vm._v(
+                            "\n          " +
+                              _vm._s(_vm.lead_projects.length) +
+                              "\n        "
+                          ),
+                        ]
                       ),
                     ],
                     1

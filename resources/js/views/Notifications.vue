@@ -10,7 +10,7 @@
           </v-col>
       </v-row>
     </v-col> -->
-    <v-col cols="9">
+    <v-col cols="12">
       <v-sheet
         :color="!notification.read_at?'green lighten-4':'white'"
         elevation="2"
@@ -26,7 +26,7 @@
         <BriefSubmit :notification="notification" v-if="notification.type=='App\\Notifications\\BriefSubmit'" />
       </v-sheet>
     </v-col>
-    <v-col cols="3">
+    <!-- <v-col cols="3">
       <v-sheet
         elevation="2"
         class="mx-auto"
@@ -46,7 +46,7 @@
           </v-list-item-group>
         </v-list>
       </v-sheet>
-    </v-col>
+    </v-col> -->
   </v-row>
 </template>
 <script>

@@ -5236,7 +5236,9 @@ var render = function () {
               _c(
                 "v-toolbar-items",
                 [
-                  _vm.user.role_id == 2 || _vm.user.role_id == 9
+                  _vm.user.role_id == 2 ||
+                  _vm.user.role_id == 9 ||
+                  _vm.user.role_id == 4
                     ? _c(
                         "v-btn",
                         {
@@ -5503,7 +5505,9 @@ var render = function () {
                         : _vm._e(),
                       _vm._v(" "),
                       _vm.form.id > 0 &&
-                      (_vm.user.role_id == 2 || _vm.user.role_id == 9)
+                      (_vm.user.role_id == 2 ||
+                        _vm.user.role_id == 9 ||
+                        _vm.user.role_id == 4)
                         ? _c(
                             "v-col",
                             { attrs: { cols: "6" } },
@@ -5530,7 +5534,9 @@ var render = function () {
                         : _vm._e(),
                       _vm._v(" "),
                       _vm.form.id > 0 &&
-                      (_vm.user.role_id == 2 || _vm.user.role_id == 9)
+                      (_vm.user.role_id == 2 ||
+                        _vm.user.role_id == 9 ||
+                        _vm.user.role_id == 4)
                         ? _c(
                             "v-col",
                             { attrs: { cols: "6" } },
@@ -5560,7 +5566,9 @@ var render = function () {
                         : _vm._e(),
                       _vm._v(" "),
                       _vm.form.id > 0 &&
-                      (_vm.user.role_id == 2 || _vm.user.role_id == 9)
+                      (_vm.user.role_id == 2 ||
+                        _vm.user.role_id == 9 ||
+                        _vm.user.role_id == 4)
                         ? _c(
                             "v-col",
                             { attrs: { cols: "12" } },

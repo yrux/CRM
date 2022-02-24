@@ -15,7 +15,7 @@
         >
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn v-if="(user.role_id==2||user.role_id==9)" dark text @click="updateLead">
+          <v-btn v-if="(user.role_id==2||user.role_id==9||user.role_id==4)" dark text @click="updateLead">
             {{ form.id > 0 ? "Update Lead" : "Save Lead" }}
           </v-btn>
         </v-toolbar-items>
@@ -102,7 +102,7 @@
                 Goto Client Summary
               </v-btn>
             </v-col>
-            <v-col v-if="form.id > 0 &&(user.role_id==2||user.role_id==9)" cols="6">
+            <v-col v-if="form.id > 0 &&(user.role_id==2||user.role_id==9||user.role_id==4)" cols="6">
               <v-select
                 required
                 :items="companyusers"
@@ -112,13 +112,13 @@
                 v-model="form.assigned_to"
               ></v-select>
             </v-col>
-            <v-col v-if="form.id > 0 &&(user.role_id==2||user.role_id==9)" cols="6">
+            <v-col v-if="form.id > 0 &&(user.role_id==2||user.role_id==9||user.role_id==4)" cols="6">
               <v-btn @click="assignUser" color="success" class="ma-2 white--text">
                 <v-icon left dark> mdi-account </v-icon>
                 Assign User to this Lead
               </v-btn>
             </v-col>
-            <v-col v-if="form.id > 0 &&(user.role_id==2||user.role_id==9)" cols="12">
+            <v-col v-if="form.id > 0 &&(user.role_id==2||user.role_id==9||user.role_id==4)" cols="12">
               <v-skeleton-loader
                   v-for="i in 10"
                   :key="i"

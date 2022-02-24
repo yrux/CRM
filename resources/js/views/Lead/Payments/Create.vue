@@ -19,7 +19,7 @@
             label
             text-color="white"
           >
-            Tags
+            {{lead_projects.length}}
           </v-chip></v-card-title
         >
       </v-card>
@@ -414,14 +414,14 @@ export default {
       },
       merchants: [
         { key: "stripe", value: "Stripe" },
-        { key: "paypal", value: "paypal" },
-        { key: "authorize.net", value: "Authorize.Net" },
+        // { key: "paypal", value: "paypal" },
+        // { key: "authorize.net", value: "Authorize.Net" },
         { key: "other", value: "Other" },
       ],
       statuses: [
         { key: 0, value: "Pending/Waiting" },
         { key: 1, value: "Paid" },
-        { key: 2, value: "Failed" },
+        // { key: 2, value: "Failed" },
       ],
       payment_types:[
         {key:'sell',value:'Sell'},
@@ -549,6 +549,9 @@ export default {
       this.briefforms = await briefformservice.get("?all=true");
       if(parseInt(this.lead.user_id)>0){
         this.lead_projects = await projectservice.getlist('?perpage=0&customer_id='+this.lead.user_id).then(e=>e.data);
+        if(this.lead_projects.length>0){
+          this.form.project_id = this.lead_projects[0].project_id_int
+        }
       }
     }
   },

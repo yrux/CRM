@@ -984,7 +984,7 @@ var render = function () {
     [
       _c(
         "v-col",
-        { attrs: { cols: "9" } },
+        { attrs: { cols: "12" } },
         _vm._l(_vm.notifications, function (notification) {
           return _c(
             "v-sheet",
@@ -1020,72 +1020,6 @@ var render = function () {
             1
           )
         }),
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-col",
-        { attrs: { cols: "3" } },
-        [
-          _c(
-            "v-sheet",
-            {
-              staticClass: "mx-auto",
-              attrs: { elevation: "2", rounded: true },
-            },
-            [
-              _c(
-                "v-list",
-                [
-                  _c(
-                    "v-list-item-group",
-                    {
-                      attrs: { multiple: "", color: "indigo" },
-                      model: {
-                        value: _vm.model,
-                        callback: function ($$v) {
-                          _vm.model = $$v
-                        },
-                        expression: "model",
-                      },
-                    },
-                    _vm._l(_vm.items, function (item, i) {
-                      return _c(
-                        "v-list-item",
-                        { key: i },
-                        [
-                          _c(
-                            "v-list-item-icon",
-                            [
-                              _c("v-icon", {
-                                domProps: { textContent: _vm._s(item.icon) },
-                              }),
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-list-item-content",
-                            [
-                              _c("v-list-item-title", {
-                                domProps: { textContent: _vm._s(item.text) },
-                              }),
-                            ],
-                            1
-                          ),
-                        ],
-                        1
-                      )
-                    }),
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-        ],
         1
       ),
     ],

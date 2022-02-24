@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Lead, User};
+use App\Models\{Lead, User, Brand, LeadAssigned};
 use Illuminate\Http\Request;
 use App\Http\Requests\LeadRequest;
 use App\Http\Resources\LeadResource;
@@ -58,6 +58,9 @@ class LeadController extends Controller
         $brands = [];
         if($request->user()->role_id==2||$request->user()->role_id==9){
             $brands = $request->user()->companybrands;
+        }elseif($request->user()->role_id==4){
+            $brand_id = $request->user()->userbrands->pluck('brand_id');
+            $brands = Brand::whereIn('id',$brand_id)->get();
         }
         $new = $this->filtersLead($request);
         $followup =$this->filtersLead($request);
@@ -95,6 +98,11 @@ class LeadController extends Controller
         $arr = $request->only('brand_id','first_name','last_name','company','email','phone','message','custom_fields','lead_type');
         $arr['marketing_user_id'] = $request->user()->id;
         $lead = Lead::create($arr);
+        if($request->user()->role_id==4){
+            $lead->assigned()->create([
+                'user_id'=>$request->user()->id
+            ]);
+        }
         return new LeadResource($lead);
     }
 
