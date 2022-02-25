@@ -24,7 +24,7 @@ class Brand extends Model
     }
     public function getImageUrlAttribute(){
         if($this->image){
-            return asset($this->image->url);
+            return $this->image->full_url;
         }else{
             return config('app.noimage');
         }
