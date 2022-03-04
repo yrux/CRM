@@ -25,4 +25,11 @@ export default [
         component: () => import('@/views/Guest/Briefs.vue'),
         meta: { guest: true },
     },
+    {
+        path: '/updates',
+        name: 'guest.crm.updates',
+        component: () => import('@/views/Guest/Updates.vue'),
+        meta: { guest: true },
+    },
+    
 ];

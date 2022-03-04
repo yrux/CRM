@@ -8,7 +8,7 @@ use App\Http\Controllers\{MarketingBudgetController, MarketingBudgetSpendingCont
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\{LeadController, PaymentController, LeadMessageController, LeadAssignedController, LeadTypeController};
 use App\Http\Controllers\{BrandController, BrandUserController};
-use App\Http\Controllers\{UserController, ChatController};
+use App\Http\Controllers\{UserController, ChatController, CrmUpdateController};
 use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController, TaskCommentController, TaskTimeController};
 use App\Http\Controllers\Auth\ApiAuthController;
 
@@ -38,6 +38,7 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
 
     /*Company resource*/
     Route::apiResource('company', CompanyController::class);
+    Route::apiResource('crm-updates', CrmUpdateController::class);
     Route::apiResource('departments', DepartmentController::class);
     Route::apiResource('brief-form', BriefFormController::class);
     Route::apiResource('user-briefs', UserBriefController::class);

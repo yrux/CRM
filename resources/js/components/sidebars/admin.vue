@@ -8,6 +8,11 @@
       </div>
 
       <v-spacer></v-spacer>
+      <v-btn :to="{ name: 'guest.crm.updates' }" text>
+          <v-icon>
+            mdi-cellphone-arrow-down
+          </v-icon>
+      </v-btn>
       <v-btn :to="{ name: 'auth.notifications' }" text>
         <v-badge
           :content="user.notification_count"
@@ -282,6 +287,41 @@
             <v-list>
               <v-list-item exact link :to="{ name: 'auth.lead_type.add' }">
                 <v-list-item-title>Add Lead Type</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-list-item>
+        <v-list-item
+          v-if="user.role_id == 1"
+          class="pa-0"
+          link
+          :to="{ name: 'auth.crm_updates.listing' }"
+        >
+          <v-menu
+            open-on-hover
+            offset-x
+            style="max-width: 600px"
+            :close-on-content-click="false"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item-icon
+                color="primary"
+                dark
+                class="d-block"
+                style="width: 100%; text-align: center"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon v-text="'mdi-cellphone-arrow-down'"></v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Crm Updates</v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list>
+              <v-list-item exact link :to="{ name: 'auth.crm_updates.add' }">
+                <v-list-item-title>Add Crm Updates</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>

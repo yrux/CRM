@@ -223,4 +223,27 @@ export default [
         ],
         beforeEnter: companymarketing,
     },
+    {
+        path: '/crm-updates/',
+        name: 'auth.crm_updates',
+        component: ()=> import('@/views/CrmUpdate/Main.vue'),
+        children: [
+            {
+                path: '',
+                component: ()=> import('@/views/CrmUpdate/List.vue'),
+                name: 'auth.crm_updates.listing'
+            },
+            {
+                path: 'add',
+                component: ()=> import('@/views/CrmUpdate/Form.vue'),
+                name: 'auth.crm_updates.add'
+            },
+            {
+                path: 'edit/:id',
+                component: ()=> import('@/views/CrmUpdate/Form.vue'),
+                name: 'auth.crm_updates.edit'
+            }
+        ],
+        beforeEnter: admin,
+    },
 ];
