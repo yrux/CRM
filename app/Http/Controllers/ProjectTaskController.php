@@ -144,6 +144,7 @@ class ProjectTaskController extends Controller
         }
         $query->leftJoin('projects','project_tasks.project_id','projects.id');
         $query->leftJoin('users as assigned_user','project_tasks.assigned_on','assigned_user.id');
+        $query->leftJoin('users as assigned_by_user','project_tasks.assigned_by','assigned_by_user.id');
         $query->leftJoin('users as developer_user','project_tasks.developer_id','developer_user.id');
 
         $query = $query->leftJoin(DB::raw('(SELECT start_time, end_time,task_id FROM task_times WHERE end_time IS NULL GROUP BY task_times.task_id) AS task_time'), 
@@ -162,7 +163,10 @@ class ProjectTaskController extends Controller
         $query->select(
             DB::raw('CASE WHEN IFNULL(task_time.start_time,0)=0 THEN 0 ELSE 1 END AS task_started'),
             DB::raw("IFNULL(task_sum_time.total_time_on_task,'00:00:00') as total_time_on_task"),
-            'project_tasks.task_type','project_tasks.title as task_title','customers.name as customer_name','projects.id as project_id_root','customers.email as customer_email','projects.title','projects.project_id','project_tasks.id','project_tasks.due_date','project_tasks.created_at','assigned_user.name as assigned_user_name','assigned_user.email as assigned_user_email','developer_user.name as developer_name','developer_user.email as developer_email','project_tasks.status');
+            'project_tasks.task_type','project_tasks.title as task_title','customers.name as customer_name','projects.id as project_id_root','customers.email as customer_email','projects.title','projects.project_id','project_tasks.id','project_tasks.due_date'
+            ,'project_tasks.created_at','assigned_user.name as assigned_user_name','assigned_user.email as assigned_user_email',
+            'assigned_by_user.email as assigned_by_user_email','assigned_by_user.name as assigned_by_user_name',
+            'developer_user.name as developer_name','developer_user.email as developer_email','project_tasks.status');
         $query = $query->leftJoin('project_users',function($join){
             $join->on('projects.id','=','project_users.project_id')->where('project_users.role_id',6);
         });
@@ -185,6 +189,8 @@ class ProjectTaskController extends Controller
                 ->orWhere('customers.email', 'like', '%'.$q.'%')
                 ->orWhere('assigned_user.name', 'like', '%'.$q.'%')
                 ->orWhere('assigned_user.email', 'like', '%'.$q.'%')
+                ->orWhere('assigned_by_user.name', 'like', '%'.$q.'%')
+                ->orWhere('assigned_by_user.email', 'like', '%'.$q.'%')
                 ->orWhere('developer_user.name', 'like', '%'.$q.'%')
                 ->orWhere('developer_user.email', 'like', '%'.$q.'%')
                 ->orWhere('projects.project_id', 'like', '%'.$q.'%');

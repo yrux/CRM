@@ -248,6 +248,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         sortable: true,
         value: "assigned_user_name"
       }, {
+        text: "Assigned By",
+        align: "start",
+        sortable: true,
+        value: "assigned_by_user_name"
+      }, {
         text: "Due",
         align: "start",
         sortable: true,
