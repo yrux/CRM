@@ -205,14 +205,14 @@
                     </template>
                     <span>Close Task</span>
                   </v-tooltip>
-                  <!-- <v-tooltip bottom v-else>
+                  <v-tooltip bottom v-else-if="task.status==2&&user.role_id==7">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn @click="taskStatusUpdate(task.id, 0)" fab small v-bind="attrs" v-on="on">
                         <v-icon>mdi-check</v-icon>
                       </v-btn>
                     </template>
                     <span>Re-Open Task</span>
-                  </v-tooltip> -->
+                  </v-tooltip>
                   <v-tooltip bottom v-if="task.status!=2">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn @click="changeAssignmentDialog = true;selectedTask = task;" fab small v-bind="attrs" v-on="on">

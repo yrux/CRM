@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{ProjectTask, Project, User};
+use App\Models\{ProjectTask, Project, User, TaskComment, TaskCommentUserNotification};
 use Illuminate\Http\Request;
 use App\Http\Resources\ProjectTaskResource;
 use App\Repositories\FileRepository;
 use App\Http\Requests\ProjectTaskRequest;
 use DB;
 use App\Notifications\taskAssigned;
+use App\Notifications\taskComment as taskCommentNotification;
 class ProjectTaskController extends Controller
 {
     protected $file;
@@ -103,15 +104,50 @@ class ProjectTaskController extends Controller
      * @param  \App\Models\ProjectTask  $projectTask
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project, ProjectTask $task)
-    {
+    public function destroy(Project $project, ProjectTask $task){
         $task->delete();
         return response()->json(null, 204);
     }
 
-    public function updateStatus(Project $project, ProjectTask $task, $status){
+    public function updateStatus(Request $request, Project $project, ProjectTask $task, $status){
+        // TaskComment, TaskCommentUserNotification
         $task->status = $status;
         $task->save();
+        $statusText = '';
+        //0=opened,1=inprogress,2=closed/completed,3=onhold
+        if($status==0){
+            $statusText=$request->user()->name.' Re-Opened the task';
+        }
+        if($status==1){
+            $statusText=$request->user()->name. ' updated the task status to In Progress';
+        }
+        if($status==2){
+            $statusText=$request->user()->name.' Closed the task';
+        }
+        if($status==3){
+            $statusText=$request->user()->name.'put the task On Hold';
+        }
+        $comment = TaskComment::create([
+            'task_id'=>$task->id,
+            'user_id'=>$request->user()->id,
+            'is_internal'=>0,
+            'comment'=>$statusText,
+        ]);
+        $userIds = [$task->assigned_on,$task->developer_id,$task->assigned_by];
+        foreach($userIds as $userId){
+            if($userId!=$comment->user_id){
+                if(intval($userId)>0){
+                    $user = User::find($userId);
+                    if($user){
+                        TaskCommentUserNotification::create([
+                            'user_id'=>$user->id,
+                            'task_id'=>$comment->task_id
+                        ]);
+                        $user->notify(new taskCommentNotification($comment));
+                    }
+                }
+            }
+        }
         return response()->json(null, 200);
     }
     public function validateTask(ProjectTaskRequest $request){

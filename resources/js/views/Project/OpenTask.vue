@@ -87,7 +87,7 @@
               </v-file-input>
             </v-col>
             <v-col cols="12" md="12">
-              <v-btn @click="validateTask" class="float-right" outlined tile color="success">
+              <v-btn :loading="taskValidationLoader" :disabled="taskValidationLoader" @click="validateTask" class="float-right" outlined tile color="success">
                 <v-icon left> mdi-arrow-right-thick </v-icon>
                 Assign
               </v-btn>
@@ -100,7 +100,7 @@
         <v-expansion-panel-content>
           <user-list v-on:selected-user="userSelectEv" />
           <v-col v-if="task.assigned_to>0" cols="12" md="12">
-            <v-btn @click="assignTask" class="float-right" outlined tile color="success">
+            <v-btn :loading="taskValidationLoader" :disabled="taskValidationLoader" @click="assignTask" class="float-right" outlined tile color="success">
               <v-icon left> mdi-arrow-right-thick </v-icon>
               Assign Now
             </v-btn>
@@ -139,6 +139,7 @@ export default {
       panel: [0],
       allowTask: false,
       allowAssign: false,
+      taskValidationLoader: false,
       task: {
         task_title: "",
         description: "",
@@ -171,6 +172,7 @@ export default {
   },
   methods: {
     async assignTask(){
+      this.taskValidationLoader = true
       var formData = new FormData();
       formData.append('title',this.task.task_title)
       formData.append('task_description',this.task.description)
@@ -204,6 +206,7 @@ export default {
           .toISOString()
           .substr(0, 10),
       }
+      this.taskValidationLoader = false
     },
     async projectSelectEv(data) {
       if (data.project_id) {
@@ -230,6 +233,7 @@ export default {
       }
     },
     async validateTask(){
+      this.taskValidationLoader = true
       this.resetTaskErrors()
       var formData = new FormData()
       formData.append('project_id',this.project_id)
@@ -237,9 +241,9 @@ export default {
       formData.append('task_description',this.task.description)
       formData.append('task_type',this.task.task_type)
       formData.append('due_date',this.task.picker)
-      for(let i = 0; i < this.task.files.length; i++){
-        formData.append('attachements['+i+']',this.task.files[i])
-      }
+      // for(let i = 0; i < this.task.files.length; i++){
+      //   formData.append('attachements['+i+']',this.task.files[i])
+      // }
       var res = await projectservice.validateTask(formData)
       if(res.status){
         //validated
@@ -262,8 +266,8 @@ export default {
           if(res.data.task_type){
               this.taskErrors.task_type = res.data.task_type
           }
-          
       }
+      this.taskValidationLoader = false
     }
   },
 };

@@ -150,7 +150,7 @@
         </v-btn>
       </v-list-item>
       <v-divider></v-divider>
-      <v-list dense>
+      <v-list dense nav>
         <v-list-item
           v-if="user.role_id == 1"
           class="pa-0"

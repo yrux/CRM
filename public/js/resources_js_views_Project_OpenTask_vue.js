@@ -209,6 +209,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       panel: [0],
       allowTask: false,
       allowAssign: false,
+      taskValidationLoader: false,
       task: {
         task_title: "",
         description: "",
@@ -247,6 +248,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _this2.taskValidationLoader = true;
                 formData = new FormData();
                 formData.append('title', _this2.task.task_title);
                 formData.append('task_description', _this2.task.description);
@@ -259,10 +261,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   formData.append('attachements[' + i + ']', _this2.task.files[i]);
                 }
 
-                _context2.next = 10;
+                _context2.next = 11;
                 return _services_auth_project__WEBPACK_IMPORTED_MODULE_3__["default"].createTask(_this2.project_id_int, formData);
 
-              case 10:
+              case 11:
                 task = _context2.sent;
                 sweetalert2__WEBPACK_IMPORTED_MODULE_4___default().fire({
                   title: "Task Assigned",
@@ -288,8 +290,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   assigned_to: 0,
                   picker: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)
                 };
+                _this2.taskValidationLoader = false;
 
-              case 20:
+              case 22:
               case "end":
                 return _context2.stop();
             }
@@ -357,11 +360,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        var formData, i, res;
+        var formData, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
+                _this5.taskValidationLoader = true;
+
                 _this5.resetTaskErrors();
 
                 formData = new FormData();
@@ -369,11 +374,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('title', _this5.task.task_title);
                 formData.append('task_description', _this5.task.description);
                 formData.append('task_type', _this5.task.task_type);
-                formData.append('due_date', _this5.task.picker);
-
-                for (i = 0; i < _this5.task.files.length; i++) {
-                  formData.append('attachements[' + i + ']', _this5.task.files[i]);
-                }
+                formData.append('due_date', _this5.task.picker); // for(let i = 0; i < this.task.files.length; i++){
+                //   formData.append('attachements['+i+']',this.task.files[i])
+                // }
 
                 _context5.next = 10;
                 return _services_auth_project__WEBPACK_IMPORTED_MODULE_3__["default"].validateTask(formData);
@@ -409,7 +412,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 }
 
-              case 12:
+                _this5.taskValidationLoader = false;
+
+              case 13:
               case "end":
                 return _context5.stop();
             }
@@ -4728,6 +4733,8 @@ var render = function () {
                             {
                               staticClass: "float-right",
                               attrs: {
+                                loading: _vm.taskValidationLoader,
+                                disabled: _vm.taskValidationLoader,
                                 outlined: "",
                                 tile: "",
                                 color: "success",
@@ -4780,6 +4787,8 @@ var render = function () {
                             {
                               staticClass: "float-right",
                               attrs: {
+                                loading: _vm.taskValidationLoader,
+                                disabled: _vm.taskValidationLoader,
                                 outlined: "",
                                 tile: "",
                                 color: "success",

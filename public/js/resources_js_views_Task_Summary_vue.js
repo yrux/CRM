@@ -6363,6 +6363,71 @@ var render = function () {
                                                   ]),
                                                 ]
                                               )
+                                            : task.status == 2 &&
+                                              _vm.user.role_id == 7
+                                            ? _c(
+                                                "v-tooltip",
+                                                {
+                                                  attrs: { bottom: "" },
+                                                  scopedSlots: _vm._u(
+                                                    [
+                                                      {
+                                                        key: "activator",
+                                                        fn: function (ref) {
+                                                          var on = ref.on
+                                                          var attrs = ref.attrs
+                                                          return [
+                                                            _c(
+                                                              "v-btn",
+                                                              _vm._g(
+                                                                _vm._b(
+                                                                  {
+                                                                    attrs: {
+                                                                      fab: "",
+                                                                      small: "",
+                                                                    },
+                                                                    on: {
+                                                                      click:
+                                                                        function (
+                                                                          $event
+                                                                        ) {
+                                                                          return _vm.taskStatusUpdate(
+                                                                            task.id,
+                                                                            0
+                                                                          )
+                                                                        },
+                                                                    },
+                                                                  },
+                                                                  "v-btn",
+                                                                  attrs,
+                                                                  false
+                                                                ),
+                                                                on
+                                                              ),
+                                                              [
+                                                                _c("v-icon", [
+                                                                  _vm._v(
+                                                                    "mdi-check"
+                                                                  ),
+                                                                ]),
+                                                              ],
+                                                              1
+                                                            ),
+                                                          ]
+                                                        },
+                                                      },
+                                                    ],
+                                                    null,
+                                                    true
+                                                  ),
+                                                },
+                                                [
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v("Re-Open Task"),
+                                                  ]),
+                                                ]
+                                              )
                                             : _vm._e(),
                                           _vm._v(" "),
                                           task.status != 2
