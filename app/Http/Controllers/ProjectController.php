@@ -146,7 +146,10 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        Gate::authorize('update',$project);
+        $arr = $request->only('title','description','brand_id');
+        $project->update($arr);
+        return new ProjectResource($project);
     }
 
     /**

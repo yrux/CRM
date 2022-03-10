@@ -30,6 +30,15 @@ class projectservice{
 			return {status: 0, data: error.response.data.errors};
 		})
 	}
+	async update(formData, id){
+		formData.append('_method','put')
+		var res = await  axios.post('/api/project/'+id,formData).then(function(e){
+            return {status: 1, data: e.data.data}
+        }).catch(function(e){
+            return {status: 0, data: e.response.data.errors};
+        });
+        return res;
+	}
 	get(projectId){
 		return axios.get(`/api/project/${projectId}`)
 		.then(function (response) {

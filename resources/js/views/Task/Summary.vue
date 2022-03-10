@@ -2,7 +2,7 @@
   <div>
     <v-card class="mx-auto" outlined v-if="!tasksLoader" elevation="2">
       <v-card-title>
-        {{ project.project_id }} {{ project.title }}
+        {{ project.project_id }} {{ project.title }} <v-btn @click="changeProjectName" icon color="pink"><v-icon>mdi-lead-pencil</v-icon></v-btn>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
@@ -366,6 +366,7 @@ import CommentTask from "./CommentTask.vue";
 import PostTaskComment from "./PostTaskComment.vue";
 import UserList from "@/views/Project/UserList.vue";
 import taskType from "@components/common/taskType.vue"
+import Swal from "sweetalert2";
 export default {
   async mounted() {
     this.$root.snackbar = true
@@ -401,6 +402,27 @@ export default {
     };
   },
   methods: {
+    async changeProjectName(){
+      const project_id = this.project_id
+      await Swal.fire({
+        title: 'Change your Project name',
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Change',
+        showLoaderOnConfirm: true,
+        preConfirm: async (name) => {
+          if (!name) throw null;
+          let formData = new FormData()
+          formData.append('title', name)
+          let res = await projectservice.update(formData, project_id)
+          this.project.title = name
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      })
+    },
     copyTaskId(task_id){
       navigator.clipboard.writeText(task_id);
       this.$store.commit(

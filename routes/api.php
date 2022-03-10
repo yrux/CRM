@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{CompanyController, BriefFormController, UserBriefController};
 use App\Http\Controllers\FileController;
@@ -11,6 +12,11 @@ use App\Http\Controllers\{BrandController, BrandUserController};
 use App\Http\Controllers\{UserController, ChatController, CrmUpdateController};
 use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController, TaskCommentController, TaskTimeController};
 use App\Http\Controllers\Auth\ApiAuthController;
+
+// Route::post('/filecheck', function(Request $request){
+//     $data = $request->file('file')->store('images', 's3');
+//     dd($data);
+// });
 
 /*
 |--------------------------------------------------------------------------
