@@ -51,7 +51,7 @@ class UserController extends Controller
             $user = $user->leftJoin('leads','leads.user_id','=','users.id')
             ->rightJoin('lead_assigned', function($join) use ($uid){
                 $join->on('lead_assigned.lead_id','=','leads.id')
-                ->where('lead_assigned.user_i','=',$uid);
+                ->where('lead_assigned.user_id','=',$uid);
                 // $join->on('lead_assigned.user_id','=',DB::raw($uid));
             });
         }
