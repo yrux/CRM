@@ -64,9 +64,6 @@ class User extends Authenticatable
     public function userbrands(){
         return $this->hasMany(BrandUser::class);
     }
-    public function brandsAssigned(){
-        return $this->hasMany(BrandUser::class);
-    }
     public function projects(){
         return $this->hasMany(ProjectUser::class);
     }

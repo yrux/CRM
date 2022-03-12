@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use DB;
 use App\Http\Requests\UserRequest;
 class UserController extends Controller
 {
@@ -45,6 +46,15 @@ class UserController extends Controller
             $user=$user->where('users.company_id',$request->user()->company_id);
         }
         $user=$user->where('users.id','<>',$request->user()->id);
+        if($request->user()->role_id==4||$request->user()->role_id==5){
+            $uid = $request->user()->id;
+            $user = $user->leftJoin('leads','leads.user_id','=','users.id')
+            ->rightJoin('lead_assigned', function($join) use ($uid){
+                $join->on('lead_assigned.lead_id','=','leads.id')
+                ->where('lead_assigned.user_i','=',$uid);
+                // $join->on('lead_assigned.user_id','=',DB::raw($uid));
+            });
+        }
         if(intval($_GET['perpage'])>0){
             $user=$user->paginate($_GET['perpage']);
         }else{

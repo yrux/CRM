@@ -73,6 +73,61 @@
     <v-col cols="12">
       <v-divider></v-divider>
     </v-col>
+    <v-col cols="3">
+      <v-list two-line>
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="primary"> mdi-account </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{lead.first_name}} {{lead.last_name}}</v-list-item-title>
+            <v-list-item-subtitle>Full Name</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-col>
+    <v-col cols="3">
+      <v-list two-line>
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="primary"> mdi-at </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{lead.email}}</v-list-item-title>
+            <v-list-item-subtitle>Email</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-col>
+    <v-col cols="3">
+      <v-list two-line>
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="primary"> mdi-phone </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{lead.phone}}</v-list-item-title>
+            <v-list-item-subtitle>Phone</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-col>
+    <v-col cols="3">
+      <v-list two-line>
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="primary"> mdi-domain </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{lead.company}}</v-list-item-title>
+            <v-list-item-subtitle>Company</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-col>
+    <v-col cols="12">
+      <v-divider></v-divider>
+    </v-col>
     <v-col cols="12">
       <v-form v-model="valid">
         <v-container>

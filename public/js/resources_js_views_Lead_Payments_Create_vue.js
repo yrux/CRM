@@ -424,6 +424,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2190,6 +2245,176 @@ var render = function () {
             1
           )
         : _vm._e(),
+      _vm._v(" "),
+      _c("v-col", { attrs: { cols: "12" } }, [_c("v-divider")], 1),
+      _vm._v(" "),
+      _c(
+        "v-col",
+        { attrs: { cols: "3" } },
+        [
+          _c(
+            "v-list",
+            { attrs: { "two-line": "" } },
+            [
+              _c(
+                "v-list-item",
+                [
+                  _c(
+                    "v-list-item-icon",
+                    [
+                      _c("v-icon", { attrs: { color: "primary" } }, [
+                        _vm._v(" mdi-account "),
+                      ]),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [
+                        _vm._v(
+                          _vm._s(_vm.lead.first_name) +
+                            " " +
+                            _vm._s(_vm.lead.last_name)
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("v-list-item-subtitle", [_vm._v("Full Name")]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-col",
+        { attrs: { cols: "3" } },
+        [
+          _c(
+            "v-list",
+            { attrs: { "two-line": "" } },
+            [
+              _c(
+                "v-list-item",
+                [
+                  _c(
+                    "v-list-item-icon",
+                    [
+                      _c("v-icon", { attrs: { color: "primary" } }, [
+                        _vm._v(" mdi-at "),
+                      ]),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [_vm._v(_vm._s(_vm.lead.email))]),
+                      _vm._v(" "),
+                      _c("v-list-item-subtitle", [_vm._v("Email")]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-col",
+        { attrs: { cols: "3" } },
+        [
+          _c(
+            "v-list",
+            { attrs: { "two-line": "" } },
+            [
+              _c(
+                "v-list-item",
+                [
+                  _c(
+                    "v-list-item-icon",
+                    [
+                      _c("v-icon", { attrs: { color: "primary" } }, [
+                        _vm._v(" mdi-phone "),
+                      ]),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [_vm._v(_vm._s(_vm.lead.phone))]),
+                      _vm._v(" "),
+                      _c("v-list-item-subtitle", [_vm._v("Phone")]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-col",
+        { attrs: { cols: "3" } },
+        [
+          _c(
+            "v-list",
+            { attrs: { "two-line": "" } },
+            [
+              _c(
+                "v-list-item",
+                [
+                  _c(
+                    "v-list-item-icon",
+                    [
+                      _c("v-icon", { attrs: { color: "primary" } }, [
+                        _vm._v(" mdi-domain "),
+                      ]),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [
+                        _vm._v(_vm._s(_vm.lead.company)),
+                      ]),
+                      _vm._v(" "),
+                      _c("v-list-item-subtitle", [_vm._v("Company")]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("v-col", { attrs: { cols: "12" } }, [_c("v-divider")], 1),
       _vm._v(" "),

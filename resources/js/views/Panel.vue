@@ -10,18 +10,24 @@
       <v-col cols="12" v-if="user.role_id==2||user.role_id==4||user.role_id==5">
         <unseenMessages :user="user" />
       </v-col>
+      <v-col cols="12">
+        <v-divider />
+      </v-col>
+      <calendar />
     </v-row>
 </template>
 <script>
 import adminbar from "@/components/sidebars/admin.vue";
 import taskWidget from "@/components/tasks/widget.vue";
 import unseenMessages from "@/components/leads/unseenMessages.vue";
+import calendar from "@/components/common/calendar.vue";
 import taskservice from "@services/auth/task";
 export default {
   components: {
     adminbar,
     taskWidget,
-    unseenMessages
+    unseenMessages,
+    calendar
   },
   data(){
     return {
@@ -44,7 +50,7 @@ export default {
   computed: {
     user() {
       return this.$store.getters.loggedInUser;
-    },
-  },
+    }
+  }
 };
 </script>

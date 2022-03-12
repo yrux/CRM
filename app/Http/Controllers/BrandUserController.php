@@ -94,7 +94,7 @@ class BrandUserController extends Controller
         return new BrandUserResource($brand_user);
     }
     public function myBrands(Request $request){
-        $brands = $request->user()->brandsAssigned()->with('brand')->get();
+        $brands = $request->user()->userbrands()->with('brand')->get();
         return $brands;
     }
 }

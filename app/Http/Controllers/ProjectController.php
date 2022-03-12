@@ -23,6 +23,10 @@ class ProjectController extends Controller
     {
         Gate::authorize('viewAny',Project::class);
         $data = Project::where('projects.company_id',$request->user()->company_id);
+        if($request->user()->role_id==4||$request->user()->role_id==5){
+            $brand_ids = $request->user()->userbrands->pluck('brand_id');
+            $data = $data->whereIn('brand_id', $brand_ids);
+        }
         if(isset($_GET['sortCol'])){
             $data = $data->orderBy($_GET['sortCol'],($_GET['sortByDesc']==1?'desc':'asc'));
         }else{

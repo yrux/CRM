@@ -67,31 +67,6 @@ class GenerateApiCrud extends Command
             '--model'=>$table,
             '--api'=>'true',
         ]);
-        $bar->advance();
-        Permission::create([
-            'name'=>Str::slug($table.' List', '-'),
-            'title'=>$table.' List',
-        ]);
-        $bar->advance();
-        Permission::create([
-            'name'=>Str::slug($table.' View', '-'),
-            'title'=>$table.' View',
-        ]);
-        $bar->advance();
-        Permission::create([
-            'name'=>Str::slug($table.' Create', '-'),
-            'title'=>$table.' Create',
-        ]);
-        $bar->advance();
-        Permission::create([
-            'name'=>Str::slug($table.' Edit', '-'),
-            'title'=>$table.' Edit',
-        ]);
-        $bar->advance();
-        Permission::create([
-            'name'=>Str::slug($table.' Delete', '-'),
-            'title'=>$table.' Delete',
-        ]);
         $bar->finish();
         // return $table;
     }
