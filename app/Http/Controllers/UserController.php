@@ -47,13 +47,15 @@ class UserController extends Controller
         }
         $user=$user->where('users.id','<>',$request->user()->id);
         if($request->user()->role_id==4||$request->user()->role_id==5){
-            $uid = $request->user()->id;
-            $user = $user->leftJoin('leads','leads.user_id','=','users.id')
-            ->rightJoin('lead_assigned', function($join) use ($uid){
-                $join->on('lead_assigned.lead_id','=','leads.id')
-                ->where('lead_assigned.user_id','=',$uid);
-                // $join->on('lead_assigned.user_id','=',DB::raw($uid));
-            });
+            if(intval($_GET['role_id'])!=7){
+                $uid = $request->user()->id;
+                $user = $user->leftJoin('leads','leads.user_id','=','users.id')
+                ->rightJoin('lead_assigned', function($join) use ($uid){
+                    $join->on('lead_assigned.lead_id','=','leads.id')
+                    ->where('lead_assigned.user_id','=',$uid);
+                    // $join->on('lead_assigned.user_id','=',DB::raw($uid));
+                });
+            }
         }
         if(intval($_GET['perpage'])>0){
             $user=$user->paginate($_GET['perpage']);
