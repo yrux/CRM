@@ -1,10 +1,13 @@
 <?php
+use Illuminate\Support\Str;
+use App\Models\{RolePermission, Role, Permission};
+
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TaskAssigned extends Migration
+class AddDescriptionColEvents extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +16,8 @@ class TaskAssigned extends Migration
      */
     public function up()
     {
-        Schema::create('task_assigned', function (Blueprint $table) {
-            $table->id();
-            $table->integer('user_id');
-            $table->integer('task_id');
-            $table->timestamps();
+        Schema::table('events', function (Blueprint $table) {
+            $table->text('description')->nullable();
         });
     }
 
@@ -28,6 +28,8 @@ class TaskAssigned extends Migration
      */
     public function down()
     {
-        Schema::drop('task_assigned');
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropColumn('description');
+        });
     }
 }

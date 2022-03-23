@@ -30,7 +30,7 @@ class EventController extends Controller
         // end: second,
         // color: this.colors[this.rnd(0, this.colors.length - 1)],
         // timed: !allDay,
-        $event = $this->listRep->listFilteredQuery(['event_date','event_time','title'])
+        $event = $this->listRep->listFilteredQuery(['event_date','event_time','title','description'])
         ->select('events.title as name',DB::raw("CONCAT(events.event_date,' ',events.event_time) as start"))->where('user_id',$request->user()->id)
         ->where('event_date','>=',$request->start)
         ->where('event_date','<=',$request->end);
@@ -51,7 +51,7 @@ class EventController extends Controller
     public function store(EventRequest $request)
     {
         Gate::authorize('create',Event::class);
-        $arr = $request->only(['title','event_date','event_time']);
+        $arr = $request->only(['title','event_date','event_time','description']);
         $arr['user_id'] = $request->user()->id;
         $event = Event::create($arr);
         return new EventResource($event);
@@ -79,7 +79,7 @@ class EventController extends Controller
     public function update(EventRequest $request, Event $event)
     {
         Gate::authorize('update',$event);
-        $event->update($request->only('title','event_date','event_time'));
+        $event->update($request->only('title','event_date','event_time','description'));
         return new EventResource($event);
     }
 
