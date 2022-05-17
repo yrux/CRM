@@ -18,7 +18,7 @@ class LeadNotePolicy
      */
     public function viewAny(User $user)
     {
-        return optional($user->permissions()->where('permission_id',91)->first())->id>0;
+        return optional($user->permissions()->where('permission_id',66)->first())->id>0;
     }
 
     /**
@@ -30,7 +30,7 @@ class LeadNotePolicy
      */
     public function view(User $user, LeadNote $leadNote)
     {
-        return optional($user->permissions()->where('permission_id',92)->first())->id>0;
+        return optional($user->permissions()->where('permission_id',67)->first())->id>0;
     }
 
     /**
@@ -41,7 +41,7 @@ class LeadNotePolicy
      */
     public function create(User $user)
     {
-        return optional($user->permissions()->where('permission_id',93)->first())->id>0;
+        return optional($user->permissions()->where('permission_id',68)->first())->id>0;
     }
 
     /**
@@ -53,7 +53,7 @@ class LeadNotePolicy
      */
     public function update(User $user, LeadNote $leadNote)
     {
-        return optional($user->permissions()->where('permission_id',94)->first())->id>0;
+        return optional($user->permissions()->where('permission_id',69)->first())->id>0;
     }
 
     /**
@@ -65,7 +65,7 @@ class LeadNotePolicy
      */
     public function delete(User $user, LeadNote $leadNote)
     {
-        return optional($user->permissions()->where('permission_id',95)->first())->id>0;
+        return optional($user->permissions()->where('permission_id',70)->first())->id>0;
     }
 
     /**
@@ -77,7 +77,7 @@ class LeadNotePolicy
      */
     public function restore(User $user, LeadNote $leadNote)
     {
-        return optional($user->permissions()->where('permission_id',95)->first())->id>0;
+        return optional($user->permissions()->where('permission_id',70)->first())->id>0;
     }
 
     /**
@@ -89,6 +89,6 @@ class LeadNotePolicy
      */
     public function forceDelete(User $user, LeadNote $leadNote)
     {
-        return optional($user->permissions()->where('permission_id',95)->first())->id>0;
+        return optional($user->permissions()->where('permission_id',70)->first())->id>0;
     }
 }
