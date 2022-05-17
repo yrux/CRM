@@ -28,6 +28,6 @@ class TaskAssigned extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('task_assigned');
     }
 }

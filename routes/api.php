@@ -9,7 +9,7 @@ use App\Http\Controllers\{MarketingBudgetController, MarketingBudgetSpendingCont
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\{LeadController, PaymentController, LeadMessageController, LeadAssignedController, LeadTypeController};
 use App\Http\Controllers\{BrandController, BrandUserController};
-use App\Http\Controllers\{UserController, ChatController, CrmUpdateController, EventController};
+use App\Http\Controllers\{UserController, ChatController, CrmUpdateController, EventController, LeadNoteController};
 use App\Http\Controllers\{ProjectController, ProjectTaskController, ProjectUserController, TaskCommentController, TaskTimeController};
 use App\Http\Controllers\Auth\ApiAuthController;
 
@@ -53,6 +53,7 @@ Route::group(['middleware' => ['cors', 'json.response','auth:api']], function ()
     Route::apiResource('leads', LeadController::class);
     Route::apiResource('leads.payments', PaymentController::class);
     Route::apiResource('leads.assigned', LeadAssignedController::class);
+    Route::apiResource('leads.notes', LeadNoteController::class);
     Route::post('leads/{lead}/{status}', [LeadController::class,'updateStatus']);
     Route::post('leads-create-user/{lead}', [LeadController::class,'createUser']);
     // Route::post('leads/{lead}/user/{user}', [LeadController::class,'assignUser']);

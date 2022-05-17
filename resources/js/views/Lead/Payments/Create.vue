@@ -424,18 +424,77 @@
         </v-row></v-container
       >
     </v-col>
+    <v-container>
+      <v-row>
+        <v-col cols="12" md="12">
+          <h2>Lead Notes</h2>
+        </v-col>
+        <v-col v-if="lead_notes.length>0" cols="12">
+          <v-timeline dense>
+            <v-slide-x-reverse-transition group hide-on-leave>
+              <v-timeline-item
+                v-for="item in lead_notes"
+                :key="item.id"
+                :color="'info'"
+                small
+              >
+                <template v-slot:icon>
+                  <v-avatar>
+                    <img :src="item.user.image_url">
+                  </v-avatar>
+                </template>
+                {{ item.created_at_formatted }}
+                <!-- <v-alert
+                  :value="true"
+                  :color="'info'"
+                  icon="mdi-information"
+                  class="white--text"
+                  v-html="item.note"
+                >
+                </v-alert> -->
+                <v-row class="pt-4">
+                  <v-col cols="1">
+                    <strong>{{item.user.name}}</strong>
+                  </v-col>
+                  <v-col v-html="item.note" class="black white--text"></v-col>
+                  <v-col cols="12">
+                    <div class="chat_attachements mt-2" v-if="item.files.length>0">
+                        <v-chip
+                        v-for="(currentfile, index) in item.files"
+                        :key="currentfile.id"
+                        color="green d-inline-block"
+                        outlined
+                        @click="openFile(currentfile.full_url)"
+                        >
+                        {{currentfile.url.split('/')[currentfile.url.split('/').length-1]}}
+                        </v-chip>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-timeline-item>
+            </v-slide-x-reverse-transition>
+          </v-timeline>
+        </v-col>
+        <v-col cols="12">
+          <InlineEditor table="lead_notes" inputName="note" @sendingData="sendLeadNotes"/>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-row>
 </template>
 <script>
 import leadservice from "@services/auth/lead";
+import lead_noteservice from "@services/auth/lead_notes";
 import projectservice from "@services/auth/project";
 import paymentservice from "@services/auth/payment";
 import briefformservice from "@services/auth/briefform";
 import userbriefsservice from "@services/auth/userbriefs";
 import StatusChip from "@components/common/status.vue";
+import InlineEditor from "@components/common/inlineeditor.vue";
 export default {
   components: {
     StatusChip,
+    InlineEditor
   },
   data() {
     return {
@@ -444,6 +503,7 @@ export default {
       lead: {},
       payments: [],
       briefs: [],
+      lead_notes: [],
       form: {
         amount: 0,
         status: 0,
@@ -492,6 +552,14 @@ export default {
     this.startupreqs()
   },
   methods: {
+    async sendLeadNotes(formData){
+      await lead_noteservice.create(this.$route.params.id, formData).then(async (e)=>{
+        this.lead_notes = await lead_noteservice.getlist(this.$route.params.id, "").then(e=>e.data)
+      })
+    },
+    openFile(url){
+      window.open(url, '_blank').focus();
+    },
     async sendForm() {
       if (this.briefform.form_id > 0 && this.briefform.name != "") {
         var formdata = new FormData();
@@ -601,6 +669,7 @@ export default {
     },
     async startupreqs(){
       this.getLead(this.$route.params.id);
+      this.lead_notes = await lead_noteservice.getlist(this.$route.params.id, "").then(e=>e.data)
       this.briefforms = await briefformservice.get("?all=true");
       if(parseInt(this.lead.user_id)>0){
         this.lead_projects = await projectservice.getlist('?perpage=0&customer_id='+this.lead.user_id).then(e=>e.data);

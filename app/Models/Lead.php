@@ -49,4 +49,7 @@ class Lead extends Model
     protected $casts = [
         'custom_fields' => Json::class,
     ];
+    public function notes(){
+        return $this->hasMany(LeadNote::class);
+    }
 }
