@@ -238,24 +238,28 @@ export default {
       this.$emit("close-leaddialog");
     },
     async updateLead() {
-      var formData = new FormData();
-      formData.append("first_name", this.form.first_name);
-      formData.append("last_name", this.form.last_name);
-      formData.append("company", this.form.company);
-      formData.append("phone", this.form.phone);
-      formData.append("email", this.form.email);
-      formData.append("message", this.form.message);
-      formData.append("brand_id", this.form.brand.id);
-      formData.append("lead_type", this.form.lead_type.id);
-      if (this.form.id > 0) {
-        await leadservice.update(formData, this.form.id);
-        this.$store.commit("setNotification", "Lead Updated");
-      } else {
-        await leadservice.create(formData);
-        this.$store.commit("setNotification", "Lead Created");
+      try{
+        var formData = new FormData();
+        formData.append("first_name", this.form.first_name);
+        formData.append("last_name", this.form.last_name);
+        formData.append("company", this.form.company);
+        formData.append("phone", this.form.phone);
+        formData.append("email", this.form.email);
+        formData.append("message", this.form.message);
+        formData.append("brand_id", this.form.brand.id);
+        formData.append("lead_type", this.form.lead_type.id);
+        if (this.form.id > 0) {
+          await leadservice.update(formData, this.form.id);
+          this.$store.commit("setNotification", "Lead Updated");
+        } else {
+          await leadservice.create(formData);
+          this.$store.commit("setNotification", "Lead Created");
+        }
+        this.$emit("refresh-leads");
+        this.closeMe()
+      }catch(ex){
+        this.$store.commit("setNotification", "Lead Data Invalid");
       }
-      this.$emit("refresh-leads");
-      this.closeMe()
     },
   },
   computed: {

@@ -50,7 +50,7 @@ lazy-validation
   class="pb-0"
 >
 <v-select
-    :items="[{id: 4, value: 'Sale'},{id: 5, value: 'Support'},{id: 6, value: 'Customer'},{id:7, value: 'Production Manager'},{id:8, value: 'Developer'},{id: 9, value: 'Marketing'}]"
+    :items="[{id: 4, value: 'Sale'},{id: 5, value: 'Support'},{id: 6, value: 'Customer'},{id:7, value: 'Production Manager'},{id:8, value: 'Developer'},{id: 9, value: 'Marketing'},{id: 10, value: 'Production Head'}]"
     item-text="value"
     item-value="id"
     label="Role*"

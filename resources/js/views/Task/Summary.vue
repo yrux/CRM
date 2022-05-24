@@ -205,7 +205,7 @@
                     </template>
                     <span>Close Task</span>
                   </v-tooltip>
-                  <v-tooltip bottom v-else-if="task.status==2&&user.role_id==7">
+                  <v-tooltip bottom v-else-if="task.status==2&&(user.role_id==7||user.role_id==10)">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn @click="taskStatusUpdate(task.id, 0)" fab small v-bind="attrs" v-on="on">
                         <v-icon>mdi-check</v-icon>

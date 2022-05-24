@@ -348,6 +348,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
+                _context4.prev = 0;
                 formData = new FormData();
                 formData.append("first_name", _this4.form.first_name);
                 formData.append("last_name", _this4.form.last_name);
@@ -359,37 +360,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append("lead_type", _this4.form.lead_type.id);
 
                 if (!(_this4.form.id > 0)) {
-                  _context4.next = 15;
+                  _context4.next = 16;
                   break;
                 }
 
-                _context4.next = 12;
+                _context4.next = 13;
                 return _services_auth_lead__WEBPACK_IMPORTED_MODULE_1__["default"].update(formData, _this4.form.id);
 
-              case 12:
+              case 13:
                 _this4.$store.commit("setNotification", "Lead Updated");
 
-                _context4.next = 18;
+                _context4.next = 19;
                 break;
 
-              case 15:
-                _context4.next = 17;
+              case 16:
+                _context4.next = 18;
                 return _services_auth_lead__WEBPACK_IMPORTED_MODULE_1__["default"].create(formData);
 
-              case 17:
+              case 18:
                 _this4.$store.commit("setNotification", "Lead Created");
 
-              case 18:
+              case 19:
                 _this4.$emit("refresh-leads");
 
                 _this4.closeMe();
 
-              case 20:
+                _context4.next = 26;
+                break;
+
+              case 23:
+                _context4.prev = 23;
+                _context4.t0 = _context4["catch"](0);
+
+                _this4.$store.commit("setNotification", "Lead Data Invalid");
+
+              case 26:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4);
+        }, _callee4, null, [[0, 23]]);
       }))();
     }
   },

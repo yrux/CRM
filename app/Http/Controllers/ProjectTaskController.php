@@ -161,7 +161,11 @@ class ProjectTaskController extends Controller
             $query = ProjectTask::where('developer_id',$request->user()->id);
         }
         else{
-            $query = ProjectTask::where('assigned_by',$request->user()->id);
+            if($request->user()->role_id!=10){
+                $query = ProjectTask::where('assigned_by',$request->user()->id);
+            }else{
+                $query = ProjectTask::whereRaw(DB::raw('1=1'));
+            }
         }
         if(optional($request)->type!=''){
             if($request->type=='overdue'){

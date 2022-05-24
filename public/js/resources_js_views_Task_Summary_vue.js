@@ -6364,7 +6364,8 @@ var render = function () {
                                                 ]
                                               )
                                             : task.status == 2 &&
-                                              _vm.user.role_id == 7
+                                              (_vm.user.role_id == 7 ||
+                                                _vm.user.role_id == 10)
                                             ? _c(
                                                 "v-tooltip",
                                                 {

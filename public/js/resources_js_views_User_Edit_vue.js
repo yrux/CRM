@@ -823,6 +823,7 @@ var render = function () {
                                 { id: 7, value: "Production Manager" },
                                 { id: 8, value: "Developer" },
                                 { id: 9, value: "Marketing" },
+                                { id: 10, value: "Production Head" },
                               ],
                               "item-text": "value",
                               "item-value": "id",
