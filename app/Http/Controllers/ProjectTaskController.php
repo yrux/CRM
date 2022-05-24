@@ -183,10 +183,10 @@ class ProjectTaskController extends Controller
             }
         }
         $query->leftJoin('projects','project_tasks.project_id','projects.id');
+        $query = $query->where('projects.company_id',$request->user()->company_id);
         $query->leftJoin('users as assigned_user','project_tasks.assigned_on','assigned_user.id');
         $query->leftJoin('users as assigned_by_user','project_tasks.assigned_by','assigned_by_user.id');
         $query->leftJoin('users as developer_user','project_tasks.developer_id','developer_user.id');
-
         $query = $query->leftJoin(DB::raw('(SELECT start_time, end_time,task_id FROM task_times WHERE end_time IS NULL GROUP BY task_times.task_id) AS task_time'), 
         function($join)
         {
