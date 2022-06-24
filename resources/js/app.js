@@ -47,6 +47,7 @@ new Vue({
       var user = await loginservice.me()
       this.$store.commit('setloggedInUser',user);
       //redirecting to user dashboard
+      this.$store.dispatch('addAccount/initialize', {currentToken: token})
     }
   },
   components: {

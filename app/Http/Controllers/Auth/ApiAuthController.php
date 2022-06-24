@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\ProfileRequest;
+use DB;
 
 class ApiAuthController extends Controller
 {
@@ -55,5 +56,20 @@ class ApiAuthController extends Controller
         }
         $data = User::where('id',$request->user()->id)->update($arr);
         return new UserResource(User::find($request->user()->id));
+    }
+    public function checkTokens(Request $request){
+        $users = [];
+        foreach($request->tokens as $token){
+            $token_parts = explode('.', $token);
+            $token_header = $token_parts[1];
+            $token_header_json = base64_decode($token_header);
+            $token_header_array = json_decode($token_header_json, true);
+            $token_id = $token_header_array['jti'];
+            $user_id = DB::table('oauth_access_tokens')->where('id', $token_id)->first();
+            $user = User::find($user_id->user_id);
+            $user->token = $token;
+            $users[] = $user;
+        }
+        return response()->json(['accounts'=>$users]);
     }
 }

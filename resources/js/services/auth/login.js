@@ -25,6 +25,13 @@ class loginservice{
 			return response.data;
 		})
 	}
+	async checkTokens(tokens){
+		return axios.post('/api/check-tokens',{
+			tokens: tokens,
+		}).then(function(response){
+			return response.data;
+		})
+	}
 	async updateProfile(formData){
 		formData.append('_method','put')
 		var res = await  axios.post('/api/updateprofile',formData).then(function(e){

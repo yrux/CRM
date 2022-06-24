@@ -20,6 +20,11 @@ export default [
         component: () => import('@/views/Profile.vue'),
     },
     {
+        path: '/account-switched',
+        name: 'auth.account-switched',
+        component: () => import('@/views/AccountSwitched.vue'),
+    },
+    {
         path: '/company/add',
         name: 'auth.company.add',
         component: () => import('@/views/Company/Add.vue'),

@@ -25,6 +25,8 @@
           </v-icon>
         </v-badge>
       </v-btn>
+      <add-account-button />
+      <add-acount-modal />
       <v-btn :to="{ name: 'auth.dashboard' }" text>
         <span class="mr-2">Dashboard</span>
         <v-icon>mdi-account-circle</v-icon>
@@ -732,9 +734,14 @@
   </div>
 </template>
 <script>
+import addAccountButton from '@components/account/button.vue'
+import addAcountModal from '@components/account/add.vue'
 export default {
   name: "sidebar",
-  components: {},
+  components: {
+    addAccountButton,
+    addAcountModal
+  },
   props: ["showsidebar"],
   data: () => ({
     drawer: false,
@@ -757,6 +764,7 @@ export default {
       this.$store.commit("setLoginStatus", false);
       this.$store.commit("setAuthToken", "");
       this.$store.commit("setloggedInUser", {});
+      this.$store.commit('addAccount/clearLocalStorage')
       this.$router.push({ name: "auth.login" });
     },
   },

@@ -120,7 +120,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 if (!this.$refs.form.validate()) {
-                  _context.next = 19;
+                  _context.next = 21;
                   break;
                 }
 
@@ -133,35 +133,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.btnloading = false;
 
                 if (!logindetail.data) {
-                  _context.next = 19;
+                  _context.next = 21;
                   break;
                 }
 
                 if (!logindetail.status) {
-                  _context.next = 17;
+                  _context.next = 19;
                   break;
                 }
 
                 this.$store.commit('setLoginStatus', true);
                 this.$store.commit('setAuthToken', logindetail.data);
-                _context.next = 12;
+                this.$store.commit('addAccount/addToken', logindetail.data);
+                this.$store.commit('addAccount/setupLocalStorage');
+                _context.next = 14;
                 return _services_auth_login__WEBPACK_IMPORTED_MODULE_1__["default"].me();
 
-              case 12:
+              case 14:
                 user = _context.sent;
                 this.$store.commit('setloggedInUser', user);
                 this.$router.push({
                   name: 'auth.dashboard'
                 }); // $route.push('auth.dashboard')
 
-                _context.next = 19;
+                _context.next = 21;
                 break;
 
-              case 17:
+              case 19:
                 this.erorrs.email = logindetail.data;
                 this.snackbar = true;
 
-              case 19:
+              case 21:
               case "end":
                 return _context.stop();
             }

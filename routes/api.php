@@ -31,7 +31,7 @@ use App\Http\Controllers\Auth\ApiAuthController;
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/login', [ApiAuthController::class,'login'])->name('login.api');
-
+    Route::post('/check-tokens', [ApiAuthController::class,'checkTokens']);
     //guest apis
     Route::post('payments/{payment}', [PaymentController::class,'checkEmail']);
     Route::post('payments-getbrand/{payment}', [PaymentController::class,'getBrand']);

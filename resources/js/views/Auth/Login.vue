@@ -103,6 +103,8 @@ export default {
           if (logindetail.status) {
             this.$store.commit('setLoginStatus',true);
             this.$store.commit('setAuthToken',logindetail.data);
+            this.$store.commit('addAccount/addToken', logindetail.data)
+            this.$store.commit('addAccount/setupLocalStorage')
             var user = await loginservice.me()
             this.$store.commit('setloggedInUser',user);
             this.$router.push({name: 'auth.dashboard'})
